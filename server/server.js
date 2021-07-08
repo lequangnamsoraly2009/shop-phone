@@ -20,10 +20,8 @@ app.use(fileUpload({
 
 
 //Routes
-// app.use("/", require(""))
-app.get('/', (req,res)=>{
-    res.json({message: "Welcome to Shop"})
-})
+
+app.use("/users", require("./routes/user.route"))
 
 
 //Connect Mongoose
