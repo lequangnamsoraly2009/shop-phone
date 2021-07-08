@@ -21,12 +21,15 @@ app.use(fileUpload({
 
 //Routes
 // app.use("/", require(""))
+app.get('/', (req,res)=>{
+    res.json({message: "Welcome to Shop"})
+})
 
 
 //Connect Mongoose
 db.onConnection();
 
-const port = process.env.PORT
+const port = process.env.PORT || 5000
 
 app.listen(port, ()=> {
     console.log(`Server listening on port ${port}`)
