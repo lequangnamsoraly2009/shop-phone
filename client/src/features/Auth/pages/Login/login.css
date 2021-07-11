@@ -36,6 +36,11 @@
     margin:  0 auto;    
 }
 
+.login-form-button{
+    width: 100px;
+    margin-right: 50px;
+}
+
 @media only screen and (max-width: 767px) {
     .login {
         display: flex;

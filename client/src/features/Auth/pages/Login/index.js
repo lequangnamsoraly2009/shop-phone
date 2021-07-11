@@ -76,7 +76,7 @@ function Login() {
                 htmlType="submit"
                 className="login-form-button"
               >
-                Log in
+                Log in      
               </Button>
               Or <a href="/buyer/register">register now!</a>
             </Form.Item>
