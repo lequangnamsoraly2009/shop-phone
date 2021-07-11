@@ -8,7 +8,7 @@ const regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
 const userController = {
   register: async (req, res) => {
     try {
-      const { userName, email, password, passwordConfirm } = req.body;
+      const { userName, email, password, passwordConfirm, gender,phone,prefix } = req.body;
 
       const user = await Users.findOne({ email: email });
 
@@ -22,6 +22,9 @@ const userController = {
           .status(400)
           .json({ status: false, message: "Password compare is incorrect!" });
 
+      if(phone.length <= 9 || phone.length > 11){
+        return res.status(400).json({status: false, message:"Phone Number required 10 and 11 numbers"})
+      }
       // Check Validate For Passwords
 
       if (regex.test(password) === false)
@@ -38,6 +41,9 @@ const userController = {
         userName,
         email,
         password: passwordHash,
+        gender,
+        prefix,
+        phone
       });
 
       await newUser.save();

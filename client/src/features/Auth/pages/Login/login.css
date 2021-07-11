@@ -29,6 +29,9 @@
 .social-login a.facebook-login__button {
     margin: 0 20px;
 }
+.social-login a.google-login__button {
+  margin: 0 20px;
+}
 
 /* Form */
 .login-form__wrap{
