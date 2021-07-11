@@ -1,12 +1,26 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import React from "react";
+import {useHistory} from "react-router-dom"
+// import axios from "axios"
+import API from "../../../../api/axiosClient"
 import "./login.css";
 
 function Login() {
 
-    const onSubmitForm = (values) =>{
-        console.log(values);
+  const history = useHistory()
+
+    const onSubmitForm = async(values) =>{
+        try {
+          await API.post("/users/login", {...values})
+
+          localStorage.setItem("firstLogin",true);
+
+          history.push("/");
+
+        } catch (error) {
+          alert(error.response.data.message);
+        }
     }
   return (
     <div className="container-fluid">

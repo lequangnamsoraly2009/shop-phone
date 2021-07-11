@@ -1,7 +1,8 @@
-import { Form, Input, Button, Checkbox, Select, Row, Col } from "antd";
+import { Form, Input, Button, Checkbox, Select} from "antd";
 import React from "react";
 import "../Login/login.css";
 import "./register.css";
+// import axios from "axios"
 const { Option } = Select;
 
 const formItemLayout = {
@@ -41,7 +42,11 @@ function Register() {
   );
 
   const onSubmitForm = (values) => {
-    console.log(values);
+    // try {
+        
+    // } catch (error) {
+        
+    // }
   };
   return (
     <div className="container-fluid">
@@ -123,6 +128,14 @@ function Register() {
                   required: true,
                   message: "Please confirm your password!",
                 },
+                ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('password') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                    },
+                  }),
               ]}
             >
               <Input.Password />
