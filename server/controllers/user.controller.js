@@ -32,7 +32,7 @@ const userController = {
         });
 
       //  Validate Password
-      const passwordHash = await bcrypt.hash(password, 10);
+      const passwordHash = await bcrypt.hash(password, 11);
 
       const newUser = new Users({
         userName,
