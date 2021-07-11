@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import HeaderNav from "./components/header";
 import FooterNav from "./components/footer";
-import { Content } from "antd/lib/layout/layout";
+// import { Content } from "antd/lib/layout/layout";
 
 function App() {
   return (
@@ -17,9 +17,7 @@ function App() {
       <Layout>
         <HeaderNav />
         <Switch>
-          <Content>
             <Route />
-          </Content>
         </Switch>
         <FooterNav />
       </Layout>

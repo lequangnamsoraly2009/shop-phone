@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: row;
     font-size: 30px;
-    width: 300px;
+    width: 180px;
 }
 
 .logo a:hover{
@@ -49,4 +49,8 @@
     padding: 16px 0 16px 16px;
     font-size: 16px;
     border-bottom: 1px solid rgba(221, 219, 219, 0.678);
+}
+
+.ant-menu-submenu-title{
+    padding: 15px !important;
 }

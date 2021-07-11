@@ -9,6 +9,7 @@ import {
   ShoppingCartOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
+import SubMenu from "antd/lib/menu/SubMenu";
 const { Search } = Input;
 const { Link } = Anchor;
 
@@ -82,6 +83,17 @@ function HeaderNav() {
               <Anchor targetOffset="300" bounds="5">
                 <Link href="/" title="Home Page" />
                 <Link href="/buyer/infor" title="Your Information" />
+                <Menu
+                  // onClick={handleClick}
+                  style={{ width: 256, borderBottom: "1px solid rgba(221, 219, 219, 0.678)"}}
+                  mode="inline"
+                >
+                  <SubMenu key="sub1" style={{paddingLeft: 0, fontSize: 16, color: "#222", fontWeight: 400}} title="Navigation One">
+                      <Menu.Item key="1"><a href="/category/ios">Ios</a></Menu.Item>
+                      <Menu.Item key="2"><a href="/category/android">Android</a></Menu.Item>
+                      <Menu.Item key="3"><a href="/category/different">Different</a></Menu.Item>                      
+                  </SubMenu>
+                </Menu>
                 <Link href="/cart" title="Cart" />
                 <Link href="/buyer/login" title="Login" />
                 <Link href="/buyer/register" title="Register" />
