@@ -1,27 +1,47 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import React from "react";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 // import axios from "axios"
-import API from "../../../../api/axiosClient"
+import API from "../../../../api/axiosClient";
 import "./login.css";
 
 function Login() {
+  const history = useHistory();
 
-  const history = useHistory()
+  const onSubmitForm = async (values) => {
+    try {
+      await API.post("/users/login", { ...values });
 
-    const onSubmitForm = async(values) =>{
-        try {
-          await API.post("/users/login", {...values})
+      localStorage.setItem("firstLogin", true);
 
-          localStorage.setItem("firstLogin",true);
-
-          history.push("/");
-
-        } catch (error) {
-          alert(error.response.data.message);
-        }
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "center-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        // didOpen: (toast) => {
+        //   toast.addEventListener("mouseenter", Swal.stopTimer);
+        //   toast.addEventListener("mouseleave", Swal.resumeTimer);
+        // },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
+      setTimeout(() => {
+        history.push("/");
+      }, 3000);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error.response.data.message}`,
+      });
     }
+  };
   return (
     <div className="container-fluid">
       <div className="login">
@@ -90,7 +110,7 @@ function Login() {
                 htmlType="submit"
                 className="login-form-button"
               >
-                Log in      
+                Log in
               </Button>
               Or <a href="/buyer/register">register now!</a>
             </Form.Item>
