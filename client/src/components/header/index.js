@@ -64,8 +64,12 @@ function HeaderNav() {
       <div className="container-fluid header-wrapper">
         <div className="header">
           <div className="logo">
-            <a href="/" style={{ color: "#000", fontWeight: 500 }}>
+            <a href="/" className="mobileHidden"  style={{ color: "#000", fontWeight: 500 }}>
               <SkinOutlined style={{ fontSize: 40, margin: "auto" }} />
+              SORALY
+            </a>
+            <a href="/" className="mobileVisible"  style={{ color: "#000", fontWeight: 500 , fontSize: 25}}>
+              <SkinOutlined className="mobileHidden" style={{ fontSize: 40, margin: "auto" }} />
               SORALY
             </a>
           </div>
@@ -77,6 +81,15 @@ function HeaderNav() {
             enterButton="Search"
             size="large"
             suffix={suffix}
+            onSearch={onSearch}
+          />
+          <Search
+            className="mobileVisible"
+            style={{ maxWidth: "60%", padding: "0 5px" }}
+            placeholder="Search"
+            // enterButton="Search"
+            // size="large"
+            // suffix={suffix}
             onSearch={onSearch}
           />
           <div className="mobileHidden">
