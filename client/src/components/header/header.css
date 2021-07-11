@@ -13,6 +13,11 @@
   padding: 10px 0;
 }
 
+.header-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
 .logo {
     display: flex;
     flex-direction: row;
@@ -54,3 +59,30 @@
 .ant-menu-submenu-title{
     padding: 15px !important;
 }
+
+/* Nav Category - Sub Menu */
+
+.nav-category{
+    width: 100%;
+}
+
+.nav-list{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 50px;
+}
+
+.nav-item{
+    font-size: 16px;
+}
+
+.nav-item a{
+    color: #111;
+}
+.ant-dropdown-menu-item-active span a,
+.nav-item a:hover{
+    color: #1890ff !important; 
+}
+

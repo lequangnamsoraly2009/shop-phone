@@ -1,4 +1,4 @@
-import { Anchor, Badge, Button, Drawer, Menu } from "antd";
+import { Anchor, Badge, Button, Drawer, Dropdown, Menu } from "antd";
 import { Header } from "antd/lib/layout/layout";
 import "./header.css";
 import React, { useState } from "react";
@@ -8,6 +8,7 @@ import {
   SkinOutlined,
   ShoppingCartOutlined,
   MenuOutlined,
+  DownOutlined,
 } from "@ant-design/icons";
 import SubMenu from "antd/lib/menu/SubMenu";
 const { Search } = Input;
@@ -32,9 +33,35 @@ function HeaderNav() {
 
   const onSearch = (value) => console.log(value);
 
+  const menu = (
+    <Menu style={{width: 200, left: -50}}>
+      <Menu.Item key="0">
+        <a
+          href="/category/ios"
+        >
+          IOS
+        </a>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <a
+          href="/category/android"
+        >
+          ANDROID
+        </a>
+      </Menu.Item>
+      <Menu.Item key="3" >
+      <a
+          href="/category/different"
+        >
+          DIFFERENT
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <Header style={{ background: "#fff", padding: 0 }}>
-      <div className="container-fluid">
+      <div className="container-fluid header-wrapper">
         <div className="header">
           <div className="logo">
             <a href="/" style={{ color: "#000", fontWeight: 500 }}>
@@ -85,13 +112,31 @@ function HeaderNav() {
                 <Link href="/buyer/infor" title="Your Information" />
                 <Menu
                   // onClick={handleClick}
-                  style={{ width: 256, borderBottom: "1px solid rgba(221, 219, 219, 0.678)"}}
+                  style={{
+                    width: "100%",
+                    borderBottom: "1px solid rgba(221, 219, 219, 0.678)",
+                  }}
                   mode="inline"
                 >
-                  <SubMenu key="sub1" style={{paddingLeft: 0, fontSize: 16, color: "#222", fontWeight: 400}} title="Navigation One">
-                      <Menu.Item key="1"><a href="/category/ios">Ios</a></Menu.Item>
-                      <Menu.Item key="2"><a href="/category/android">Android</a></Menu.Item>
-                      <Menu.Item key="3"><a href="/category/different">Different</a></Menu.Item>                      
+                  <SubMenu
+                    key="sub1"
+                    style={{
+                      paddingLeft: 0,
+                      fontSize: 16,
+                      color: "#222",
+                      fontWeight: 400,
+                    }}
+                    title="Category"
+                  >
+                    <Menu.Item key="1">
+                      <a href="/category/ios">Ios</a>
+                    </Menu.Item>
+                    <Menu.Item key="2">
+                      <a href="/category/android">Android</a>
+                    </Menu.Item>
+                    <Menu.Item key="3">
+                      <a href="/category/different">Different</a>
+                    </Menu.Item>
                   </SubMenu>
                 </Menu>
                 <Link href="/cart" title="Cart" />
@@ -101,6 +146,32 @@ function HeaderNav() {
               </Anchor>
             </Drawer>
           </div>
+        </div>
+        <div className="nav-category mobileHidden">
+          <ul className="nav-list">
+            <li className="nav-item">
+              <a href="/">HOME PAGE</a>
+            </li>
+            <li className="nav-item">
+              <Dropdown overlay={menu} arrow={true}>
+                <a className="ant-dropdown-link" href="/category">
+                  CATEGORY <DownOutlined />
+                </a>
+              </Dropdown>
+            </li>
+            <li className="nav-item">
+              <a href="/">CONTACT</a>
+            </li>
+            <li className="nav-item">
+              <a href="/">ABOUT US</a>
+            </li>
+            <li className="nav-item">
+              <a href="/">BLOG</a>
+            </li>
+            <li className="nav-item">
+              <a href="/">GITHUB</a>
+            </li>
+          </ul>
         </div>
       </div>
     </Header>
