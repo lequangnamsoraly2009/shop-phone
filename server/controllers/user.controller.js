@@ -119,6 +119,17 @@ const userController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  inforUser: async (req, res) => {
+    try {
+      const user = await Users.findById({_id: req.user.id}).select("-password");
+
+      if(!user) return res.status(400).json({status: false,message: "User does not exist !"});
+      
+      res.json(user);
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message })
+    }
+  }
 };
 
 const createAccessToken = (user) => {
