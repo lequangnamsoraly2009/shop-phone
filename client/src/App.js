@@ -9,16 +9,19 @@ import {
 } from "react-router-dom";
 import HeaderNav from "./components/header";
 import FooterNav from "./components/footer";
-// import { Content } from "antd/lib/layout/layout";
+import AuthPage from "./features/Auth";
+import { Content } from "antd/lib/layout/layout";
 
 function App() {
   return (
     <Router>
       <Layout>
         <HeaderNav />
-        <Switch>
-            <Route />
-        </Switch>
+        <Content>
+          <Switch>
+            <Route  path="/buyer" component={AuthPage} />
+          </Switch>
+        </Content>
         <FooterNav />
       </Layout>
     </Router>

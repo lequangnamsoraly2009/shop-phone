@@ -1,8 +1,5 @@
 .ant-layout-header {
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 999;
+  height: 162px;
 }
 
 .header {
@@ -13,76 +10,80 @@
   padding: 10px 0;
 }
 
-.header-wrapper{
-    display: flex;
-    flex-direction: column;
+.header-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
-    display: flex;
-    flex-direction: row;
-    font-size: 30px;
-    width: 180px;
+  display: flex;
+  flex-direction: row;
+  font-size: 30px;
+  width: 180px;
 }
 
-.logo a:hover{
-    color: #1890ff !important;
+.logo a:hover {
+  color: #1890ff !important;
 }
 
-.header_menu{
-    width: 300px;
-    display: flex;
-    justify-content: space-evenly;
+.header_menu {
+  width: 300px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.ant-menu-item{
-    font-size: 16px;
+.ant-menu-item {
+  font-size: 16px;
 }
 
-.cart_icon{
-    position: relative;
+.cart_icon {
+  position: relative;
 }
 
-.badge-count{
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    
+.badge-count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
-.ant-anchor-link{
-    padding: 16px 0 16px 16px;
-    font-size: 16px;
-    border-bottom: 1px solid rgba(221, 219, 219, 0.678);
+.ant-anchor-link {
+  padding: 16px 0 16px 16px;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(221, 219, 219, 0.678);
 }
 
-.ant-menu-submenu-title{
-    padding: 15px !important;
+.ant-menu-submenu-title {
+  padding: 15px !important;
 }
 
 /* Nav Category - Sub Menu */
 
-.nav-category{
-    width: 100%;
+.nav-category {
+  width: 100%;
 }
 
-.nav-list{
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0 50px;
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 50px;
 }
 
-.nav-item{
-    font-size: 16px;
+.nav-item {
+  font-size: 16px;
 }
 
-.nav-item a{
-    color: #111;
+.nav-item a {
+  color: #111;
 }
 .ant-dropdown-menu-item-active span a,
-.nav-item a:hover{
-    color: #1890ff !important; 
+.nav-item a:hover {
+  color: #1890ff !important;
 }
 
+@media only screen and (max-width: 767px) {
+  .ant-layout-header {
+    height: 70px;
+  }
+}
