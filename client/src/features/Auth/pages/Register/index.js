@@ -5,6 +5,9 @@ import "./register.css";
 import Swal from "sweetalert2";
 import API from "../../../../api/axiosClient";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginPending } from "../../../../app/userSlice";
+import { setToken } from "../../../../app/tokenSlice";
 
 const { Option } = Select;
 
@@ -34,6 +37,7 @@ const tailFormItemLayout = {
 function Register() {
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
 
   const prefixSelector = (
@@ -49,11 +53,11 @@ function Register() {
   );
 
   const onSubmitForm = async(values) => {
+    dispatch(loginPending());
     try {
-      await API.post("/users/register", {...values});
-
+      const response = await API.post("/users/register", {...values});
+      dispatch(setToken(response.data.accessToken));
       localStorage.setItem("firstLogin", true);
-
       const Toast = Swal.mixin({
         toast: true,
         position: "center-end",

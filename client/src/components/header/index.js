@@ -11,11 +11,17 @@ import {
   DownOutlined,
 } from "@ant-design/icons";
 import SubMenu from "antd/lib/menu/SubMenu";
+// import { useSelector } from "react-redux";
 const { Search } = Input;
 const { Link } = Anchor;
 
 function HeaderNav() {
   const [visible, setVisible] = useState(false);
+  // const token = useSelector(state=> state.token)
+  // console.log(token)
+
+
+
   const showDrawer = () => {
     setVisible(true);
   };
