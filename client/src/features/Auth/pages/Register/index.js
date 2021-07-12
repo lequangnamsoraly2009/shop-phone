@@ -2,7 +2,10 @@ import { Form, Input, Button, Checkbox, Select} from "antd";
 import React from "react";
 import "../Login/login.css";
 import "./register.css";
-// import axios from "axios"
+import Swal from "sweetalert2";
+import API from "../../../../api/axiosClient";
+import { useHistory } from "react-router-dom";
+
 const { Option } = Select;
 
 const formItemLayout = {
@@ -29,6 +32,10 @@ const tailFormItemLayout = {
 };
 
 function Register() {
+
+  const history = useHistory();
+
+
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select style={{ width: 70 }}>
@@ -41,12 +48,39 @@ function Register() {
     </Form.Item>
   );
 
-  const onSubmitForm = (values) => {
-    // try {
+  const onSubmitForm = async(values) => {
+    try {
+      await API.post("/users/register", {...values});
+
+      localStorage.setItem("firstLogin", true);
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "center-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        // didOpen: (toast) => {
+        //   toast.addEventListener("mouseenter", Swal.stopTimer);
+        //   toast.addEventListener("mouseleave", Swal.resumeTimer);
+        // },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Register account successfully",
+      });
+
+      setTimeout(() => {
+        history.push("/");
+      }, 3000);
         
-    // } catch (error) {
-        
-    // }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error.response.data.message}`,
+      });
+    }
   };
   return (
     <div className="container-fluid">

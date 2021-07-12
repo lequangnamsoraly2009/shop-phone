@@ -1,38 +1,46 @@
-import { createSlice} from "@reduxjs/toolkit";
-// import axios from "axios";
-
-// export const refreshToken = createAsyncThunk(
-//   "token/refreshToken",
-//   async () => {
-//     const loginCurrent = localStorage.getItem("firstLogin");
-//     if (loginCurrent) {
-//       const response = await axios.get("/users/refresh_token");
-//       return response.data.accessToken;
-//     }
-//   }
-// );
+import {createSlice} from "@reduxjs/toolkit"
 
 const initialState = {
-  token: "",
-};
- 
-const tokenSlice = createSlice({
-  name: "token",
-  initialState,
-  reducers: {
-    setToken: (state, action) => {
-      state.token = action.payload;
+    isBuyer: false,
+    isAdmin: false,
+    user:{},
+    isLoading: false, 
+    isLoggedIn: false,
+}
+
+const userSlice = createSlice({
+    name:"user",
+    initialState,
+    reducers:{
+        loginPending: (state) => {
+            state.isLoading = true
+        },
+        getUser: (state,action) =>{
+            state.user = action.payload;
+            state.isLoggedIn = true;
+            state.isLoading = false;
+        }, 
+        isABuyer: (state,action) =>{
+            state.isBuyer = action.payload;
+            state.isDealer = false
+            state.isAdmin = false
+        },
+        isAAdmin: (state,action) =>{
+            state.isBuyer = false
+            state.isDealer = false
+            state.isAdmin = action.payload
+        },
+        getLogout: (state,action) =>{
+            state.user = {};
+            state.isLoggedIn = false;
+            state.isLoading = false;
+        }
     },
-  },
-//   extraReducers: {
-//     [refreshToken.fulfilled]: (state, action) => {
-//       state.token = action.payload;
-//     },
-//   },
-});
+    extraReducers:{}
+})
 
-const { reducer, actions } = tokenSlice;
+const {actions,reducer} = userSlice;
 
-export const { setToken } = actions;
+export const {getUser,isAAdmin,isABuyer,loginPending,getLogout} = actions;
 
 export default reducer;

@@ -3,7 +3,6 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-// import axios from "axios"
 import API from "../../../../api/axiosClient";
 import "./login.css";
 
