@@ -108,6 +108,7 @@ const userController = {
   refreshToken: async (req, res) => {
     try {
       const rf_token = req.cookies.refreshToken;
+      // console.log(rf_token)
       if (!rf_token)
         return res
           .status(400)

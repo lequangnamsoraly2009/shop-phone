@@ -28,6 +28,8 @@ app.use("/users", require("./routes/user.route"))
 db.onConnection();
 
 const port = process.env.PORT || 5000
+// const port = 3001;
+
 
 app.listen(port, ()=> {
     console.log(`Server listening on port ${port}`)
