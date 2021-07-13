@@ -119,6 +119,7 @@ function HeaderNav() {
                         color: "#f56a00",
                         backgroundColor: "#fde3cf",
                         textTransform: "capitalize",
+                        marginRight: 5,
                       }}
                     >
                       U
