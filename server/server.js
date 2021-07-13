@@ -22,6 +22,8 @@ app.use(fileUpload({
 //Routes
 
 app.use("/users", require("./routes/user.route"))
+app.use("/api", require("./routes/category.route"))
+
 
 
 //Connect Mongoose
