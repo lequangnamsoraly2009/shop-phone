@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import "./carousel.css"
+import "./carousel.css";
 
 function Carousel() {
   const settings = {
@@ -13,12 +13,28 @@ function Carousel() {
     pauseOnHover: true,
     rtl: true,
     arrows: false,
+    responsive: [
+      {
+        breakpoint: 767,
+        settings: {
+            dots: false,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 4000,
+            pauseOnHover: true,
+            rtl: true,
+            arrows: false,
+        },
+      },
+    ],
   };
 
   return (
-    <div className="container-fluid">
-      <div className="carousel">
-        <Slider {...settings} style={{ height: 350 }}>
+    <>
+      <div className="carousel mobileHidden">
+        <Slider {...settings}>
           <div>
             <img
               src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2021/6/30/637606925995211801_F-C1_1200x300.png"
@@ -57,7 +73,53 @@ function Carousel() {
           </div>
         </Slider>
       </div>
-    </div>
+      <div className="banner-mobile mobileVisible">
+        <Slider {...settings}>
+          <div>
+            <img
+              className="banner-img"
+              src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2021/6/30/637606925995211801_F-C1_1200x300.png"
+              alt="hi"
+            />
+          </div>
+          <div>
+            <img
+              className="banner-img"
+              src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2021/6/30/637606730975261719_F-C1_1200x300.png"
+              alt="hi"
+            />
+          </div>
+          <div>
+            <img
+              className="banner-img"
+              src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2021/7/1/637607303354411064_F-C1_1200x300.png"
+              alt="hi"
+            />
+          </div>
+          <div>
+            <img
+              className="banner-img"
+              src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2021/7/12/637617190007336359_F-C1_1200x300.png"
+              alt="hi"
+            />
+          </div>
+          <div>
+            <img
+              className="banner-img"
+              src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2021/7/12/637616771112398475_F-C1_1200x300.png"
+              alt="hi"
+            />
+          </div>
+          <div>
+            <img
+              className="banner-img"
+              src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2021/7/1/637607303354411064_F-C1_1200x300.png"
+              alt="hi"
+            />
+          </div>
+        </Slider>
+      </div>
+    </>
   );
 }
 

@@ -1,3 +1,27 @@
-.carousel{
-    height: 380px;
+.carousel {
+  height: 380px;
 }
+
+.img-carousel {
+  border-radius: 5px;
+}
+
+/* @media only screen and (max-width: 767px) {
+   
+    .carousel{
+        height: auto;
+        width: 100%;
+    }
+  } */
+
+.banner-mobile {
+    height: 130px;
+}
+
+.banner-img{
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+
