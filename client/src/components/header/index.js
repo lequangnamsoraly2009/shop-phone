@@ -11,7 +11,8 @@ import {
   DownOutlined,
 } from "@ant-design/icons";
 import SubMenu from "antd/lib/menu/SubMenu";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import Avatar from "antd/lib/avatar/avatar";
 const { Search } = Input;
 const { Link } = Anchor;
 
@@ -20,7 +21,9 @@ function HeaderNav() {
   // const token = useSelector(state=> state.token)
   // console.log(token)
 
-
+  const { isLoggedIn, isBuyer, user } = useSelector(
+    (state) => state.user
+  );
 
   const showDrawer = () => {
     setVisible(true);
@@ -40,27 +43,15 @@ function HeaderNav() {
   const onSearch = (value) => console.log(value);
 
   const menu = (
-    <Menu style={{width: 200, left: -50}}>
+    <Menu style={{ width: 200, left: -50 }}>
       <Menu.Item key="0">
-        <a
-          href="/category/ios"
-        >
-          IOS
-        </a>
+        <a href="/category/ios">IOS</a>
       </Menu.Item>
       <Menu.Item key="1">
-        <a
-          href="/category/android"
-        >
-          ANDROID
-        </a>
+        <a href="/category/android">ANDROID</a>
       </Menu.Item>
-      <Menu.Item key="3" >
-      <a
-          href="/category/different"
-        >
-          DIFFERENT
-        </a>
+      <Menu.Item key="3">
+        <a href="/category/different">DIFFERENT</a>
       </Menu.Item>
     </Menu>
   );
@@ -70,12 +61,23 @@ function HeaderNav() {
       <div className="container-fluid header-wrapper">
         <div className="header">
           <div className="logo">
-            <a href="/" className="mobileHidden"  style={{ color: "#000", fontWeight: 500 }}>
+            <a
+              href="/"
+              className="mobileHidden"
+              style={{ color: "#000", fontWeight: 500 }}
+            >
               <SkinOutlined style={{ fontSize: 40, margin: "auto" }} />
               SORALY
             </a>
-            <a href="/" className="mobileVisible"  style={{ color: "#000", fontWeight: 500 , fontSize: 25}}>
-              <SkinOutlined className="mobileHidden" style={{ fontSize: 40, margin: "auto" }} />
+            <a
+              href="/"
+              className="mobileVisible"
+              style={{ color: "#000", fontWeight: 500, fontSize: 25 }}
+            >
+              <SkinOutlined
+                className="mobileHidden"
+                style={{ fontSize: 40, margin: "auto" }}
+              />
               SORALY
             </a>
           </div>
@@ -100,12 +102,36 @@ function HeaderNav() {
           />
           <div className="mobileHidden">
             <Menu theme="light" mode="horizontal" className="header_menu">
-              <Menu.Item key="login">
-                <a href="/buyer/login">Login</a>
-              </Menu.Item>
-              <Menu.Item key="register">
-                <a href="/buyer/register">Register</a>
-              </Menu.Item>
+              {(!isLoggedIn && !isBuyer) ? (
+                <>
+                  <Menu.Item key="login">
+                    <a href="/buyer/login">Login</a>
+                  </Menu.Item>
+                  <Menu.Item key="register">
+                    <a href="/buyer/register">Register</a>
+                  </Menu.Item>
+                </>
+              ) : (
+                <>
+                  <Menu.Item key="user">
+                    <Avatar
+                      style={{
+                        color: "#f56a00",
+                        backgroundColor: "#fde3cf",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      U
+                    </Avatar>
+                    <a
+                      href="/buyer/user"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {user.userName}
+                    </a>
+                  </Menu.Item>
+                </>
+              )}
               <Menu.Item key="cart" className="cart_icon">
                 <a href="/cart">
                   <Badge className="badge-count" count={10} overflowCount={9} />
@@ -159,8 +185,14 @@ function HeaderNav() {
                   </SubMenu>
                 </Menu>
                 <Link href="/cart" title="Cart" />
-                <Link href="/buyer/login" title="Login" />
-                <Link href="/buyer/register" title="Register" />
+                {(!isLoggedIn && !isBuyer) ? (
+                  ""
+                ) : (
+                  <>
+                    <Link href="/buyer/login" title="Login" />
+                    <Link href="/buyer/register" title="Register" />
+                  </>
+                )}
                 <Link href="/contact" title="Contact" />
               </Anchor>
             </Drawer>
