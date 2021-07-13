@@ -185,7 +185,7 @@ function HeaderNav() {
                   </SubMenu>
                 </Menu>
                 <Link href="/cart" title="Cart" />
-                {(!isLoggedIn && !isBuyer) ? (
+                {(isLoggedIn && isBuyer) ? (
                   ""
                 ) : (
                   <>
