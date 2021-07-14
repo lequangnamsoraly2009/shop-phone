@@ -42,21 +42,20 @@ function HeaderNav() {
     e.preventDefault();
     try {
       await API.get("/users/logout");
-      persistor.purge("persist:root");
+      persistor.purge("persist:soraly");
 
       localStorage.removeItem("firstLogin");
-      localStorage.removeItem("persist:root");
+      localStorage.removeItem("persist:soraly");
 
       dispatch(getLogout());
       Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Good bye! See you soon! 😭',
-        text: 'You have logged out successfully!',
+        position: "center",
+        icon: "success",
+        title: "Good bye! See you soon! 😭",
+        text: "You have logged out successfully!",
         showConfirmButton: false,
-        timer: 2000
-      })
-      
+        timer: 2000,
+      });
     } catch (error) {
       alert(error.message);
     }
