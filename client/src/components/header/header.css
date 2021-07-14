@@ -71,8 +71,8 @@
   top: 50px;
   left: 22px;
   background: #fff;
-  width: 120px;
-  height: 80px;
+  width: 150px;
+  height: 90px;
   z-index: 2 !important;
   border-radius: 0 5px 5px 5px;
   border-top: 1px solid rgba(44, 44, 44, 0.1);
@@ -90,6 +90,12 @@
   margin-top: 2px;
   line-height: 2.5;
   margin: 0 auto;
+  font-size: 15px;
+  color: #000;
+}
+
+.user_dropdown a:hover{
+  color: #1890ff;
 }
 
 .button-logout{
