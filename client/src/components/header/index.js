@@ -11,8 +11,13 @@ import {
   DownOutlined,
 } from "@ant-design/icons";
 import SubMenu from "antd/lib/menu/SubMenu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Avatar from "antd/lib/avatar/avatar";
+import API from "../../api/axiosClient"
+import { getLogout } from "../../app/userSlice";
+import {persistor} from "../../app/store"
+
+
 const { Search } = Input;
 const { Link } = Anchor;
 
@@ -23,12 +28,33 @@ function HeaderNav() {
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
 
+  const dispatch = useDispatch()
+
   const showDrawer = () => {
     setVisible(true);
   };
   const onClose = () => {
     setVisible(false);
   };
+
+  // Logout
+  const onClickLogout = async(e) => {
+    e.preventDefault();
+    try {
+      await API.get('/users/logout');
+      persistor.purge("persist:root");
+    
+      localStorage.removeItem("firstLogin");
+      localStorage.removeItem("persist:root");
+
+      dispatch(getLogout());
+      
+    } catch (error) {
+      alert(error.message);
+    }
+
+  }
+
   const suffix = (
     <AudioOutlined
       style={{
@@ -132,7 +158,7 @@ function HeaderNav() {
                   <div className="user_dropdown">
                     <div className="user-dropdown-title">
                       <a href="/">Your Information</a>
-                      <a href="/">Logout</a>
+                      <a href="/" onClick={onClickLogout}>Logout</a>
                     </div>
                   </div>
                 </div>
@@ -157,7 +183,7 @@ function HeaderNav() {
               width="75%"
               maskClosable={true}
             >
-              <Anchor targetOffset="300" bounds="5">
+              <Anchor targetOffset="300" bounds="5" onClick={onClickLogout}>
                 <Link href="/" title="Home Page" />
                 <Link href="/buyer/infor" title="Your Information" />
                 <Link href="/cart" title="Cart" />
@@ -193,7 +219,7 @@ function HeaderNav() {
                 <Link href="/contact" title="Contact" />
                 {isLoggedIn && isBuyer ? (
                   <>
-                    <Link href="/buyer/logout" title="Logout" />
+                    <a href="/" onClick={onClickLogout} className="button-logout">Logout</a>
                   </>
                 ) : (
                   <>

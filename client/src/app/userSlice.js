@@ -29,9 +29,11 @@ const userSlice = createSlice({
       state.isAdmin = action.payload;
     },
     getLogout: (state, action) => {
+      state.isBuyer = false;
+      state.isAdmin = false;
       state.user = {};
-      state.isLoggedIn = false;
       state.isLoading = false;
+      state.isLoggedIn = false;
     },
   },
   extraReducers: {},
