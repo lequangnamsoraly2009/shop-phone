@@ -26,6 +26,14 @@ const categoryController = {
         } catch (error) {
             return res.status(500).json({status: false, message: error.message})
         }
+    },
+    deteleCategory: async(req, res) => {
+        try {
+            await Category.findByIdAndDelete(req.params.id);
+            res.json({message: "Delete category successfully"})
+        } catch (error) {
+            return res.status(500).json({status: false, message: error.message})
+        }
     }
 
 
