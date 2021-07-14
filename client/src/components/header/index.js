@@ -21,9 +21,7 @@ function HeaderNav() {
   // const token = useSelector(state=> state.token)
   // console.log(token)
 
-  const { isLoggedIn, isBuyer, user } = useSelector(
-    (state) => state.user
-  );
+  const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
 
   const showDrawer = () => {
     setVisible(true);
@@ -102,7 +100,7 @@ function HeaderNav() {
           />
           <div className="mobileHidden">
             <Menu theme="light" mode="horizontal" className="header_menu">
-              {(!isLoggedIn && !isBuyer) ? (
+              {!isLoggedIn && !isBuyer ? (
                 <>
                   <Menu.Item key="login">
                     <a href="/buyer/login">Login</a>
@@ -112,7 +110,7 @@ function HeaderNav() {
                   </Menu.Item>
                 </>
               ) : (
-                <>
+                <div className="user_infor">
                   <Menu.Item key="user">
                     <Avatar
                       style={{
@@ -131,7 +129,13 @@ function HeaderNav() {
                       {user.userName}
                     </a>
                   </Menu.Item>
-                </>
+                  <div className="user_dropdown">
+                    <div className="user-dropdown-title">
+                      <a href="/">Your Information</a>
+                      <a href="/">Logout</a>
+                    </div>
+                  </div>
+                </div>
               )}
               <Menu.Item key="cart" className="cart_icon">
                 <a href="/cart">
@@ -156,6 +160,7 @@ function HeaderNav() {
               <Anchor targetOffset="300" bounds="5">
                 <Link href="/" title="Home Page" />
                 <Link href="/buyer/infor" title="Your Information" />
+                <Link href="/cart" title="Cart" />
                 <Menu
                   // onClick={handleClick}
                   style={{
@@ -185,16 +190,17 @@ function HeaderNav() {
                     </Menu.Item>
                   </SubMenu>
                 </Menu>
-                <Link href="/cart" title="Cart" />
-                {(isLoggedIn && isBuyer) ? (
-                  ""
+                <Link href="/contact" title="Contact" />
+                {isLoggedIn && isBuyer ? (
+                  <>
+                    <Link href="/buyer/logout" title="Logout" />
+                  </>
                 ) : (
                   <>
                     <Link href="/buyer/login" title="Login" />
                     <Link href="/buyer/register" title="Register" />
                   </>
                 )}
-                <Link href="/contact" title="Contact" />
               </Anchor>
             </Drawer>
           </div>
