@@ -10,5 +10,6 @@ router
   .post(auth, authAdmin, categoryController.createCategory);
 router
   .route("/admin/category/:id")
-  .delete(auth, authAdmin, categoryController.deteleCategory);
+  .delete(auth, authAdmin, categoryController.deteleCategory)
+  .put(auth, authAdmin, categoryController.updateCategory);
 module.exports = router;
