@@ -13,13 +13,13 @@ import {
 import SubMenu from "antd/lib/menu/SubMenu";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "antd/lib/avatar/avatar";
-import API from "../../api/axiosClient"
+import API from "../../api/axiosClient";
 import { getLogout } from "../../app/userSlice";
-import {persistor} from "../../app/store"
-
+import { persistor } from "../../app/store";
+import Swal from "sweetalert2";
 
 const { Search } = Input;
-const { Link } = Anchor;
+// const { Link } = Anchor;
 
 function HeaderNav() {
   const [visible, setVisible] = useState(false);
@@ -28,7 +28,7 @@ function HeaderNav() {
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const showDrawer = () => {
     setVisible(true);
@@ -38,22 +38,21 @@ function HeaderNav() {
   };
 
   // Logout
-  const onClickLogout = async(e) => {
+  const onClickLogout = async (e) => {
     e.preventDefault();
     try {
-      await API.get('/users/logout');
+      await API.get("/users/logout");
       persistor.purge("persist:root");
-    
+
       localStorage.removeItem("firstLogin");
       localStorage.removeItem("persist:root");
 
       dispatch(getLogout());
-      
+      Swal.fire("Good Bye! See you soon!", "You have logged out successfully!", "success");
     } catch (error) {
       alert(error.message);
     }
-
-  }
+  };
 
   const suffix = (
     <AudioOutlined
@@ -158,7 +157,9 @@ function HeaderNav() {
                   <div className="user_dropdown">
                     <div className="user-dropdown-title">
                       <a href="/">Your Information</a>
-                      <a href="/" onClick={onClickLogout}>Logout</a>
+                      <a href="/" onClick={onClickLogout}>
+                        Logout
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -184,9 +185,17 @@ function HeaderNav() {
               maskClosable={true}
             >
               <Anchor targetOffset="300" bounds="5" onClick={onClickLogout}>
-                <Link href="/" title="Home Page" />
-                <Link href="/buyer/infor" title="Your Information" />
-                <Link href="/cart" title="Cart" />
+                <div className="anchor-wrap">
+                  <a href="/" className="button-logout">
+                    Home Page
+                  </a>{" "}
+                  <a href="/buyer/infor" className="button-logout">
+                    Your Information
+                  </a>{" "}
+                  <a href="/cart" className="button-logout">
+                    Cart
+                  </a>
+                </div>
                 <Menu
                   // onClick={handleClick}
                   style={{
@@ -216,16 +225,30 @@ function HeaderNav() {
                     </Menu.Item>
                   </SubMenu>
                 </Menu>
-                <Link href="/contact" title="Contact" />
+                <div className="anchor-wrap">
+                  <a href="/contact" className="button-logout">
+                    Contact
+                  </a>
+                </div>
                 {isLoggedIn && isBuyer ? (
-                  <>
-                    <a href="/" onClick={onClickLogout} className="button-logout">Logout</a>
-                  </>
+                  <div className="anchor-wrap">
+                    <a
+                      href="/"
+                      onClick={onClickLogout}
+                      className="button-logout"
+                    >
+                      Logout
+                    </a>
+                  </div>
                 ) : (
-                  <>
-                    <Link href="/buyer/login" title="Login" />
-                    <Link href="/buyer/register" title="Register" />
-                  </>
+                  <div className="anchor-wrap">
+                    <a href="/buyer/login" className="button-logout">
+                      Login
+                    </a>
+                    <a href="/buyer/register" className="button-logout">
+                      Register
+                    </a>
+                  </div>
                 )}
               </Anchor>
             </Drawer>
