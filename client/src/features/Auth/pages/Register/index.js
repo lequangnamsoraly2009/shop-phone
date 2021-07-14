@@ -58,25 +58,16 @@ function Register() {
       const response = await API.post("/users/register", {...values});
       dispatch(setToken(response.data.accessToken));
       localStorage.setItem("firstLogin", true);
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "center-end",
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Register successfully',
         showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        // didOpen: (toast) => {
-        //   toast.addEventListener("mouseenter", Swal.stopTimer);
-        //   toast.addEventListener("mouseleave", Swal.resumeTimer);
-        // },
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Register account successfully",
-      });
-
+        timer: 1500
+      })
       setTimeout(() => {
         history.push("/");
-      }, 3000);
+      }, 1500);
         
     } catch (error) {
       Swal.fire({

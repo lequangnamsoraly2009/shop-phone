@@ -48,7 +48,15 @@ function HeaderNav() {
       localStorage.removeItem("persist:root");
 
       dispatch(getLogout());
-      Swal.fire("Good Bye! See you soon!", "You have logged out successfully!", "success");
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Good bye! See you soon! 😭',
+        text: 'You have logged out successfully!',
+        showConfirmButton: false,
+        timer: 2000
+      })
+      
     } catch (error) {
       alert(error.message);
     }
