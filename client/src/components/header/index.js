@@ -17,6 +17,7 @@ import API from "../../api/axiosClient";
 import { getLogout } from "../../app/userSlice";
 import { persistor } from "../../app/store";
 import Swal from "sweetalert2";
+import { removeToken } from "../../app/tokenSlice";
 
 const { Search } = Input;
 // const { Link } = Anchor;
@@ -42,12 +43,13 @@ function HeaderNav() {
     e.preventDefault();
     try {
       await API.get("/users/logout");
-      persistor.purge("persist:soraly");
+      persistor.purge("persist:root");
 
       localStorage.removeItem("firstLogin");
-      localStorage.removeItem("persist:soraly");
+      localStorage.removeItem("persist:root");
 
       dispatch(getLogout());
+      dispatch(removeToken());
       Swal.fire({
         position: "center",
         icon: "success",

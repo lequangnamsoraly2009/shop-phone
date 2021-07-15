@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig = {
-  key: "soraly",
+  key: "root",
   version: 1,
   storage,
 };

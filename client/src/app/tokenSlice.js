@@ -25,6 +25,9 @@ const tokenSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    removeToken: (state, action) => {
+      state.token = ""
+    }
   },
   extraReducers: {
     [refreshToken.fulfilled]: (state, action) => {
@@ -35,6 +38,6 @@ const tokenSlice = createSlice({
 
 const { reducer, actions } = tokenSlice;
 
-export const { setToken } = actions;
+export const { setToken,removeToken } = actions;
 
 export default reducer;
