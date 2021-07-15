@@ -47,6 +47,21 @@ const uploadImageController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  deleteImage: (req, res) => {
+      try {
+        const {public_id} = req.body;
+        if(!public_id) {
+            return res.status(400).json({ status:false, message:"No image have selected !"})
+        }
+        cloudinary.v2.uploader.destroy(public_id,async(err,result) => {
+            if(err) throw err;
+
+            res.json({message: "Deleted Image Success"})
+        })
+      } catch (error) {
+          return res.status(500).json({ status: false, message: error.message });
+      }
+  }
 };
 
 const removeTmp = (path) => {

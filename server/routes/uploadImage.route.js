@@ -2,7 +2,7 @@ const router = require("express").Router();
 const cloudinary = require("cloudinary");
 const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
-const uploadImageController = require("../controllers/uploadImage.controller")
+const uploadImageController = require("../controllers/uploadImage.controller");
 
 // Upload on cloudinary
 
@@ -15,8 +15,10 @@ cloudinary.config({
 
 // Upload Image
 
-router.post("/upload", uploadImageController.uploadImage );
+router.post("/upload-image", auth, authAdmin, uploadImageController.uploadImage);
 
+// Delete image
 
+router.post('/delete-image', auth, authAdmin, uploadImageController.deleteImage);
 
 module.exports = router;
