@@ -13,18 +13,33 @@ class APIfeatures {
       const excludedFields = ['page','sort','limit'];
       excludedFields.forEach(element => delete(queryObj[element]));
 
+      let queryStr = JSON.stringify(queryObj);
+
+      queryStr = queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g, match => '$' + match)
+
+      this.query.find(JSON.parse(queryStr))
+
       return this;
   }
-  sorting() {}
+  sorting() {
+    if(this.queryString.sort){
+      const sortBy = this.queryString.sort.split(',').join(' ');
+      this.query = this.query.sort(sortBy);      
+    }
+    else{
+      this.query = this.query.sort("-createdAt");         
+    }
+    return this;
+  }
   pagination() {}
 }
 
 const productController = {
   getProducts: async (req, res) => {
     try {
-      const features = new APIfeatures(Products.find(), req.query);
+      const features = new APIfeatures(Products.find(), req.query).filtering().sorting();
         
-      const products = await features.query()
+      const products = await features.query
       res.json(products);
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
@@ -62,7 +77,7 @@ const productController = {
 
       const newProduct = await Products({
         product_id,
-        title: title.toUpperCase(),
+        title: title.toLowerCase(),
         price,
         status,
         description,
@@ -112,7 +127,7 @@ const productController = {
       await Products.findByIdAndUpdate(
         { _id: req.params.id },
         {
-          title: title.toUpperCase(),
+          title: title.toLowerCase(),
           price,
           description,
           status,
