@@ -15,10 +15,10 @@ cloudinary.config({
 
 // Upload Image
 
-router.post("/upload-image", auth, authAdmin, uploadImageController.uploadImage);
+router.post("/upload-image", uploadImageController.uploadImage);
 
 // Delete image
 
-router.post('/delete-image', auth, authAdmin, uploadImageController.deleteImage);
+router.post('/delete-image',  uploadImageController.deleteImage);
 
 module.exports = router;

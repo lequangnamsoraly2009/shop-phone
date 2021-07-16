@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
   product_id: {
@@ -22,10 +22,9 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   status: {
-    type: ["Stocking", "OutStocking","Importing"],
-    trim: true,
+    type: String,
+    enum: ["Stocking", "OutStocking", "Importing"],
     default: "Stocking",
-    required: true,
   },
   color: {
     type: String,
@@ -43,10 +42,15 @@ const productSchema = new mongoose.Schema({
   checked: {
     type: Boolean,
     required: true,
+    default: false,
   },
   numberSold: {
     type: Number,
     default: 0,
+  },
+  storage: {
+    type: Number,
+    required: true,
   },
 });
 
