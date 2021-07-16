@@ -31,16 +31,26 @@ class APIfeatures {
     }
     return this;
   }
-  pagination() {}
+  pagination() {
+    const page = this.queryString.page*1||1;
+    const limit = this.queryString.limit * 1 || 9;
+    const skip = (page - 1)*limit;
+    this.query = this.query.skip(skip).limit(limit);
+    return this;
+  }
 }
 
 const productController = {
   getProducts: async (req, res) => {
     try {
-      const features = new APIfeatures(Products.find(), req.query).filtering().sorting();
+      const features = new APIfeatures(Products.find(), req.query).filtering().sorting().pagination();
         
       const products = await features.query
-      res.json(products);
+      res.json({
+        status: "success",
+        result: products.length,
+        products: products
+      });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
