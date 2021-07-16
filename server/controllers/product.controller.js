@@ -52,21 +52,54 @@ const productController = {
       });
 
       await newProduct.save();
-      res.json({message:"Created a product successful !!!"});
+      res.json({ message: "Created a product successful !!!" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
   deleteProduct: async (req, res) => {
     try {
-        await Products.findByIdAndDelete(req.params.id);
-        res.json({message:"Product has deleted successful !!"})
+      await Products.findByIdAndDelete(req.params.id);
+      res.json({ message: "Product has deleted successful !!" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
   updateProduct: async (req, res) => {
     try {
+      const {
+        title,
+        price,
+        description,
+        status,
+        color,
+        images,
+        category,
+        storage,
+      } = req.body;
+
+      if (!images)
+        return res
+          .status(400)
+          .json({ status: false, message: "No image upload ! Add images" });
+
+      if (price <= 0)
+        return res
+          .status(400)
+          .json({ status: false, message: "Price needs > 0" });
+
+      await Products.findByIdAndUpdate({_id: req.params.id},{
+        title: title.toUpperCase(),
+        price,
+        description,
+        status,
+        color,
+        images,
+        category,
+        storage, 
+      })
+
+      res.json({ message: "Update a product successful !!! "})
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
