@@ -1,9 +1,30 @@
 const Products = require("../models/product.model");
 
+// Filter, sorting and pagination
+class APIfeatures {
+  constructor(query, queryString) {
+    this.query = query;
+    this.queryString = queryString;
+  }
+
+  filtering() {
+      const queryObj = {...this.queryString} //queryString = req.query
+
+      const excludedFields = ['page','sort','limit'];
+      excludedFields.forEach(element => delete(queryObj[element]));
+
+      return this;
+  }
+  sorting() {}
+  pagination() {}
+}
+
 const productController = {
   getProducts: async (req, res) => {
     try {
-      const products = await Products.find();
+      const features = new APIfeatures(Products.find(), req.query);
+        
+      const products = await features.query()
       res.json(products);
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
@@ -88,18 +109,21 @@ const productController = {
           .status(400)
           .json({ status: false, message: "Price needs > 0" });
 
-      await Products.findByIdAndUpdate({_id: req.params.id},{
-        title: title.toUpperCase(),
-        price,
-        description,
-        status,
-        color,
-        images,
-        category,
-        storage, 
-      })
+      await Products.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          title: title.toUpperCase(),
+          price,
+          description,
+          status,
+          color,
+          images,
+          category,
+          storage,
+        }
+      );
 
-      res.json({ message: "Update a product successful !!! "})
+      res.json({ message: "Update a product successful !!! " });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
