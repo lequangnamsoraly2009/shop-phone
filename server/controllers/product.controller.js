@@ -8,33 +8,35 @@ class APIfeatures {
   }
 
   filtering() {
-      const queryObj = {...this.queryString} //queryString = req.query
+    const queryObj = { ...this.queryString }; //queryString = req.query
 
-      const excludedFields = ['page','sort','limit'];
-      excludedFields.forEach(element => delete(queryObj[element]));
+    const excludedFields = ["page", "sort", "limit"];
+    excludedFields.forEach((element) => delete queryObj[element]);
 
-      let queryStr = JSON.stringify(queryObj);
+    let queryStr = JSON.stringify(queryObj);
 
-      queryStr = queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g, match => '$' + match)
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lt|lte|regex)\b/g,
+      (match) => "$" + match
+    );
 
-      this.query.find(JSON.parse(queryStr))
+    this.query.find(JSON.parse(queryStr));
 
-      return this;
+    return this;
   }
   sorting() {
-    if(this.queryString.sort){
-      const sortBy = this.queryString.sort.split(',').join(' ');
-      this.query = this.query.sort(sortBy);      
-    }
-    else{
-      this.query = this.query.sort("-createdAt");         
+    if (this.queryString.sort) {
+      const sortBy = this.queryString.sort.split(",").join(" ");
+      this.query = this.query.sort(sortBy);
+    } else {
+      this.query = this.query.sort("-createdAt");
     }
     return this;
   }
   pagination() {
-    const page = this.queryString.page*1||1;
+    const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 9;
-    const skip = (page - 1)*limit;
+    const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
     return this;
   }
@@ -43,13 +45,16 @@ class APIfeatures {
 const productController = {
   getProducts: async (req, res) => {
     try {
-      const features = new APIfeatures(Products.find(), req.query).filtering().sorting().pagination();
-        
-      const products = await features.query
+      const features = new APIfeatures(Products.find(), req.query)
+        .filtering()
+        .sorting()
+        .pagination();
+
+      const products = await features.query;
       res.json({
         status: "success",
         result: products.length,
-        products: products
+        products: products,
       });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
@@ -67,6 +72,7 @@ const productController = {
         images,
         category,
         storage,
+        sale,
       } = req.body;
 
       if (!images)
@@ -95,6 +101,7 @@ const productController = {
         images,
         category,
         storage,
+        sale,
       });
 
       await newProduct.save();
@@ -122,6 +129,7 @@ const productController = {
         images,
         category,
         storage,
+        sale,
       } = req.body;
 
       if (!images)
@@ -145,6 +153,7 @@ const productController = {
           images,
           category,
           storage,
+          sale,
         }
       );
 
