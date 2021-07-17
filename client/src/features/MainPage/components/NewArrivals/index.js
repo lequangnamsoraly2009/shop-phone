@@ -12,21 +12,29 @@ function NewArrivals() {
       <div className="site_card-wrapper">
         <Row gutter={[16, 16]}>
           <Col span={6} style={{ height: "auto" }}>
-            <CardItem />
+            <a href="/new-arrivals/:id">
+              <CardItem />
+            </a>
           </Col>
           <Col span={6} style={{ height: "auto" }}>
-            <CardItem />
+            <a href="/new-arrivals/:id">
+              <CardItem />
+            </a>
           </Col>
           <Col span={6} style={{ height: "auto" }}>
-            <CardItem />
+            <a href="/new-arrivals/:id">
+              <CardItem />
+            </a>
           </Col>
           <Col span={6} style={{ height: "auto" }}>
-            <CardItem />
+            <a href="/new-arrivals/:id">
+              <CardItem />
+            </a>
           </Col>
         </Row>
       </div>
-      <div style={{display: "flex"}}>
-        <a className="btn" style={{margin: '20px auto'}} href='/'>
+      <div style={{ display: "flex" }}>
+        <a className="btn" style={{ margin: "20px auto" }} href="/new-arrivals">
           <span></span>
           <span></span>
           <span></span>

@@ -6,7 +6,6 @@ import "./cardItem.css";
 function CardItem() {
   return (
     <>
-      <a href="/new-arrivals">
         <Card
           hoverable
           cover={
@@ -33,7 +32,6 @@ function CardItem() {
           </div>
           <p style={{ margin: "0px 5px", fontWeight: 800 }}>630$</p>
         </Card>
-      </a>
     </>
   );
 }
