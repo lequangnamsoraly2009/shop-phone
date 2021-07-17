@@ -77,13 +77,22 @@ function HeaderNav() {
   const menu = (
     <Menu style={{ width: 200, left: -50 }}>
       <Menu.Item key="0">
-        <a href="/category/ios">IOS</a>
+        <a href="/category/iphone">Iphone</a>
       </Menu.Item>
       <Menu.Item key="1">
-        <a href="/category/android">ANDROID</a>
+        <a href="/category/samsung">SamSung</a>
       </Menu.Item>
       <Menu.Item key="3">
-        <a href="/category/different">DIFFERENT</a>
+        <a href="/category/nokia">Nokia</a>
+      </Menu.Item>
+      <Menu.Item key="4">
+        <a href="/category/vsmart">VsMart</a>
+      </Menu.Item>
+      <Menu.Item key="5">
+        <a href="/category/xiaomi">Xiaomi</a>
+      </Menu.Item>
+      <Menu.Item key="6">
+        <a href="/category/oppo">OPPO</a>
       </Menu.Item>
     </Menu>
   );
@@ -224,13 +233,16 @@ function HeaderNav() {
                     title="Category"
                   >
                     <Menu.Item key="1">
-                      <a href="/category/ios">Ios</a>
+                      <a href="/category/iphone">Iphone</a>
                     </Menu.Item>
                     <Menu.Item key="2">
-                      <a href="/category/android">Android</a>
+                      <a href="/category/samsung">SamSung</a>
                     </Menu.Item>
                     <Menu.Item key="3">
-                      <a href="/category/different">Different</a>
+                      <a href="/category/nokia">Nokia</a>
+                    </Menu.Item>
+                    <Menu.Item key="4">
+                      <a href="/category/vsmart">VsMart</a>
                     </Menu.Item>
                   </SubMenu>
                 </Menu>
