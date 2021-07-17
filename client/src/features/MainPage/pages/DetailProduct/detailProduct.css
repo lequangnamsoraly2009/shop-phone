@@ -1,4 +1,54 @@
 .breadcumb-wrapper {
   margin-bottom: 30px;
 }
+/* main-product */
+.main-product {
+  width: 100%;
+}
 
+/* left-product */
+.left-product {
+  width: 50%;
+}
+
+.image-product-overview-wrapper {
+  width: 100%;
+  padding: 1px;
+  margin-bottom: 20px;
+  display: block;
+}
+/* .image-product-overview-wrapper:hover {
+  border: 1px solid rgb(231, 231, 231);
+  border-radius: 10px;
+} */
+
+.image-wrapper {
+  width: 640px;
+  margin: 0 auto;
+  height: 550px;
+}
+
+.image-wrapper .image-primary {
+  max-height: 100%;
+  max-width: 100%;
+  transform: scale(1) translate(0px, 0px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* thumbnail-list */
+.thumbnail-list {
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+}
+
+.image-thumbnail {
+  margin: 0 10px;
+}
+
+.image-thumbnail button img {
+  height: 60px;
+  width: auto;
+  cursor: pointer;
+}
