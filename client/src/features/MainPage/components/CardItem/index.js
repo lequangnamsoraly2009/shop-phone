@@ -2,41 +2,50 @@ import { Card } from "antd";
 import { Meta } from "antd/lib/list/Item";
 import React from "react";
 import "./cardItem.css";
+import {Link} from 'react-router-dom'
 
-function CardItem() {
+function CardItem({ product }) {
   return (
-    <>
-        <Card
-          hoverable
-          cover={
-            <img
-              style={{ paddingTop: 20 }}
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-            />
-          }
-        >
-          <div className="sale-firstShop">
-            <img src="https://cdn.tgdd.vn/2020/10/content/icon1-50x50.png" alt="sale" />
-            <span>BRAND OPENING SALE </span>
-          </div>
-          <Meta title="Iphone 11 64GB" style={{ margin: "0px 5px" }} />
-          <div className="price-down">
-            <p
-              style={{
-                margin: 5,
-                textDecoration: "line-through",
-                fontWeight: 300,
-              }}
-            >
-              700$
-            </p>
+    <Link to={`details/${product?._id}`}>
+      <Card
+        hoverable
+        cover={
+          <img
+            style={{ paddingTop: 20 }}
+            alt={product?.description}
+            src={product?.images.url}
+          />
+        }
+      >
+        <div className="sale-firstShop">
+          <img
+            src="https://cdn.tgdd.vn/2020/10/content/icon1-50x50.png"
+            alt="sale"
+          />
+          <span>BRAND OPENING SALE </span>
+        </div>
+        <Meta
+          title={product?.title}
+          style={{ margin: "0px 5px", textTransform: "capitalize" }}
+        />
+        <div className="price-down">
+          <p
+            style={{
+              margin: 5,
+              textDecoration: "line-through",
+              fontWeight: 300,
+            }}
+          >
+            {product?.price} $
+          </p>
 
-            <span style={{ margin: "auto 0", fontWeight: 300 }}>-10%</span>
-          </div>
-          <p style={{ margin: "0px 5px", fontWeight: 800 }}>630$</p>
-        </Card>
-    </>
+          <span style={{ margin: "auto 0", fontWeight: 300 }}>-10%</span>
+        </div>
+        <p style={{ margin: "0px 5px", fontWeight: 800 }}>
+          {product?.price - (product?.price * 10) / 100} $
+        </p>
+      </Card>
+    </Link>
   );
 }
 

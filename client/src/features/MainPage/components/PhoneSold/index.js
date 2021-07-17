@@ -2,8 +2,11 @@ import React from "react";
 import { Row, Col } from "antd";
 import CardItem from "../CardItem";
 import "./phonesold.css";
+import { useSelector } from "react-redux";
 
 function PhoneSold() {
+  const listProducts = useSelector((state) => state.products.products);
+  console.log(listProducts)
   return (
     <section className="soraly-section-3">
       <div className="title-global">
@@ -11,30 +14,13 @@ function PhoneSold() {
       </div>
       <div className="site-phone-sold">
         <Row gutter={[16, 24]}>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
+          {listProducts.map((product) => {
+            return (
+              <Col key={product._id} className="gutter-row" span={6}>
+                <CardItem key={product._id} product={product} />
+              </Col>
+            );
+          })}
         </Row>
       </div>
       <div style={{ display: "flex" }}>

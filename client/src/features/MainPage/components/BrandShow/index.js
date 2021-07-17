@@ -1,5 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
+import "./brandshow.css";
 
 function BrandShow() {
   const settings = {
@@ -31,6 +32,12 @@ function BrandShow() {
   };
   return (
     <section className="soraly-section-4">
+      <div className="banner-brands">
+        <img
+          src="https://cdn.cellphones.com.vn/media/wysiwyg/new-HP_DESKTOP_COVID.png"
+          alt="banner"
+        />
+      </div>
       <div className="title-global">
         <h2>BRAND HIGHLIGHTS</h2>
       </div>

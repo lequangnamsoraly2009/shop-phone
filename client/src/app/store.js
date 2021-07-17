@@ -12,10 +12,12 @@ import {
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import tokenReducer from "./tokenSlice";
 import userReducer from "./userSlice";
+import productReducer from "./productSlice";
 
 const rootReducer = combineReducers({
   token: tokenReducer,
   user: userReducer,
+  products: productReducer,
 });
 
 const persistConfig = {

@@ -1,4 +1,16 @@
 .soraly-section-4 {
-  padding-top: 20px;
+  /* padding-top: 20px; */
   border-bottom: 1px solid rgb(230, 229, 229);
+  margin-bottom: 50px;
+}
+
+.banner-brands {
+  width: 1173px;
+  height: 75px;
+  margin-bottom: 30px;
+}
+
+.banner-brands img {
+  object-fit: cover;
+  width: 100%;
 }
