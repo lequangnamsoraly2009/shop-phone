@@ -36,7 +36,8 @@ p {
 .title-global h2:hover {
   color: #1890ff;
   cursor: pointer;
-}
+  }
+
 
 @media only screen and (max-width: 767px) {
   .mobileVisible {

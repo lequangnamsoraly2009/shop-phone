@@ -131,11 +131,16 @@ function DetailProduct() {
                 defaultValue={5}
                 value={4.5}
                 style={{ color: "red" }}
-              />{" "}
+              />
               <a href="#rate">100 rated </a>
             </div>
           </div>
           <div className="product-variations">
+            <div className="product-stocking">
+              <div className="product-stocking-name">
+                <p style={{ color: "#1890ff", marginBottom: 20, userSelect: "none"}}>Stocking !</p>
+              </div>
+            </div>
             <div className="product-model-family">
               <div className="product-model-family-name">
                 <p>Model Family:</p>
@@ -184,6 +189,23 @@ function DetailProduct() {
             <div className="product-price">
               <p>PRICE:</p>
               <span>1200 $</span>
+            </div>
+            <div className="product-add-cart">
+              <a
+                className="btn"
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  backgroundColor: "rgb(228, 228, 228)",
+                }}
+                href="/cart"
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Add to Cart
+              </a>
             </div>
           </div>
         </div>
