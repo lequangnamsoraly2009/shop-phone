@@ -18,7 +18,7 @@ function DetailProduct() {
         <Breadcrumb separator=">">
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
           <Breadcrumb.Item href="">Iphone</Breadcrumb.Item>
-          <Breadcrumb.Item>Iphone 11</Breadcrumb.Item>
+          <Breadcrumb.Item>Iphone 12</Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="main-product">
@@ -103,7 +103,32 @@ function DetailProduct() {
             </ul>
           </div>
         </div>
-        <div className="right-product"></div>
+        <div className="right-product">
+          <div className="product-overview">
+            <div className="product-title">
+              <div className="product-name">
+                <h3>Apple - iPhone 12 Pro Max 5G 512GB - Gold (AT&T)</h3>
+              </div>
+              <div className="product-title-data">
+                <div className="product-model">
+                  <span>
+                    <strong>Model</strong>:
+                  </span>
+                  <span>MGCR3LL/A</span>
+                </div>
+                <div className="product-sku">
+                  <span>
+                    <strong>SKU</strong>:
+                  </span>
+                  <span>6009746</span>
+                </div>
+              </div>
+            </div>
+            <div className="product-generated">
+              <Rate allowHalf defaultValue={3.5} style={{color: 'red'}} /> <span>100 rated </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
