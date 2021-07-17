@@ -1,6 +1,7 @@
 import React from 'react'
 import {Switch, Route, useRouteMatch } from 'react-router-dom';
 import DashBoard from './pages/DashBoard';
+import DetailProduct from './pages/DetailProduct';
 
 
 function MainPage() {
@@ -9,6 +10,7 @@ function MainPage() {
     <Switch>
       {/* <Redirect exact from="/" to="/" /> */}
       <Route path={`${match.url}/`} exact component={DashBoard} />
+      <Route path={`${match.url}/:id`} exact component={DetailProduct} />      
       {/* <Route path={`${match.url}/register`} exact component={Register} /> */}
       {/* <Route component={NotFound} /> */}
     </Switch>

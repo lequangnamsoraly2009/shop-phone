@@ -8,7 +8,7 @@ function CardItem({ product }) {
   const history = useHistory();
 
   const onClickDetails = () => {
-    history.push(`details/${product?._id}`);
+    history.push(`home/${product?._id}`);
   };
   return (
     <Card
