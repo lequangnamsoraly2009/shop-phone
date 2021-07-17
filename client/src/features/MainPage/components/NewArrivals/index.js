@@ -6,6 +6,9 @@ import CardItem from "../CardItem";
 function NewArrivals() {
   return (
     <section className="soraly-section-2">
+      <div className="banner-adv">
+        <img src="https://cdn.tgdd.vn/2021/07/campaign/Artboard1copy28-1200x120.png" alt="banner" />
+      </div>
       <div className="title-global">
         <h2>NEW ARRIVALS</h2>
       </div>

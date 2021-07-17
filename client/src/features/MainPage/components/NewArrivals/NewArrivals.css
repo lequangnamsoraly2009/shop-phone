@@ -7,4 +7,13 @@
   margin-bottom: 20px;
 }
 
+.banner-adv{
+  width: 1173px;
+  height: 120px;
+  margin-bottom: 30px;
+}
 
+.banner-adv img{
+  object-fit: cover;
+  width: 100%;
+}
