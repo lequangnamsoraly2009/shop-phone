@@ -24,6 +24,22 @@ p {
   display: block !important;
 }
 
+/* Title Global DashBoard */
+.title-global h2{
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: #000;
+  margin-bottom: 40px;
+}
+
+.title-global h2:hover{
+  color: #1890ff;
+  cursor: pointer;
+}
+
+
+
 @media only screen and (max-width: 767px) {
   .mobileVisible {
     display: block !important;
@@ -31,6 +47,12 @@ p {
 
   .mobileHidden {
     display: none !important;
+  }
+
+  .title-global{
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
   }
 }
 

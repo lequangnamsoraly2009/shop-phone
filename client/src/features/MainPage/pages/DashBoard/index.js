@@ -1,7 +1,7 @@
 import React from "react";
 import UserAPI from "../../../../api/userAPI";
 import Carousel from "../../components/Carousel";
-import CategoryIphone from "../../components/CategoryIphone";
+import NewArrivals from "../../components/NewArrivals";
 
 function DashBoard() {
   UserAPI();
@@ -9,7 +9,7 @@ function DashBoard() {
     <div className="container-fluid">
       <div style={{height: "auto"}}>
         <Carousel />
-        <CategoryIphone />
+        <NewArrivals />
       </div>
     </div>
   );
