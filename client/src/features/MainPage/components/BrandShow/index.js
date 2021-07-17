@@ -30,7 +30,7 @@ function BrandShow() {
     ],
   };
   return (
-    <section className="soraly-section-2">
+    <section className="soraly-section-4">
       <div className="title-global">
         <h2>BRAND HIGHLIGHTS</h2>
       </div>
