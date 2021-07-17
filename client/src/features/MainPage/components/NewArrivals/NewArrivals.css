@@ -1,29 +1,10 @@
 .soraly-section-2 {
   padding-top: 20px;
+  border-bottom: 1px solid rgb(240, 239, 239);
 }
 
 .site_card-wrapper {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
-.ant-card .ant-card-cover img{
-    transition: transform 1s;
-}
-
-.ant-card:hover .ant-card-cover img
-{
-  transform: translateY(-20px);
-
-}
-
-.ant-card:hover .ant-card-meta-title{
-    color: #1890ff;
-}
-
-
-.price-down{
-    display: flex;
-    flex-direction: row;
-}
-
 
 

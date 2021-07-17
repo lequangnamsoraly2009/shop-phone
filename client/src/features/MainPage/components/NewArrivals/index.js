@@ -1,7 +1,7 @@
 import React from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col } from "antd";
 import "./NewArrivals.css";
-import Meta from "antd/lib/card/Meta";
+import CardItem from "../CardItem";
 
 function NewArrivals() {
   return (
@@ -12,118 +12,27 @@ function NewArrivals() {
       <div className="site_card-wrapper">
         <Row gutter={[16, 16]}>
           <Col span={6} style={{ height: "auto" }}>
-            <Card
-              hoverable
-              cover={
-                <img
-                  style={{ paddingTop: 20 }}
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              }
-            >
-              <Meta title="Iphone 11 64GB" style={{ margin: "0px 5px" }} />
-              <div className="price-down">
-                <p
-                  style={{
-                    margin: 5,
-                    textDecoration: "line-through",
-                    fontWeight: 300,
-                  }}
-                >
-                  700$
-                </p>
-
-                <span style={{ margin: "auto 0", fontWeight: 300 }}>-10%</span>
-              </div>
-              <p style={{ margin: "0px 5px", fontWeight: 800 }}>630$</p>
-            </Card>
+            <CardItem />
           </Col>
           <Col span={6} style={{ height: "auto" }}>
-            <Card
-              hoverable
-              cover={
-                <img
-                  style={{ paddingTop: 20 }}
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              }
-            >
-              <Meta title="Iphone 11 64GB" style={{ margin: "0px 5px" }} />
-              <div className="price-down">
-                <p
-                  style={{
-                    margin: 5,
-                    textDecoration: "line-through",
-                    fontWeight: 300,
-                  }}
-                >
-                  700$
-                </p>
-
-                <span style={{ margin: "auto 0", fontWeight: 300 }}>-10%</span>
-              </div>
-              <p style={{ margin: "0px 5px", fontWeight: 800 }}>630$</p>
-            </Card>
+            <CardItem />
           </Col>
           <Col span={6} style={{ height: "auto" }}>
-            <Card
-              hoverable
-              cover={
-                <img
-                  style={{ paddingTop: 20 }}
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              }
-            >
-              <Meta title="Iphone 11 64GB" style={{ margin: "0px 5px" }} />
-              <div className="price-down">
-                <p
-                  style={{
-                    margin: 5,
-                    textDecoration: "line-through",
-                    fontWeight: 300,
-                  }}
-                >
-                  700$
-                </p>
-
-                <span style={{ margin: "auto 0", fontWeight: 300 }}>-10%</span>
-              </div>
-              <p style={{ margin: "0px 5px", fontWeight: 800 }}>630$</p>
-            </Card>
+            <CardItem />
           </Col>
           <Col span={6} style={{ height: "auto" }}>
-            <Card
-              hoverable
-              cover={
-                <img
-                  style={{ paddingTop: 20 }}
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              }
-            >
-              <Meta title="Iphone 11 64GB" style={{ margin: "0px 5px" }} />
-              <div className="price-down">
-                <p
-                  style={{
-                    margin: 5,
-                    textDecoration: "line-through",
-                    fontWeight: 300,
-                  }}
-                >
-                  700$
-                </p>
-
-                <span style={{ margin: "auto 0", fontWeight: 300 }}>-10%</span>
-              </div>
-              <p style={{ margin: "0px 5px", fontWeight: 800 }}>630$</p>
-            </Card>
+            <CardItem />
           </Col>
         </Row>
+      </div>
+      <div style={{display: "flex"}}>
+        <a className="btn" style={{margin: '20px auto'}} href='/'>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          See More
+        </a>
       </div>
     </section>
   );

@@ -1,0 +1,19 @@
+.ant-card .ant-card-cover img{
+    transition: transform 1s;
+}
+
+.ant-card:hover .ant-card-cover img
+{
+  transform: translateY(-20px);
+
+}
+
+.ant-card:hover .ant-card-meta-title{
+    color: #1890ff;
+}
+
+
+.price-down{
+    display: flex;
+    flex-direction: row;
+}
