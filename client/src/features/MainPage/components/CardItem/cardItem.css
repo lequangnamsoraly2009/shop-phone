@@ -17,3 +17,26 @@
     display: flex;
     flex-direction: row;
 }
+
+.sale-firstShop{
+    height: 26px;
+    border: 1px solid #000;
+    margin: 0;
+    width: 150px;
+    border-radius: 15px;
+    background: red;
+    margin-bottom: 10px;
+}
+
+.sale-firstShop img{
+    margin: 0 auto;
+    vertical-align: middle;
+    height:20px;
+    padding-right: 5px;
+}
+
+.sale-firstShop span{
+    margin: auto 0;
+    font-size: 10px;
+    color: #fff;
+}
