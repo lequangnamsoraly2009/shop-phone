@@ -1,5 +1,6 @@
 import React from "react";
 import UserAPI from "../../../../api/userAPI";
+import BrandShow from "../../components/BrandShow";
 import Carousel from "../../components/Carousel";
 import NewArrivals from "../../components/NewArrivals";
 import PhoneSold from "../../components/PhoneSold";
@@ -12,6 +13,7 @@ function DashBoard() {
         <Carousel />
         <NewArrivals />
         <PhoneSold />
+        <BrandShow />
       </div>
     </div>
   );

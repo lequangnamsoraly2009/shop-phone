@@ -94,6 +94,9 @@ function HeaderNav() {
       <Menu.Item key="6">
         <a href="/category/oppo">OPPO</a>
       </Menu.Item>
+      <Menu.Item key="7">
+        <a href="/category/vivo">Vivo</a>
+      </Menu.Item>
     </Menu>
   );
 
@@ -243,6 +246,15 @@ function HeaderNav() {
                     </Menu.Item>
                     <Menu.Item key="4">
                       <a href="/category/vsmart">VsMart</a>
+                    </Menu.Item>
+                    <Menu.Item key="5">
+                      <a href="/category/xiaomi">Xiaomi</a>
+                    </Menu.Item>
+                    <Menu.Item key="6">
+                      <a href="/category/oppo">OPPO</a>
+                    </Menu.Item>
+                    <Menu.Item key="7">
+                      <a href="/category/vivo">Vivo</a>
                     </Menu.Item>
                   </SubMenu>
                 </Menu>
