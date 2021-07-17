@@ -61,5 +61,27 @@
   margin-left: 50px;
 }
 
-.right-product .product-overview {
+
+.product-name h3{
+  font-size: 20px;
+  font-weight: 700;
 }
+
+.product-title{
+  margin-bottom: 10px;
+}
+
+.product-title-data{
+  display: flex;
+  flex-direction: row;
+}
+
+.product-title-data .product-model {
+  margin-right: 10px;
+}
+
+.product-generated .ant-rate{
+  font-size: 14px;
+}
+
+

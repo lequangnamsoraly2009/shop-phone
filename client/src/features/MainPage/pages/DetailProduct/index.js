@@ -125,7 +125,7 @@ function DetailProduct() {
               </div>
             </div>
             <div className="product-generated">
-              <Rate allowHalf defaultValue={3.5} style={{color: 'red'}} /> <span>100 rated </span>
+              <Rate allowHalf defaultValue={5} value={4.5} style={{color: 'red'}} /> <span>100 rated </span>
             </div>
           </div>
         </div>
