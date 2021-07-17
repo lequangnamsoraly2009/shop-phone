@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Breadcrumb, Rate } from "antd";
+import { Breadcrumb, Rate, Select } from "antd";
 import "./detailProduct.css";
+const { Option } = Select;
 
 function DetailProduct() {
   const [image, setImage] = useState(
@@ -125,7 +126,47 @@ function DetailProduct() {
               </div>
             </div>
             <div className="product-generated">
-              <Rate allowHalf defaultValue={5} value={4.5} style={{color: 'red'}} /> <span>100 rated </span>
+              <Rate
+                allowHalf
+                defaultValue={5}
+                value={4.5}
+                style={{ color: "red" }}
+              />{" "}
+              <a href="#rate">100 rated </a>
+            </div>
+          </div>
+          <div className="product-variations">
+            <div className="product-model-family">
+              <div className="product-model-family-name">
+                <p>Model Family:</p>
+              </div>
+              <Select
+                defaultValue="ip12pm"
+                style={{ width: 120 }}
+                size="large"
+                // onChange={handleChange}
+              >
+                <Option value="ip12pm">Apple iPhone 12 Pro Max</Option>
+                <Option value="ip12p">Apple iPhone 12 Pro</Option>
+                <Option value="ip12">Apple iPhone 12</Option>
+                <Option value="ip12mn">Apple iPhone 12 Mini</Option>
+              </Select>
+            </div>
+            <div className="product-memory">
+              <div className="product-memory-name">
+                <p>Internal Memory:</p>
+              </div>
+              <Select
+                defaultValue="512gb"
+                style={{ width: 120 }}
+                size="large"
+                // onChange={handleChange}
+              >
+                <Option value="64gb">64GB</Option>
+                <Option value="128gb">128 GB</Option>
+                <Option value="256gb">256 GB</Option>
+                <Option value="512gb">512 GB</Option>
+              </Select>
             </div>
           </div>
         </div>

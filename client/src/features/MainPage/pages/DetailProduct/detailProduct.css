@@ -61,17 +61,16 @@
   margin-left: 50px;
 }
 
-
-.product-name h3{
+.product-name h3 {
   font-size: 20px;
   font-weight: 700;
 }
 
-.product-title{
+.product-title {
   margin-bottom: 10px;
 }
 
-.product-title-data{
+.product-title-data {
   display: flex;
   flex-direction: row;
 }
@@ -80,8 +79,29 @@
   margin-right: 10px;
 }
 
-.product-generated .ant-rate{
+.product-generated .ant-rate {
   font-size: 14px;
 }
 
+/* Product Variations */
 
+.product-variations {
+  margin-top: 50px;
+}
+
+.product-memory{
+  margin-top: 20px;
+}
+
+.product-model-family-name p,
+.product-memory-name p {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.product-model-family .ant-select,
+.product-memory .ant-select {
+  width: 100% !important;
+  margin-top: 5px;
+}
