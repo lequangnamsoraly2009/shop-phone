@@ -142,7 +142,6 @@ function DetailProduct() {
               </div>
               <Select
                 defaultValue="ip12pm"
-                style={{ width: 120 }}
                 size="large"
                 // onChange={handleChange}
               >
@@ -158,7 +157,6 @@ function DetailProduct() {
               </div>
               <Select
                 defaultValue="512gb"
-                style={{ width: 120 }}
                 size="large"
                 // onChange={handleChange}
               >
@@ -167,6 +165,25 @@ function DetailProduct() {
                 <Option value="256gb">256 GB</Option>
                 <Option value="512gb">512 GB</Option>
               </Select>
+            </div>
+            <div className="product-color">
+              <div className="product-color-name">
+                <p>Color:</p>
+              </div>
+              <Select
+                defaultValue="gold"
+                size="large"
+                // onChange={handleChange}
+              >
+                <Option value="pacificblue">Pacific Blue</Option>
+                <Option value="gold">Gold</Option>
+                <Option value="graphit">Graphit</Option>
+                <Option value="silver">Silver</Option>
+              </Select>
+            </div>
+            <div className="product-price">
+              <p>PRICE:</p>
+              <span>1200 $</span>
             </div>
           </div>
         </div>

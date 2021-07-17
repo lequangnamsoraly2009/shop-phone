@@ -89,19 +89,40 @@
   margin-top: 50px;
 }
 
-.product-memory{
+.product-memory {
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .product-model-family-name p,
-.product-memory-name p {
+.product-memory-name p,
+.product-color-name p {
   font-size: 16px;
   font-weight: 700;
   margin: 0;
 }
 
 .product-model-family .ant-select,
-.product-memory .ant-select {
+.product-memory .ant-select,
+.product-color .ant-select {
   width: 100% !important;
   margin-top: 5px;
+}
+
+/* product-price */
+.product-price{
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+}
+.product-price p {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 15px;
+}
+
+.product-price span {
+  font-size: 30px;
+  font-weight: 700;
+  margin-left: 10px;
 }
