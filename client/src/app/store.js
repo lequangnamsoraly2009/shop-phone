@@ -13,11 +13,14 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import tokenReducer from "./tokenSlice";
 import userReducer from "./userSlice";
 import productReducer from "./productSlice";
+import cartReducer from "./cartSlice";
+
 
 const rootReducer = combineReducers({
   token: tokenReducer,
   user: userReducer,
   products: productReducer,
+  carts: cartReducer,
 });
 
 const persistConfig = {
