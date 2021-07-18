@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, Rate, Select } from "antd";
+import { Breadcrumb, Col, Rate, Row, Select } from "antd";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./detailProduct.css";
+import CardItem from "../../components/CardItem";
 
 const { Option } = Select;
 
@@ -129,7 +130,9 @@ function DetailProduct() {
           <div className="product-overview">
             <div className="product-title">
               <div className="product-name">
-                <h3 style={{textTransform: "capitalize" }}>{detailProduct.title} - {detailProduct.color}</h3>
+                <h3 style={{ textTransform: "capitalize" }}>
+                  {detailProduct.title} - {detailProduct.color}
+                </h3>
               </div>
               <div className="product-title-data">
                 <div className="product-model">
@@ -237,6 +240,23 @@ function DetailProduct() {
               </a>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="related-products">
+        <h2>People also viewed</h2>
+        <div className="related-products-list">
+          <Row gutter={24}>
+            {products
+              .filter((product) => product.category === detailProduct.category)
+              .slice(0, 4)
+              .map((product) => {
+                return product.product_id !== detailProduct.product_id ? (
+                  <Col key={product._id} className="gutter-row" span={6}>
+                    <CardItem key={product._id} product={product} />
+                  </Col>
+                ) : null;
+              })}
+          </Row>
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ function App() {
         <Content>
           <Switch>
             <Redirect exact from="/" to="/home"/>
-            <Route  path="/home" component={MainPage} />
+            <Route path="/home" component={MainPage} />
             <Route path="/buyer" component={AuthPage} />
           </Switch>
         </Content>

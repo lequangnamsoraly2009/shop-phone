@@ -132,3 +132,16 @@
 .product-add-cart{
   margin-top: 20px;
 }
+
+/* People also viewed */
+.related-products{
+
+}
+
+.related-products-list{
+  overflow: hidden;
+  /* height: 466px; */
+  /* display: grid; */
+  display: flex;
+  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+}

@@ -8,7 +8,13 @@ function CardItem({ product }) {
   const history = useHistory();
 
   const onClickDetails = () => {
-    history.push(`home/${product?._id}`);
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+
+    history.push(`/home/${product?._id}`);
   };
   return (
     <Card
