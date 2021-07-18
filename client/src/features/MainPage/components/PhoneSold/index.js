@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 function PhoneSold() {
   const listProducts = useSelector((state) => state.products.products);
-  console.log(listProducts)
+  // console.log(listProducts)
   // const newList = listProducts.slice(0,3);
   // console.log(newList)
   return (

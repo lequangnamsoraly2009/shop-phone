@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Breadcrumb, Rate, Select } from "antd";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import "./detailProduct.css";
+
 const { Option } = Select;
 
 function DetailProduct() {
   const [image, setImage] = useState(
     "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746_sd.jpg;maxHeight=640;maxWidth=550"
   );
+  const [detailProduct, setDetailProduct] = useState([]);
 
+  const { products } = useSelector((state) => state.products);
+  // console.log(products)
+  const params = useParams();
+  // console.log(params)
+  useEffect(() => {
+    if (params) {
+      products.forEach((product) => {
+        if (product._id === params.id) {
+          setDetailProduct(product);
+        }
+      });
+    }
+  }, [params, products]);
+
+  // console.log(detailProduct);
   const onClickShowImage = (e, src) => {
     e.preventDefault();
     setImage(src);
@@ -18,8 +37,10 @@ function DetailProduct() {
       <div className="breadcumb-wrapper">
         <Breadcrumb separator=">">
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-          <Breadcrumb.Item href="">Iphone</Breadcrumb.Item>
-          <Breadcrumb.Item>Iphone 12</Breadcrumb.Item>
+          <Breadcrumb.Item href="">{detailProduct.category}</Breadcrumb.Item>
+          <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
+            {detailProduct.title}
+          </Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="main-product">
@@ -108,7 +129,7 @@ function DetailProduct() {
           <div className="product-overview">
             <div className="product-title">
               <div className="product-name">
-                <h3>Apple - iPhone 12 Pro Max 5G 512GB - Gold (AT&T)</h3>
+                <h3 style={{textTransform: "capitalize" }}>{detailProduct.title} - {detailProduct.color}</h3>
               </div>
               <div className="product-title-data">
                 <div className="product-model">
@@ -138,7 +159,15 @@ function DetailProduct() {
           <div className="product-variations">
             <div className="product-stocking">
               <div className="product-stocking-name">
-                <p style={{ color: "#1890ff", marginBottom: 20, userSelect: "none"}}>Stocking !</p>
+                <p
+                  style={{
+                    color: "#1890ff",
+                    marginBottom: 20,
+                    userSelect: "none",
+                  }}
+                >
+                  {detailProduct.status} !
+                </p>
               </div>
             </div>
             <div className="product-model-family">
@@ -188,7 +217,7 @@ function DetailProduct() {
             </div>
             <div className="product-price">
               <p>PRICE:</p>
-              <span>1200 $</span>
+              <span>{detailProduct.price}$</span>
             </div>
             <div className="product-add-cart">
               <a
