@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -6,8 +6,6 @@ import { getUser, isAAdmin, isABuyer } from "../app/userSlice";
 
 const UserAPI = () => {
   const { token } = useSelector((state) => state.token);
-  const { loggedIn } = useSelector((state) => state.user);
-  const [cart,setCart] = useState([])
 
   const dispatch = useDispatch();
 
@@ -35,20 +33,6 @@ const UserAPI = () => {
       getUserLogin();
     }
   }, [token, dispatch]);
-
-   const addCartItem = (detailProduct) => {
-    if(!loggedIn){
-      Swal.fire({
-        icon: "question",
-        title: "Oops...",
-        text: 'Please login or register to continue buying !!',
-      });
-    }
-  };
-
-  return {
-    addCartItem: addCartItem,
-  }
 
 };
 

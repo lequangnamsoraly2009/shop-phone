@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Breadcrumb, Col, Rate, Row, Select } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./detailProduct.css";
 import CardItem from "../../components/CardItem";
-// import Swal from "sweetalert2";
-import UserAPI from "../../../../api/userAPI";
+// import UserAPI from "../../../../api/userAPI";
+import Swal from "sweetalert2";
+import { addCart } from "../../../../app/cartSlice";
 
 const { Option } = Select;
 
@@ -14,10 +15,11 @@ function DetailProduct() {
     "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746_sd.jpg;maxHeight=640;maxWidth=550"
   );
   const [detailProduct, setDetailProduct] = useState([]);
+  const dispatch = useDispatch();
 
   const { products } = useSelector((state) => state.products);
-  // const { loggedIn } = useSelector((state) => state.user);
-  // const { carts } = useSelector((state) => state.carts);
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const { carts } = useSelector((state) => state.carts);
   // console.log(products)
   const params = useParams();
   // console.log(params)
@@ -37,16 +39,29 @@ function DetailProduct() {
     setImage(src);
   };
 
-  // Add Cart
-  // const addCartItem = (detailProduct) => {
-  //   if(!loggedIn){
-  //     Swal.fire({
-  //       icon: "question",
-  //       title: "Oops...",
-  //       text: 'Please login or register to continue buying !!',
-  //     });
-  //   }
-  // };
+  const addCartItem = () => {
+    if (!isLoggedIn) {
+      Swal.fire({
+        icon: "question",
+        title: "Oops...",
+        text: "Please login or register to continue buying !!",
+      });
+    }
+    const checkItem = carts.every((item) => {
+      return (item._id !== detailProduct._id);
+    });
+
+    if (checkItem) {
+      const newCart = {...detailProduct, quantity: 1};
+      dispatch(addCart(newCart));
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This product has been added to your cart !",
+      });
+    }
+  };
 
   return (
     <div className="container-fluid">
@@ -247,7 +262,7 @@ function DetailProduct() {
                   cursor: "pointer",
                 }}
                 // href="#cart"
-                onClick={UserAPI().addCartItem}
+                onClick={addCartItem}
               >
                 <span></span>
                 <span></span>
