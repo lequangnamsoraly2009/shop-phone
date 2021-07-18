@@ -8,7 +8,7 @@ const regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
 const userController = {
   register: async (req, res) => {
     try {
-      const { userName, email, password, gender,phone,prefix } = req.body;
+      const { userName, email, password, gender, phone, prefix } = req.body;
 
       const user = await Users.findOne({ email: email });
 
@@ -22,8 +22,11 @@ const userController = {
       //     .status(400)
       //     .json({ status: false, message: "Password compare is incorrect!" });
 
-      if(phone.length <= 9 || phone.length > 11){
-        return res.status(400).json({status: false, message:"Phone Number required 10 and 11 numbers"})
+      if (phone.length <= 9 || phone.length > 11) {
+        return res.status(400).json({
+          status: false,
+          message: "Phone Number required 10 and 11 numbers",
+        });
       }
       // Check Validate For Passwords
 
@@ -43,7 +46,7 @@ const userController = {
         password: passwordHash,
         gender,
         prefix,
-        phone
+        phone,
       });
 
       await newUser.save();
@@ -90,19 +93,18 @@ const userController = {
         path: "/users/refresh_token",
       });
 
-      res.json({accessToken});
+      res.json({ accessToken });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
   logout: async (req, res) => {
     try {
-      res.clearCookie("refreshToken",{path: "/users/refresh_token"});
+      res.clearCookie("refreshToken", { path: "/users/refresh_token" });
 
-      return res.json({status: true, message: "Logout success"});
-      
+      return res.json({ status: true, message: "Logout success" });
     } catch (error) {
-      return res.status(500).json({status: false, message: error.message})
+      return res.status(500).json({ status: false, message: error.message });
     }
   },
   refreshToken: async (req, res) => {
@@ -128,15 +130,38 @@ const userController = {
   },
   inforUser: async (req, res) => {
     try {
-      const user = await Users.findById({_id: req.user.id}).select("-password");
+      const user = await Users.findById({ _id: req.user.id }).select(
+        "-password"
+      );
 
-      if(!user) return res.status(400).json({status: false,message: "User does not exist !"});
-      
+      if (!user)
+        return res
+          .status(400)
+          .json({ status: false, message: "User does not exist !" });
+
       res.json(user);
     } catch (error) {
-      return res.status(500).json({ status: false, message: error.message })
+      return res.status(500).json({ status: false, message: error.message });
     }
-  }
+  },
+  addCart: async (req, res) => {
+    try {
+      const user = await Users.findById(req.user.id);
+      if (!user)
+        return res
+          .status(400)
+          .json({ status: false, message: "User does not exist" });
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        {
+          cart: req.body.cart,
+        }
+      );
+      return res.json({ message: "Added to cart" });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
 };
 
 const createAccessToken = (user) => {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { getUser, isAAdmin, isABuyer } from "../app/userSlice";
+import { getCarts } from "../app/cartSlice";
 
 const UserAPI = () => {
   const { token } = useSelector((state) => state.token);
@@ -22,6 +23,7 @@ const UserAPI = () => {
           (await response.data.role) === 0
             ? dispatch(isABuyer(true))
             : dispatch(isAAdmin(true));
+          dispatch(getCarts(response.data.cart));
         } catch (error) {
           Swal.fire({
             icon: "error",
@@ -33,7 +35,6 @@ const UserAPI = () => {
       getUserLogin();
     }
   }, [token, dispatch]);
-
 };
 
 export default UserAPI;

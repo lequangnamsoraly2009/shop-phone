@@ -7,6 +7,7 @@ import CardItem from "../../components/CardItem";
 // import UserAPI from "../../../../api/userAPI";
 import Swal from "sweetalert2";
 import { addCart } from "../../../../app/cartSlice";
+import API from "../../../../api/axiosClient";
 
 const { Option } = Select;
 
@@ -18,6 +19,7 @@ function DetailProduct() {
   const dispatch = useDispatch();
 
   const { products } = useSelector((state) => state.products);
+  const { token } = useSelector((state) => state.token);
   const { isLoggedIn } = useSelector((state) => state.user);
   const { carts } = useSelector((state) => state.carts);
   // console.log(products)
@@ -39,7 +41,7 @@ function DetailProduct() {
     setImage(src);
   };
 
-  const addCartItem = () => {
+  const addCartItem = async () => {
     if (!isLoggedIn) {
       Swal.fire({
         icon: "question",
@@ -48,12 +50,21 @@ function DetailProduct() {
       });
     }
     const checkItem = carts.every((item) => {
-      return (item._id !== detailProduct._id);
+      return item._id !== detailProduct._id;
     });
 
     if (checkItem) {
-      const newCart = {...detailProduct, quantity: 1};
+      const newCart = { ...detailProduct, quantity: 1 };
       dispatch(addCart(newCart));
+      await API.patch(
+        "/users/addcart",
+        {
+          cart: [...carts, { ...detailProduct, quantity: 1 }],
+        },
+        {
+          headers: { Authorization: token },
+        }
+      );
     } else {
       Swal.fire({
         icon: "error",
