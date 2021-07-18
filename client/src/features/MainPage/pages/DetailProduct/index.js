@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./detailProduct.css";
 import CardItem from "../../components/CardItem";
-
+// import Swal from "sweetalert2";
+import UserAPI from "../../../../api/userAPI";
 
 const { Option } = Select;
 
@@ -15,6 +16,7 @@ function DetailProduct() {
   const [detailProduct, setDetailProduct] = useState([]);
 
   const { products } = useSelector((state) => state.products);
+  // const { loggedIn } = useSelector((state) => state.user);
   // const { carts } = useSelector((state) => state.carts);
   // console.log(products)
   const params = useParams();
@@ -35,7 +37,16 @@ function DetailProduct() {
     setImage(src);
   };
 
-  
+  // Add Cart
+  // const addCartItem = (detailProduct) => {
+  //   if(!loggedIn){
+  //     Swal.fire({
+  //       icon: "question",
+  //       title: "Oops...",
+  //       text: 'Please login or register to continue buying !!',
+  //     });
+  //   }
+  // };
 
   return (
     <div className="container-fluid">
@@ -236,7 +247,7 @@ function DetailProduct() {
                   cursor: "pointer",
                 }}
                 // href="#cart"
-                // onClick={UserAPI().addCart(detailProduct)}
+                onClick={UserAPI().addCartItem}
               >
                 <span></span>
                 <span></span>
