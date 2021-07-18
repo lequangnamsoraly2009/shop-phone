@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import "./detailProduct.css";
 import CardItem from "../../components/CardItem";
 
+
 const { Option } = Select;
 
 function DetailProduct() {
@@ -14,6 +15,7 @@ function DetailProduct() {
   const [detailProduct, setDetailProduct] = useState([]);
 
   const { products } = useSelector((state) => state.products);
+  // const { carts } = useSelector((state) => state.carts);
   // console.log(products)
   const params = useParams();
   // console.log(params)
@@ -32,6 +34,8 @@ function DetailProduct() {
     e.preventDefault();
     setImage(src);
   };
+
+  
 
   return (
     <div className="container-fluid">
@@ -223,21 +227,23 @@ function DetailProduct() {
               <span>{detailProduct.price}$</span>
             </div>
             <div className="product-add-cart">
-              <a
+              <div
                 className="btn"
                 style={{
                   width: "100%",
                   textAlign: "center",
                   backgroundColor: "rgb(228, 228, 228)",
+                  cursor: "pointer",
                 }}
-                href="/cart"
+                // href="#cart"
+                // onClick={UserAPI().addCart(detailProduct)}
               >
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 Add to Cart
-              </a>
+              </div>
             </div>
           </div>
         </div>

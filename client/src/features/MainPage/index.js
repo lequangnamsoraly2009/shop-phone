@@ -9,7 +9,7 @@ function MainPage() {
   return (
     <Switch>
       {/* <Redirect exact from="/" to="/home" /> */}
-      <Route path={`${match.url}/`} component={DashBoard} />
+      <Route path={`${match.url}/`} exact component={DashBoard} />
       <Route path={`${match.url}/:id`} exact component={DetailProduct} />      
       {/* <Route path={`${match.url}/register`} exact component={Register} /> */}
       {/* <Route component={NotFound} /> */}

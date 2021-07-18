@@ -28,6 +28,7 @@ function HeaderNav() {
   // console.log(token)
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
+  const {carts} = useSelector((state) => state.carts);
 
   const dispatch = useDispatch();
 
@@ -187,7 +188,7 @@ function HeaderNav() {
               )}
               <Menu.Item key="cart" className="cart_icon">
                 <a href="/cart">
-                  <Badge className="badge-count" count={10} overflowCount={9} />
+                  <Badge className="badge-count" count={carts.length} overflowCount={9} />
                   <ShoppingCartOutlined style={{ fontSize: 25 }} />
                 </a>
               </Menu.Item>
