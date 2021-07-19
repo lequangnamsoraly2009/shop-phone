@@ -1,19 +1,34 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Table, Tag, Space } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
+import { updateCart } from "../../app/cartSlice";
 
 function Cart() {
   const { carts, isLoadingCart } = useSelector((state) => state.carts);
   const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
+
+  const increment = (idProduct) => {
+    //   console.log(idProduct)
+    carts.forEach((item) => {
+      const temp = { ...item };
+      if (temp._id === idProduct) {
+        temp.quantity += 1;
+      }
+      dispatch(updateCart(temp));
+    });
+  };
+
+  const dispatch = useDispatch();
+
   if (isLoadingCart === true) {
     return <div>Loading</div>;
   }
 
-  if (carts.length === 0 &&  isLoadingCart === false) {
+  if (carts.length === 0 && isLoadingCart === false) {
     return <CartEmpty />;
   }
 
@@ -41,9 +56,9 @@ function Cart() {
     },
     {
       title: "Amount",
-      dataIndex: "quantity",
-      key: "quantity",
-      render: (quantity) => (
+      dataIndex: ["quantity", "_id"],
+      key: "amount",
+      render: (text, record, index) => (
         <>
           <div className="cart-amount">
             <button>-</button>
@@ -51,9 +66,9 @@ function Cart() {
               className="cart-amount-input"
               readOnly
               type="text"
-              value={quantity}
+              value={record.quantity}
             />
-            <button>+</button>
+            <button onClick={() => increment(record._id)}>+</button>
           </div>
         </>
       ),
@@ -72,10 +87,10 @@ function Cart() {
     },
     {
       title: "Total Price",
-      //   dataIndex: "totalPrice",
+      dataIndex: ["price", "quantity"],
       key: "totalPrice",
-      render: (price, quantity) => (
-        <span>{price.price * quantity.quantity} $</span>
+      render: (text, record, index) => (
+        <span>{record.price * record.quantity} $</span>
       ),
     },
     {
@@ -113,6 +128,7 @@ function Cart() {
                 }}
                 columns={columns}
                 dataSource={carts}
+                // rowKey={record => record.}
               />
             </div>
           </div>
