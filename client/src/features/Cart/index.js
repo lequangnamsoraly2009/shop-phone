@@ -4,22 +4,35 @@ import { Table, Tag, Space } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
-import { updateCart } from "../../app/cartSlice";
+import { removeOneCart, updateCart } from "../../app/cartSlice";
+import API from "../../api/axiosClient";
 
 function Cart() {
   const { carts, isLoadingCart } = useSelector((state) => state.carts);
+  const { token } = useSelector((state) => state.token);
   const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        const getTotal = () =>{
-            const totalPrice = carts.reduce((item1, item2) => {
-                return item1 + item2.price * item2.quantity;
-              }, 0);
-              setTotal(totalPrice)
+  useEffect(() => {
+    const getTotal = () => {
+      const totalPrice = carts.reduce((item1, item2) => {
+        return item1 + item2.price * item2.quantity;
+      }, 0);
+      setTotal(totalPrice);
+    };
+    const updateCartToServer = async () => {
+      await API.patch(
+        "/users/addcart",
+        { cart: [...carts] },
+        {
+          headers: { Authorization: token },
         }
-        getTotal();
-    },[carts])
+      );
+    };
+    updateCartToServer();
+    getTotal();
+  }, [carts, token]);
 
   const increment = (idProduct) => {
     //   console.log(idProduct)
@@ -43,7 +56,9 @@ function Cart() {
     });
   };
 
-  const dispatch = useDispatch();
+  const removeCartItem = (idProduct) => {
+    dispatch(removeOneCart(idProduct));
+  };
 
   if (isLoadingCart === true) {
     return <div>Loading</div>;
@@ -116,23 +131,26 @@ function Cart() {
     },
     {
       title: "Action",
-      key: "action",
-      render: (text, record) => (
+      dataIndex: "_id",
+      render: (text, record, index) => (
         <Space size="middle">
-          <a href="/">Delete</a>
+          <div
+            style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
+            onClick={() => removeCartItem(record._id)}
+          >
+            Delete
+          </div>
         </Space>
       ),
     },
   ];
 
-  
-
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-    //   const totalPrice = selectedRows.reduce((item1, item2) => {
-    //     return item1 + item2.price * item2.quantity;
-    //   }, 0);
-    //   setTotal(totalPrice);
+      //   const totalPrice = selectedRows.reduce((item1, item2) => {
+      //     return item1 + item2.price * item2.quantity;
+      //   }, 0);
+      //   setTotal(totalPrice);
       setProductChoice(selectedRows.length);
     },
   };
