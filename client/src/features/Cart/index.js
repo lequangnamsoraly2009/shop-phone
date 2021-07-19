@@ -6,11 +6,14 @@ import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
 
 function Cart() {
-  const { carts } = useSelector((state) => state.carts);
-  const [total,setTotal]  = useState(0);
+  const { carts, isLoadingCart } = useSelector((state) => state.carts);
+  const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
+  if (isLoadingCart === true) {
+    return <div>Loading</div>;
+  }
 
-  if (carts.length === 0) {
+  if (carts.length === 0 &&  isLoadingCart === false) {
     return <CartEmpty />;
   }
 
@@ -86,56 +89,13 @@ function Cart() {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      status: "Stocking",
-      checked: false,
-      numberSold: 0,
-      sale: 0,
-      _id: "60f191a9fd8d832a8952b14e",
-      product_id: "IP6",
-      title: "iphone6",
-      price: 300,
-      description: "this is iphone 6",
-      color: "black",
-      images: {
-        url: "https://www.gravatar.com/avatar/f2c683e7dc0c4d4bcc790f87eaa67301?s=32&d=identicon&r=PG",
-      },
-      category: "Iphone",
-      storage: 100,
-      __v: 0,
-      quantity: 5,
-    },
-    {
-      key: "2",
-      status: "Stocking",
-      checked: false,
-      numberSold: 0,
-      sale: 0,
-      _id: "60f191a9fd8d832a8952b14e",
-      product_id: "IP6",
-      title: "iphone6",
-      price: 300,
-      description: "this is iphone 6",
-      color: "black",
-      images: {
-        url: "https://www.gravatar.com/avatar/f2c683e7dc0c4d4bcc790f87eaa67301?s=32&d=identicon&r=PG",
-      },
-      category: "Iphone",
-      storage: 100,
-      __v: 0,
-      quantity: 5,
-    },
-  ];
-
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       const totalPrice = selectedRows.reduce((item1, item2) => {
         return item1 + item2.price * item2.quantity;
       }, 0);
       setTotal(totalPrice);
-      setProductChoice(selectedRows.length)
+      setProductChoice(selectedRows.length);
     },
   };
 
@@ -152,7 +112,7 @@ function Cart() {
                   ...rowSelection,
                 }}
                 columns={columns}
-                dataSource={data}
+                dataSource={carts}
               />
             </div>
           </div>
@@ -165,7 +125,7 @@ function Cart() {
               <div>
                 <a
                   className="btn"
-                  style={{ backgroundColor: "rgb(230,246,255)"}}
+                  style={{ backgroundColor: "rgb(230,246,255)" }}
                   href="/payment"
                 >
                   <span></span>

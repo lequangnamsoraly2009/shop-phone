@@ -54,12 +54,23 @@ function DetailProduct() {
     });
 
     if (checkItem) {
-      const newCart = { ...detailProduct, quantity: 1 };
+      const newCart = {
+        ...detailProduct,
+        quantity: 1,
+        key: Math.floor(Math.random() * 9999999999),
+      };
       dispatch(addCart(newCart));
       await API.patch(
         "/users/addcart",
         {
-          cart: [...carts, { ...detailProduct, quantity: 1 }],
+          cart: [
+            ...carts,
+            {
+              ...detailProduct,
+              quantity: 1,
+              key: Math.floor(Math.random() * 9999999999),
+            },
+          ],
         },
         {
           headers: { Authorization: token },
