@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Table, Tag, Space } from "antd";
 import CartBanner from "./components/CartBanner";
@@ -7,6 +7,8 @@ import "./cart.css";
 
 function Cart() {
   const { carts } = useSelector((state) => state.carts);
+  const [total,setTotal]  = useState(0);
+  const [productChoice, setProductChoice] = useState(0);
 
   if (carts.length === 0) {
     return <CartEmpty />;
@@ -59,7 +61,9 @@ function Cart() {
       dataIndex: "status",
       render: (tags) => (
         <>
-          <Tag key={tags}>{tags}</Tag>
+          <Tag color="green" key={tags}>
+            {tags}
+          </Tag>
         </>
       ),
     },
@@ -130,12 +134,8 @@ function Cart() {
       const totalPrice = selectedRows.reduce((item1, item2) => {
         return item1 + item2.price * item2.quantity;
       }, 0);
-      console.log(
-        // `selectedRowKeys: ${selectedRowKeys}`,
-        // "selectedRows: ",
-        // selectedRows,
-        `total: ${totalPrice}`
-      );
+      setTotal(totalPrice);
+      setProductChoice(selectedRows.length)
     },
   };
 
@@ -157,7 +157,25 @@ function Cart() {
             </div>
           </div>
           <div className="cart-total-price">
-              
+            <div className="cart-total-1">
+              <span>Total Price ({productChoice} products) :</span>
+              <span style={{ color: "rgb(25,144,255)" }}>{total} $</span>
+            </div>
+            <div className="cart-total-2">
+              <div>
+                <a
+                  className="btn"
+                  style={{ backgroundColor: "rgb(230,246,255)"}}
+                  href="/payment"
+                >
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  PayMent
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
