@@ -19,6 +19,8 @@ import { persistor } from "../../app/store";
 import Swal from "sweetalert2";
 import { removeToken } from "../../app/tokenSlice";
 import { removeCart } from "../../app/cartSlice";
+import UserAPI from "../../api/userAPI";
+import ProductAPI from "../../api/productAPI";
 
 const { Search } = Input;
 // const { Link } = Anchor;
@@ -27,6 +29,8 @@ function HeaderNav() {
   const [visible, setVisible] = useState(false);
   // const token = useSelector(state=> state.token)
   // console.log(token)
+  UserAPI();
+  ProductAPI();
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
   const {carts} = useSelector((state) => state.carts);
@@ -189,7 +193,7 @@ function HeaderNav() {
                 </div>
               )}
               <Menu.Item key="cart" className="cart_icon">
-                <a href="/cart">
+                <a href="/home/cart">
                   <Badge className="badge-count" count={carts.length} overflowCount={9} />
                   <ShoppingCartOutlined style={{ fontSize: 25 }} />
                 </a>

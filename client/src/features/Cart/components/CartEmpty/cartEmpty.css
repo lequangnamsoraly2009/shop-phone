@@ -1,0 +1,21 @@
+.cart-empty-wrapper {
+  height: 29rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-empty-image {
+    margin: 20px auto;
+}
+
+.cart-empty-image img {
+  width: 10rem;
+  height: 10rem;
+}
+
+.cart-empty-infor {
+    font-size: 20px;
+    text-transform: capitalize;
+    font-weight: 800;
+    margin: 0 auto;
+}

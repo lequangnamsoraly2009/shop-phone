@@ -1,6 +1,6 @@
 import React from "react";
-import ProductAPI from "../../../../api/productAPI";
-import UserAPI from "../../../../api/userAPI";
+// import ProductAPI from "../../../../api/productAPI";
+// import UserAPI from "../../../../api/userAPI";
 import Advertisement from "../../components/Advertisement";
 import BrandShow from "../../components/BrandShow";
 import Carousel from "../../components/Carousel";
@@ -9,8 +9,8 @@ import NewArrivals from "../../components/NewArrivals";
 import PhoneSold from "../../components/PhoneSold";
 
 function DashBoard() {
-  UserAPI();
-  ProductAPI();
+  // UserAPI();
+  // ProductAPI();
   return (
     <div className="container-fluid">
       <div style={{height: "auto"}}>
