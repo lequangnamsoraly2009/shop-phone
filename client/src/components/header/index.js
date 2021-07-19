@@ -18,6 +18,7 @@ import { getLogout } from "../../app/userSlice";
 import { persistor } from "../../app/store";
 import Swal from "sweetalert2";
 import { removeToken } from "../../app/tokenSlice";
+import { removeCart } from "../../app/cartSlice";
 
 const { Search } = Input;
 // const { Link } = Anchor;
@@ -51,6 +52,7 @@ function HeaderNav() {
 
       dispatch(getLogout());
       dispatch(removeToken());
+      dispatch(removeCart());
       Swal.fire({
         position: "center",
         icon: "success",
