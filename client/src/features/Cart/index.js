@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table, Tag, Space } from "antd";
 import CartBanner from "./components/CartBanner";
@@ -11,12 +11,33 @@ function Cart() {
   const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
 
+  useEffect(() => {
+    const getTotal = () => {
+      const totalPrice = carts.reduce((item1, item2) => {
+        return item1 + item2.price * item2.quantity;
+      }, 0);
+      setTotal(totalPrice);
+    };
+    getTotal();
+  }, [carts]);
+
   const increment = (idProduct) => {
     //   console.log(idProduct)
     carts.forEach((item) => {
       const temp = { ...item };
       if (temp._id === idProduct) {
         temp.quantity += 1;
+      }
+      dispatch(updateCart(temp));
+    });
+  };
+
+  const decrement = (idProduct) => {
+    //   console.log(idProduct)
+    carts.forEach((item) => {
+      const temp = { ...item };
+      if (temp._id === idProduct) {
+        temp.quantity === 1 ? (temp.quantity = 1) : (temp.quantity -= 1);
       }
       dispatch(updateCart(temp));
     });
@@ -61,7 +82,7 @@ function Cart() {
       render: (text, record, index) => (
         <>
           <div className="cart-amount">
-            <button>-</button>
+            <button onClick={() => decrement(record._id)}>-</button>
             <input
               className="cart-amount-input"
               readOnly
@@ -106,10 +127,10 @@ function Cart() {
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      const totalPrice = selectedRows.reduce((item1, item2) => {
-        return item1 + item2.price * item2.quantity;
-      }, 0);
-      setTotal(totalPrice);
+      //   const totalPrice = selectedRows.reduce((item1, item2) => {
+      //     return item1 + item2.price * item2.quantity;
+      //   }, 0);
+      //   setTotal(totalPrice);
       setProductChoice(selectedRows.length);
     },
   };
