@@ -221,7 +221,7 @@ function Cart() {
                   <a
                     className="btn"
                     style={{ backgroundColor: "rgb(230,246,255)" }}
-                    href="/payment"
+                    href="/home/checkout"
                   >
                     <span></span>
                     <span></span>

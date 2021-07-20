@@ -1,0 +1,9 @@
+.checkout-steps{
+    padding: 0px 100px 30px;
+}
+
+.steps-action{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
