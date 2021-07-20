@@ -4,7 +4,12 @@ import { Table, Tag, Space, Breadcrumb } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
-import { addCartPayMentTemp, removeOneCart, updateCart } from "../../app/cartSlice";
+import { Link } from "react-router-dom";
+import {
+  addCartPayMentTemp,
+  removeOneCart,
+  updateCart,
+} from "../../app/cartSlice";
 import API from "../../api/axiosClient";
 
 function Cart() {
@@ -172,7 +177,7 @@ function Cart() {
 
   const sendPayMentCart = () => {
     dispatch(addCartPayMentTemp(productCheckOut));
-  }
+  };
 
   return (
     <div className="container-fluid">
@@ -210,7 +215,7 @@ function Cart() {
           <div className="cart-total-wrapper">
             <div className="cart-total-price">
               <div className="cart-total">
-                <h2 style={{fontWeight: 800}}>Total Cart</h2>
+                <h2 style={{ fontWeight: 800 }}>Total Cart</h2>
               </div>
               <div className="cart-total  ">
                 <span>Totals Price ({productChoice} products):</span>
@@ -225,11 +230,11 @@ function Cart() {
                 <span style={{ color: "rgb(247,69,46)" }}>{total + 10}$</span>
               </div>
               <div className="cart-total ">
-                <div style={{margin: "20px auto 0px auto"}}>
-                  <a
+                <div style={{ margin: "20px auto 0px auto" }}>
+                  <Link
                     className="btn"
                     style={{ backgroundColor: "rgb(230,246,255)" }}
-                    href="/home/checkout"
+                    to="/home/checkout"
                     onClick={() => sendPayMentCart()}
                   >
                     <span></span>
@@ -237,7 +242,7 @@ function Cart() {
                     <span></span>
                     <span></span>
                     PayMent
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -221,7 +221,7 @@ function HeaderNav() {
                   <a href="/buyer/infor" className="button-logout">
                     Your Information
                   </a>{" "}
-                  <a href="/cart" className="button-logout">
+                  <a href="/home/cart" className="button-logout">
                     Cart
                   </a>
                 </div>

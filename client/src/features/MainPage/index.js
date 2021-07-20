@@ -8,20 +8,23 @@ import DashBoard from "./pages/DashBoard";
 function MainPage() {
   const match = useRouteMatch();
   const { isLoggedIn } = useSelector((state) => state.user);
+
   return (
     <Switch>
       {/* <Redirect exact from="/" to="/home" /> */}
       <Route path={`${match.url}/`} exact component={DashBoard} />
       <Route path={`${match.url}/cart`} component={Cart} />
+
       {isLoggedIn ? (
-        <>
+        <Switch>
           <Route path={`${match.url}/checkout`} component={CheckOut} />
-        </>
+        </Switch>
       ) : (
-        <>
+        <Switch>
           <p>Page Not Found</p>
-        </>
+        </Switch>
       )}
+
       {/* <Route component={NotFound} /> */}
     </Switch>
   );

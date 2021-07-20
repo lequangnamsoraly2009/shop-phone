@@ -1,6 +1,6 @@
 import "./App.css";
 import "antd/dist/antd.css";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Layout } from "antd";
 import {
@@ -15,12 +15,8 @@ import AuthPage from "./features/Auth";
 import { Content } from "antd/lib/layout/layout";
 import MainPage from "./features/MainPage";
 import DetailProduct from "./features/MainPage/pages/DetailProduct";
-// import Cart from "./features/Cart";
-// import { useSelector } from "react-redux";
 
 function App() {
-
-  // const {isLoggedIn} = useSelector(state => state.user);
 
   return (
     <Router>
@@ -28,10 +24,10 @@ function App() {
         <HeaderNav />
         <Content>
           <Switch>
-            <Redirect exact from="/" to="/home"/>
+            <Redirect exact from="/" to="/home" />
             <Route path="/home" component={MainPage} />
             <Route path="/buyer" component={AuthPage} />
-            <Route path="/:id" exact  component={DetailProduct} />
+            <Route path="/:id" exact component={DetailProduct} />
 
             {/* <Route path="/cart" exact component={Cart} /> */}
           </Switch>
