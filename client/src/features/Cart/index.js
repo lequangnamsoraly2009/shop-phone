@@ -15,12 +15,12 @@ function Cart() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getTotal = () => {
-      const totalPrice = carts.reduce((item1, item2) => {
-        return item1 + item2.price * item2.quantity;
-      }, 0);
-      setTotal(totalPrice);
-    };
+    // const getTotal = () => {
+    //   const totalPrice = carts.reduce((item1, item2) => {
+    //     return item1 + item2.price * item2.quantity;
+    //   }, 0);
+    //   setTotal(totalPrice);
+    // };
     const updateCartToServer = async () => {
       await API.patch(
         "/users/addcart",
@@ -31,7 +31,7 @@ function Cart() {
       );
     };
     updateCartToServer();
-    getTotal();
+    // getTotal();
   }, [carts, token]);
 
   const increment = (idProduct) => {
@@ -115,9 +115,20 @@ function Cart() {
       dataIndex: "status",
       render: (tags) => (
         <>
-          <Tag color="green" key={tags}>
-            {tags}
-          </Tag>
+          {" "}
+          {tags === "Stocking" ? (
+            <Tag color="green" key={tags}>
+              {tags}
+            </Tag>
+          ) : tags === "OutStocking" ? (
+            <Tag color="red" key={tags}>
+              {tags}
+            </Tag>
+          ) : (
+            <Tag color="brown" key={tags}>
+              {tags}
+            </Tag>
+          )}
         </>
       ),
     },
@@ -147,10 +158,10 @@ function Cart() {
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      //   const totalPrice = selectedRows.reduce((item1, item2) => {
-      //     return item1 + item2.price * item2.quantity;
-      //   }, 0);
-      //   setTotal(totalPrice);
+      const totalPrice = selectedRows.reduce((item1, item2) => {
+        return item1 + item2.price * item2.quantity;
+      }, 0);
+      setTotal(totalPrice);
       setProductChoice(selectedRows.length);
     },
   };
@@ -170,6 +181,13 @@ function Cart() {
                 columns={columns}
                 dataSource={carts}
                 // rowKey={record => record.}
+                // onRow={(record, rowIndex) => {
+                //   return {
+                //     onClick: event => { 
+                //       return record.price * record.quantity;
+                //     }
+                //   };
+                // }}
               />
             </div>
           </div>
