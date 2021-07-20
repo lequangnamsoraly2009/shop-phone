@@ -1,7 +1,9 @@
 import { Breadcrumb, Steps, Button } from "antd";
 import React, { useState } from "react";
-import "./checkout.css"
-import PayPal from "./PayPal"
+import "./checkout.css";
+import AddressShipping from "./components/addressShip";
+import CheckoutInfor from "./components/inforCheckout";
+import PayPal from "./PayPal";
 
 const { Step } = Steps;
 
@@ -11,14 +13,20 @@ const steps = [
   },
   {
     title: "ADDRESS",
-    content: (<>
-        <p>Hi anh em</p>
-    </>),
+    content: (
+      <>
+        <AddressShipping />
+      </>
+    ),
   },
   {
     title: "CHECKOUT",
-    content: "checkout",
-  }
+    content: (
+      <>
+        <CheckoutInfor />
+      </>
+    ),
+  },
 ];
 
 function CheckOut() {
@@ -45,7 +53,11 @@ function CheckOut() {
       <div className="checkout-steps">
         <Steps current={current} className="steps-line">
           {steps.map((item) => (
-            <Step style={{fontSize: 16}} key={item.title} title={item.title} />
+            <Step
+              style={{ fontSize: 16 }}
+              key={item.title}
+              title={item.title}
+            />
           ))}
         </Steps>
         <div className="steps-content">{steps[current].content}</div>
@@ -55,9 +67,7 @@ function CheckOut() {
               Next
             </Button>
           )}
-          {current === steps.length - 1 && (
-            <PayPal />
-          )}
+          {current === steps.length - 1 && <PayPal />}
           {current > 1 && (
             <Button style={{ margin: "0 8px" }} onClick={() => prevStep()}>
               Previous
