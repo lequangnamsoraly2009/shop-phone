@@ -1,5 +1,5 @@
-.cart-full-wrapper{
-    margin-bottom: 200px;
+.cart-full-wrapper {
+  margin-bottom: 200px;
 }
 
 .cart-product-infor {
@@ -35,21 +35,38 @@
 }
 
 /* Total Price */
-.cart-total-price {
-  margin: 30px 10px;
+
+.cart-total-wrapper {
   display: flex;
-  flex-direction: row;
-  height: 47px;
   justify-content: flex-end;
 }
 
-.cart-total-1{
-   margin-right: 100px; 
-   margin: auto 0;
+.cart-total-price {
+  margin: 30px 10px;
+  display: flex;
+  flex-direction: column;
+  /* height: 47px; */
+  width: 400px;
+  border: 1px solid rgba(196, 192, 192, 0.3);
+  border-radius: 5px;
+
 }
 
-.cart-total-1 span{
-    font-size: 20px;
-    margin-right: 20px;
-    text-align: center;
+.cart-total {
+  padding: 10px 30px;
+  margin: auto 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-total span{
+  font-weight: 500;
+}
+
+
+
+/* BreadCumb */
+
+.breadcumb-wrapper {
+  margin-bottom: 10px;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Tag, Space } from "antd";
+import { Table, Tag, Space, Breadcrumb } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
@@ -73,12 +73,12 @@ function Cart() {
       title: "Product",
       dataIndex: "title",
       key: "title",
-      render: (text, image) => (
+      render: (text, record, index) => (
         <>
           <div className="cart-product-infor">
-            <img src={image.images.url} alt="hi" />
-            <a style={{ textTransform: "capitalize" }} href="/">
-              {text}
+            <img src={record.images.url} alt="hi" />
+            <a style={{ textTransform: "capitalize" }} href={`/home/${record._id}`}>
+              {record.title}
             </a>
           </div>
         </>
@@ -169,6 +169,14 @@ function Cart() {
   return (
     <div className="container-fluid">
       <div className="cart-full-wrapper">
+        <div className="breadcumb-wrapper">
+          <Breadcrumb separator=">">
+            <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+            <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
+              Cart
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
         <CartBanner />
         <div className="cart-table">
           <div className="cart-table-header">
@@ -183,7 +191,7 @@ function Cart() {
                 // rowKey={record => record.}
                 // onRow={(record, rowIndex) => {
                 //   return {
-                //     onClick: event => { 
+                //     onClick: event => {
                 //       return record.price * record.quantity;
                 //     }
                 //   };
@@ -191,24 +199,37 @@ function Cart() {
               />
             </div>
           </div>
-          <div className="cart-total-price">
-            <div className="cart-total-1">
-              <span>Total Price ({productChoice} products) :</span>
-              <span style={{ color: "rgb(25,144,255)" }}>{total} $</span>
-            </div>
-            <div className="cart-total-2">
-              <div>
-                <a
-                  className="btn"
-                  style={{ backgroundColor: "rgb(230,246,255)" }}
-                  href="/payment"
-                >
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  PayMent
-                </a>
+          <div className="cart-total-wrapper">
+            <div className="cart-total-price">
+              <div className="cart-total">
+                <h2 style={{fontWeight: 800}}>Total Cart</h2>
+              </div>
+              <div className="cart-total  ">
+                <span>Totals Price ({productChoice} products):</span>
+                <span style={{ color: "rgb(25,144,255)" }}>{total} $</span>
+              </div>
+              <div className="cart-total ">
+                <span>Shipping:</span>
+                <span>10 $</span>
+              </div>
+              <div className="cart-total ">
+                <span>Total:</span>
+                <span style={{ color: "rgb(247,69,46)" }}>{total + 10}$</span>
+              </div>
+              <div className="cart-total ">
+                <div style={{margin: "20px auto 0px auto"}}>
+                  <a
+                    className="btn"
+                    style={{ backgroundColor: "rgb(230,246,255)" }}
+                    href="/payment"
+                  >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    PayMent
+                  </a>
+                </div>
               </div>
             </div>
           </div>
