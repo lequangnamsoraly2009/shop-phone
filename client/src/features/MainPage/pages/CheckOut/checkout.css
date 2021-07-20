@@ -1,4 +1,8 @@
 .checkout-steps{
+    padding: 0px 50px 30px;
+}
+
+.steps-line{
     padding: 0px 100px 30px;
 }
 
