@@ -76,6 +76,13 @@ function DetailProduct() {
           headers: { Authorization: token },
         }
       );
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'The product has been added to cart',
+        showConfirmButton: false,
+        timer: 1500
+      })
     } else {
       Swal.fire({
         icon: "error",

@@ -145,7 +145,6 @@ const userController = {
     }
   },
   addCart: async (req, res) => {
-    console.log(req.body);
     try {
       const user = await Users.findById(req.user.id);
       if (!user)
