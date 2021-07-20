@@ -222,12 +222,12 @@ function Cart() {
                 <span style={{ color: "rgb(25,144,255)" }}>{total} $</span>
               </div>
               <div className="cart-total ">
-                <span>Shipping:</span>
-                <span>10 $</span>
+                <span>Shipping (Default):</span>
+                <span>0 $</span>
               </div>
               <div className="cart-total ">
                 <span>Total:</span>
-                <span style={{ color: "rgb(247,69,46)" }}>{total + 10}$</span>
+                <span style={{ color: "rgb(247,69,46)" }}>{total} $</span>
               </div>
               <div className="cart-total ">
                 <div style={{ margin: "20px auto 0px auto" }}>

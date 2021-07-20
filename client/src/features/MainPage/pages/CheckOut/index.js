@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./checkout.css";
 import AddressShipping from "./components/addressShip";
 import CheckoutInfor from "./components/inforCheckout";
-import PayPal from "./PayPal";
+import PaypalButton from "./PaypalButton";
 
 const { Step } = Steps;
 
@@ -67,7 +67,7 @@ function CheckOut() {
               Next
             </Button>
           )}
-          {current === steps.length - 1 && <PayPal />}
+          {current === steps.length - 1 && <PaypalButton />}
           {current > 1 && (
             <Button style={{ margin: "0 8px" }} onClick={() => prevStep()}>
               Previous
