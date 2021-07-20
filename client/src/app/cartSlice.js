@@ -4,6 +4,7 @@ const initialState = {
   carts: [],
   isLoadingCart: false,
   cartPayMentTemp: [],
+  addressTemp: {},
 };
 
 const cartSlice = createSlice({
@@ -41,14 +42,20 @@ const cartSlice = createSlice({
     },
     removeCartPayMentTemp : (state, action) => {
       state.cartPayMentTemp = [];
-    }
+    },
+    addAddressTemp: (state, action) => {
+      state.addressTemp = action.payload;
+    },
+    removeAddressTemp : (state, action) => {
+      state.addressTemp = {};
+    },
   },
   extraReducers: {},
 });
 
 const { actions, reducer } = cartSlice;
 
-export const { getCartsPending, getCarts, addCart, removeCart, updateCart,removeOneCart,addCartPayMentTemp, removeCartPayMentTemp  } =
+export const { getCartsPending, getCarts, addCart, removeCart, updateCart,removeOneCart,addCartPayMentTemp, removeCartPayMentTemp, addAddressTemp, removeAddressTemp  } =
   actions;
 
 export default reducer;

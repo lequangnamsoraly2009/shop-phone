@@ -1,13 +1,13 @@
 import { Form, Input, Button, Select } from "antd";
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { addAddressTemp } from "../../../../../../app/cartSlice";
 import "./addressShip.css";
 
 const { Option } = Select;
 
 function AddressShipping() {
-
-    const [form,setForm] = useState({});
-    console.log(form)
+  const dispatch = useDispatch();
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -39,7 +39,7 @@ function AddressShipping() {
     </Form.Item>
   );
   const onSubmitForm = (values) => {
-    setForm(values);
+    dispatch(addAddressTemp(values));
   };
 
   return (
@@ -88,7 +88,7 @@ function AddressShipping() {
           <Form.Item
             name="notes"
             label="Order Note"
-            
+
             // rules={[{ required: true, message: "Please input address!" }]}
           >
             <Input placeholder="Notes about your order ?" />

@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import "./inforCheckout.css";
 
 function CheckoutInfor() {
-  const { cartPayMentTemp } = useSelector((state) => state.carts);
+  const { cartPayMentTemp, addressTemp } = useSelector((state) => state.carts);
   const shipCode = Math.floor(Math.random() * 20);
-  console.log(cartPayMentTemp);
+//   console.log(cartPayMentTemp);
 
   const totalCart = cartPayMentTemp.reduce((item1, item2) => {
     return item1 + item2.price * item2.quantity;
@@ -27,7 +27,7 @@ function CheckoutInfor() {
                 </span>
               </span>
               <span style={{ color: "rgb(25,144,255)" }}>
-                {item.price * item.quantity}$
+                {item.price * item.quantity} $
               </span>
             </div>
           ))}
