@@ -18,7 +18,7 @@ import { getLogout } from "../../app/userSlice";
 import { persistor } from "../../app/store";
 import Swal from "sweetalert2";
 import { removeToken } from "../../app/tokenSlice";
-import { removeCart } from "../../app/cartSlice";
+import { removeCart, removeCartPayMentTemp } from "../../app/cartSlice";
 import UserAPI from "../../api/userAPI";
 import ProductAPI from "../../api/productAPI";
 
@@ -57,6 +57,7 @@ function HeaderNav() {
       dispatch(getLogout());
       dispatch(removeToken());
       dispatch(removeCart());
+      dispatch(removeCartPayMentTemp());
       Swal.fire({
         position: "center",
         icon: "success",

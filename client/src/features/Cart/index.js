@@ -4,7 +4,7 @@ import { Table, Tag, Space, Breadcrumb } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
-import { removeOneCart, updateCart } from "../../app/cartSlice";
+import { addCartPayMentTemp, removeOneCart, updateCart } from "../../app/cartSlice";
 import API from "../../api/axiosClient";
 
 function Cart() {
@@ -12,7 +12,10 @@ function Cart() {
   const { token } = useSelector((state) => state.token);
   const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
+  const [productCheckOut, setProductCheckOut] = useState([]);
   const dispatch = useDispatch();
+
+  // console.log(productCheckOut)
 
   useEffect(() => {
     // const getTotal = () => {
@@ -163,8 +166,13 @@ function Cart() {
       }, 0);
       setTotal(totalPrice);
       setProductChoice(selectedRows.length);
+      setProductCheckOut(selectedRows);
     },
   };
+
+  const sendPayMentCart = () => {
+    dispatch(addCartPayMentTemp(productCheckOut));
+  }
 
   return (
     <div className="container-fluid">
@@ -222,6 +230,7 @@ function Cart() {
                     className="btn"
                     style={{ backgroundColor: "rgb(230,246,255)" }}
                     href="/home/checkout"
+                    onClick={() => sendPayMentCart()}
                   >
                     <span></span>
                     <span></span>
