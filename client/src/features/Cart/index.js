@@ -4,13 +4,14 @@ import { Table, Tag, Space, Breadcrumb } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   addCartPayMentTemp,
   removeOneCart,
   updateCart,
 } from "../../app/cartSlice";
 import API from "../../api/axiosClient";
+import Swal from "sweetalert2";
 
 function Cart() {
   const { carts, isLoadingCart } = useSelector((state) => state.carts);
@@ -19,6 +20,7 @@ function Cart() {
   const [productChoice, setProductChoice] = useState(0);
   const [productCheckOut, setProductCheckOut] = useState([]);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // console.log(productCheckOut)
 
@@ -176,6 +178,15 @@ function Cart() {
   };
 
   const sendPayMentCart = () => {
+    if (productChoice === 0) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'You have not selected any products to pay! Please check again !',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    }
     dispatch(addCartPayMentTemp(productCheckOut));
   };
 
@@ -231,18 +242,37 @@ function Cart() {
               </div>
               <div className="cart-total ">
                 <div style={{ margin: "20px auto 0px auto" }}>
-                  <Link
-                    className="btn"
-                    style={{ backgroundColor: "rgb(230,246,255)" }}
-                    to="/home/checkout"
-                    onClick={() => sendPayMentCart()}
-                  >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    PayMent
-                  </Link>
+                  {productChoice === 0 ? (
+                    <>
+                      <Link
+                        className="btn"
+                        style={{ backgroundColor: "rgb(230,246,255)" }}
+                        to="/home/cart"
+                        onClick={() => sendPayMentCart()}
+                      >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        PayMent
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        className="btn"
+                        style={{ backgroundColor: "rgb(230,246,255)" }}
+                        to="/home/checkout"
+                        onClick={() => sendPayMentCart()}
+                      >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        PayMent
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
