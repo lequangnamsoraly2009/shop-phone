@@ -1,3 +1,14 @@
+.address-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.address-header{
+    display: flex;
+    margin: 20px auto;
+}
+
 .address-content{
     margin-bottom: 50px;
+    width: 80%;
 }

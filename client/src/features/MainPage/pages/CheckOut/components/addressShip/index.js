@@ -1,5 +1,4 @@
 import { Form, Input, Button, Select } from "antd";
-
 import React, { useState } from "react";
 import "./addressShip.css";
 
@@ -44,7 +43,7 @@ function AddressShipping() {
   };
 
   return (
-    <div>
+    <div className="address-wrapper">
       <div className="address-header">
         <h2>ADDRESS SHIPPING</h2>
       </div>
@@ -54,7 +53,6 @@ function AddressShipping() {
           //   form={form}
           name="form-address"
           onFinish={onSubmitForm}
-          scrollToFirstError
         >
           <Form.Item
             name="yourName"
