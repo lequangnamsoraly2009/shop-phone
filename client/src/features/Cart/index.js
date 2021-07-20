@@ -77,7 +77,7 @@ function Cart() {
         <>
           <div className="cart-product-infor">
             <img src={record.images.url} alt="hi" />
-            <a style={{ textTransform: "capitalize" }} href={`/home/${record._id}`}>
+            <a style={{ textTransform: "capitalize" }} href={`/${record._id}`}>
               {record.title}
             </a>
           </div>

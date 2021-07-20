@@ -14,7 +14,7 @@ function CardItem({ product }) {
       behavior: "smooth",
     });
 
-    history.push(`/home/${product?._id}`);
+    history.push(`/${product?._id}`);
   };
   return (
     <Card

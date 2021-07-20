@@ -14,6 +14,7 @@ import FooterNav from "./components/footer";
 import AuthPage from "./features/Auth";
 import { Content } from "antd/lib/layout/layout";
 import MainPage from "./features/MainPage";
+import DetailProduct from "./features/MainPage/pages/DetailProduct";
 // import Cart from "./features/Cart";
 // import { useSelector } from "react-redux";
 
@@ -30,6 +31,8 @@ function App() {
             <Redirect exact from="/" to="/home"/>
             <Route path="/home" component={MainPage} />
             <Route path="/buyer" component={AuthPage} />
+            <Route path="/:id" exact  component={DetailProduct} />
+
             {/* <Route path="/cart" exact component={Cart} /> */}
           </Switch>
         </Content>

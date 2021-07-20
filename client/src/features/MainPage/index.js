@@ -4,7 +4,6 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 import Cart from "../Cart";
 import CheckOut from "./pages/CheckOut";
 import DashBoard from "./pages/DashBoard";
-import DetailProduct from "./pages/DetailProduct";
 
 function MainPage() {
   const match = useRouteMatch();
@@ -13,17 +12,16 @@ function MainPage() {
     <Switch>
       {/* <Redirect exact from="/" to="/home" /> */}
       <Route path={`${match.url}/`} exact component={DashBoard} />
-      <Route path={`${match.url}/cart`} exact component={Cart} />
+      <Route path={`${match.url}/cart`} component={Cart} />
       {isLoggedIn ? (
         <>
-          <Route path={`${match.url}/checkout`} exact component={CheckOut} />
+          <Route path={`${match.url}/checkout`} component={CheckOut} />
         </>
       ) : (
         <>
           <p>Page Not Found</p>
         </>
       )}
-      <Route path={`${match.url}/:id`} exact component={DetailProduct} />
       {/* <Route component={NotFound} /> */}
     </Switch>
   );

@@ -37,13 +37,13 @@ export default class PayPal extends React.Component {
         // For production app-ID:
         //   => https://developer.paypal.com/docs/classic/lifecycle/goingLive/
 
-        let style = {
-            size: "small",
-            color: "blue",
-            shape:"rect",
-            label: "Checkout Now",
-            tagline: false,
-        }
+        // let style = {
+        //     size: "small",
+        //     color: "blue",
+        //     shape:"rect",
+        //     label: "Checkout Now",
+        //     tagline: false,
+        // }
  
         // NB. You can also have many Paypal express checkout buttons on page, just pass in the correct amount and they will work!
         return (
