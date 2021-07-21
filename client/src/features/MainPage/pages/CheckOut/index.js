@@ -1,5 +1,6 @@
 import { Breadcrumb, Steps, Button } from "antd";
 import React, { useState } from "react";
+// import { useSelector } from "react-redux";
 import "./checkout.css";
 import AddressShipping from "./components/addressShip";
 import CheckoutInfor from "./components/inforCheckout";
@@ -31,6 +32,7 @@ const steps = [
 
 function CheckOut() {
   const [current, setCurrent] = useState(1);
+  // const { addressTemp } = useSelector((state) => state.carts);
 
   const nextStep = () => {
     setCurrent(current + 1);
@@ -62,7 +64,7 @@ function CheckOut() {
         </Steps>
         <div className="steps-content">{steps[current].content}</div>
         <div className="steps-action">
-          {current < steps.length - 1 && (
+          {current < steps.length - 1 &&(
             <Button type="primary" onClick={() => nextStep()}>
               Next
             </Button>

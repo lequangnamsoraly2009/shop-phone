@@ -6,6 +6,7 @@ function CheckoutInfor() {
   const { cartPayMentTemp, addressTemp } = useSelector((state) => state.carts);
   const shipCode = Math.floor(Math.random() * 20);
 //   console.log(cartPayMentTemp);
+// console.log(addressTemp.address.length )
 
   const totalCart = cartPayMentTemp.reduce((item1, item2) => {
     return item1 + item2.price * item2.quantity;
@@ -21,7 +22,7 @@ function CheckoutInfor() {
           {cartPayMentTemp.map((item) => (
             <div key={item._id} className="checkout-col">
               <span style={{ textTransform: "capitalize" }}>
-                {item.title}{" "}
+                {item.title}
                 <span style={{ marginLeft: 30, color: "red", fontSize: 12 }}>
                   x{item.quantity}
                 </span>

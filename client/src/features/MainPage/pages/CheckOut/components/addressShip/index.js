@@ -46,7 +46,11 @@ function AddressShipping() {
     <div className="address-wrapper">
       <div className="address-header">
         <h2>ADDRESS SHIPPING</h2>
+        
       </div>
+      <div style={{display: "flex", margin: "20px auto"}}>
+          <span style={{textAlign: "center", color: "red"}}>If you skip! You will get the information from your credit card !</span>
+        </div>
       <div className="address-content">
         <Form
           {...formItemLayout}
