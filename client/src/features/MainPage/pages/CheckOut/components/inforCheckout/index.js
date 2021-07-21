@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import "./inforCheckout.css";
 
 function CheckoutInfor() {
-  const { cartPayMentTemp, addressTemp } = useSelector((state) => state.carts);
-  const shipCode = Math.floor(Math.random() * 20);
+  const { cartPayMentTemp } = useSelector((state) => state.carts);
+  // const shipCode = Math.floor(Math.random() * 20);
 //   console.log(cartPayMentTemp);
 // console.log(addressTemp.address.length )
 
@@ -34,12 +34,12 @@ function CheckoutInfor() {
           ))}
           <div className="checkout-col">
             <span>Shipping COD:</span>
-            <span>{shipCode} $</span>
+            <span>{10} $</span>
           </div>
           <div className="checkout-col ">
             <span>Order Total:</span>
             <span style={{ color: "rgb(247,69,46)" }}>
-              {totalCart + shipCode} $
+              {totalCart + 10} $
             </span>
           </div>
         </div>

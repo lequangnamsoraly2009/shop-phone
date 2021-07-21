@@ -4,7 +4,7 @@ import { Table, Tag, Space, Breadcrumb } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   addCartPayMentTemp,
   removeOneCart,
@@ -20,7 +20,6 @@ function Cart() {
   const [productChoice, setProductChoice] = useState(0);
   const [productCheckOut, setProductCheckOut] = useState([]);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   // console.log(productCheckOut)
 

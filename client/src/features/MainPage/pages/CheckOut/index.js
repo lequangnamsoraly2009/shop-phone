@@ -1,5 +1,6 @@
 import { Breadcrumb, Steps, Button } from "antd";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
 import "./checkout.css";
 import AddressShipping from "./components/addressShip";
@@ -33,6 +34,11 @@ const steps = [
 function CheckOut() {
   const [current, setCurrent] = useState(1);
   // const { addressTemp } = useSelector((state) => state.carts);
+  const  { addressTemp, cartPayMentTemp} = useSelector((state) => state.carts)
+
+  const totalPrice = cartPayMentTemp.reduce((item1, item2) => {
+    return item1 + item2.price * item2.quantity;
+  },0)
 
   const nextStep = () => {
     setCurrent(current + 1);
@@ -41,6 +47,10 @@ function CheckOut() {
   const prevStep = () => {
     setCurrent(current - 1);
   };
+
+  const tranSuccess = async(payment)=>{
+    console.log(payment,addressTemp);
+  }
 
   return (
     <div className="container-fluid">
@@ -69,7 +79,7 @@ function CheckOut() {
               Next
             </Button>
           )}
-          {current === steps.length - 1 && <PaypalButton />}
+          {current === steps.length - 1 && <PaypalButton total={totalPrice + 10} tranSuccess={tranSuccess} />}
           {current > 1 && (
             <Button style={{ margin: "0 8px" }} onClick={() => prevStep()}>
               Previous
