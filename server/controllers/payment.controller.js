@@ -19,16 +19,18 @@ const paymentController = {
           .status(400)
           .json({ status: false, message: "User does not exist !" });
 
-      const { cart, paymentID, address } = req.body;
+      const { cart, paymentID, address, phone, notes } = req.body;
       const { _id, name, email } = user;
 
       const newPayment = new Payments({
         user_id: _id,
         name,
         email,
+        paymentID,
         cart,
-        paymenID,
+        phone,
         address,
+        notes,
       });
 
       res.json({ newPayment });
