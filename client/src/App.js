@@ -15,6 +15,7 @@ import AuthPage from "./features/Auth";
 import { Content } from "antd/lib/layout/layout";
 import MainPage from "./features/MainPage";
 import DetailProduct from "./features/MainPage/pages/DetailProduct";
+import Customer from "./features/Customer";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Redirect exact from="/" to="/home" />
             <Route path="/home" component={MainPage} />
             <Route path="/buyer" component={AuthPage} />
+            <Route path="/customer" component={Customer} />
             <Route path="/:id" exact component={DetailProduct} />
 
             {/* <Route path="/cart" exact component={Cart} /> */}

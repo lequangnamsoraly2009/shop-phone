@@ -8,7 +8,7 @@ const paymentSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
+      // required: true,
     },
     email: {
       type: String,
@@ -20,7 +20,6 @@ const paymentSchema = new mongoose.Schema(
     },
     phone: {
       type: Number,
-      required: true,
     },
     address: {
       type: Object,
@@ -28,12 +27,11 @@ const paymentSchema = new mongoose.Schema(
     },
     cart: {
       type: Array,
-      required: true,
       default: [],
     },
     status: {
       type: Boolean,
-      required: true,
+      default: false,
     },
     notes: {
       type: String,

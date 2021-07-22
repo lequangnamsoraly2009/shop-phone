@@ -91,7 +91,7 @@ const productController = {
           .status(400)
           .json({ status: false, message: "Price needs > 0" });
 
-      const newProduct = await Products({
+      const newProduct = new Products({
         product_id,
         title: title.toLowerCase(),
         price,

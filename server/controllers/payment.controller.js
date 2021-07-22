@@ -22,17 +22,6 @@ const paymentController = {
       const { cart, paymentID, address, phone, notes } = req.body;
       const { _id, name, email } = user;
 
-      const newPayment = new Payments({
-        user_id: _id,
-        name,
-        email,
-        paymentID,
-        cart,
-        phone,
-        address,
-        notes,
-      });
-
       cart.filter((item) => {
         return countSoldAndStorage(
           item._id,
@@ -41,10 +30,21 @@ const paymentController = {
           item.storage
         );
       });
+
+      const newPayment = new Payments({
+        user_id: _id,
+        name: address.recipient_name,
+        email,
+        paymentID,
+        cart,
+        phone,
+        address,
+        notes,
+      });
       // console.log(newPayment);
       await newPayment.save();
 
-      res.json({ newPayment });
+      res.json({ message: "Payment successful" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

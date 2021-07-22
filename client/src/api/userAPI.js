@@ -36,6 +36,18 @@ const UserAPI = () => {
       getUserLogin();
     }
   }, [token, dispatch]);
+
+  // useEffect(() => {
+  //   if (token) {
+  //     const getHistoryCustomer = async () => {
+  //       const response = await axios.get("/users/history", {
+  //         headers: { Authorization: token },
+  //       });
+  //       console.log(response);
+  //     };
+  //     getHistoryCustomer();
+  //   }
+  // }, [token]);
 };
 
 export default UserAPI;

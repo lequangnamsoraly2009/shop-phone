@@ -186,7 +186,8 @@ function HeaderNav() {
                   </Menu.Item>
                   <div className="user_dropdown">
                     <div className="user-dropdown-title">
-                      <a href="/">Your Information</a>
+                      <a href="/customer/infor">Your Information</a>
+                      <a href="/customer/history">History Order</a>
                       <a href="/" onClick={onClickLogout}>
                         Logout
                       </a>
@@ -219,8 +220,11 @@ function HeaderNav() {
                   <a href="/" className="button-logout">
                     Home Page
                   </a>{" "}
-                  <a href="/buyer/infor" className="button-logout">
+                  <a href="/customer/infor" className="button-logout">
                     Your Information
+                  </a>{" "}
+                  <a href="/customer/history" className="button-logout">
+                    History Order
                   </a>{" "}
                   <a href="/home/cart" className="button-logout">
                     Cart
