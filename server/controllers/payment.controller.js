@@ -40,6 +40,7 @@ const paymentController = {
         phone,
         address,
         notes,
+        key: _id,
       });
       // console.log(newPayment);
       await newPayment.save();

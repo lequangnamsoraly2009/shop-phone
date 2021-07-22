@@ -6,7 +6,7 @@ import "./history.css";
 
 function HistoryCustomer() {
   const { history } = useSelector((state) => state.histories);
-  console.log(history);
+  // console.log(history);
 
   const columns = [
     {

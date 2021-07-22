@@ -65,7 +65,7 @@ function CheckOut() {
     const { notes, phone } = addressTemp;
     await API.post(
       "/api/payment",
-      { cart: cartPayMentTemp, paymentID, address, phone, notes },
+      { cart: cartPayMentTemp, paymentID, address, phone, notes},
       {
         headers: { Authorization: token },
       }
