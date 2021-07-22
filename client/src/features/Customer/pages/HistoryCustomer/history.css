@@ -1,0 +1,19 @@
+.history-banner {
+  border: 0.2rem solid rgba(8, 145, 224, 0.7);
+  border-radius: 4px;
+  height: 2.5rem;
+  width: 100%;
+  display: flex;
+  background-color: rgba(8, 145, 224, 0.05);
+}
+
+.history-banner span {
+  margin: auto;
+}
+
+.history-header {
+  margin: 10px 0 10px 20px;
+}
+
+.history-table {
+}
