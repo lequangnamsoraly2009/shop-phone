@@ -15,7 +15,7 @@ function HistoryCustomer() {
       key: "paymentID",
       render: (text, record, index) => (
         <Link to={`/customer/history/${record._id}`} style={{ fontSize: 12 }}>
-          {record.paymentID}
+          {record.paymentID.split("-")[1]}
         </Link>
       ),
       width: 300,
@@ -88,7 +88,9 @@ function HistoryCustomer() {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (text) => <span style={{ fontSize: 12, color: "green" }}>Success</span>,
+      render: (text) => (
+        <span style={{ fontSize: 12, color: "green" }}>Success</span>
+      ),
       width: 140,
     },
   ];

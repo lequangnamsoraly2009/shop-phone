@@ -1,0 +1,8 @@
+.order-date-delivery{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.order-date-delivery span{
+    color: rgba(0, 0, 0, 1)
+}
