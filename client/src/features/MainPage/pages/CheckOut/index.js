@@ -5,6 +5,7 @@ import AddressShipping from "./components/addressShip";
 import CheckoutInfor from "./components/inforCheckout";
 import PaypalButton from "./PaypalButton";
 import API from "../../../../api/axiosClient";
+import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
   removeCartPayMentTemp,
@@ -45,6 +46,8 @@ function CheckOut() {
 
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const totalPrice = cartPayMentTemp.reduce((item1, item2) => {
     return item1 + item2.price * item2.quantity;
   }, 0);
@@ -74,8 +77,11 @@ function CheckOut() {
       icon: "success",
       title: "You have successfully placed an order !",
       showConfirmButton: false,
-      timer: 1500,
+      timer: 3000,
     });
+    setTimeout(() => {
+      history.push("/home/cart");
+    }, 3000);
   };
 
   useEffect(() => {

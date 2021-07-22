@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { getUser, isAAdmin, isABuyer } from "../app/userSlice";
 import { getCarts, getCartsPending } from "../app/cartSlice";
+import { getHistory } from "../app/historySlice";
 
 const UserAPI = () => {
   const { token } = useSelector((state) => state.token);
@@ -37,17 +38,17 @@ const UserAPI = () => {
     }
   }, [token, dispatch]);
 
-  // useEffect(() => {
-  //   if (token) {
-  //     const getHistoryCustomer = async () => {
-  //       const response = await axios.get("/users/history", {
-  //         headers: { Authorization: token },
-  //       });
-  //       console.log(response);
-  //     };
-  //     getHistoryCustomer();
-  //   }
-  // }, [token]);
+  useEffect(() => {
+    if (token) {
+      const getHistoryCustomer = async () => {
+        const response = await axios.get("/users/history", {
+          headers: { Authorization: token },
+        });
+        dispatch(getHistory(response.data));
+      };
+      getHistoryCustomer();
+    }
+  }, [token, dispatch]);
 };
 
 export default UserAPI;

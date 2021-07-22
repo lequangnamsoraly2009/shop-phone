@@ -4,18 +4,20 @@ const initialState = {
     history: [],
 };
 
-const userSlice = createSlice({
+const historySlice = createSlice({
     name: "history",
     initialState,
     reducers: {
-      
+      getHistory: (state,action) => {
+          state.history = action.payload;
+      }
     },
     extraReducers: {},
   });
   
-  const { actions, reducer } = userSlice;
+  const { actions, reducer } = historySlice;
   
-  export const {} = actions;
+  export const {getHistory} = actions;
   
   export default reducer;
   
