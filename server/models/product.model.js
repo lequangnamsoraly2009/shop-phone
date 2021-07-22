@@ -27,8 +27,7 @@ const productSchema = new mongoose.Schema({
     default: "Stocking",
   },
   color: {
-    type: String,
-    trim: true,
+    type: Array,
     required: true,
   },
   images: {
@@ -51,6 +50,7 @@ const productSchema = new mongoose.Schema({
   storage: {
     type: Number,
     required: true,
+    default: 500,
   },
   sale:{
     type: Number,

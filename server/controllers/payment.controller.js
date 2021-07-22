@@ -32,12 +32,33 @@ const paymentController = {
         address,
         notes,
       });
+
+      cart.filter((item) => {
+        return countSoldAndStorage(
+          item._id,
+          item.quantity,
+          item.numberSold,
+          item.storage
+        );
+      });
       // console.log(newPayment);
+      await newPayment.save();
+
       res.json({ newPayment });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+};
+
+const countSoldAndStorage = async (id, quantity, oldSold, oldStorage) => {
+  await Products.findOneAndUpdate(
+    { _id: id },
+    {
+      numberSold: quantity + oldSold,
+      storage: oldStorage - quantity,
+    }
+  );
 };
 
 module.exports = paymentController;

@@ -1,8 +1,6 @@
 import { Breadcrumb, Steps, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useSelector } from "react-redux";
-import "./checkout.css";
 import AddressShipping from "./components/addressShip";
 import CheckoutInfor from "./components/inforCheckout";
 import PaypalButton from "./PaypalButton";
@@ -12,6 +10,7 @@ import {
   removeCartPayMentTemp,
   removeManyCart,
 } from "../../../../app/cartSlice";
+import "./checkout.css";
 
 const { Step } = Steps;
 
@@ -39,7 +38,6 @@ const steps = [
 
 function CheckOut() {
   const [current, setCurrent] = useState(1);
-  // const { addressTemp } = useSelector((state) => state.carts);
   const { carts, addressTemp, cartPayMentTemp } = useSelector(
     (state) => state.carts
   );
@@ -60,10 +58,8 @@ function CheckOut() {
   };
 
   const tranSuccess = async (payment) => {
-    console.log(payment, addressTemp);
     const { paymentID, address } = payment;
     const { notes, phone } = addressTemp;
-
     await API.post(
       "/api/payment/",
       { cart: cartPayMentTemp, paymentID, address, phone, notes },
