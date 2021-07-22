@@ -10,7 +10,7 @@ import API from "../../../../api/axiosClient";
 import Swal from "sweetalert2";
 import {
   removeCartPayMentTemp,
-  removeOneCart,
+  removeManyCart,
 } from "../../../../app/cartSlice";
 
 const { Step } = Steps;
@@ -47,19 +47,6 @@ function CheckOut() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const updateCartToServer = async () => {
-      await API.patch(
-        "/users/addcart",
-        { cart: [...carts] },
-        {
-          headers: { Authorization: token },
-        }
-      );
-    };
-    updateCartToServer();
-  }, [carts, token]);
-
   const totalPrice = cartPayMentTemp.reduce((item1, item2) => {
     return item1 + item2.price * item2.quantity;
   }, 0);
@@ -84,9 +71,7 @@ function CheckOut() {
         headers: { Authorization: token },
       }
     );
-    cartPayMentTemp.forEach((item) => {
-      dispatch(removeOneCart(item._id));
-    });
+    dispatch(removeManyCart(cartPayMentTemp));
     dispatch(removeCartPayMentTemp());
     Swal.fire({
       position: "center",
@@ -96,6 +81,19 @@ function CheckOut() {
       timer: 1500,
     });
   };
+
+  useEffect(() => {
+    const updateCartToServer = async () => {
+      await API.patch(
+        "/users/addcart",
+        { cart: [...carts] },
+        {
+          headers: { Authorization: token },
+        }
+      );
+    };
+    updateCartToServer();
+  }, [carts, token]);
 
   return (
     <div className="container-fluid">

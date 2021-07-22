@@ -34,6 +34,12 @@ const cartSlice = createSlice({
       const cartRemove = action.payload;
       state.carts = state.carts.filter(cart => cart._id !== cartRemove)
     },
+    removeManyCart: (state, action) => {
+      const listCartRemove = action.payload;
+      listCartRemove.forEach(item => {
+        state.carts = state.carts.filter(cart => cart._id !== item._id)
+      })
+    },
     removeCart: (state, action) => {
       state.carts = [];
     },
@@ -55,7 +61,7 @@ const cartSlice = createSlice({
 
 const { actions, reducer } = cartSlice;
 
-export const { getCartsPending, getCarts, addCart, removeCart, updateCart,removeOneCart,addCartPayMentTemp, removeCartPayMentTemp, addAddressTemp, removeAddressTemp  } =
+export const { getCartsPending, getCarts, addCart, removeCart, updateCart,removeOneCart,removeManyCart,addCartPayMentTemp, removeCartPayMentTemp, addAddressTemp, removeAddressTemp  } =
   actions;
 
 export default reducer;
