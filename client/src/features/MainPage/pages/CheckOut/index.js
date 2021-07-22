@@ -1,5 +1,5 @@
 import { Breadcrumb, Steps, Button } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
 import "./checkout.css";
@@ -40,10 +40,25 @@ const steps = [
 function CheckOut() {
   const [current, setCurrent] = useState(1);
   // const { addressTemp } = useSelector((state) => state.carts);
-  const { addressTemp, cartPayMentTemp } = useSelector((state) => state.carts);
+  const { carts, addressTemp, cartPayMentTemp } = useSelector(
+    (state) => state.carts
+  );
   const { token } = useSelector((state) => state.token);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const updateCartToServer = async () => {
+      await API.patch(
+        "/users/addcart",
+        { cart: [...carts] },
+        {
+          headers: { Authorization: token },
+        }
+      );
+    };
+    updateCartToServer();
+  }, [carts, token]);
 
   const totalPrice = cartPayMentTemp.reduce((item1, item2) => {
     return item1 + item2.price * item2.quantity;
@@ -70,7 +85,7 @@ function CheckOut() {
       }
     );
     cartPayMentTemp.forEach((item) => {
-      dispatch(removeOneCart(item));
+      dispatch(removeOneCart(item._id));
     });
     dispatch(removeCartPayMentTemp());
     Swal.fire({

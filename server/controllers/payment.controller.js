@@ -32,7 +32,7 @@ const paymentController = {
         address,
         notes,
       });
-      console.log(newPayment);
+      // console.log(newPayment);
       res.json({ newPayment });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
