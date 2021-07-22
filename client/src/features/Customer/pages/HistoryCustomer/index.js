@@ -13,7 +13,7 @@ function HistoryCustomer() {
       dataIndex: "paymentID",
       key: "paymentID",
       render: (text, record, index) => (
-        <Link href="/" style={{ fontSize: 12}}>{record.paymentID}</Link>
+        <Link  to={`/${record._id}`} style={{ fontSize: 12}}>{record.paymentID}</Link>
       ),
       width: 300,
     },
@@ -82,7 +82,8 @@ function HistoryCustomer() {
         <h2>Your History Order</h2>
       </div>
       <div className="history-table">
-        <Table columns={columns} dataSource={history} />
+        <Table columns={columns} dataSource={history} />  
+        {/* Theem key vao dataSource */}
       </div>
     </div>
   );
