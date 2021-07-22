@@ -1,11 +1,17 @@
 import { Breadcrumb, Steps, Button } from "antd";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
 import "./checkout.css";
 import AddressShipping from "./components/addressShip";
 import CheckoutInfor from "./components/inforCheckout";
 import PaypalButton from "./PaypalButton";
+import API from "../../../../api/axiosClient";
+import Swal from "sweetalert2";
+import {
+  removeCartPayMentTemp,
+  removeOneCart,
+} from "../../../../app/cartSlice";
 
 const { Step } = Steps;
 
@@ -34,11 +40,14 @@ const steps = [
 function CheckOut() {
   const [current, setCurrent] = useState(1);
   // const { addressTemp } = useSelector((state) => state.carts);
-  const  { addressTemp, cartPayMentTemp} = useSelector((state) => state.carts)
+  const { addressTemp, cartPayMentTemp } = useSelector((state) => state.carts);
+  const { token } = useSelector((state) => state.token);
+
+  const dispatch = useDispatch();
 
   const totalPrice = cartPayMentTemp.reduce((item1, item2) => {
     return item1 + item2.price * item2.quantity;
-  },0)
+  }, 0);
 
   const nextStep = () => {
     setCurrent(current + 1);
@@ -48,9 +57,30 @@ function CheckOut() {
     setCurrent(current - 1);
   };
 
-  const tranSuccess = async(payment)=>{
-    console.log(payment,addressTemp);
-  }
+  const tranSuccess = async (payment) => {
+    console.log(payment, addressTemp);
+    const { paymentID, address } = payment;
+    const { notes, phone } = addressTemp;
+
+    await API.post(
+      "/api/payment/",
+      { cart: cartPayMentTemp, paymentID, address, phone, notes },
+      {
+        headers: { Authorization: token },
+      }
+    );
+    cartPayMentTemp.forEach((item) => {
+      dispatch(removeOneCart(item));
+    });
+    dispatch(removeCartPayMentTemp());
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "You have successfully placed an order !",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
 
   return (
     <div className="container-fluid">
@@ -74,12 +104,14 @@ function CheckOut() {
         </Steps>
         <div className="steps-content">{steps[current].content}</div>
         <div className="steps-action">
-          {current < steps.length - 1 &&(
+          {current < steps.length - 1 && (
             <Button type="primary" onClick={() => nextStep()}>
               Next
             </Button>
           )}
-          {current === steps.length - 1 && <PaypalButton total={totalPrice + 10} tranSuccess={tranSuccess} />}
+          {current === steps.length - 1 && (
+            <PaypalButton total={totalPrice + 10} tranSuccess={tranSuccess} />
+          )}
           {current > 1 && (
             <Button style={{ margin: "0 8px" }} onClick={() => prevStep()}>
               Previous
