@@ -50,7 +50,7 @@ function HistoryOrder() {
               borderBottom: "2px solid rgb(25,144,255)",
             }}
           >
-            INFORMATION OF USER
+            INFORMATION OF ORDER
           </span>
           <div className="order-infor-wrapper">
             <div className="order-infor-address">
@@ -73,6 +73,10 @@ function HistoryOrder() {
                   0{orderDetail.phone}
                 </span>
               )}
+              <span>
+                <span style={{ color: "#000", fontWeight: 800 }}>Name: </span>
+                {orderDetail.address.recipient_name}
+              </span>
             </div>
             <div className="order-infor-delivery">
               <span>
@@ -98,7 +102,11 @@ function HistoryOrder() {
         </div>
       </div>
       <div className="order-table">
-        <Table columns={columnTable} dataSource={orderDetail.cart}  pagination={{ position: ["none"] }} />
+        <Table
+          columns={columnTable}
+          dataSource={orderDetail.cart}
+          pagination={{ position: ["none"] }}
+        />
       </div>
       <div className="order-total">
         <div className="order-total-wrapper">
@@ -151,6 +159,18 @@ function HistoryOrder() {
             </span>
           </div>
         </div>
+      </div>
+      <div className="order-note">
+        <span style={{ fontSize: 15, fontWeight: 600, marginRight: 5 }}>
+          Notes of Customer:
+        </span>
+        {orderDetail.notes === "" || orderDetail.notes === undefined ? (
+          <span>No Note Here</span>
+        ) : (
+          <span>
+            <i>{orderDetail.notes}</i>
+          </span>
+        )}
       </div>
       <div className="order-button">
         <a
