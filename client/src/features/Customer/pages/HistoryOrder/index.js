@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Table } from "antd";
 import "./historyOrder.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { columnTable } from "./columnPage";
 
 function HistoryOrder() {
   const params = useParams();
@@ -57,8 +58,9 @@ function HistoryOrder() {
                 <span style={{ color: "#000", fontWeight: 800 }}>
                   Address:{" "}
                 </span>
-                {orderDetail.address.line1} - {orderDetail.address.city} -{" "}
-                {orderDetail.address.state} - {orderDetail.address.country_code}
+                {orderDetail.address?.line1} - {orderDetail.address?.city} -{" "}
+                {orderDetail.address?.state} -{" "}
+                {orderDetail.address?.country_code}
               </span>
               {orderDetail.phone === "" || orderDetail.phone === undefined ? (
                 <span>
@@ -74,13 +76,17 @@ function HistoryOrder() {
             </div>
             <div className="order-infor-delivery">
               <span>
-                <span style={{ color: "#000", fontWeight: 800, marginRight: 5 }}>
+                <span
+                  style={{ color: "#000", fontWeight: 800, marginRight: 5 }}
+                >
                   Delivery Way:
                 </span>
                 Economical delivery
               </span>
               <span>
-                <span style={{ color: "red", fontWeight: 800 , marginRight: 5}}>Fee:</span>
+                <span style={{ color: "red", fontWeight: 800, marginRight: 5 }}>
+                  Ship:
+                </span>
                 10.0 $
               </span>
             </div>
@@ -90,6 +96,9 @@ function HistoryOrder() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="order-table">
+        <Table columns={columnTable} dataSource={orderDetail.cart} />
       </div>
     </div>
   );
