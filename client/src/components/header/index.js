@@ -21,6 +21,7 @@ import { removeToken } from "../../app/tokenSlice";
 import { removeAddressTemp, removeCart, removeCartPayMentTemp } from "../../app/cartSlice";
 import UserAPI from "../../api/userAPI";
 import ProductAPI from "../../api/productAPI";
+import { Link } from "react-router-dom";
 
 const { Search } = Input;
 // const { Link } = Anchor;
@@ -196,10 +197,10 @@ function HeaderNav() {
                 </div>
               )}
               <Menu.Item key="cart" className="cart_icon">
-                <a href="/home/cart">
+                <Link to="/home/cart">
                   <Badge className="badge-count" count={carts.length} overflowCount={9} />
                   <ShoppingCartOutlined style={{ fontSize: 25 }} />
-                </a>
+                </Link>
               </Menu.Item>
             </Menu>
           </div>

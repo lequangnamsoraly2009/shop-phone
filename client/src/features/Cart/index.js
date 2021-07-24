@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 
 function Cart() {
   const { carts, isLoadingCart } = useSelector((state) => state.carts);
+  const { isLoggedIn } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
   const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
@@ -177,14 +178,21 @@ function Cart() {
   };
 
   const sendPayMentCart = () => {
-    if (productChoice === 0) {
+    if (isLoggedIn === false) {
       Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'You have not selected any products to pay! Please check again !',
+        icon: "error",
+        title: "Oops...",
+        text: "Please Login or Register to Payment",
+      });
+    } else if (productChoice === 0) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          "You have not selected any products to pay! Please check again !",
         showConfirmButton: false,
-        timer: 3000
-      })
+        timer: 3000,
+      });
     }
     dispatch(addCartPayMentTemp(productCheckOut));
   };
@@ -241,7 +249,22 @@ function Cart() {
               </div>
               <div className="cart-total ">
                 <div style={{ margin: "20px auto 0px auto" }}>
-                  {productChoice === 0 ? (
+                  {isLoggedIn === false ? (
+                    <>
+                      <Link
+                        className="btn"
+                        style={{ backgroundColor: "rgb(230,246,255)" }}
+                        to="/home/cart"
+                        onClick={() => sendPayMentCart()}
+                      >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        PayMent
+                      </Link>
+                    </>
+                  ) : productChoice === 0 ? (
                     <>
                       <Link
                         className="btn"

@@ -20,7 +20,6 @@ function DetailProduct() {
 
   const { products } = useSelector((state) => state.products);
   const { token } = useSelector((state) => state.token);
-  const { isLoggedIn } = useSelector((state) => state.user);
   const { carts } = useSelector((state) => state.carts);
   // console.log(products)
   const params = useParams();
@@ -42,13 +41,6 @@ function DetailProduct() {
   };
 
   const addCartItem = async () => {
-    if (!isLoggedIn) {
-      Swal.fire({
-        icon: "question",
-        title: "Oops...",
-        text: "Please login or register to continue buying !!",
-      });
-    }
     const checkItem = carts.every((item) => {
       return item._id !== detailProduct._id;
     });

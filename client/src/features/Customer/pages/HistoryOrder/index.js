@@ -84,7 +84,7 @@ function HistoryOrder() {
                 <span
                   style={{ color: "#000", fontWeight: 800, marginRight: 5 }}
                 >
-                  Delivery Way:
+                  Delivery Method:
                 </span>
                 Economical delivery
               </span>
