@@ -9,9 +9,6 @@ function CategoryPage() {
         <Switch>
       {/* <Redirect exact from="/" to="/home" /> */}
       <Route path={`${match.url}/`} exact component={Category} />
-      <Route path={`${match.url}/:id`} component={Category} />
-
-
       {/* <Route component={NotFound} /> */}
     </Switch>
     )
