@@ -98,21 +98,77 @@ function HistoryOrder() {
         </div>
       </div>
       <div className="order-table">
-        <Table columns={columnTable} dataSource={orderDetail.cart} />
+        <Table columns={columnTable} dataSource={orderDetail.cart}  pagination={{ position: ["none"] }} />
       </div>
       <div className="order-total">
-        <div className="order-total-item">
-          <span>Tam Tinh</span>
-          <span>385.000$</span>
+        <div className="order-total-wrapper">
+          <div className="order-total-item">
+            <span style={{ color: "#000", fontWeight: 500, marginRight: 150 }}>
+              Provisional
+            </span>
+            <span>
+              {orderDetail.cart?.reduce((item1, item2) => {
+                if (item2.sale === 0) {
+                  return item1 + item2.price * item2.quantity;
+                } else {
+                  return (
+                    item1 +
+                    item2.price * item2.quantity -
+                    Math.floor(
+                      item2.price * item2.quantity * (item2.sale / 100)
+                    )
+                  );
+                }
+              }, 0)}{" "}
+              $
+            </span>
+          </div>
+          <div className="order-total-item">
+            <span style={{ color: "#000", fontWeight: 500, marginRight: 150 }}>
+              Ship Fee
+            </span>
+            <span style={{ borderBottom: "1px solid #000" }}>10 $</span>
+          </div>
+          <div className="order-total-item">
+            <span style={{ color: "#000", fontWeight: 500, marginRight: 150 }}>
+              Total Price
+            </span>
+            <span style={{ color: "red", fontSize: 16, fontWeight: 800 }}>
+              {orderDetail.cart?.reduce((item1, item2) => {
+                if (item2.sale === 0) {
+                  return item1 + item2.price * item2.quantity;
+                } else {
+                  return (
+                    item1 +
+                    item2.price * item2.quantity -
+                    Math.floor(
+                      item2.price * item2.quantity * (item2.sale / 100)
+                    )
+                  );
+                }
+              }, 10)}{" "}
+              $
+            </span>
+          </div>
         </div>
-        <div className="order-total-item">
-          <span>Tam Tinh</span>
-          <span>385.000$</span>
-        </div>
-        <div className="order-total-item">
-          <span>Tam Tinh</span>
-          <span style={{ color: "red", fontSize: 20 , fontWeight: 800 }}>385.000$</span>
-        </div>
+      </div>
+      <div className="order-button">
+        <a
+          className="btn"
+          style={{
+            width: "100%",
+            textAlign: "center",
+            backgroundColor: "rgb(228, 228, 228)",
+            cursor: "pointer",
+          }}
+          href="/customer/history"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          Return Order History
+        </a>
       </div>
     </div>
   );

@@ -8,11 +8,11 @@ export const columnTable = [
     width: "40%",
     render: (text, record, index) => (
       <div className="order-table-product">
-        <a href="/" className="order-table-img">
+        <a href={`/${record._id}`} className="order-table-img">
           <img src={record.images.url} alt={record.images.public_id} />
         </a>
         <div className="order-table-info">
-          <a href="/">
+          <a href={`/${record._id}`}>
             <span style={{ fontSize: 15, fontWeight: 600 }}>
               {record.title.toUpperCase()}
             </span>
