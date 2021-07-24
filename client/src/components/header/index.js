@@ -22,6 +22,7 @@ import { removeAddressTemp, removeCart, removeCartPayMentTemp } from "../../app/
 import UserAPI from "../../api/userAPI";
 import ProductAPI from "../../api/productAPI";
 import { Link } from "react-router-dom";
+import CategoryAPI from "../../api/categoryAPI";
 
 const { Search } = Input;
 // const { Link } = Anchor;
@@ -32,6 +33,7 @@ function HeaderNav() {
   // console.log(token)
   UserAPI();
   ProductAPI();
+  CategoryAPI();
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
   const {carts} = useSelector((state) => state.carts);

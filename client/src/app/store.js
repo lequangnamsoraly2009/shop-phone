@@ -15,6 +15,7 @@ import userReducer from "./userSlice";
 import productReducer from "./productSlice";
 import cartReducer from "./cartSlice";
 import historyReducer from "./historySlice";
+import categoryReducer from "./categorySlice";
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   products: productReducer,
   carts: cartReducer,
   histories: historyReducer,
+  categories: categoryReducer,
 });
 
 const persistConfig = {
