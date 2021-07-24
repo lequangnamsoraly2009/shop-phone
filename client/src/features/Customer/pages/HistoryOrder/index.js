@@ -100,6 +100,20 @@ function HistoryOrder() {
       <div className="order-table">
         <Table columns={columnTable} dataSource={orderDetail.cart} />
       </div>
+      <div className="order-total">
+        <div className="order-total-item">
+          <span>Tam Tinh</span>
+          <span>385.000$</span>
+        </div>
+        <div className="order-total-item">
+          <span>Tam Tinh</span>
+          <span>385.000$</span>
+        </div>
+        <div className="order-total-item">
+          <span>Tam Tinh</span>
+          <span style={{ color: "red", fontSize: 20 , fontWeight: 800 }}>385.000$</span>
+        </div>
+      </div>
     </div>
   );
 }

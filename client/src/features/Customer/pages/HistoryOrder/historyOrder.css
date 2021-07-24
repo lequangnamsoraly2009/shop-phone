@@ -30,3 +30,36 @@
   display: flex;
   flex-direction: column;
 }
+
+.order-table-product{
+    display: flex;
+    flex-direction: row;
+}
+
+.order-table-img{
+    width: 100px;
+    height: 100px;
+}
+
+.order-table-img img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.order-table-info{
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    margin-left: 20px;
+}
+
+/* Total */
+.order-total{
+    margin: 20px  0;
+    display: flex;
+    flex-direction: column;
+}
+
+
