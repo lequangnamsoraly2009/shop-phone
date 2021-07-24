@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import CategoryDetail from './pages/categoryDetail';
+// import CategoryDetail from './pages/categoryDetail';
 import Category from './pages/categoryMain';
 
 function CategoryPage() {
@@ -9,7 +9,7 @@ function CategoryPage() {
         <Switch>
       {/* <Redirect exact from="/" to="/home" /> */}
       <Route path={`${match.url}/`} exact component={Category} />
-      <Route path={`${match.url}/:id`} component={CategoryDetail} />
+      <Route path={`${match.url}/:id`} component={Category} />
 
 
       {/* <Route component={NotFound} /> */}
