@@ -1,8 +1,32 @@
-.order-date-delivery{
-    display: flex;
-    justify-content: flex-end;
+.order-date-delivery {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.order-date-delivery span{
-    color: rgba(0, 0, 0, 1)
+.order-date-delivery span {
+  color: rgba(0, 0, 0, 1);
+}
+
+/* Information Receiver */
+
+.order-infor-receiver {
+  margin: 20px 0;
+}
+
+.order-infor-address-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-infor-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.order-infor-address,
+.order-infor-delivery {
+  display: flex;
+  flex-direction: column;
 }

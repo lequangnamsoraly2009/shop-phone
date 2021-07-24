@@ -39,6 +39,57 @@ function HistoryOrder() {
         <span>{new Date(orderDetail.createdAt).toLocaleString("vi-GB")}</span>
       </div>
       <div className="order-infor-receiver">
+        <div className="order-infor-address-wrapper">
+          <span
+            style={{
+              color: "#000",
+              fontWeight: 600,
+              fontSize: 20,
+              margin: "0 auto",
+              borderBottom: "2px solid rgb(25,144,255)",
+            }}
+          >
+            INFORMATION OF USER
+          </span>
+          <div className="order-infor-wrapper">
+            <div className="order-infor-address">
+              <span>
+                <span style={{ color: "#000", fontWeight: 800 }}>
+                  Address:{" "}
+                </span>
+                {orderDetail.address.line1} - {orderDetail.address.city} -{" "}
+                {orderDetail.address.state} - {orderDetail.address.country_code}
+              </span>
+              {orderDetail.phone === "" || orderDetail.phone === undefined ? (
+                <span>
+                  <span style={{ color: "#000", fontWeight: 800 }}>Phone:</span>{" "}
+                  0xxxxxx295
+                </span>
+              ) : (
+                <span>
+                  <span style={{ color: "#000", fontWeight: 800 }}>Phone:</span>{" "}
+                  0{orderDetail.phone}
+                </span>
+              )}
+            </div>
+            <div className="order-infor-delivery">
+              <span>
+                <span style={{ color: "#000", fontWeight: 800, marginRight: 5 }}>
+                  Delivery Way:
+                </span>
+                Economical delivery
+              </span>
+              <span>
+                <span style={{ color: "red", fontWeight: 800 , marginRight: 5}}>Fee:</span>
+                10.0 $
+              </span>
+            </div>
+            <div className="order-infor-status">
+              <span style={{ color: "#000", fontWeight: 800 }}>Status: </span>
+              <span style={{ color: "green" }}>Delivery Success</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
