@@ -14,7 +14,6 @@ function MainPage() {
       {/* <Redirect exact from="/" to="/home" /> */}
       <Route path={`${match.url}/`} exact component={DashBoard} />
       <Route path={`${match.url}/cart`} component={Cart} />
-
       {isLoggedIn ? (
         <Switch>
           <Route path={`${match.url}/checkout`} component={CheckOut} />
