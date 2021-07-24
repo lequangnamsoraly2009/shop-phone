@@ -24,8 +24,9 @@ function HistoryOrder() {
       <div className="breadcumb-wrapper">
         <Breadcrumb separator=">">
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+          <Breadcrumb.Item href="/customer/history">History</Breadcrumb.Item>
           <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
-            History
+            Order details
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
@@ -75,7 +76,7 @@ function HistoryOrder() {
               )}
               <span>
                 <span style={{ color: "#000", fontWeight: 800 }}>Name: </span>
-                {orderDetail.address.recipient_name}
+                {orderDetail.address?.recipient_name}
               </span>
             </div>
             <div className="order-infor-delivery">
@@ -162,10 +163,10 @@ function HistoryOrder() {
       </div>
       <div className="order-note">
         <span style={{ fontSize: 15, fontWeight: 600, marginRight: 5 }}>
-          Notes of Customer:
+          Your Notes For Shop:
         </span>
         {orderDetail.notes === "" || orderDetail.notes === undefined ? (
-          <span>No Note Here</span>
+          <span>(VietNamese Admin Said) <i>Bạn có notes lại cái gì cho Shop đâu mà bây giờ chui vô đây đọc </i>😭</span>
         ) : (
           <span>
             <i>{orderDetail.notes}</i>
