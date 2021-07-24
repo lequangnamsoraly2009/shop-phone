@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import axios from "axios";
+// import axios from "axios";
 import { getUser, isAAdmin, isABuyer } from "../app/userSlice";
 import { getCarts, getCartsPending } from "../app/cartSlice";
 import { getHistory } from "../app/historySlice";
+import API from  "./axiosClient"
 
 const UserAPI = () => {
   const { token } = useSelector((state) => state.token);
@@ -15,7 +16,7 @@ const UserAPI = () => {
     if (token) {
       const getUserLogin = async () => {
         try {
-          const response = await axios.get("/users/infor", {
+          const response = await API.get("/users/infor", {
             headers: { Authorization: token },
           });
           // console.log(response);
@@ -41,7 +42,7 @@ const UserAPI = () => {
   useEffect(() => {
     if (token) {
       const getHistoryCustomer = async () => {
-        const response = await axios.get("/users/history", {
+        const response = await API.get("/users/history", {
           headers: { Authorization: token },
         });
         dispatch(getHistory(response.data));
