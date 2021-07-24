@@ -44,7 +44,6 @@ function DetailProduct() {
     const checkItem = carts.every((item) => {
       return item._id !== detailProduct._id;
     });
-
     if (checkItem) {
       const newCart = {
         ...detailProduct,
@@ -52,6 +51,13 @@ function DetailProduct() {
         key: Math.floor(Math.random() * 9999999999),
       };
       dispatch(addCart(newCart));
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'The product has been added to cart',
+        showConfirmButton: false,
+        timer: 1500
+      })
       await API.patch(
         "/users/addcart",
         {
@@ -68,13 +74,7 @@ function DetailProduct() {
           headers: { Authorization: token },
         }
       );
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'The product has been added to cart',
-        showConfirmButton: false,
-        timer: 1500
-      })
+      
     } else {
       Swal.fire({
         icon: "error",

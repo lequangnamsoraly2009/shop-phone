@@ -22,15 +22,9 @@ function Cart() {
   const [productCheckOut, setProductCheckOut] = useState([]);
   const dispatch = useDispatch();
 
-  // console.log(productCheckOut)
 
   useEffect(() => {
-    // const getTotal = () => {
-    //   const totalPrice = carts.reduce((item1, item2) => {
-    //     return item1 + item2.price * item2.quantity;
-    //   }, 0);
-    //   setTotal(totalPrice);
-    // };
+
     const updateCartToServer = async () => {
       await API.patch(
         "/users/addcart",
@@ -67,7 +61,9 @@ function Cart() {
   };
 
   const removeCartItem = (idProduct) => {
-    dispatch(removeOneCart(idProduct));
+   
+      dispatch(removeOneCart(idProduct));
+   
   };
 
   if (isLoadingCart === true) {

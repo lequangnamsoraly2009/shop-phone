@@ -30,6 +30,7 @@ const cartSlice = createSlice({
         state.carts[cartIndex] = newCartUpdate;
       }
     },
+    
     removeOneCart: (state, action) => {
       const cartRemove = action.payload;
       state.carts = state.carts.filter((cart) => cart._id !== cartRemove);
@@ -73,6 +74,7 @@ export const {
   removeCartPayMentTemp,
   addAddressTemp,
   removeAddressTemp,
+
 } = actions;
 
 export default reducer;

@@ -28,7 +28,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["carts", "histories"],
+  blacklist: ["histories"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
