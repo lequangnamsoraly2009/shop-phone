@@ -3,6 +3,7 @@ import React from "react";
 import { AppstoreOutlined, FilterOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import "./categorymain.css"
+import ListItem from "../../components/listItem";
 
 const { SubMenu } = Menu;
 
@@ -30,7 +31,7 @@ function Category() {
                   title="Smart Phone"
                 //   style={{padding: 0}}
                 >
-                  <Menu.Item key="2" onChange={} >
+                  <Menu.Item key="2">
                     <span>iPhone</span>
                   </Menu.Item>
                   <Menu.Item key="3">
@@ -101,9 +102,9 @@ function Category() {
             </div>
           </div>
         </Col>
-        <Col className="gutter-row" span={18}>
-          <div style={{ border: "1px solid #000" }}>
-            Danh sach san pham nam o day ha
+        <Col className="gutter-row" span={20}>
+          <div>
+            <ListItem />
           </div>
         </Col>
       </Row>
