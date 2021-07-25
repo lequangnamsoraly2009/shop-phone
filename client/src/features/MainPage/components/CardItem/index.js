@@ -77,7 +77,7 @@ function CardItem({ product }) {
                 fontSize: 14,
               }}
             >
-              TP.Ho Chi Minh
+              Ho Chi Minh City
             </p>
           </div>
         ) : (
@@ -119,7 +119,7 @@ function CardItem({ product }) {
               fontSize: 14,
             }}
           >
-            TP.Ho Chi Minh
+            Ho Chi Minh City
           </p>
         </div>
       )}
