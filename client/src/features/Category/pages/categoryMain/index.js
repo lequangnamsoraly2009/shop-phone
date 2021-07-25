@@ -31,6 +31,13 @@ function Category() {
     dispatch(setSortFilter(""));
   };
 
+  const handleClickGetAll = () =>{
+    dispatch(setCategoryFilter(""));
+    dispatch(setSearchFilter(""));
+    dispatch(setPageFilter(1));
+    dispatch(setSortFilter(""));
+  }
+
   return (
     <div className="container-fluid">
       <Row gutter={{ xs: 4, sm: 8, md: 8, lg: 12 }}>
@@ -47,6 +54,7 @@ function Category() {
                   style={{ padding: 0 }}
                   key="1"
                   icon={<AppstoreOutlined spin />}
+                  onClick={()=>handleClickGetAll()}
                 >
                   <span>All Category</span>
                 </Menu.Item>

@@ -96,25 +96,25 @@ function HeaderNav() {
   const menu = (
     <Menu style={{ width: 200, left: -50 }}>
       <Menu.Item key="0">
-        <a href="/category/iphone">Iphone</a>
+        <a href="/category">Iphone</a>
       </Menu.Item>
       <Menu.Item key="1">
-        <a href="/category/samsung">SamSung</a>
+        <a href="/category">SamSung</a>
       </Menu.Item>
       <Menu.Item key="3">
-        <a href="/category/nokia">Nokia</a>
+        <a href="/category">Nokia</a>
       </Menu.Item>
       <Menu.Item key="4">
-        <a href="/category/vsmart">VsMart</a>
+        <a href="/category">VsMart</a>
       </Menu.Item>
       <Menu.Item key="5">
-        <a href="/category/xiaomi">Xiaomi</a>
+        <a href="/category">Xiaomi</a>
       </Menu.Item>
       <Menu.Item key="6">
-        <a href="/category/oppo">OPPO</a>
+        <a href="/category">OPPO</a>
       </Menu.Item>
       <Menu.Item key="7">
-        <a href="/category/vivo">Vivo</a>
+        <a href="/category">Vivo</a>
       </Menu.Item>
     </Menu>
   );
