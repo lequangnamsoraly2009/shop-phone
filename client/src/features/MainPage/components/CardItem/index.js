@@ -1,8 +1,9 @@
-import { Card, Rate } from "antd";
-import { Meta } from "antd/lib/list/Item";
+import { Card, Rate,Typography } from "antd";
 import React from "react";
 import "./cardItem.css";
 import { useHistory } from "react-router-dom";
+
+const {Paragraph} = Typography
 
 function CardItem({ product }) {
   const history = useHistory();
@@ -36,7 +37,13 @@ function CardItem({ product }) {
         />
         <span>BRAND OPENING SALE </span>
       </div>
-      <Meta title={product?.title} className="card-item-title" />
+      {/* <Meta title={product?.title} className="card-item-title" /> */}
+      <Paragraph
+        className="card-item-title"
+        ellipsis={{rows: 2, expandable: false}}
+      >
+        {product?.title}
+      </Paragraph>
       <div className="card-item-rate">
         <Rate disabled allowHalf defaultValue={4.5} />
         <div className="card-item-sold">

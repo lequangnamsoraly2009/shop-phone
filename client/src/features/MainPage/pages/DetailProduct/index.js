@@ -21,9 +21,9 @@ function DetailProduct() {
   const { products } = useSelector((state) => state.products);
   const { token } = useSelector((state) => state.token);
   const { carts } = useSelector((state) => state.carts);
-  // console.log(products)
+
   const params = useParams();
-  // console.log(params)
+  
   useEffect(() => {
     if (params) {
       products.forEach((product) => {

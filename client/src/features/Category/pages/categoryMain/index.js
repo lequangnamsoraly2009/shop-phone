@@ -18,11 +18,6 @@ function Category() {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
 
-  // const handleClickAll = () => {
-  //   dispatch(setCategoryFilter(""));
-  //   dispatch(setSearchFilter(""));
-  //   dispatch(setPageFilter(1));
-  // };
 
   const handleClickCategory = (cateID) => {
     dispatch(setCategoryFilter(`category=${cateID}`));

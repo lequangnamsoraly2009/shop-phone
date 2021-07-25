@@ -25,14 +25,10 @@ import { Link, useHistory } from "react-router-dom";
 import CategoryAPI from "../../api/categoryAPI";
 import ProductFilterAPI from "../../api/filterAPI";
 import { setSearchFilter } from "../../app/filterSlice";
-
 const { Search } = Input;
-// const { Link } = Anchor;
 
 function HeaderNav() {
   const [visible, setVisible] = useState(false);
-  // const token = useSelector(state=> state.token)
-  // console.log(token)
   UserAPI();
   ProductAPI();
   CategoryAPI();
