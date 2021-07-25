@@ -19,6 +19,7 @@ function CardItem({ product }) {
   return (
     <Card
       hoverable
+      style={{height: 430}}
       cover={
         <img
           style={{ paddingTop: 20 }}
@@ -40,21 +41,43 @@ function CardItem({ product }) {
         style={{ margin: "0px 5px", textTransform: "capitalize" }}
       />
       <div className="price-down">
-        <p
-          style={{
-            margin: 5,
-            textDecoration: "line-through",
-            fontWeight: 300,
-          }}
-        >
-          {product?.price} $
-        </p>
+        {product?.sale === 0 ? (
+          <>
+            <p
+              style={{
+                margin: 5,
+                // textDecoration: "line-through",
+                fontWeight: 700,
+              }}
+            >
+              {product?.price} $
+            </p>
+          </>
+        ) : (
+          <>
+            <p
+              style={{
+                margin: 5,
+                textDecoration: "line-through",
+                fontWeight: 300,
+              }}
+            >
+              {product?.price} $
+            </p>
 
-        <span style={{ margin: "auto 0", fontWeight: 300 }}>-10%</span>
+            <span style={{ margin: "auto 0", fontWeight: 300 }}>
+              -{product?.sale}%
+            </span>
+          </>
+        )}
       </div>
-      <p style={{ margin: "0px 5px", fontWeight: 800 }}>
-        {product?.price - (product?.price * 10) / 100} $
-      </p>
+      {product?.sale === 0 ? (
+        ""
+      ) : (
+        <p style={{ margin: "0px 5px", fontWeight: 800 }}>
+          {product?.price - (product?.price * product?.sale) / 100} $
+        </p>
+      )}
     </Card>
   );
 }
