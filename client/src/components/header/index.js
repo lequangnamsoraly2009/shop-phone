@@ -21,9 +21,10 @@ import { removeToken } from "../../app/tokenSlice";
 import { removeAddressTemp, removeCart, removeCartPayMentTemp } from "../../app/cartSlice";
 import UserAPI from "../../api/userAPI";
 import ProductAPI from "../../api/productAPI";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CategoryAPI from "../../api/categoryAPI";
 import ProductFilterAPI from "../../api/filterAPI";
+import { setSearchFilter } from "../../app/filterSlice";
 
 const { Search } = Input;
 // const { Link } = Anchor;
@@ -41,6 +42,7 @@ function HeaderNav() {
   const {carts} = useSelector((state) => state.carts);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const showDrawer = () => {
     setVisible(true);
@@ -86,7 +88,10 @@ function HeaderNav() {
     />
   );
 
-  const onSearch = (value) => console.log(value);
+  const onSearch = (value) => {
+    history.push("/category")
+    dispatch(setSearchFilter(value))
+  };
 
   const menu = (
     <Menu style={{ width: 200, left: -50 }}>

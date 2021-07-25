@@ -8,26 +8,25 @@ import {
 // import { Link } from "react-router-dom";
 import "./categorymain.css";
 import ListItem from "../../components/listItem";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setCategoryFilter,
-  setPageFilter,
-  setSearchFilter,
-  setSortFilter,
-} from "../../../../app/filterSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   setCategoryFilter,
+//   setPageFilter,
+//   setSearchFilter,
+//   setSortFilter,
+// } from "../../../../app/filterSlice";
 
 const { SubMenu } = Menu;
 
 function Category() {
   
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const handleClickAll = () => {
-    dispatch(setCategoryFilter(""));
-    dispatch(setSortFilter(""));
-    dispatch(setSearchFilter("iphone"));
-    dispatch(setPageFilter(1));
-  };
+  // const handleClickAll = () => {
+  //   dispatch(setCategoryFilter(""));
+  //   dispatch(setSearchFilter(""));
+  //   dispatch(setPageFilter(1));
+  // };
 
 
   return (
@@ -48,7 +47,7 @@ function Category() {
                   key="1"
                   icon={<AppstoreOutlined spin />}
                 >
-                  <span>All Category</span>
+                  <span >All Category</span>
                 </Menu.Item>
                 <SubMenu
                   key="smart-phone"
@@ -56,7 +55,7 @@ function Category() {
                   title="Smart Phone"
                   //   style={{padding: 0}}
                 >
-                  <Menu.Item onClick={() => handleClickAll()} key="2">
+                  <Menu.Item key="2">
                     <span>iPhone</span>
                   </Menu.Item>
                   <Menu.Item key="3">
