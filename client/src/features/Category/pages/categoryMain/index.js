@@ -8,19 +8,15 @@ import {
 // import { Link } from "react-router-dom";
 import "./categorymain.css";
 import ListItem from "../../components/listItem";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   setCategoryFilter,
-//   setPageFilter,
-//   setSearchFilter,
-//   setSortFilter,
-// } from "../../../../app/filterSlice";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setCategoryFilter, setPageFilter, setSearchFilter, setSortFilter } from "../../../../app/filterSlice";
 
 const { SubMenu } = Menu;
 
 function Category() {
-  
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.categories);
 
   // const handleClickAll = () => {
   //   dispatch(setCategoryFilter(""));
@@ -28,6 +24,12 @@ function Category() {
   //   dispatch(setPageFilter(1));
   // };
 
+  const handleClickCategory = (cateID) => {
+    dispatch(setCategoryFilter(`category=${cateID}`));
+    dispatch(setSearchFilter(""));
+    dispatch(setPageFilter(1));
+    dispatch(setSortFilter(""));
+  };
 
   return (
     <div className="container-fluid">
@@ -42,64 +44,28 @@ function Category() {
                 theme="white"
               >
                 <Menu.Item
-                  
                   style={{ padding: 0 }}
                   key="1"
                   icon={<AppstoreOutlined spin />}
                 >
-                  <span >All Category</span>
+                  <span>All Category</span>
                 </Menu.Item>
                 <SubMenu
                   key="smart-phone"
                   icon={<PhoneOutlined spin />}
-                  title="Smart Phone"
+                  title="List Categories"
                   //   style={{padding: 0}}
                 >
-                  <Menu.Item key="2">
-                    <span>iPhone</span>
-                  </Menu.Item>
-                  <Menu.Item key="3">
-                    <span>SamSung</span>
-                  </Menu.Item>
-                  <Menu.Item key="4">
-                    <span>Oppo</span>
-                  </Menu.Item>
-                  <Menu.Item key="5">
-                    <span>VsMart</span>
-                  </Menu.Item>
-                  <Menu.Item key="6">
-                    <span>Nokia</span>
-                  </Menu.Item>
-                  <Menu.Item key="8">
-                    <span>Vivo</span>
-                  </Menu.Item>
-                  <Menu.Item key="9">
-                    <span>Xiaomi</span>
-                  </Menu.Item>
-                  <Menu.Item key="10">
-                    <span>OnePlus</span>
-                  </Menu.Item>
-                </SubMenu>
-                <SubMenu
-                  key="brick-phone"
-                  icon={<PhoneOutlined spin />}
-                  title="Brick Phone"
-                >
-                  <Menu.Item key="11">
-                    <span>Nokia</span>
-                  </Menu.Item>
-                  <Menu.Item key="12">
-                    <span>Mobell</span>
-                  </Menu.Item>
-                  <Menu.Item key="13">
-                    <span>iTel</span>
-                  </Menu.Item>
-                  <Menu.Item key="14">
-                    <span>Masstel</span>
-                  </Menu.Item>
-                  <Menu.Item key="15">
-                    <span>Vertu</span>
-                  </Menu.Item>
+                  {categories.map((cate) => {
+                    return (
+                      <Menu.Item
+                        key={cate._id}
+                        onClick={() => handleClickCategory(cate._id)}
+                      >
+                        <span>{cate.nameCategory}</span>
+                      </Menu.Item>
+                    );
+                  })}
                 </SubMenu>
               </Menu>
               <div className="category-filter">
