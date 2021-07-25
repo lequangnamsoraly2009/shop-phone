@@ -15,7 +15,6 @@ import {
   setSearchFilter,
   setSortFilter,
 } from "../../../../app/filterSlice";
-import ProductFilterAPI from "../../../../api/filterAPI";
 
 const { SubMenu } = Menu;
 
@@ -23,15 +22,13 @@ function Category() {
   
   const dispatch = useDispatch();
 
-  ProductFilterAPI();
-  
-
   const handleClickAll = () => {
     dispatch(setCategoryFilter(""));
     dispatch(setSortFilter(""));
-    dispatch(setSearchFilter("samsung"));
+    dispatch(setSearchFilter("iphone"));
     dispatch(setPageFilter(1));
   };
+
 
   return (
     <div className="container-fluid">

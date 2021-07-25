@@ -23,7 +23,7 @@ import UserAPI from "../../api/userAPI";
 import ProductAPI from "../../api/productAPI";
 import { Link } from "react-router-dom";
 import CategoryAPI from "../../api/categoryAPI";
-// import ProductFilterAPI from "../../api/filterAPI";
+import ProductFilterAPI from "../../api/filterAPI";
 
 const { Search } = Input;
 // const { Link } = Anchor;
@@ -35,7 +35,7 @@ function HeaderNav() {
   UserAPI();
   ProductAPI();
   CategoryAPI();
-  // ProductFilterAPI();
+  ProductFilterAPI();
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
   const {carts} = useSelector((state) => state.carts);
