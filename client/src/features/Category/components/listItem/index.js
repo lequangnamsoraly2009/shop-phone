@@ -1,8 +1,8 @@
 import { Col, Radio, Row } from "antd";
 import React from "react";
-import CardItem from "../../../MainPage/components/CardItem";
 import { useSelector } from "react-redux";
 import "./listitem.css";
+import CardItemCate from "../cardItemCate";
 
 function ListItem() {
   const { products } = useSelector((state) => state.products);
@@ -27,7 +27,7 @@ function ListItem() {
             {products.map((product) => {
               return (
                 <Col key={product._id} className="gutter-row" span={6}>
-                  <CardItem product={product} />
+                  <CardItemCate product={product} />
                 </Col>
               );
             })}

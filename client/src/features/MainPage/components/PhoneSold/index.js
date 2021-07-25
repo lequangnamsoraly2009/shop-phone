@@ -15,11 +15,11 @@ function PhoneSold() {
         <h2>BEST SELLING 2021</h2>
       </div>
       <div className="site-phone-sold">
-        <Row gutter={[16, 24]}>
+        <Row gutter={[8, 12]}>
           {listProducts.map((product) => {
             return (
               <Col key={product._id} className="gutter-row" span={6}>
-                <CardItem key={product._id} product={product} />
+                <CardItem product={product} />
               </Col>
             );
           })}

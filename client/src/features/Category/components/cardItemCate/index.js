@@ -1,10 +1,10 @@
 import { Card, Rate } from "antd";
 import { Meta } from "antd/lib/list/Item";
 import React from "react";
-import "./cardItem.css";
+import "./carditemcate.css";
 import { useHistory } from "react-router-dom";
 
-function CardItem({ product }) {
+function CardItemCate({ product }) {
   const history = useHistory();
 
   const onClickDetails = () => {
@@ -19,7 +19,7 @@ function CardItem({ product }) {
   return (
     <Card
       hoverable
-      style={{ height: 500 }}
+      style={{ height: 440 }}
       cover={
         <img
           style={{ paddingTop: 20 }}
@@ -120,4 +120,4 @@ function CardItem({ product }) {
   );
 }
 
-export default CardItem;
+export default CardItemCate;
