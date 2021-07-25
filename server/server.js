@@ -22,7 +22,7 @@ app.use("/users", require("./routes/user.route"));
 app.use("/api", require("./routes/category.route"));
 app.use("/api/", require("./routes/payment.route"));
 app.use("/api/admin", require("./routes/uploadImage.route"));
-app.use("/api/admin", require("./routes/product.route"));
+app.use("/api", require("./routes/product.route"));
 
 //Connect Mongoose
 db.onConnection();

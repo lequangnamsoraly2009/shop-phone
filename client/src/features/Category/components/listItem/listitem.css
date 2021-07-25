@@ -1,8 +1,17 @@
 .list-item-header{
-    
-    margin-top: 5px;
+    margin: 5px 0 20px 0;
 }
 
-.list-item-content{
+/* .list-item-content{
     
+} */
+
+.list-item-pagination{
+    display: flex;
+    margin: 20px auto;
+}
+
+.list-item-pagination .ant-pagination{
+    display: flex;
+    margin: 20px auto;
 }

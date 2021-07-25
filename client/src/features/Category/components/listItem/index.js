@@ -1,4 +1,4 @@
-import { Col, Radio, Row } from "antd";
+import { Col, Pagination, Radio, Row } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import "./listitem.css";
@@ -33,6 +33,9 @@ function ListItem() {
             })}
           </Row>
         </div>
+      </div>
+      <div className="list-item-pagination">
+        <Pagination defaultCurrent={1} total={200} showSizeChanger={false}  pageSize={20}/>
       </div>
     </div>
   );
