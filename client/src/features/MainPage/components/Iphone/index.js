@@ -1,8 +1,45 @@
 import { Col, Row } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import CardItem from "../CardItem";
+import API from "../../../../api/axiosClient";
+import {
+  setCategoryFilter,
+  setPageFilter,
+  setSearchFilter,
+  setSortFilter,
+} from "../../../../app/filterSlice";
 
 function Iphone() {
+  const [iphones, setIphones] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getNewArrivals = async () => {
+      const response = await API.get(
+        `/api/filter/products?limit=${
+          1 * 8
+        }&category=60fda6f142896d2fbb6d9ae4&&title[regex]=`
+      );
+      setIphones(response.data.products);
+    };
+    getNewArrivals();
+  }, []);
+
+  const handleClick = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+    // history.push("/category");
+    dispatch(setSortFilter(""));
+    dispatch(setCategoryFilter("category=60fda6f142896d2fbb6d9ae4"));
+    dispatch(setSearchFilter(""));
+    dispatch(setPageFilter(1));
+  };
+
   return (
     <section className="soraly-section-5">
       <div className="banner-brands">
@@ -16,34 +53,22 @@ function Iphone() {
       </div>
       <div className="site-phone-sold">
         <Row gutter={[16, 24]}>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardItem />
-          </Col>
+          {iphones.map((product) => {
+            return (
+              <Col key={product._id}className="gutter-row" span={6}>
+                <CardItem product={product}/>
+              </Col>
+            );
+          })}
         </Row>
       </div>
       <div style={{ display: "flex" }}>
-        <a className="btn" style={{ margin: "20px auto" }} href="/new-arrivals">
+        <a
+          className="btn"
+          style={{ margin: "20px auto", cursor: "pointer" }}
+          onClick={handleClick}
+          href="/category"
+        >
           <span></span>
           <span></span>
           <span></span>
