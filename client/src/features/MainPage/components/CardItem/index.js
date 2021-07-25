@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Rate } from "antd";
 import { Meta } from "antd/lib/list/Item";
 import React from "react";
 import "./cardItem.css";
@@ -19,7 +19,7 @@ function CardItem({ product }) {
   return (
     <Card
       hoverable
-      style={{height: 430}}
+      style={{ height: 450 }}
       cover={
         <img
           style={{ paddingTop: 20 }}
@@ -36,23 +36,43 @@ function CardItem({ product }) {
         />
         <span>BRAND OPENING SALE </span>
       </div>
-      <Meta
-        title={product?.title}
-        style={{ margin: "0px 5px", textTransform: "capitalize" }}
-      />
+      <Meta title={product?.title} className="card-item-title" />
+      <div className="card-item-rate">
+        <Rate disabled allowHalf defaultValue={4.5} />
+        <div className="card-item-sold">
+          <span>Sold: </span>
+          <span>{product?.numberSold}</span>
+        </div>
+      </div>
       <div className="price-down">
         {product?.sale === 0 ? (
-          <>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
             <p
               style={{
                 margin: 5,
                 // textDecoration: "line-through",
                 fontWeight: 700,
+                fontSize: 14,
               }}
             >
               {product?.price} $
             </p>
-          </>
+            <p
+              style={{
+                margin: 5,
+                fontSize: 14,
+              }}
+            >
+              TP.Ho Chi Minh
+            </p>
+          </div>
         ) : (
           <>
             <p
@@ -60,12 +80,13 @@ function CardItem({ product }) {
                 margin: 5,
                 textDecoration: "line-through",
                 fontWeight: 300,
+                fontSize: 14,
               }}
             >
               {product?.price} $
             </p>
 
-            <span style={{ margin: "auto 0", fontWeight: 300 }}>
+            <span style={{ margin: "auto 0", fontWeight: 300, fontSize: 12 }}>
               -{product?.sale}%
             </span>
           </>
@@ -74,9 +95,26 @@ function CardItem({ product }) {
       {product?.sale === 0 ? (
         ""
       ) : (
-        <p style={{ margin: "0px 5px", fontWeight: 800 }}>
-          {product?.price - (product?.price * product?.sale) / 100} $
-        </p>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
+          <p style={{ margin: "0px 5px", fontWeight: 800, fontSize: 14 }}>
+            {product?.price - (product?.price * product?.sale) / 100} $
+          </p>
+          <p
+            style={{
+              margin: "0px 5px",
+              fontSize: 14,
+            }}
+          >
+            TP.Ho Chi Minh
+          </p>
+        </div>
       )}
     </Card>
   );
