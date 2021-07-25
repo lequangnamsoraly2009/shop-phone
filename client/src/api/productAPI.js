@@ -9,7 +9,7 @@ const ProductAPI = () => {
   useEffect(() => {
     const getAllProducts = async () => {
       const response = await API.get(`/api/products`);
-      // const response = await API.get(`/api/products?limit=${1*20}&&&title[regex]=`);
+      // const response = await API.get(`/api/products?limit=${1*20}&&&title[regex]=samsung`);
       dispatch(getProducts(response.data.products));
     };
     getAllProducts();

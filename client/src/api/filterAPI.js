@@ -4,18 +4,24 @@ import API from "../api/axiosClient";
 import { getProductsFilter, setResultFilter } from "../app/filterSlice";
 
 const ProductFilterAPI = () => {
-  const {category,sort,search,page} = useSelector(state => state.products);
+  const { categoryFilter, sortFilter, searchFilter, pageFilter } = useSelector(
+    (state) => state.productsFilter
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getAllProductsFilter = async () => {
-      const response = await API.get(`/api/products?limit=${page*20}&${category}&${sort}&title[regex]=${search}`);
+      const response = await API.get(
+        `/api/filter/products?limit=${
+          pageFilter * 20
+        }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
+      );
       // const response = await API.get(`/api/products?limit=${1*20}&&&title[regex]=`);
       dispatch(getProductsFilter(response.data.products));
-        dispatch(setResultFilter(response.data.result));
+      dispatch(setResultFilter(response.data.result));
     };
     getAllProductsFilter();
-  }, [dispatch,page,category,sort,search]);
+  }, [dispatch, pageFilter, categoryFilter, sortFilter, searchFilter]);
 };
 
 export default ProductFilterAPI;

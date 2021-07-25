@@ -60,6 +60,23 @@ const productController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  getFilterProducts: async (req, res) => {
+    try {
+      const features = new APIfeatures(Products.find(), req.query)
+        .filtering()
+        .sorting()
+        .pagination();
+
+      const products = await features.query;
+      res.json({
+        status: "success",
+        result: products.length,
+        products: products,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
   createProduct: async (req, res) => {
     try {
       const {

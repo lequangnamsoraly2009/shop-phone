@@ -14,22 +14,22 @@ const productFilterSlice = createSlice({
   initialState,
   reducers: {
     getProductsFilter: (state, action) => {
-      state.products = action.payload;
+      state.productsFilter = action.payload;
     },
     setCategoryFilter: (state, action) => {
-      state.category = action.payload;
+      state.categoryFilter = action.payload;
     },
     setSortFilter: (state, action) => {
-      state.sort = action.payload;
+      state.sortFilter = action.payload;
     },
     setSearchFilter: (state, action) => {
-      state.search = action.payload;
+      state.searchFilter = action.payload;
     },
     setPageFilter: (state, action) => {
-      state.page = action.payload;
+      state.pageFilter = action.payload;
     },
     setResultFilter: (state, action) => {
-      state.result = action.payload;
+      state.resultFilter = action.payload;
     },
   },
   extraReducers: {},
