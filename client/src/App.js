@@ -19,7 +19,6 @@ import Customer from "./features/Customer";
 import CategoryPage from "./features/Category";
 
 function App() {
-
   return (
     <Router>
       <Layout>
@@ -31,9 +30,7 @@ function App() {
             <Route path="/buyer" component={AuthPage} />
             <Route path="/category" component={CategoryPage} />
             <Route path="/customer" component={Customer} />
-            <Route path="/:id" exact component={DetailProduct} />
-
-            {/* <Route path="/cart" exact component={Cart} /> */}
+            <Route path="/:id" component={DetailProduct} />
           </Switch>
         </Content>
         <FooterNav />

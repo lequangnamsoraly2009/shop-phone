@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
+import PageNotFound from "../../components/pagenotfound";
 import Cart from "../Cart";
 import CheckOut from "./pages/CheckOut";
 import DashBoard from "./pages/DashBoard";
@@ -11,7 +12,6 @@ function MainPage() {
 
   return (
     <Switch>
-      {/* <Redirect exact from="/" to="/home" /> */}
       <Route path={`${match.url}/`} exact component={DashBoard} />
       <Route path={`${match.url}/cart`} component={Cart} />
       {isLoggedIn ? (
@@ -20,11 +20,10 @@ function MainPage() {
         </Switch>
       ) : (
         <Switch>
-          <p>Page Not Found</p>
+          <Route component={PageNotFound} />
         </Switch>
       )}
-
-      {/* <Route component={NotFound} /> */}
+      <Route component={PageNotFound} />
     </Switch>
   );
 }

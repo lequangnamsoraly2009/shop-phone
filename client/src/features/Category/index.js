@@ -1,17 +1,17 @@
-import React from 'react'
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import React from "react";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+import PageNotFound from "../../components/pagenotfound";
 // import CategoryDetail from './pages/categoryDetail';
-import Category from './pages/categoryMain';
+import Category from "./pages/categoryMain";
 
 function CategoryPage() {
-    const match = useRouteMatch();
-    return (
-        <Switch>
-      {/* <Redirect exact from="/" to="/home" /> */}
+  const match = useRouteMatch();
+  return (
+    <Switch>
       <Route path={`${match.url}/`} exact component={Category} />
-      {/* <Route component={NotFound} /> */}
+      <Route component={PageNotFound} />
     </Switch>
-    )
+  );
 }
 
-export default CategoryPage
+export default CategoryPage;
