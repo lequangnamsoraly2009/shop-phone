@@ -1,4 +1,4 @@
-import { Col, Pagination, Radio, Row } from "antd";
+import { Col, Pagination, Radio, Result, Row } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./listitem.css";
@@ -44,25 +44,37 @@ function ListItem() {
       </div>
       <div className="list-item-content">
         <div className="list-item-main">
-          <Row gutter={[12, 12]}>
-            {productsFilter.map((product) => {
-              return (
-                <Col key={product._id} className="gutter-row" span={6}>
-                  <CardItemCate product={product} />
-                </Col>
-              );
-            })}
-          </Row>
+          {productsFilter.length === 0 ? (
+            <>
+              <Result status="warning" title="No search results found" />
+            </>
+          ) : (
+            <>
+              <Row gutter={[12, 12]}>
+                {productsFilter.map((product) => {
+                  return (
+                    <Col key={product._id} className="gutter-row" span={6}>
+                      <CardItemCate product={product} />
+                    </Col>
+                  );
+                })}
+              </Row>
+            </>
+          )}
         </div>
       </div>
       <div className="list-item-pagination">
-        <Pagination
-          defaultCurrent={1}
-          total={200}
-          showSizeChanger={false}
-          pageSize={20}
-          onChange={(page, pageSize) => handleChangePage(page, pageSize)}
-        />
+        {productsFilter.length >= 0 && productsFilter.length <= 20 ? (
+          ""
+        ) : (
+          <Pagination
+            defaultCurrent={1}
+            total={200}
+            showSizeChanger={false}
+            pageSize={20}
+            onChange={(page, pageSize) => handleChangePage(page, pageSize)}
+          />
+        )}
       </div>
     </div>
   );
