@@ -1,13 +1,35 @@
 import { Breadcrumb, Form, Input, InputNumber, Button } from "antd";
-
+import API from "../../../../api/axiosClient";
 import React from "react";
 import "./information.css";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+
 
 function InformationCustomer() {
   const { user } = useSelector((state) => state.user);
-  const onFinish = (values) => {
-    console.log(values);
+  const { token } = useSelector((state) => state.token);
+  const onFinish = async (values) => {
+    try {
+      await API.patch("/users/infor",{...values},{
+        headers: { Authorization: token },
+      }
+    );
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'User Information Updated !',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error.response.data.message}`,
+      });
+    }
+   
   };
 
   const layout = {
@@ -38,10 +60,16 @@ function InformationCustomer() {
           {...layout}
           name="nest-messages"
           onFinish={onFinish}
-          initialValues={{name: user.userName , phone: user.phone, email: user.email}}
+          initialValues={{
+            name: user.userName,
+            phone: user?.phone,
+            email: user.email,
+            age: user.age,
+            introduction: user?.introduction,
+          }}
         >
           <Form.Item name="name" label="Name">
-            <Input  />
+            <Input />
           </Form.Item>
           <Form.Item name="phone" label="Phone">
             <Input />

@@ -145,6 +145,29 @@ const userController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  updateInforUser: async (req, res) => {
+    try {
+      const user = await Users.findById(req.user.id);
+      if (!user)
+        return res
+          .status(400)
+          .json({ status: false, message: "User does not exist" });
+      const { name, phone, email, age, introduction } = req.body;
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        {
+          userName: name,
+          phone,
+          email,
+          age,
+          introduction,
+        }
+      );
+      res.json("Update User Success")
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
   addCart: async (req, res) => {
     try {
       const user = await Users.findById(req.user.id);

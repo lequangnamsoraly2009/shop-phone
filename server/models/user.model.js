@@ -36,6 +36,13 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    age: {
+      type: Number,
+      default: 18,
+    },
+    introduction: {
+      type: String,
+    }
   },
   {
     timestamps: true,
