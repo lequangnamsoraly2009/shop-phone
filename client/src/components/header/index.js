@@ -18,7 +18,11 @@ import { getLogout } from "../../app/userSlice";
 import { persistor } from "../../app/store";
 import Swal from "sweetalert2";
 import { removeToken } from "../../app/tokenSlice";
-import { removeAddressTemp, removeCart, removeCartPayMentTemp } from "../../app/cartSlice";
+import {
+  removeAddressTemp,
+  removeCart,
+  removeCartPayMentTemp,
+} from "../../app/cartSlice";
 import UserAPI from "../../api/userAPI";
 import ProductAPI from "../../api/productAPI";
 import { Link, useHistory } from "react-router-dom";
@@ -35,7 +39,7 @@ function HeaderNav() {
   ProductFilterAPI();
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
-  const {carts} = useSelector((state) => state.carts);
+  const { carts } = useSelector((state) => state.carts);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -61,7 +65,7 @@ function HeaderNav() {
       dispatch(removeToken());
       dispatch(removeCart());
       dispatch(removeCartPayMentTemp());
-      dispatch(removeAddressTemp())
+      dispatch(removeAddressTemp());
       Swal.fire({
         position: "center",
         icon: "success",
@@ -85,8 +89,8 @@ function HeaderNav() {
   );
 
   const onSearch = (value) => {
-    history.push("/category")
-    dispatch(setSearchFilter(value))
+    history.push("/category");
+    dispatch(setSearchFilter(value));
   };
 
   const menu = (
@@ -203,7 +207,11 @@ function HeaderNav() {
               )}
               <Menu.Item key="cart" className="cart_icon">
                 <Link to="/home/cart">
-                  <Badge className="badge-count" count={carts.length} overflowCount={9} />
+                  <Badge
+                    className="badge-count"
+                    count={carts.length}
+                    overflowCount={9}
+                  />
                   <ShoppingCartOutlined style={{ fontSize: 25 }} />
                 </Link>
               </Menu.Item>
@@ -255,25 +263,25 @@ function HeaderNav() {
                     title="Category"
                   >
                     <Menu.Item key="1">
-                      <a href="/category/iphone">Iphone</a>
+                      <a href="/category">Iphone</a>
                     </Menu.Item>
                     <Menu.Item key="2">
-                      <a href="/category/samsung">SamSung</a>
+                      <a href="/category">SamSung</a>
                     </Menu.Item>
                     <Menu.Item key="3">
-                      <a href="/category/nokia">Nokia</a>
+                      <a href="/category">Nokia</a>
                     </Menu.Item>
                     <Menu.Item key="4">
-                      <a href="/category/vsmart">VsMart</a>
+                      <a href="/category">VsMart</a>
                     </Menu.Item>
                     <Menu.Item key="5">
-                      <a href="/category/xiaomi">Xiaomi</a>
+                      <a href="/category">Xiaomi</a>
                     </Menu.Item>
                     <Menu.Item key="6">
-                      <a href="/category/oppo">OPPO</a>
+                      <a href="/category">OPPO</a>
                     </Menu.Item>
                     <Menu.Item key="7">
-                      <a href="/category/vivo">Vivo</a>
+                      <a href="/category">Vivo</a>
                     </Menu.Item>
                   </SubMenu>
                 </Menu>
@@ -328,7 +336,13 @@ function HeaderNav() {
               <a href="/">BLOG</a>
             </li>
             <li className="nav-item">
-              <a href="/">GITHUB</a>
+              <a
+                href="https://github.com/lequangnamsoraly2009"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GITHUB
+              </a>
             </li>
           </ul>
         </div>

@@ -1,0 +1,14 @@
+.infor-header{
+    display: flex;
+}
+
+.infor-header span{
+    margin: 0 auto;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.infor-form{
+    width: 80%;
+    margin: 30px 0;
+}
