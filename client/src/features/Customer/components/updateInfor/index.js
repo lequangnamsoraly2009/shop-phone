@@ -1,4 +1,4 @@
-import { Button, Input, InputNumber,Form } from "antd";
+import { Button, Input, InputNumber, Form } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -17,6 +17,7 @@ function UpdateInfor() {
           headers: { Authorization: token },
         }
       );
+
       Swal.fire({
         position: "center",
         icon: "success",
@@ -24,6 +25,9 @@ function UpdateInfor() {
         showConfirmButton: false,
         timer: 1500,
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
       Swal.fire({
         icon: "error",

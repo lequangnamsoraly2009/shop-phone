@@ -163,16 +163,17 @@ const userController = {
             .json({ status: false, message: "Email already in use !" });
       }
 
-      if(phone.length < 9 || phone.length > 11 ){
+      if (phone.length < 9 || phone.length > 11) {
         return res
-            .status(400)
-            .json({ status: false, message: "Incorrect phone number" });
+          .status(400)
+          .json({ status: false, message: "Incorrect phone number" });
       }
 
-      if(name.length < 5 || name.length > 12){
-        return res
-            .status(400)
-            .json({ status: false, message: "Name User Has required 5 to 12 characters" });
+      if (name.length < 5 || name.length > 12) {
+        return res.status(400).json({
+          status: false,
+          message: "Name User Has required 5 to 12 characters",
+        });
       }
 
       await Users.findOneAndUpdate(
@@ -186,6 +187,41 @@ const userController = {
         }
       );
       res.json("Update User Success");
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  changePassword: async (req, res) => {
+    try {
+      const user = await Users.findById(req.user.id);
+      if (!user)
+        return res
+          .status(400)
+          .json({ status: false, message: "User does not exist" });
+      const { newPassword, oldPassword } = req.body;
+      // Check validate compare Passwords
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch)
+        return res
+          .status(400)
+          .json({ status: false, message: "Incorrect Password" });
+
+      if (regex.test(newPassword) === false)
+        return res.status(400).json({
+          status: false,
+          message:
+            "Password has at least 6 characters including at least 1 letter and 1 number",
+        });
+
+      //  Validate Password
+      const passwordHash = await bcrypt.hash(newPassword, 11);
+
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        { password: passwordHash }
+      );
+      res.json("Change Password Success");
+
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
