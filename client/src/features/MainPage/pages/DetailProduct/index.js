@@ -188,7 +188,7 @@ function DetailProduct() {
             <div className="product-title">
               <div className="product-name">
                 <h3 style={{ textTransform: "capitalize" }}>
-                  {detailProduct.title} - {detailProduct.color}
+                  {detailProduct.title} - {detailProduct.memory}GB - {detailProduct.color} 
                 </h3>
               </div>
               <div className="product-title-data">
@@ -265,14 +265,15 @@ function DetailProduct() {
                 <p>Color:</p>
               </div>
               <Select
-                defaultValue="gold"
+                defaultValue={1}
                 size="large"
+                style={{textTransform: "capitalize" }}
                 // onChange={handleChange}
               >
-                <Option value="pacificblue">Pacific Blue</Option>
-                <Option value="gold">Gold</Option>
-                <Option value="graphit">Graphit</Option>
-                <Option value="silver">Silver</Option>
+                <Option style={{textTransform: "capitalize" }} value={1}>{detailProduct.color}</Option>
+                <Option value={2}>Gold</Option>
+                <Option value={3}>Graphit</Option>
+                <Option value={4}>Silver</Option>
               </Select>
             </div>
             <div className="product-price">
