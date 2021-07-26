@@ -16,14 +16,16 @@ function DetailProduct() {
     "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746_sd.jpg;maxHeight=640;maxWidth=550"
   );
   const [detailProduct, setDetailProduct] = useState([]);
+  const [categoryDetail, setCategoryDetail] = useState("");
   const dispatch = useDispatch();
 
   const { products } = useSelector((state) => state.products);
   const { token } = useSelector((state) => state.token);
   const { carts } = useSelector((state) => state.carts);
+  const { categories } = useSelector((state) => state.categories);
 
   const params = useParams();
-  
+
   useEffect(() => {
     if (params) {
       products.forEach((product) => {
@@ -32,7 +34,12 @@ function DetailProduct() {
         }
       });
     }
-  }, [params, products]);
+    categories.forEach((item) => {
+      if (item._id === detailProduct.category) {
+        setCategoryDetail(item.nameCategory);
+      }
+    });
+  }, [params, products, categories, detailProduct.category]);
 
   // console.log(detailProduct);
   const onClickShowImage = (e, src) => {
@@ -52,12 +59,12 @@ function DetailProduct() {
       };
       dispatch(addCart(newCart));
       Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'The product has been added to cart',
+        position: "center",
+        icon: "success",
+        title: "The product has been added to cart",
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
       await API.patch(
         "/users/addcart",
         {
@@ -74,7 +81,6 @@ function DetailProduct() {
           headers: { Authorization: token },
         }
       );
-      
     } else {
       Swal.fire({
         icon: "error",
@@ -89,7 +95,7 @@ function DetailProduct() {
       <div className="breadcumb-wrapper">
         <Breadcrumb separator=">">
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-          <Breadcrumb.Item href="">{detailProduct.category}</Breadcrumb.Item>
+          <Breadcrumb.Item href="">{categoryDetail}</Breadcrumb.Item>
           <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
             {detailProduct.title}
           </Breadcrumb.Item>

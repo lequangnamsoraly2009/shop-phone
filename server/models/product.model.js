@@ -21,13 +21,17 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  memory: {
+    type: Number,
+    default: 64,
+  },
   status: {
     type: String,
     enum: ["Stocking", "OutStocking", "Importing"],
     default: "Stocking",
   },
   color: {
-    type: Array,
+    type: String,
     required: true,
   },
   images: {
