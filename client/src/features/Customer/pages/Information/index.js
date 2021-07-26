@@ -68,7 +68,7 @@ function InformationCustomer() {
             introduction: user?.introduction,
           }}
         >
-          <Form.Item name="name" label="Name">
+          <Form.Item name="name" label="Name" rules={[{ length: 10 }]}>
             <Input />
           </Form.Item>
           <Form.Item name="phone" label="Phone">

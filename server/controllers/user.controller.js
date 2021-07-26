@@ -153,6 +153,28 @@ const userController = {
           .status(400)
           .json({ status: false, message: "User does not exist" });
       const { name, phone, email, age, introduction } = req.body;
+
+      if (email !== user.email) {
+        const currentEmail = await Users.findOne({ email: email });
+
+        if (currentEmail)
+          return res
+            .status(400)
+            .json({ status: false, message: "Email already in use !" });
+      }
+
+      if(phone.length < 10 || phone.length > 12 ){
+        return res
+            .status(400)
+            .json({ status: false, message: "Incorrect phone number" });
+      }
+
+      if(name.length < 5 || name.length > 12){
+        return res
+            .status(400)
+            .json({ status: false, message: "Name User Has required 5 to 12 characters" });
+      }
+
       await Users.findOneAndUpdate(
         { _id: req.user.id },
         {
@@ -163,7 +185,7 @@ const userController = {
           introduction,
         }
       );
-      res.json("Update User Success")
+      res.json("Update User Success");
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
