@@ -163,7 +163,7 @@ const userController = {
             .json({ status: false, message: "Email already in use !" });
       }
 
-      if(phone.length < 10 || phone.length > 12 ){
+      if(phone.length < 9 || phone.length > 11 ){
         return res
             .status(400)
             .json({ status: false, message: "Incorrect phone number" });
