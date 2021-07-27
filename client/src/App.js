@@ -17,8 +17,12 @@ import MainPage from "./features/MainPage";
 import DetailProduct from "./features/MainPage/pages/DetailProduct";
 import Customer from "./features/Customer";
 import CategoryPage from "./features/Category";
+import { useSelector } from "react-redux";
+import PageNotFound from "./components/pagenotfound";
+import DetailProductMain from "./features/MainPage/pages";
 
 function App() {
+  const { isLoggedIn } = useSelector((state) => state.user);
   return (
     <Router>
       <Layout>
@@ -30,7 +34,7 @@ function App() {
             <Route path="/buyer" component={AuthPage} />
             <Route path="/category" component={CategoryPage} />
             <Route path="/customer" component={Customer} />
-            <Route path="/:id" component={DetailProduct} />
+            <Route path="/detail" component={DetailProductMain} />
           </Switch>
         </Content>
         <FooterNav />

@@ -54,7 +54,7 @@ function NewArrivals() {
           {newArrivals.map((item) => {
             return (
               <Col key={item._id} span={6} style={{ height: "auto" }}>
-                <a href={`/${item._id}`}>
+                <a href={`/detail/${item._id}`}>
                   <CardItem product={item} />
                 </a>
               </Col>
