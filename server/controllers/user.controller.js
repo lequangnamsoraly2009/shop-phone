@@ -3,7 +3,7 @@ const PendingUsers = require("../models/pendingUser.model");
 const Payments = require("../models/payment.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { sendConfirmationEmail } = require("../helper/mailer.helper");
+const { sendConfirmationEmail,sendResetPasswordEmail } = require("../helper/mailer.helper");
 
 // Generator 1 regex
 const regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
@@ -51,17 +51,6 @@ const userController = {
 
       await newUser.save();
       await sendConfirmationEmail({ toUser: newUser, hash: newUser._id });
-
-      // Create jsonwebtoken to authentication
-
-      // const accessToken = createAccessToken({ id: newUser._id });
-      // const refreshToken = createRefreshToken({ id: newUser._id });
-
-      // res.cookie("refreshToken", refreshToken, {
-      //   httpOnly: true,
-      //   path: "/users/refresh_token",
-      // });
-
       res.json({ ok: true });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
@@ -89,6 +78,26 @@ const userController = {
       await user.remove();
 
       res.json({ message: `User ${user.userName} has been activated` });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  resetPassword: async (req, res) => {
+    try {
+      const {email} = req.body;
+      const user = await Users.findOne({ email: email})
+      if(!user) return res.status(400).json({status: false,message: "User does not exist"})
+
+      const newPassword = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5);
+
+      await sendResetPasswordEmail({ toUser: newUser, newPassword: newPassword });
+
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        { password: newPassword}
+      );
+      res.json("Change Password Success");
+
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
