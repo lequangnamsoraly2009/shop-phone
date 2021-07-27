@@ -12,7 +12,7 @@ function Customer() {
         <Route path={`${match.url}/history`} exact component={HistoryCustomer} />
         <Route path={`${match.url}/history/:id`} exact component={HistoryOrder} />
         <Route path={`${match.url}/infor`} exact component={InformationCustomer} />
-        <Route component={PageNotFound} />
+        <Route path="*" exact component={PageNotFound} />
       </Switch>
     );
 }

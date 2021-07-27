@@ -189,7 +189,7 @@ function HeaderNav() {
                       U
                     </Avatar>
                     <a
-                      href="/buyer/user"
+                      href="/customer/infor"
                       style={{ textTransform: "capitalize" }}
                     >
                       {user.userName}

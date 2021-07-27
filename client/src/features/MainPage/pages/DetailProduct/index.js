@@ -251,11 +251,11 @@ function DetailProduct() {
                 <p>Internal Memory:</p>
               </div>
               <Select
-                defaultValue="512gb"
+                defaultValue="64"
                 size="large"
                 // onChange={handleChange}
               >
-                <Option value="64gb">64GB</Option>
+                <Option value="64">{detailProduct.memory} GB</Option>
                 <Option value="128gb">128 GB</Option>
                 <Option value="256gb">256 GB</Option>
                 <Option value="512gb">512 GB</Option>
