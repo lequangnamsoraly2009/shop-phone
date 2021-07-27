@@ -3,7 +3,7 @@ const PendingUsers = require("../models/pendingUser.model");
 const Payments = require("../models/payment.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {sendConfirmationEmail} = require("../helper/mailer.helper")
+const { sendConfirmationEmail } = require("../helper/mailer.helper");
 
 // Generator 1 regex
 const regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
@@ -50,7 +50,7 @@ const userController = {
       });
 
       await newUser.save();
-      await sendConfirmationEmail({toUser: newUser.data, hash: newUser.data._id})
+      await sendConfirmationEmail({ toUser: newUser, hash: newUser._id });
 
       // Create jsonwebtoken to authentication
 
@@ -62,28 +62,35 @@ const userController = {
       //   path: "/users/refresh_token",
       // });
 
-      res.json({ ok : true });
+      res.json({ ok: true });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
   activateUser: async (req, res) => {
     try {
-      const {hash} = req.params;
-      const user = await PendingUsers.findOne({ _id: hash })
-      if(!user) {
-        return res.status(422).json({ status: false, message: "User cannot be actived"})
+      const hash = req.body;
+      const user = await PendingUsers.findOne({ _id: hash.id });
+      if (!user) {
+        return res
+          .status(400)
+          .json({ status: false, message: "User cannot be actived" });
       }
-
-      const newUser = new Users({...user.data});
+      const newUser = new Users({
+        userName: user.userName,
+        email: user.email,
+        password: user.password,
+        gender: user.gender,
+        prefix: user.prefix,
+        phone: user.phone,
+      });
 
       await newUser.save();
       await user.remove();
 
-      res.json({message: `User ${userName} has been activated`})
-      
+      res.json({ message: `User ${user.userName} has been activated` });
     } catch (error) {
-      return res.status(422).json({ status: false, message: "User cannot be actived"})
+      return res.status(500).json({ status: false, message: error.message });
     }
   },
   login: async (req, res) => {

@@ -12,7 +12,7 @@ function AuthPage() {
       <Redirect exact from="/buyer" to="/" />
       <Route path={`${match.url}/login`} exact component={Login} />
       <Route path={`${match.url}/register`} exact component={Register} />
-      <Route path={`${match.url}/activated`} exact component={ActivateUser} />
+      <Route path={`${match.url}/activated/:id`} exact component={ActivateUser} />
       <Route component={PageNotFound} />
     </Switch>
   );
