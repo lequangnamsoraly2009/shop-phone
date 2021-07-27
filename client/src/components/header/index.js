@@ -66,6 +66,7 @@ function HeaderNav() {
       dispatch(removeCart());
       dispatch(removeCartPayMentTemp());
       dispatch(removeAddressTemp());
+      history.push("/home");
       Swal.fire({
         position: "center",
         icon: "success",
