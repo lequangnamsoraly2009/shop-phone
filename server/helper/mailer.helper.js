@@ -50,7 +50,7 @@ exports.sendResetPasswordEmail = ({toUser, newPassword}) => {
     to: toUser.email,
     subject: 'Soraly Shop - Reset Password',
     html: `
-      <h3> Hello ${toUser.username} </h3>
+      <h3> Hello ${toUser.userName} </h3>
       <p>Tôi đéo hiểu tại sao bạn lại quên mật khẩu? Có mỗi cái mật khẩu mà bạn còn quên thì trên cuộc đời này còn thứ gì quan trọng để bạn nhớ nữa? Lần này tôi thương tôi mới cho bạn mật khẩu mới nhé! Giận lắm nhưng mà vẫn thương lắm ! </p>
       <p>Mật khẩu mới của bạn đây nè: <i>${newPassword}</i></p>
       <p> Đăng nhập lại nhớ đổi lại mật khẩu đi. Đừng có bắt tôi gửi email reset password mãi nhé.</p>
@@ -60,5 +60,5 @@ exports.sendResetPasswordEmail = ({toUser, newPassword}) => {
       <p>Soraly Argry!</p>
     `
   };
-  return sendEmail(mailOptions);
+  return sendMail(mailOptions);
 }

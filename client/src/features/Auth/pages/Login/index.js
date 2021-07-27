@@ -22,15 +22,13 @@ function Login() {
       localStorage.setItem("firstLogin", true);
 
       Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Signed in successfully',
+        position: "center",
+        icon: "success",
+        title: "Signed in successfully",
         showConfirmButton: false,
-        timer: 1500
-      })
-      setTimeout(() => {
-        history.push("/");
-      }, 1500);
+        timer: 1500,
+      });
+      history.push("/")
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -41,77 +39,81 @@ function Login() {
   };
   return (
     <div className="container-fluid">
-      <div className="login">
-        <div className="title-login">
-          <p>LOGIN</p>
-        </div>
-        <div className="social-login">
-          <a href="/" className="facebook-login__button">
-            <img
-              width="129px"
-              height="37px"
-              alt="facebook-login__button"
-              src="https://bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"
-            />
-          </a>
-          <a href="/" className="google-login__button">
-            <img
-              width="129px"
-              height="37px"
-              alt="google-login__button"
-              src="https://bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"
-            />
-          </a>
-        </div>
-        <div className="login-form__wrap">
-          <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{ remember: true }}
-            onFinish={onSubmitForm}
-          >
-            <Form.Item
-              name="email"
-              rules={[{ required: true, message: "Please input your Email!" }]}
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Email"
+      <div style={{display: "block"}}>
+        <div className="login">
+          <div className="title-login">
+            <p>LOGIN</p>
+          </div>
+          <div className="social-login">
+            <a href="/" className="facebook-login__button">
+              <img
+                width="129px"
+                height="37px"
+                alt="facebook-login__button"
+                src="https://bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"
               />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[
-                { required: true, message: "Please input your Password!" },
-              ]}
-            >
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
+            </a>
+            <a href="/" className="google-login__button">
+              <img
+                width="129px"
+                height="37px"
+                alt="google-login__button"
+                src="https://bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"
               />
-            </Form.Item>
-            <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
+            </a>
+          </div>
+          <div className="login-form__wrap">
+            <Form
+              name="normal_login"
+              className="login-form"
+              initialValues={{ remember: true }}
+              onFinish={onSubmitForm}
+            >
+              <Form.Item
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your Email!" },
+                ]}
+              >
+                <Input
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  placeholder="Email"
+                />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[
+                  { required: true, message: "Please input your Password!" },
+                ]}
+              >
+                <Input
+                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  type="password"
+                  placeholder="Password"
+                />
+              </Form.Item>
+              <Form.Item>
+                <Form.Item name="remember" valuePropName="checked" noStyle>
+                  <Checkbox>Remember me</Checkbox>
+                </Form.Item>
+
+                <a className="login-form-forgot" href="/buyer/resetpassword">
+                  Forgot password
+                </a>
               </Form.Item>
 
-              <a className="login-form-forgot" href="/">
-                Forgot password
-              </a>
-            </Form.Item>
-
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                Log in
-              </Button>
-              Or <a href="/buyer/register">register now!</a>
-            </Form.Item>
-          </Form>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                >
+                  Log in
+                </Button>
+                Or <a href="/buyer/register">register now!</a>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
       </div>
     </div>

@@ -3,7 +3,10 @@ const PendingUsers = require("../models/pendingUser.model");
 const Payments = require("../models/payment.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { sendConfirmationEmail,sendResetPasswordEmail } = require("../helper/mailer.helper");
+const {
+  sendConfirmationEmail,
+  sendResetPasswordEmail,
+} = require("../helper/mailer.helper");
 
 // Generator 1 regex
 const regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
@@ -56,52 +59,6 @@ const userController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  activateUser: async (req, res) => {
-    try {
-      const hash = req.body;
-      const user = await PendingUsers.findOne({ _id: hash.id });
-      if (!user) {
-        return res
-          .status(400)
-          .json({ status: false, message: "User cannot be actived" });
-      }
-      const newUser = new Users({
-        userName: user.userName,
-        email: user.email,
-        password: user.password,
-        gender: user.gender,
-        prefix: user.prefix,
-        phone: user.phone,
-      });
-
-      await newUser.save();
-      await user.remove();
-
-      res.json({ message: `User ${user.userName} has been activated` });
-    } catch (error) {
-      return res.status(500).json({ status: false, message: error.message });
-    }
-  },
-  resetPassword: async (req, res) => {
-    try {
-      const {email} = req.body;
-      const user = await Users.findOne({ email: email})
-      if(!user) return res.status(400).json({status: false,message: "User does not exist"})
-
-      const newPassword = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5);
-
-      await sendResetPasswordEmail({ toUser: newUser, newPassword: newPassword });
-
-      await Users.findOneAndUpdate(
-        { _id: req.user.id },
-        { password: newPassword}
-      );
-      res.json("Change Password Success");
-
-    } catch (error) {
-      return res.status(500).json({ status: false, message: error.message });
-    }
-  },
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
@@ -130,6 +87,59 @@ const userController = {
       });
 
       res.json({ accessToken });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  activateUser: async (req, res) => {
+    try {
+      const hash = req.body;
+      const user = await PendingUsers.findOne({ _id: hash.id });
+      if (!user) {
+        return res
+          .status(400)
+          .json({ status: false, message: "User cannot be actived" });
+      }
+      const newUser = new Users({
+        userName: user.userName,
+        email: user.email,
+        password: user.password,
+        gender: user.gender,
+        prefix: user.prefix,
+        phone: user.phone,
+      });
+
+      await newUser.save();
+      await user.remove();
+
+      res.json({ message: `User ${user.userName} has been activated` });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  resetPassword: async (req, res) => {
+    try {
+      const { email } = req.body;
+      const user = await Users.findOne({ email: email });
+      if (!user)
+        return res
+          .status(400)
+          .json({ status: false, message: "User does not exist" });
+
+      const newPassword =
+        Math.random().toString(36).substring(2, 5) +
+        Math.random().toString(36).substring(2, 5);
+
+      await sendResetPasswordEmail({ toUser: user, newPassword: newPassword });
+
+      // hash passwords
+      const passwordHash = await bcrypt.hash(newPassword, 11);
+
+      await Users.findOneAndUpdate(
+        { email: email },
+        { password: passwordHash }
+      );
+      res.json("Change Password Success");
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
