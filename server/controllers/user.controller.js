@@ -3,6 +3,7 @@ const PendingUsers = require("../models/pendingUser.model");
 const Payments = require("../models/payment.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {sendConfirmationEmail} = require("../helper/mailer.helper")
 
 // Generator 1 regex
 const regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
@@ -49,6 +50,7 @@ const userController = {
       });
 
       await newUser.save();
+      await sendConfirmationEmail({toUser: newUser.data, hash: newUser.data._id})
 
       // Create jsonwebtoken to authentication
 
