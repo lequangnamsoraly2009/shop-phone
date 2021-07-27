@@ -14,7 +14,7 @@ function CardItemCate({ product }) {
       behavior: "smooth",
     });
 
-    history.push(`/${product?._id}`);
+    history.push(`/detail/${product?._id}`);
   };
   return (
     <Card
