@@ -67,6 +67,25 @@ const userController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  activateUser: async (req, res) => {
+    try {
+      const {hash} = req.params;
+      const user = await PendingUsers.findOne({ _id: hash })
+      if(!user) {
+        return res.status(422).json({ status: false, message: "User cannot be actived"})
+      }
+
+      const newUser = new Users({...user.data});
+
+      await newUser.save();
+      await user.remove();
+
+      res.json({message: `User ${userName} has been activated`})
+      
+    } catch (error) {
+      return res.status(422).json({ status: false, message: "User cannot be actived"})
+    }
+  },
   login: async (req, res) => {
     try {
       const { email, password } = req.body;

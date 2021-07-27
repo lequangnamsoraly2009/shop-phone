@@ -3,6 +3,7 @@ const userController = require('../controllers/user.controller')
 const auth = require('../middleware/auth');
 
 router.post('/register', userController.register)
+router.get('/activate/:hash', userController.activateUser)
 router.post('/login', userController.login)
 router.get('/logout', userController.logout)
 router.post('/refresh_token', userController.refreshToken)
