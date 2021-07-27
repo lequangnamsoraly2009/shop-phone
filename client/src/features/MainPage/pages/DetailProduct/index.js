@@ -188,7 +188,8 @@ function DetailProduct() {
             <div className="product-title">
               <div className="product-name">
                 <h3 style={{ textTransform: "capitalize" }}>
-                  {detailProduct.title} - {detailProduct.memory}GB - {detailProduct.color} 
+                  {detailProduct.title} - {detailProduct.memory}GB -{" "}
+                  {detailProduct.color}
                 </h3>
               </div>
               <div className="product-title-data">
@@ -267,18 +268,43 @@ function DetailProduct() {
               <Select
                 defaultValue={1}
                 size="large"
-                style={{textTransform: "capitalize" }}
+                style={{ textTransform: "capitalize" }}
                 // onChange={handleChange}
               >
-                <Option style={{textTransform: "capitalize" }} value={1}>{detailProduct.color}</Option>
+                <Option style={{ textTransform: "capitalize" }} value={1}>
+                  {detailProduct.color}
+                </Option>
                 <Option value={2}>Gold</Option>
                 <Option value={3}>Graphit</Option>
                 <Option value={4}>Silver</Option>
               </Select>
             </div>
-            <div className="product-price">
-              <p>PRICE:</p>
-              <span>{detailProduct.price}$</span>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              {detailProduct.sale === 0 ? (
+                <div className="product-price">
+                  <p>PRICE:</p>
+                  <span>{detailProduct.price}$</span>
+                </div>
+              ) : (
+                <>
+                  <div className="product-price">
+                    <p>PRICE:</p>
+                    <span style={{ textDecoration: "line-through" }}>
+                      {detailProduct.price}$
+                    </span>
+                    <span style={{ fontSize: 16 }}>-{detailProduct.sale}%</span>
+                  </div>
+                  <div className="product-price">
+                    <span>
+                      {Math.floor(
+                        detailProduct.price -
+                          detailProduct.price * (detailProduct.sale / 100)
+                      )}
+                      $
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
             <div className="product-add-cart">
               <div
