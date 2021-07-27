@@ -1,4 +1,5 @@
 const Users = require("../models/user.model");
+const PendingUsers = require("../models/pendingUser.model");
 const Payments = require("../models/payment.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -11,17 +12,14 @@ const userController = {
     try {
       const { userName, email, password, gender, phone, prefix } = req.body;
 
-      const user = await Users.findOne({ email: email });
+      const user = await Users.findOne({ email });
+      const pendingUser = await PendingUsers.findOne({ email });
 
-      if (user)
+      if (user || pendingUser) {
         return res
           .status(400)
           .json({ status: false, message: "Your Email already exists!" });
-
-      // if (password !== passwordConfirm)
-      //   return res
-      //     .status(400)
-      //     .json({ status: false, message: "Password compare is incorrect!" });
+      }
 
       if (phone.length <= 9 || phone.length > 11) {
         return res.status(400).json({
@@ -41,7 +39,7 @@ const userController = {
       //  Validate Password
       const passwordHash = await bcrypt.hash(password, 11);
 
-      const newUser = new Users({
+      const newUser = new PendingUsers({
         userName,
         email,
         password: passwordHash,
@@ -54,15 +52,15 @@ const userController = {
 
       // Create jsonwebtoken to authentication
 
-      const accessToken = createAccessToken({ id: newUser._id });
-      const refreshToken = createRefreshToken({ id: newUser._id });
+      // const accessToken = createAccessToken({ id: newUser._id });
+      // const refreshToken = createRefreshToken({ id: newUser._id });
 
-      res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        path: "/users/refresh_token",
-      });
+      // res.cookie("refreshToken", refreshToken, {
+      //   httpOnly: true,
+      //   path: "/users/refresh_token",
+      // });
 
-      res.json({ accessToken });
+      res.json({ ok : true });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
@@ -221,7 +219,6 @@ const userController = {
         { password: passwordHash }
       );
       res.json("Change Password Success");
-
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

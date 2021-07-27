@@ -1,13 +1,13 @@
-import { Form, Input, Button, Checkbox, Select} from "antd";
+import { Form, Input, Button, Checkbox, Select } from "antd";
 import React from "react";
 import "../Login/login.css";
 import "./register.css";
 import Swal from "sweetalert2";
 import API from "../../../../api/axiosClient";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginPending } from "../../../../app/userSlice";
-import { setToken } from "../../../../app/tokenSlice";
+// import { setToken } from "../../../../app/tokenSlice";
 
 const { Option } = Select;
 
@@ -35,10 +35,8 @@ const tailFormItemLayout = {
 };
 
 function Register() {
-
-  const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
-
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -52,23 +50,20 @@ function Register() {
     </Form.Item>
   );
 
-  const onSubmitForm = async(values) => {
+  const onSubmitForm = async (values) => {
     dispatch(loginPending());
     try {
-      const response = await API.post("/users/register", {...values});
-      dispatch(setToken(response.data.accessToken));
-      localStorage.setItem("firstLogin", true);
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Register successfully',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      setTimeout(() => {
-        history.push("/");
-      }, 1500);
-        
+      const res = await API.post("/users/register", { ...values });
+      // dispatch(setToken(response.data.accessToken));
+      // localStorage.setItem("firstLogin", true);
+      if (res.data.ok === true) {
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Please visit your email address and active your account",
+          showConfirmButton: true,
+        });
+      }
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -158,13 +153,17 @@ function Register() {
                   message: "Please confirm your password!",
                 },
                 ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue('password') === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                    },
-                  }),
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error(
+                        "The two passwords that you entered do not match!"
+                      )
+                    );
+                  },
+                }),
               ]}
             >
               <Input.Password />
@@ -177,7 +176,11 @@ function Register() {
                 { required: true, message: "Please input your phone number!" },
               ]}
             >
-              <Input type="number" addonBefore={prefixSelector} style={{ width: "100%" }} />
+              <Input
+                type="number"
+                addonBefore={prefixSelector}
+                style={{ width: "100%" }}
+              />
             </Form.Item>
 
             <Form.Item
@@ -231,7 +234,7 @@ function Register() {
               {...tailFormItemLayout}
             >
               <Checkbox>
-                I have read the <a href="/">agreement</a>
+                I have read the <a href="/#">agreement</a>
               </Checkbox>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
