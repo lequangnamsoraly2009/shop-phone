@@ -10,7 +10,7 @@ export default async function activateUser(req, res) {
   if (response.status >= 400) {
     return res.status(401).json({ message: "Cannot Validate an User!" });
   } else {
-    res.writeHead(307, { Location: "/users/activated" });
+    res.writeHead(307, { Location: "/buyer/activated" });
     res.end();
   }
 }
