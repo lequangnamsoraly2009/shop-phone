@@ -22,11 +22,10 @@ function MainPage() {
       ) : (
         <Switch>
           <Route path={`${match.url}/cart`} exact component={Cart} />
-
           <Route component={PageNotFound} />
         </Switch>
       )}
-      {/* <Route component={PageNotFound} /> */}
+      <Route component={PageNotFound} />
     </Switch>
   );
 }

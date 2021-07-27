@@ -32,8 +32,14 @@ function App() {
             <Route path="/home" component={MainPage} />
             <Route path="/detail" component={DetailProductMain} />
             <Route path="/category" component={CategoryPage} />
-            <Route path="/buyer" component={AuthPage} />
-            <Route path="/customer" component={Customer} />
+            <Route
+              path="/buyer"
+              component={!isLoggedIn ? AuthPage : PageNotFound}
+            />
+            <Route
+              path="/customer"
+              component={isLoggedIn ? Customer : PageNotFound}
+            />
             <Route component={PageNotFound} />
           </Switch>
         </Content>

@@ -29,9 +29,7 @@ function Login() {
         showConfirmButton: false,
         timer: 1500,
       });
-      setTimeout(() => {
-        history.push("/home");
-      }, 1500);
+      history.push("/home");
     } catch (error) {
       Swal.fire({
         icon: "error",

@@ -13,6 +13,6 @@
     display: flex;
 }
 
-.ant-form{
+.reset-form .ant-form{
     width: 400px;
 }
