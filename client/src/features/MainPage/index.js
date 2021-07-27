@@ -13,17 +13,20 @@ function MainPage() {
   return (
     <Switch>
       <Route path={`${match.url}/`} exact component={DashBoard} />
-      <Route path={`${match.url}/cart`} component={Cart} />
       {isLoggedIn ? (
         <Switch>
           <Route path={`${match.url}/checkout`} component={CheckOut} />
+          <Route path={`${match.url}/cart`} component={Cart} />
+
         </Switch>
       ) : (
         <Switch>
+          <Route path={`${match.url}/cart`} exact component={Cart} />
+
           <Route component={PageNotFound} />
         </Switch>
       )}
-      <Route component={PageNotFound} />
+      {/* <Route component={PageNotFound} /> */}
     </Switch>
   );
 }
