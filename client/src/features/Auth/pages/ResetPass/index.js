@@ -1,10 +1,21 @@
 import { Form, Input, Button } from "antd";
 import React from "react";
 import "./resetpass.css";
+import Swal from "sweetalert2";
+
+import API from "../../../../api/axiosClient";
 
 function ResetPass() {
-  const onSubmitForm = (values) => {
-      console.log(values)
+  const onSubmitForm = async (values) => {
+    try {
+      await API.patch("/users/reset_password", { ...values });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error.response.data.message}`,
+      });
+    }
   };
   return (
     <div className="container-fluid">
