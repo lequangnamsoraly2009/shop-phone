@@ -4,6 +4,7 @@ import PageNotFound from '../../components/pagenotfound';
 import ActivateUser from './pages/ActivateUser';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ResetPass from './pages/ResetPass';
 
 function AuthPage() {
     const match = useRouteMatch();
@@ -13,6 +14,7 @@ function AuthPage() {
       <Route path={`${match.url}/login`} exact component={Login} />
       <Route path={`${match.url}/register`} exact component={Register} />
       <Route path={`${match.url}/activated/:id`} exact component={ActivateUser} />
+      <Route path={`${match.url}/resetpassword`} exact component={ResetPass} />
       <Route component={PageNotFound} />
     </Switch>
   );
