@@ -61,6 +61,7 @@ const productController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  // get product by filter 
   getFilterProducts: async (req, res) => {
     try {
       const features = new APIfeatures(Products.find(), req.query)

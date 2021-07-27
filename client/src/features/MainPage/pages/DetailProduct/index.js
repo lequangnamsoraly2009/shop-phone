@@ -12,12 +12,11 @@ import API from "../../../../api/axiosClient";
 const { Option } = Select;
 
 function DetailProduct() {
-  const [image, setImage] = useState(
-    "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746_sd.jpg;maxHeight=640;maxWidth=550"
-  );
   const [detailProduct, setDetailProduct] = useState([]);
   const [categoryDetail, setCategoryDetail] = useState("");
+  const [image, setImage] = useState("");
   const dispatch = useDispatch();
+
 
   const { products } = useSelector((state) => state.products);
   const { token } = useSelector((state) => state.token);
@@ -31,6 +30,7 @@ function DetailProduct() {
       products.forEach((product) => {
         if (product._id === params.id) {
           setDetailProduct(product);
+          setImage(product?.images?.url)
         }
       });
     }
@@ -106,7 +106,7 @@ function DetailProduct() {
           <div className="left-product-gallery">
             <div className="image-product-overview-wrapper">
               <div className="image-wrapper">
-                <img className="image-primary" src={image} alt="iPhone 11" />
+                <img className="image-primary" src={image} alt={detailProduct.title} />
               </div>
             </div>
             <ul className="thumbnail-list" style={{ listStyle: "none" }}>
@@ -116,10 +116,25 @@ function DetailProduct() {
                     onClick={(e) =>
                       onClickShowImage(
                         e,
-                        "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746_sd.jpg;maxHeight=640;maxWidth=550"
+                        detailProduct?.images?.url
                       )
                     }
-                    src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746_sd.jpg;maxHeight=640;maxWidth=550"
+                    src={detailProduct?.images?.url}
+                    alt={detailProduct.title}
+                  />
+                </button>
+              </li>
+              <li className="image-thumbnail">
+                <button>
+                  <img
+                    style={{objectFit: "cover"}}
+                    onClick={(e) =>
+                      onClickShowImage(
+                        e,
+                        "https://cdn.tgdd.vn/Files/2020/08/18/1281164/kham-pha-ngay-top-11-dien-thoai-5g-dang-mua-nhat-2-6.jpg"
+                      )
+                    }
+                    src="https://cdn.tgdd.vn/Files/2020/08/18/1281164/kham-pha-ngay-top-11-dien-thoai-5g-dang-mua-nhat-2-6.jpg"
                     alt="iPhone 11"
                   />
                 </button>
@@ -130,24 +145,10 @@ function DetailProduct() {
                     onClick={(e) =>
                       onClickShowImage(
                         e,
-                        "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746cv13d.jpg;maxHeight=640;maxWidth=550"
+                        "http://dienmay.vatbau.com/Products/Images/42/232668/samsung-galaxy-z-fold-2-vang-600x600-600x600.jpg"
                       )
                     }
-                    src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746cv13d.jpg;maxHeight=640;maxWidth=550"
-                    alt="iPhone 11"
-                  />
-                </button>
-              </li>
-              <li className="image-thumbnail">
-                <button>
-                  <img
-                    onClick={(e) =>
-                      onClickShowImage(
-                        e,
-                        "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746cv11d.jpg;maxHeight=640;maxWidth=550"
-                      )
-                    }
-                    src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746cv11d.jpg;maxHeight=640;maxWidth=550"
+                    src="http://dienmay.vatbau.com/Products/Images/42/232668/samsung-galaxy-z-fold-2-vang-600x600-600x600.jpg"
                     alt="iPhone 11"
                   />
                 </button>
@@ -238,9 +239,13 @@ function DetailProduct() {
               <Select
                 defaultValue="ip12pm"
                 size="large"
+                style={{ textTransform: "capitalize" }}
+
                 // onChange={handleChange}
               >
-                <Option value="ip12pm">Apple iPhone 12 Pro Max</Option>
+                <Option value="ip12pm" style={{ textTransform: "capitalize" }}>
+                  {detailProduct.title}
+                </Option>
                 <Option value="ip12p">Apple iPhone 12 Pro</Option>
                 <Option value="ip12">Apple iPhone 12</Option>
                 <Option value="ip12mn">Apple iPhone 12 Mini</Option>

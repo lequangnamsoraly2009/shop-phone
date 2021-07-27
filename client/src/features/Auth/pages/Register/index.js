@@ -1,5 +1,5 @@
 import { Form, Input, Button, Checkbox, Select } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import "../Login/login.css";
 import "./register.css";
 import Swal from "sweetalert2";
@@ -35,8 +35,8 @@ const tailFormItemLayout = {
 };
 
 function Register() {
-  // const history = useHistory();
   const dispatch = useDispatch();
+  const [loadingRegister,setLoadingRegister] = useState(false);
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -51,11 +51,10 @@ function Register() {
   );
 
   const onSubmitForm = async (values) => {
-    dispatch(loginPending());
     try {
+      setLoadingRegister(true)
       const res = await API.post("/users/register", { ...values });
-      // dispatch(setToken(response.data.accessToken));
-      // localStorage.setItem("firstLogin", true);
+      setLoadingRegister(false)
       if (res.data.ok === true) {
         await Swal.fire({
           position: "center",
