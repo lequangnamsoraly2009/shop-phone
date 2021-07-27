@@ -36,8 +36,7 @@ p {
 .title-global h2:hover {
   color: #1890ff;
   cursor: pointer;
-  }
-
+}
 
 @media only screen and (max-width: 767px) {
   .mobileVisible {
@@ -55,7 +54,7 @@ p {
   }
 }
 
-.btn{
+.btn {
   position: relative;
   display: inline-block;
   padding: 5px 10px;
@@ -68,18 +67,18 @@ p {
   /* border: 0.004px solid #999; */
 }
 
-.btn:hover{
+.btn:hover {
   color: #255784;
   border: none;
 }
 
-.btn span{
+.btn span {
   position: absolute;
   display: block;
   background: #2894ff;
 }
 
-.btn span:nth-child(1){
+.btn span:nth-child(1) {
   left: 0;
   bottom: 0;
   width: 1px;
@@ -89,13 +88,13 @@ p {
   transition: transform 0.5s;
 }
 
-.btn:hover span:nth-child(1){
+.btn:hover span:nth-child(1) {
   transform: scaleY(1);
   transform-origin: bottom;
   transition: transform 0.5s;
 }
 
-.btn span:nth-child(2){
+.btn span:nth-child(2) {
   left: 0;
   bottom: 0;
   width: 100%;
@@ -105,13 +104,13 @@ p {
   transition: transform 0.5s;
 }
 
-.btn:hover span:nth-child(2){
+.btn:hover span:nth-child(2) {
   transform: scaleX(1);
   transform-origin: left;
   transition: transform 0.5s;
 }
 
-.btn span:nth-child(3){
+.btn span:nth-child(3) {
   right: 0;
   bottom: 0;
   width: 1px;
@@ -121,13 +120,13 @@ p {
   transition: transform 0.5s;
 }
 
-.btn:hover span:nth-child(3){
+.btn:hover span:nth-child(3) {
   transform: scaleY(1);
   transform-origin: bottom;
   transition: transform 0.5s;
 }
 
-.btn span:nth-child(4){
+.btn span:nth-child(4) {
   left: 0;
   top: 0;
   width: 100%;
@@ -137,13 +136,23 @@ p {
   transition: transform 0.5s;
 }
 
-.btn:hover span:nth-child(4){
+.btn:hover span:nth-child(4) {
   transform: scaleX(1);
   transform-origin: left;
   transition: transform 0.5s;
 }
 
 /* BreadCumb  */
-.breadcumb-wrapper{
+.breadcumb-wrapper {
   margin-bottom: 30px;
+}
+
+/* Loading-page */
+.loading-page {
+  margin: auto;
+  padding: 150px 50px;
+  height: 463px;
+  text-align: center;
+  /* background: rgba(0, 0, 0, 0.05); */
+  border-radius: 4px;
 }
