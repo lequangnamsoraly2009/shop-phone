@@ -14,11 +14,11 @@ const userSlice = createSlice({
   reducers: {
     loginPending: (state) => {
       state.isLoading = true;
-      state.isLoggedIn = true;
     },
     getUser: (state, action) => {
       state.user = action.payload;
       state.isLoading = false;
+      state.isLoggedIn = true;
     },
     isABuyer: (state, action) => {
       state.isBuyer = action.payload;

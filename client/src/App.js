@@ -31,18 +31,9 @@ function App() {
             <Redirect exact from="/" to="/home" />
             <Route path="/home" component={MainPage} />
             <Route path="/detail" component={DetailProductMain} />
-
-            {!isLoggedIn ? (
-              <>
-                <Route path="/buyer" component={AuthPage} />
-                <Route path="/category" component={CategoryPage} />
-              </>
-            ) : (
-              <>
-                <Route path="/customer" component={Customer} />
-                <Route path="/category" component={CategoryPage} />
-              </>
-            )}
+            <Route path="/category" component={CategoryPage} />
+            <Route path="/buyer" component={AuthPage} />
+            <Route path="/customer" component={Customer} />
             <Route component={PageNotFound} />
           </Switch>
         </Content>

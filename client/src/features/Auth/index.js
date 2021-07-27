@@ -10,7 +10,7 @@ function AuthPage() {
     const match = useRouteMatch();
   return (
     <Switch>
-      <Redirect exact from="/buyer" to="/" />
+      <Redirect exact from="/buyer" to="/buyer/login" />
       <Route path={`${match.url}/login`} exact component={Login} />
       <Route path={`${match.url}/register`} exact component={Register} />
       <Route path={`${match.url}/activated/:id`} exact component={ActivateUser} />

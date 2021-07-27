@@ -1,6 +1,6 @@
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
@@ -12,15 +12,16 @@ import { loginPending } from "../../../../app/userSlice";
 function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [a, setA] = useState(false);
 
   const onSubmitForm = async (values) => {
-    dispatch(loginPending());
     try {
+      dispatch(loginPending());
+      setA(true);
       const response = await API.post("/users/login", { ...values });
-      // console.log(response);
       dispatch(setToken(response.data.accessToken));
       localStorage.setItem("firstLogin", true);
-
+      setA(false);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -28,7 +29,9 @@ function Login() {
         showConfirmButton: false,
         timer: 1500,
       });
-      history.push("/")
+      setTimeout(() => {
+        history.push("/home");
+      }, 1500);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -39,7 +42,11 @@ function Login() {
   };
   return (
     <div className="container-fluid">
-      <div style={{display: "block"}}>
+      {a === true ? (
+        <div className="loading-page">
+          <Spin size="large" />
+        </div>
+      ) : (
         <div className="login">
           <div className="title-login">
             <p>LOGIN</p>
@@ -115,7 +122,7 @@ function Login() {
             </Form>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
