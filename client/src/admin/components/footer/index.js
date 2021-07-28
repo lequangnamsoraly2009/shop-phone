@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import { Layout } from "antd";
+const { Footer } = Layout;
 
 function FooterAdmin() {
-    return (
-        <div>
-            footer
-        </div>
-    )
+  return (
+    <Footer style={{ textAlign: "center" }}>
+      Shop Phone ©2021 Created by Soraly 8 Tủi
+    </Footer>
+  );
 }
 
-export default FooterAdmin
+export default FooterAdmin;
