@@ -6,3 +6,4 @@
     - Address Shipping Bug (Unfinished)
     - Load Product -> Load Detail Product (Not Yet)
     - DashBoard Admin (Not Yet) 
+    - Wrong Password -> Fix It

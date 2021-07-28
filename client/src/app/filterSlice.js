@@ -6,7 +6,7 @@ const initialState = {
   sortFilter: "",
   searchFilter: "",
   pageFilter: 1,
-  resultFilter: 0,
+  resultFilter: 20,
 };
 
 const productFilterSlice = createSlice({

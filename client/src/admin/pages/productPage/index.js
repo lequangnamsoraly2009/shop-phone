@@ -1,15 +1,24 @@
 import { Breadcrumb, Table, Input, Button, Tag, Space, Pagination } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import "./product.css";
 import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setPageFilter } from "../../../app/filterSlice";
 
 const { Search } = Input;
 
 function ProductPage() {
   const { products } = useSelector((state) => state.products);
+  const { productsFilter } = useSelector((state) => state.productsFilter);
+  const [data, setData] = useState(productsFilter.slice(0, 3));
+  const dispatch = useDispatch();
 
+  const handleChangePage = (page, pageSize) => {
+    dispatch(setPageFilter(page));
+    setData(productsFilter.slice((page - 1) * pageSize, page * pageSize));
+  };
+  
   const columns = [
     {
       title: "STT",
@@ -50,38 +59,42 @@ function ProductPage() {
       dataIndex: "numberSold",
       key: "numberSold",
       render: (text, record, index) => <span>{record.numberSold}</span>,
-      defaultSortOrder: 'descend',
-        sorter: (a, b) => a.numberSold - b.numberSold,
+      //   defaultSortOrder: 'descend',
+      sorter: (a, b) => a.numberSold - b.numberSold,
     },
     {
       title: "Amount",
       dataIndex: "storage",
       key: "storage",
       render: (text, record, index) => <span>{record.storage}</span>,
-      defaultSortOrder: 'descend',
-        sorter: (a, b) => a.storage - b.storage,
+      //   defaultSortOrder: 'descend',
+      sorter: (a, b) => a.storage - b.storage,
     },
     {
       title: "Sale",
       dataIndex: "sale",
       key: "sale",
       render: (text, record, index) => <span>{record.sale}%</span>,
-      defaultSortOrder: 'descend',
-        sorter: (a, b) => a.sale - b.sale,
+      //   defaultSortOrder: 'descend',
+      sorter: (a, b) => a.sale - b.sale,
     },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
       render: (text, record, index) => <span>{record.price}$</span>,
-      defaultSortOrder: 'descend',
-        sorter: (a, b) => a.price - b.price,
+      //   defaultSortOrder: 'descend',
+      sorter: (a, b) => a.price - b.price,
     },
     {
-        title: "New Price",
-        key: "newprice",
-        render: (text, record, index) => <span>{Math.floor(record.price - record.price*(record.sale/100))}$</span>,
-      },
+      title: "New Price",
+      key: "newprice",
+      render: (text, record, index) => (
+        <span>
+          {Math.floor(record.price - record.price * (record.sale / 100))}$
+        </span>
+      ),
+    },
     {
       title: "Status",
       dataIndex: "status",
@@ -148,19 +161,19 @@ function ProductPage() {
           <Table
             pagination={{ position: ["none", "none"] }}
             columns={columns}
-            dataSource={products}
+            dataSource={data}
           />
         </div>
         <div className="product_data-pagination">
-          {products.length >= 0 && products.length <= 10 ? (
+          {productsFilter.length >= 0 && productsFilter.length < 3 ? (
             ""
           ) : (
             <Pagination
               defaultCurrent={1}
               total={products.length}
               showSizeChanger={false}
-              pageSize={20}
-              // onChange={(page, pageSize) => handleChangePage(page, pageSize)}
+              pageSize={3}
+              onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
           )}
         </div>

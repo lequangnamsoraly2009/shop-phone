@@ -1,12 +1,18 @@
 import { Col, Pagination, Radio, Result, Row } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./listitem.css";
 import CardItemCate from "../cardItemCate";
 import { setPageFilter, setSortFilter } from "../../../../app/filterSlice";
 
 function ListItem() {
+
+
+  const { products } = useSelector((state) => state.products);
+
   const { productsFilter } = useSelector((state) => state.productsFilter);
+  const [data, setData] = useState(productsFilter.slice(0, 20));
+
   const dispatch = useDispatch();
 
   const handleClickSort = (e) => {
@@ -15,6 +21,8 @@ function ListItem() {
 
   const handleChangePage = (page, pageSize) => {
     dispatch(setPageFilter(page));
+    setData(productsFilter.slice((page - 1) * pageSize, page * pageSize));
+    
   };
 
   return (
@@ -51,7 +59,7 @@ function ListItem() {
           ) : (
             <>
               <Row gutter={[12, 12]}>
-                {productsFilter.map((product) => {
+                {data.map((product) => {
                   return (
                     <Col key={product._id} className="gutter-row" span={6}>
                       <CardItemCate product={product} />
@@ -64,12 +72,12 @@ function ListItem() {
         </div>
       </div>
       <div className="list-item-pagination">
-        {productsFilter.length >= 0 && productsFilter.length <= 20 ? (
+        {productsFilter.length >= 0 && productsFilter.length < 20 ? (
           ""
         ) : (
           <Pagination
             defaultCurrent={1}
-            total={200}
+            total={products.length}
             showSizeChanger={false}
             pageSize={20}
             onChange={(page, pageSize) => handleChangePage(page, pageSize)}

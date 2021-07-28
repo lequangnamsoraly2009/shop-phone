@@ -23,3 +23,13 @@
 .product_data-search{
     margin-right: 10px;
 }
+
+.product_data-pagination{
+    display: flex;
+    margin: 20px auto;
+}
+
+.product_data-pagination .ant-pagination{
+    display: flex;
+    margin: 20px auto;
+}
