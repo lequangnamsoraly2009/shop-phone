@@ -8,8 +8,18 @@ import { Header } from "antd/lib/layout/layout";
 import { Link } from "react-router-dom";
 import React from "react";
 import "./header.css";
+import UserAPI from "../../../api/userAPI";
+import ProductAPI from "../../../api/productAPI";
+import CategoryAPI from "../../../api/categoryAPI";
+import ProductFilterAPI from "../../../api/filterAPI";
+
 
 function HeaderAdmin() {
+  UserAPI();
+  ProductAPI();
+  CategoryAPI();
+  ProductFilterAPI();
+  
   return (
     <Header className="header_admin">
       <div className="header_wrapper container-fluid">

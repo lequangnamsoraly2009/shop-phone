@@ -42,6 +42,9 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  nameCategory: {
+    type: String,
+  },
   checked: {
     type: Boolean,
     required: true,
