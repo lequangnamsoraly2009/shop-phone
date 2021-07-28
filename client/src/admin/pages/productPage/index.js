@@ -2,9 +2,15 @@ import { Breadcrumb, Table, Input, Button, Tag, Space, Pagination } from "antd";
 import React, { useState } from "react";
 import "./product.css";
 import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsFilter, setSearchFilter } from "../../../app/filterSlice";
+import {
+  getProductsFilter,
+  setCategoryFilter,
+  setPageFilter,
+  setSearchFilter,
+  setSortFilter,
+} from "../../../app/filterSlice";
 import API from "../../../api/axiosClient";
 
 const { Search } = Input;
@@ -16,6 +22,7 @@ function ProductPage() {
   const [listProducts, setListProducts] = useState(productsFilter);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleChangePage = async (page, pageSize) => {
     try {
@@ -41,6 +48,14 @@ function ProductPage() {
 
   const onSearch = (value) => {
     dispatch(setSearchFilter(value));
+  };
+
+  const handleReloadSearch = () => {
+    history.push("/admin/products");
+    dispatch(setCategoryFilter(""));
+    dispatch(setSearchFilter(""));
+    dispatch(setSortFilter(""));
+    dispatch(setPageFilter(1));
   };
 
   const columns = [
@@ -165,7 +180,9 @@ function ProductPage() {
         </div>
         <div className="product_data-top">
           <div className="product_data-reload">
-            <Button type="primary">Reload Search</Button>
+            <Button onClick={handleReloadSearch} type="primary">
+              Reload Search
+            </Button>
           </div>
           <div className="product_data-wrapper">
             <div className="product_data-search">
