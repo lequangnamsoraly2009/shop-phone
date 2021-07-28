@@ -2,31 +2,46 @@ import { Breadcrumb, Table, Input, Button, Tag, Space, Pagination } from "antd";
 import React, { useState } from "react";
 import "./product.css";
 import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setPageFilter, setSearchFilter } from "../../../app/filterSlice";
+import { getProductsFilter, setSearchFilter } from "../../../app/filterSlice";
+import API from "../../../api/axiosClient";
 
 const { Search } = Input;
 
 function ProductPage() {
-  const { products } = useSelector((state) => state.products);
-  const { productsFilter } = useSelector((state) => state.productsFilter);
-  // const [data, setData] = useState(productsFilter.slice(0, 10));
-  const dispatch = useDispatch();
-  const history = useHistory();
+  // const { products } = useSelector((state) => state.products);
+  const { productsFilter, categoryFilter, sortFilter, searchFilter } =
+    useSelector((state) => state.productsFilter);
+  const [listProducts, setListProducts] = useState(productsFilter);
 
-  
-  const handleChangePage = (page, pageSize) => {
-    dispatch(setPageFilter(page));
+  const dispatch = useDispatch();
+
+  const handleChangePage = async (page, pageSize) => {
+    try {
+      const response = await API.get(
+        `/api/filter/products?limit=${
+          page * 20
+        }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
+      );
+      // if (response.data.products.length <= pageSize) {
+      setListProducts(response.data.products);
+      // }
+      const data = response.data.products.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+      );
+      dispatch(getProductsFilter(data));
+    } catch (error) {
+      alert(error.message);
+    }
+    // dispatch(setPageFilter(page));
     // setData(productsFilter.slice((page - 1) * pageSize, page * pageSize));
   };
 
   const onSearch = (value) => {
-    // history.push("/admin/products")
     dispatch(setSearchFilter(value));
   };
-
-
 
   const columns = [
     {
@@ -149,35 +164,40 @@ function ProductPage() {
           <h3>Data Table Products</h3>
         </div>
         <div className="product_data-top">
-          <div className="product_data-search">
-            <Search
-              placeholder="Search Product"
-              allowClear
-              enterButton="Search"
-              size="middle"
-              onSearch={onSearch}
-            />
+          <div className="product_data-reload">
+            <Button type="primary">Reload Search</Button>
           </div>
-          <div className="product_data-create">
-            <Button type="primary">Create Product</Button>
+          <div className="product_data-wrapper">
+            <div className="product_data-search">
+              <Search
+                placeholder="Search Product"
+                allowClear
+                enterButton="Search"
+                size="middle"
+                onSearch={onSearch}
+              />
+            </div>
+            <div className="product_data-create">
+              <Button type="primary">Create Product</Button>
+            </div>
           </div>
         </div>
         <div className="product_data-table">
           <Table
             pagination={{ position: ["none", "none"] }}
             columns={columns}
-            dataSource={productsFilter}
+            dataSource={productsFilter.slice(0, 2)}
           />
         </div>
         <div className="product_data-pagination">
-          {productsFilter.length >= 0 && productsFilter.length < 10 ? (
+          {listProducts.length < 3 ? (
             ""
           ) : (
             <Pagination
               defaultCurrent={1}
-              total={products.length}
+              total={listProducts.length}
               showSizeChanger={false}
-              pageSize={10}
+              pageSize={2}
               onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
           )}

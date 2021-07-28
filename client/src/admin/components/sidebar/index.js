@@ -16,8 +16,24 @@ import {
   WhatsAppOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  setCategoryFilter,
+  setPageFilter,
+  setSearchFilter,
+  setSortFilter,
+} from "../../../app/filterSlice";
 
 function SideBar() {
+  const dispatch = useDispatch();
+
+  const onClickResetTable = () => {
+    dispatch(setCategoryFilter(""));
+    dispatch(setPageFilter(1));
+    dispatch(setSearchFilter(""));
+    dispatch(setSortFilter(""));
+  };
+
   return (
     <Col className="gutter-row" span={4}>
       <Menu
@@ -31,7 +47,9 @@ function SideBar() {
             <Link to="/home">Home</Link>
           </Menu.Item>
           <Menu.Item icon={<DesktopOutlined />} key="2">
-            <Link to="/admin/products">Products</Link>
+            <Link onClick={onClickResetTable} to="/admin/products">
+              Products
+            </Link>
           </Menu.Item>
           <Menu.Item icon={<CoffeeOutlined />} key="3">
             <Link to="/admin/categories">Categories</Link>

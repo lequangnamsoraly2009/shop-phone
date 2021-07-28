@@ -16,12 +16,19 @@
 .product_data-top{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 0 30px 0;
+}
+
+.product_data-wrapper{
+    display: flex;
+    flex-direction: row;
     justify-content: flex-end;
-    margin: 10px 0;
+    /* margin: 10px 0; */
 }
 
 .product_data-search{
-    margin-right: 10px;
+    margin: 0 10px;
 }
 
 .product_data-pagination{
