@@ -1,8 +1,19 @@
 import { Col, Menu } from "antd";
 import React from "react";
 import {
+    CoffeeOutlined,
+    DashboardOutlined,
     DesktopOutlined,
+  ExclamationCircleOutlined,
+  ExperimentOutlined,
+  GithubOutlined,
   HomeOutlined,
+  QuestionCircleOutlined,
+  SettingOutlined,
+  StarOutlined,
+  TransactionOutlined,
+  UsergroupAddOutlined,
+  WhatsAppOutlined,
 } from "@ant-design/icons";
 
 function SideBar() {
@@ -18,19 +29,19 @@ function SideBar() {
           <Menu.ItemGroup key="g1" title="MAIN">
         <Menu.Item icon={<HomeOutlined />} key="1">Home</Menu.Item>
         <Menu.Item icon={<DesktopOutlined />} key="2">Products</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="3">Categories</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="4">Orders</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="5">Users</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="6">Information Admin</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="7">Notification</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="8">Setting</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="9">Discount</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="10">Contact</Menu.Item>
+        <Menu.Item icon={<CoffeeOutlined />} key="3">Categories</Menu.Item>
+        <Menu.Item icon={<DashboardOutlined />} key="4">Orders</Menu.Item>
+        <Menu.Item icon={<UsergroupAddOutlined />} key="5">Users</Menu.Item>
+        <Menu.Item icon={<StarOutlined />} key="6">Information Admin</Menu.Item>
+        <Menu.Item icon={<ExperimentOutlined />} key="7">Notification</Menu.Item>
+        <Menu.Item icon={<SettingOutlined />} key="8">Setting</Menu.Item>
+        <Menu.Item icon={<TransactionOutlined />} key="9">Discount</Menu.Item>
+        <Menu.Item icon={<WhatsAppOutlined />} key="10">Contact</Menu.Item>
           </Menu.ItemGroup>
           <Menu.ItemGroup key="g2" title="EXTRA">
-        <Menu.Item icon={<HomeOutlined />} key="12">GitHub</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="13">About</Menu.Item>
-        <Menu.Item icon={<HomeOutlined />} key="14">Help</Menu.Item>
+        <Menu.Item icon={<GithubOutlined />} key="12">GitHub</Menu.Item>
+        <Menu.Item icon={<QuestionCircleOutlined />} key="13">About</Menu.Item>
+        <Menu.Item icon={<ExclamationCircleOutlined />} key="14">Help</Menu.Item>
           </Menu.ItemGroup>
       </Menu>
     </Col>
