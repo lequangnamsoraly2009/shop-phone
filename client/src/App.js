@@ -2,7 +2,7 @@ import "./App.css";
 import "antd/dist/antd.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Layout } from "antd";
+import { Layout, Row } from "antd";
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,6 +22,7 @@ import DetailProductMain from "./features/MainPage/pages";
 import Admin from "./admin";
 import HeaderAdmin from "./admin/components/header";
 import FooterAmdin from "./admin/components/footer";
+import SideBar from "./admin/components/sidebar";
 
 function App() {
   const { isLoggedIn, isAdmin } = useSelector((state) => state.user);
@@ -32,9 +33,12 @@ function App() {
           <Layout>
             <HeaderAdmin />
             <Content>
-              <Switch>
-                <Route path="/home" component={Admin} />
-              </Switch>
+              <Row gutter={16}>
+                <SideBar />
+                <Switch>
+                  <Route path="/home" component={Admin} />
+                </Switch>
+              </Row>
             </Content>
             <FooterAmdin />
           </Layout>

@@ -17,7 +17,7 @@ function HeaderAdmin() {
           <a
             href="/home"
             className="mobileHidden"
-            style={{ color: "#000", fontWeight: 500 }}
+            style={{ color: "#fff", fontWeight: 500 }}
           >
             <SkinOutlined style={{ fontSize: 40, margin: "auto" }} />
             DASHBOARD
@@ -27,12 +27,12 @@ function HeaderAdmin() {
           <Link to="/admin/notification" className="header_nav-notifi">
             <Badge count={1} overflowCount={10}>
               <NotificationOutlined
-                style={{ fontSize: 20, cursor: "pointer" }}
+                style={{ color: "#fff", fontSize: 20, cursor: "pointer" }}
               />
             </Badge>
           </Link>
           <div className="header_nav-setting">
-            <SettingOutlined style={{ fontSize: 20, cursor: "pointer" }} />
+            <SettingOutlined style={{ color: "#fff", fontSize: 20, cursor: "pointer" }} />
           </div>
           <Link to="/admin/user" className="header_nav-avatar">
             <Avatar style={{cursor: "pointer" }}  src="https://i.pinimg.com/originals/1e/56/93/1e56935ed2360bde6ffc4b12bb2ec461.jpg" />

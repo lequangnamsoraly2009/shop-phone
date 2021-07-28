@@ -1,11 +1,12 @@
-import React from 'react'
+import { Col } from "antd";
+import React from "react";
 
 function Admin() {
-    return (
-        <div>
-            Here we go
-        </div>
-    )
+  return (
+    <Col className="gutter-row" span={20}>
+      <div>col-20</div>
+    </Col>
+  );
 }
 
-export default Admin
+export default Admin;
