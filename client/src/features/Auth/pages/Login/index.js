@@ -2,7 +2,7 @@ import { Form, Input, Button, Checkbox, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import Swal from "sweetalert2";
 import API from "../../../../api/axiosClient";
 import "./login.css";
