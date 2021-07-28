@@ -2,23 +2,32 @@ import { Breadcrumb, Table, Input, Button, Tag, Space, Pagination } from "antd";
 import React, { useState } from "react";
 import "./product.css";
 import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setPageFilter } from "../../../app/filterSlice";
+import { setPageFilter, setSearchFilter } from "../../../app/filterSlice";
 
 const { Search } = Input;
 
 function ProductPage() {
   const { products } = useSelector((state) => state.products);
   const { productsFilter } = useSelector((state) => state.productsFilter);
-  const [data, setData] = useState(productsFilter.slice(0, 3));
+  // const [data, setData] = useState(productsFilter.slice(0, 10));
   const dispatch = useDispatch();
+  const history = useHistory();
 
+  
   const handleChangePage = (page, pageSize) => {
     dispatch(setPageFilter(page));
-    setData(productsFilter.slice((page - 1) * pageSize, page * pageSize));
+    // setData(productsFilter.slice((page - 1) * pageSize, page * pageSize));
   };
-  
+
+  const onSearch = (value) => {
+    // history.push("/admin/products")
+    dispatch(setSearchFilter(value));
+  };
+
+
+
   const columns = [
     {
       title: "STT",
@@ -121,10 +130,6 @@ function ProductPage() {
     },
   ];
 
-  const onSearch = (values) => {
-    console.log(values);
-  };
-
   return (
     <div>
       <div className="header_page">
@@ -161,18 +166,18 @@ function ProductPage() {
           <Table
             pagination={{ position: ["none", "none"] }}
             columns={columns}
-            dataSource={data}
+            dataSource={productsFilter}
           />
         </div>
         <div className="product_data-pagination">
-          {productsFilter.length >= 0 && productsFilter.length < 3 ? (
+          {productsFilter.length >= 0 && productsFilter.length < 10 ? (
             ""
           ) : (
             <Pagination
               defaultCurrent={1}
               total={products.length}
               showSizeChanger={false}
-              pageSize={3}
+              pageSize={10}
               onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
           )}

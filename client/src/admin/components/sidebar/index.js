@@ -22,7 +22,7 @@ function SideBar() {
     <Col className="gutter-row" span={4}>
       <Menu
         style={{ width: "100%" }}
-        defaultSelectedKeys={["1"]}
+        // defaultSelectedKeys={["1"]}
         mode="inline"
         theme="light"
       >

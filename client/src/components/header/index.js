@@ -28,7 +28,12 @@ import ProductAPI from "../../api/productAPI";
 import { Link, useHistory } from "react-router-dom";
 import CategoryAPI from "../../api/categoryAPI";
 import ProductFilterAPI from "../../api/filterAPI";
-import { setSearchFilter } from "../../app/filterSlice";
+import {
+  setCategoryFilter,
+  setPageFilter,
+  setSearchFilter,
+  setSortFilter,
+} from "../../app/filterSlice";
 const { Search } = Input;
 
 function HeaderNav() {
@@ -91,8 +96,18 @@ function HeaderNav() {
 
   const onSearch = (value) => {
     history.push("/category");
-    dispatch(setSearchFilter(value));
+    dispatch(setSearchFilter(value.toLowerCase()));
+    dispatch(setCategoryFilter(""));
+    dispatch(setPageFilter(1));
+    dispatch(setSortFilter(""));
   };
+
+  const onClickGetAll = () => {
+    dispatch(setSearchFilter(""));
+    dispatch(setCategoryFilter(""));
+    dispatch(setPageFilter(1));
+    dispatch(setSortFilter(""));
+  }
 
   const menu = (
     <Menu style={{ width: 200, left: -50 }}>
@@ -322,7 +337,7 @@ function HeaderNav() {
             </li>
             <li className="nav-item">
               <Dropdown overlay={menu} arrow={true}>
-                <a className="ant-dropdown-link" href="/category">
+                <a className="ant-dropdown-link" href="/category" onClick={onClickGetAll}>
                   CATEGORY <DownOutlined />
                 </a>
               </Dropdown>

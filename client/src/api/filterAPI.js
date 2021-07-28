@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import API from "../api/axiosClient";
-import { getProductsFilter, setResultFilter} from "../app/filterSlice";
+import { getProductsFilter, setResultFilter } from "../app/filterSlice";
 
 const ProductFilterAPI = () => {
-  const { categoryFilter, sortFilter, searchFilter, pageFilter, resultFilter } =
-    useSelector((state) => state.productsFilter);
+  const { categoryFilter, sortFilter, searchFilter, pageFilter } = useSelector(
+    (state) => state.productsFilter
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,14 +21,7 @@ const ProductFilterAPI = () => {
       dispatch(setResultFilter(response.data.result));
     };
     getAllProductsFilter();
-  }, [
-    dispatch,
-    pageFilter,
-    categoryFilter,
-    sortFilter,
-    searchFilter,
-    resultFilter,
-  ]);
+  }, [dispatch, pageFilter, categoryFilter, sortFilter, searchFilter]);
 };
 
 export default ProductFilterAPI;
