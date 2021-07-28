@@ -1,4 +1,4 @@
-import { Breadcrumb, Table, Input, Button, Tag, Space } from "antd";
+import { Breadcrumb, Table, Input, Button, Tag, Space, Pagination } from "antd";
 import React from "react";
 import "./product.css";
 import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
@@ -50,24 +50,38 @@ function ProductPage() {
       dataIndex: "numberSold",
       key: "numberSold",
       render: (text, record, index) => <span>{record.numberSold}</span>,
+      defaultSortOrder: 'descend',
+        sorter: (a, b) => a.numberSold - b.numberSold,
     },
     {
       title: "Amount",
       dataIndex: "storage",
       key: "storage",
       render: (text, record, index) => <span>{record.storage}</span>,
+      defaultSortOrder: 'descend',
+        sorter: (a, b) => a.storage - b.storage,
     },
     {
       title: "Sale",
       dataIndex: "sale",
       key: "sale",
-      render: (text, record, index) => <span>{record.sale}</span>,
+      render: (text, record, index) => <span>{record.sale}%</span>,
+      defaultSortOrder: 'descend',
+        sorter: (a, b) => a.sale - b.sale,
     },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
+      render: (text, record, index) => <span>{record.price}$</span>,
+      defaultSortOrder: 'descend',
+        sorter: (a, b) => a.price - b.price,
     },
+    {
+        title: "New Price",
+        key: "newprice",
+        render: (text, record, index) => <span>{Math.floor(record.price - record.price*(record.sale/100))}$</span>,
+      },
     {
       title: "Status",
       dataIndex: "status",
@@ -131,7 +145,24 @@ function ProductPage() {
           </div>
         </div>
         <div className="product_data-table">
-          <Table columns={columns} dataSource={products} />
+          <Table
+            pagination={{ position: ["none", "none"] }}
+            columns={columns}
+            dataSource={products}
+          />
+        </div>
+        <div className="product_data-pagination">
+          {products.length >= 0 && products.length <= 10 ? (
+            ""
+          ) : (
+            <Pagination
+              defaultCurrent={1}
+              total={products.length}
+              showSizeChanger={false}
+              pageSize={20}
+              // onChange={(page, pageSize) => handleChangePage(page, pageSize)}
+            />
+          )}
         </div>
       </div>
     </div>
