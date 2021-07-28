@@ -23,6 +23,7 @@ import Admin from "./admin";
 import HeaderAdmin from "./admin/components/header";
 import FooterAmdin from "./admin/components/footer";
 import SideBar from "./admin/components/sidebar";
+import DashBoard from "./admin/pages/dashboard";
 
 function App() {
   const { isLoggedIn, isAdmin } = useSelector((state) => state.user);
@@ -36,7 +37,8 @@ function App() {
               <Row gutter={16}>
                 <SideBar />
                 <Switch>
-                  <Route path="/home" component={Admin} />
+                  <Route path="/admin" component={Admin} />
+                  <Route path="/home" component={DashBoard} />
                 </Switch>
               </Row>
             </Content>
