@@ -2,7 +2,7 @@ import "./App.css";
 import "antd/dist/antd.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Layout, Row } from "antd";
+import { Col, Layout, Row } from "antd";
 import {
   BrowserRouter as Router,
   Switch,
@@ -30,21 +30,23 @@ function App() {
   return (
     <Router>
       {isAdmin === true ? (
-        <div className="container-fluid">
-          <Layout>
-            <HeaderAdmin />
-            <Content>
+        <Layout>
+          <HeaderAdmin />
+          <Content>
+            <div className="container-fluid">
               <Row gutter={16}>
                 <SideBar />
                 <Switch>
                   <Route path="/admin" component={Admin} />
-                  <Route path="/home" component={DashBoard} />
+                  <Col className="gutter-row" span={20}>
+                    <Route path="/home" component={DashBoard} />
+                  </Col>
                 </Switch>
               </Row>
-            </Content>
-            <FooterAmdin />
-          </Layout>
-        </div>
+            </div>
+          </Content>
+          <FooterAmdin />
+        </Layout>
       ) : (
         <Layout>
           <HeaderNav />

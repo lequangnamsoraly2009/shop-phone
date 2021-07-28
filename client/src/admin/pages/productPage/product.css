@@ -1,0 +1,25 @@
+.product_data{
+    display: flex;
+    margin: 20px 0;
+    flex-direction: column;
+}
+
+.product_data-header{
+    margin: 0 auto;
+}
+
+.product_data-header h3{
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.product_data-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 10px 0;
+}
+
+.product_data-search{
+    margin-right: 10px;
+}
