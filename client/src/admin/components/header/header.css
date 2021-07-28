@@ -1,0 +1,39 @@
+.header_admin {
+  height: 80px;
+  width: 100%;
+  background-color: #fff;
+}
+
+.header_wrapper {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header_logo {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  width: 180px;
+}
+
+.header_nav {
+  display: flex;
+  flex-direction: row;
+  width: 100px;
+  justify-content: space-between;
+}
+
+/* .header_nav-notifi .header_nav-setting .header_nav-avatar {
+    margin: 0 10px;
+} */
+
+.header_nav-avatar {
+  position: relative;
+}
+
+.header_nav-avatar .ant-avatar {
+  position: absolute;
+  top: 12px;
+}

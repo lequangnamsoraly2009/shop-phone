@@ -22,7 +22,6 @@ import DetailProductMain from "./features/MainPage/pages";
 import Admin from "./admin";
 import HeaderAdmin from "./admin/components/header";
 import FooterAmdin from "./admin/components/footer";
-import Sider from "antd/lib/layout/Sider";
 
 function App() {
   const { isLoggedIn, isAdmin } = useSelector((state) => state.user);
