@@ -1,6 +1,6 @@
 import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Input, Form, Select, Button } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import UploadImage from "../uploadImage";
 import "./createProduct.css";
 import { useSelector } from "react-redux";
@@ -18,6 +18,7 @@ const layout = {
 
 function CreateProduct() {
   const { categories } = useSelector((state) => state.categories);
+  const [image,setImage] = useState({});
   const onFinishForm = (values) => {
     // let nameCate = {};
     // categories.forEach((item) => {
@@ -27,7 +28,11 @@ function CreateProduct() {
     // });
     // const a = {...values, nameCategory: nameCate};
   };
-
+  
+  const callbackFunction = (childData) =>{
+    setImage(childData);
+  }
+  console.log(image?.response);
   return (
     <div>
       <div className="product_breadcrumb">
@@ -51,7 +56,7 @@ function CreateProduct() {
             <span>Upload Image:</span>
           </div>
           <div className="create_upload-img-up">
-            <UploadImage />
+            <UploadImage parentCallback={callbackFunction} />
             <span>Thumbnail</span>
           </div>
           <div className="create_upload-img-up">

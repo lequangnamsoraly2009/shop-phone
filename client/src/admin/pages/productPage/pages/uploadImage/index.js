@@ -1,11 +1,12 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Upload } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
 import API from "../../../../../api/axiosClient";
+import Swal from "sweetalert2";
+
+
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -15,18 +16,52 @@ function getBase64(file) {
   });
 }
 
-function UploadImage() {
-  const { token } = useSelector((state) => state.token);
-
+function UploadImage(props) {
   const [file, setFile] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
 
+  const { token } = useSelector((state) => state.token);
   // console.log(file[0]);
 
   const onChange = ({ fileList: newFileList }) => {
     setFile(newFileList);
+    const status = newFileList[0]?.status;
+    // console.log(status)
+    if (status === "done") {
+      props.parentCallback(newFileList[0]);
+    }
+  };
+
+  const onRemove = async (file) => {
+    try {
+      await API.post(
+        "/api/admin/delete-image",
+        { public_id: file.response.public_id },
+        {
+          headers: { Authorization: token },
+        }
+      );
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title:
+          "Image Delete Success",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          "Something wrong. Please try again ! ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   };
 
   const handleCancel = () => {
@@ -44,8 +79,6 @@ function UploadImage() {
     );
   };
 
-  console.log(file[0]?.response);
-
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -60,6 +93,7 @@ function UploadImage() {
         fileList={file}
         onPreview={handlePreview}
         onChange={onChange}
+        onRemove={onRemove}
       >
         {file.length >= 1 ? null : uploadButton}
       </Upload>
