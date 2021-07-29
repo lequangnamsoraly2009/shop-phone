@@ -46,6 +46,11 @@ function MainProduct() {
     dispatch(setSearchFilter(value));
   };
 
+  const handleOnclickReload = (e) => {
+    e.preventDefault();
+    window.location.reload();
+  };
+
   const columns = [
     {
       title: "STT",
@@ -174,6 +179,11 @@ function MainProduct() {
           <h3>Data Table Products</h3>
         </div>
         <div className="product_data-wrapper">
+          <div className="product_data-create">
+            <Button onClick={handleOnclickReload} type="primary">
+              Reload Page
+            </Button>
+          </div>
           <div className="product_data-search">
             <Search
               placeholder="Search Product"

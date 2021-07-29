@@ -6,7 +6,7 @@ import "./createProduct.css";
 import { useSelector } from "react-redux";
 import API from "../../../../../api/axiosClient";
 import Swal from "sweetalert2";
-
+import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -23,6 +23,8 @@ function CreateProduct() {
   const { categories } = useSelector((state) => state.categories);
   const { token } = useSelector((state) => state.token);
 
+  const history = useHistory();
+
   const [image, setImage] = useState({});
   const onFinishForm = async (values) => {
     try {
@@ -32,7 +34,6 @@ function CreateProduct() {
           nameCate = item.nameCategory;
         }
       });
-      console.log(nameCate)
       let images = { ...image?.response };
       const product = { ...values, nameCategory: nameCate, images: images };
       await API.post(
@@ -43,6 +44,7 @@ function CreateProduct() {
         }
       );
       setImage({});
+      history.push("/admin/products")
       Swal.fire({
         position: "center",
         icon: "success",
