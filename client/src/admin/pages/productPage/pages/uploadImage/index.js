@@ -1,8 +1,11 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Upload } from "antd";
 import Modal from "antd/lib/modal/Modal";
+import axios from "axios";
 import React, { useState } from "react";
-
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import API from "../../../../../api/axiosClient";
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -13,12 +16,14 @@ function getBase64(file) {
 }
 
 function UploadImage() {
+  const { token } = useSelector((state) => state.token);
+
   const [file, setFile] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
 
-  // console.log(file)
+  // console.log(file[0]);
 
   const onChange = ({ fileList: newFileList }) => {
     setFile(newFileList);
@@ -39,6 +44,8 @@ function UploadImage() {
     );
   };
 
+  console.log(file[0]?.response);
+
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -48,7 +55,7 @@ function UploadImage() {
   return (
     <>
       <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        action={"http://localhost:3001/api/admin/upload-image"}
         listType="picture-card"
         fileList={file}
         onPreview={handlePreview}

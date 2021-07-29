@@ -9,17 +9,23 @@ const { Option } = Select;
 
 const layout = {
   labelCol: {
-    span: 2,
+    span: 4,
   },
   wrapperCol: {
-    span: 22,
+    span: 20,
   },
 };
 
 function CreateProduct() {
   const { categories } = useSelector((state) => state.categories);
   const onFinishForm = (values) => {
-    console.log(values);
+    // let nameCate = {};
+    // categories.forEach((item) => {
+    //   if (item._id === values.category) {
+    //     nameCate = item.nameCategory
+    //   }
+    // });
+    // const a = {...values, nameCategory: nameCate};
   };
 
   return (
@@ -71,7 +77,10 @@ function CreateProduct() {
             onFinish={onFinishForm}
             {...layout}
             size="middle"
-            initialValues={{}}
+            initialValues={{
+              sale: 0,
+              status: "Stocking",
+            }}
           >
             <Form.Item
               label="Product Name"
@@ -132,7 +141,14 @@ function CreateProduct() {
                 <Option value="Importing">Importing</Option>
               </Select>
             </Form.Item>
-            <Form.Item label="Color" name="color" hasFeedback rules={[{ required: true, message: "Please select color for product!" }]}>
+            <Form.Item
+              label="Color"
+              name="color"
+              hasFeedback
+              rules={[
+                { required: true, message: "Please select color for product!" },
+              ]}
+            >
               <Select placeholder="Please select color for product">
                 <Option value="yellow">Yellow</Option>
                 <Option value="gold">Gold</Option>
@@ -145,7 +161,17 @@ function CreateProduct() {
                 <Option value="silver">Silver</Option>
               </Select>
             </Form.Item>
-            <Form.Item label="Momory" name="memory" hasFeedback rules={[{ required: true, message: "Please select memory for product!" }]}>
+            <Form.Item
+              label="Momory"
+              name="memory"
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "Please select memory for product!",
+                },
+              ]}
+            >
               <Select placeholder="Please select memory for product">
                 <Option value="16">16</Option>
                 <Option value="32">32</Option>
@@ -159,9 +185,27 @@ function CreateProduct() {
             <Form.Item
               label="Price"
               name="price"
-              rules={[{ required: true, message: "Please input price product!" }]}
+              rules={[
+                { required: true, message: "Please input price product!" },
+              ]}
             >
-              <Input placeholder="Units in USD" type="number"/> 
+              <Input placeholder="Units in USD" type="number" />
+            </Form.Item>
+            <Form.Item
+              label="Storage"
+              name="storage"
+              rules={[
+                { required: true, message: "Please enter quantity in stock!" },
+              ]}
+            >
+              <Input placeholder="Units" type="number" />
+            </Form.Item>
+            <Form.Item
+              label="Sale"
+              name="sale"
+              rules={[{ required: true, message: "0% -> 99%", min: 0, max: 2 }]}
+            >
+              <Input placeholder="10%" type="number" />
             </Form.Item>
             <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
               <Button type="primary" htmlType="submit">
