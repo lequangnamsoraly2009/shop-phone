@@ -3,15 +3,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./listitem.css";
 import CardItemCate from "../cardItemCate";
-import { setPageFilter, setSortFilter } from "../../../../app/filterSlice";
+import {getProductsFilter, setPaginationFilter, setSortFilter } from "../../../../app/filterSlice";
+import API from "../../../../api/axiosClient";
 
 function ListItem() {
 
-
-  const { products } = useSelector((state) => state.products);
-
-  const { productsFilter } = useSelector((state) => state.productsFilter);
-  // const [data, setData] = useState(productsFilter.slice(0, 20));
+  const { productsFilter, paginationFilter,categoryFilter,sortFilter,searchFilter } = useSelector((state) => state.productsFilter);
 
   const dispatch = useDispatch();
 
@@ -19,9 +16,22 @@ function ListItem() {
     dispatch(setSortFilter(e.target.value));
   };
 
-  const handleChangePage = (page, pageSize) => {
-    dispatch(setPageFilter(page));
-    // setData(productsFilter.slice((page - 1) * pageSize, page * pageSize));
+  const handleChangePage = async(page, pageSize) => {
+    try {
+      const response = await API.get(
+        `/api/filter/products?limit=${
+          page * 20
+        }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
+      );
+      dispatch(setPaginationFilter(response.data.products));
+      const data = response.data.products.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+      );
+      dispatch(getProductsFilter(data));
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -58,7 +68,7 @@ function ListItem() {
           ) : (
             <>
               <Row gutter={[12, 12]}>
-                {productsFilter.map((product) => {
+                {productsFilter.slice(0,20).map((product) => {
                   return (
                     <Col key={product._id} className="gutter-row" span={6}>
                       <CardItemCate product={product} />
@@ -71,12 +81,12 @@ function ListItem() {
         </div>
       </div>
       <div className="list-item-pagination">
-        {productsFilter.length >= 0 && productsFilter.length < 20 ? (
+        {paginationFilter.length <= 20 ? (
           ""
         ) : (
           <Pagination
             defaultCurrent={1}
-            total={products.length}
+            total={paginationFilter.length}
             showSizeChanger={false}
             pageSize={20}
             onChange={(page, pageSize) => handleChangePage(page, pageSize)}

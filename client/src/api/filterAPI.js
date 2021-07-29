@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import API from "../api/axiosClient";
-import { getProductsFilter, setResultFilter } from "../app/filterSlice";
+import {
+  getProductsFilter,
+  setPaginationFilter,
+  setResultFilter,
+} from "../app/filterSlice";
 
 const ProductFilterAPI = () => {
   const { categoryFilter, sortFilter, searchFilter, pageFilter } = useSelector(
@@ -18,6 +22,7 @@ const ProductFilterAPI = () => {
       );
       // const response = await API.get(`/api/products?limit=${1*20}&&&title[regex]=`);
       dispatch(getProductsFilter(response.data.products));
+      dispatch(setPaginationFilter(response.data.products));
       dispatch(setResultFilter(response.data.result));
     };
     getAllProductsFilter();

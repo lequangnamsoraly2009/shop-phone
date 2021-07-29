@@ -1,28 +1,28 @@
 import { Breadcrumb, Table, Input, Button, Tag, Space, Pagination } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import "./product.css";
 import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getProductsFilter,
-  setCategoryFilter,
-  setPageFilter,
+  setPaginationFilter,
   setSearchFilter,
-  setSortFilter,
 } from "../../../app/filterSlice";
 import API from "../../../api/axiosClient";
 
 const { Search } = Input;
 
 function ProductPage() {
-  // const { products } = useSelector((state) => state.products);
-  const { productsFilter, categoryFilter, sortFilter, searchFilter } =
-    useSelector((state) => state.productsFilter);
-  const [listProducts, setListProducts] = useState(productsFilter);
+  const {
+    productsFilter,
+    categoryFilter,
+    sortFilter,
+    searchFilter,
+    paginationFilter,
+  } = useSelector((state) => state.productsFilter);
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleChangePage = async (page, pageSize) => {
     try {
@@ -31,9 +31,7 @@ function ProductPage() {
           page * 20
         }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
       );
-      // if (response.data.products.length <= pageSize) {
-      setListProducts(response.data.products);
-      // }
+      dispatch(setPaginationFilter(response.data.products));
       const data = response.data.products.slice(
         (page - 1) * pageSize,
         page * pageSize
@@ -42,21 +40,13 @@ function ProductPage() {
     } catch (error) {
       alert(error.message);
     }
-    // dispatch(setPageFilter(page));
-    // setData(productsFilter.slice((page - 1) * pageSize, page * pageSize));
   };
 
   const onSearch = (value) => {
     dispatch(setSearchFilter(value));
   };
 
-  const handleReloadSearch = () => {
-    history.push("/admin/products");
-    dispatch(setCategoryFilter(""));
-    dispatch(setSearchFilter(""));
-    dispatch(setSortFilter(""));
-    dispatch(setPageFilter(1));
-  };
+
 
   const columns = [
     {
@@ -178,43 +168,36 @@ function ProductPage() {
         <div className="product_data-header">
           <h3>Data Table Products</h3>
         </div>
-        <div className="product_data-top">
-          <div className="product_data-reload">
-            <Button onClick={handleReloadSearch} type="primary">
-              Reload Search
-            </Button>
+        <div className="product_data-wrapper">
+          <div className="product_data-search">
+            <Search
+              placeholder="Search Product"
+              allowClear
+              enterButton="Search"
+              size="middle"
+              onSearch={onSearch}
+            />
           </div>
-          <div className="product_data-wrapper">
-            <div className="product_data-search">
-              <Search
-                placeholder="Search Product"
-                allowClear
-                enterButton="Search"
-                size="middle"
-                onSearch={onSearch}
-              />
-            </div>
-            <div className="product_data-create">
-              <Button type="primary">Create Product</Button>
-            </div>
+          <div className="product_data-create">
+            <Button type="primary">Create Product</Button>
           </div>
         </div>
         <div className="product_data-table">
           <Table
             pagination={{ position: ["none", "none"] }}
             columns={columns}
-            dataSource={productsFilter.slice(0, 2)}
+            dataSource={productsFilter.slice(0,10)}
           />
         </div>
         <div className="product_data-pagination">
-          {listProducts.length < 3 ? (
+          {paginationFilter.length <= 10 ? (
             ""
           ) : (
             <Pagination
               defaultCurrent={1}
-              total={listProducts.length}
+              total={paginationFilter.length}
               showSizeChanger={false}
-              pageSize={2}
+              pageSize={10}
               onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
           )}

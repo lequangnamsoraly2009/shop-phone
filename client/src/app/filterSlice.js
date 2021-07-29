@@ -7,6 +7,7 @@ const initialState = {
   searchFilter: "",
   pageFilter: 1,
   resultFilter: 20,
+  paginationFilter: [],
 };
 
 const productFilterSlice = createSlice({
@@ -31,6 +32,9 @@ const productFilterSlice = createSlice({
     setResultFilter: (state, action) => {
       state.resultFilter = action.payload;
     },
+    setPaginationFilter: (state, action) => {
+      state.paginationFilter = action.payload;
+    },
   },
   extraReducers: {},
 });
@@ -44,6 +48,7 @@ export const {
   setSearchFilter,
   setPageFilter,
   setResultFilter,
+  setPaginationFilter
 } = actions;
 
 export default reducer;
