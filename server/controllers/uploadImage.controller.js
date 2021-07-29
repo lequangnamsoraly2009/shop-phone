@@ -5,7 +5,6 @@ const fs = require("fs");
 const uploadImageController = {
   uploadImage: (req, res) => {
     try {
-      console.log(req.files);
       if (!req.files || Object.keys(req.files).length === 0) {
         return res
           .status(400)

@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import API from "../../../../../api/axiosClient";
 import Swal from "sweetalert2";
 
-
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -31,6 +30,13 @@ function UploadImage(props) {
     // console.log(status)
     if (status === "done") {
       props.parentCallback(newFileList[0]);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Image Upload Success",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
   };
 
@@ -46,18 +52,15 @@ function UploadImage(props) {
       Swal.fire({
         position: "center",
         icon: "success",
-        title:
-          "Image Delete Success",
+        title: "Image Delete Success",
         showConfirmButton: false,
         timer: 2000,
       });
-
     } catch (error) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title:
-          "Something wrong. Please try again ! ",
+        title: "Something wrong. Please try again ! ",
         showConfirmButton: false,
         timer: 2000,
       });

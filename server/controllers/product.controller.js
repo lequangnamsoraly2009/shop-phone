@@ -92,6 +92,7 @@ const productController = {
         category,
         storage,
         sale,
+        nameCategory
       } = req.body;
 
       if (!images)
@@ -121,6 +122,7 @@ const productController = {
         category,
         storage,
         sale,
+        nameCategory
       });
 
       await newProduct.save();

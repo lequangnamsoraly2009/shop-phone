@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import UploadImage from "../uploadImage";
 import "./createProduct.css";
 import { useSelector } from "react-redux";
+import API from "../../../../../api/axiosClient";
+import Swal from "sweetalert2";
+
 
 const { Option } = Select;
 
@@ -18,21 +21,49 @@ const layout = {
 
 function CreateProduct() {
   const { categories } = useSelector((state) => state.categories);
-  const [image,setImage] = useState({});
-  const onFinishForm = (values) => {
-    // let nameCate = {};
-    // categories.forEach((item) => {
-    //   if (item._id === values.category) {
-    //     nameCate = item.nameCategory
-    //   }
-    // });
-    // const a = {...values, nameCategory: nameCate};
+  const { token } = useSelector((state) => state.token);
+
+  const [image, setImage] = useState({});
+  const onFinishForm = async (values) => {
+    try {
+      let nameCate = {};
+      categories.forEach((item) => {
+        if (item._id === values.category) {
+          nameCate = item.nameCategory;
+        }
+      });
+      console.log(nameCate)
+      let images = { ...image?.response };
+      const product = { ...values, nameCategory: nameCate, images: images };
+      await API.post(
+        "/api/admin/products",
+        { ...product },
+        {
+          headers: { Authorization: token },
+        }
+      );
+      setImage({});
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Create product successfully! Check it ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something wrong. Please try create product again ! ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   };
-  
-  const callbackFunction = (childData) =>{
+
+  const callbackFunction = (childData) => {
     setImage(childData);
-  }
-  console.log(image?.response);
+  };
   return (
     <div>
       <div className="product_breadcrumb">
@@ -167,7 +198,7 @@ function CreateProduct() {
               </Select>
             </Form.Item>
             <Form.Item
-              label="Momory"
+              label="Memory"
               name="memory"
               hasFeedback
               rules={[
@@ -206,7 +237,7 @@ function CreateProduct() {
               <Input placeholder="Units" type="number" />
             </Form.Item>
             <Form.Item
-              label="Sale"
+              label="Sale Offer"
               name="sale"
               rules={[{ required: true, message: "0% -> 99%", min: 0, max: 2 }]}
             >
