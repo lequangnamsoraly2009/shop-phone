@@ -1,6 +1,7 @@
 import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb } from "antd";
 import React from "react";
+import UploadImage from "../uploadImage";
 import "./createProduct.css"
 
 function CreateProduct() {
@@ -18,10 +19,15 @@ function CreateProduct() {
         </Breadcrumb>
       </div>
       <div className="create-header">
-        <div>C</div>
+        <div className="create-header-title">
+          <span>CREATE NEW PRODUCT</span>
+        </div>
       </div>
-      <div className="create-upload">
-        <input type="file" name="file" id="file_up" />
+      <div className="create-content">
+        <div className="create-upload-img">
+            <span>Upload Image</span>
+            <UploadImage />
+        </div>
       </div>
     </div>
   );

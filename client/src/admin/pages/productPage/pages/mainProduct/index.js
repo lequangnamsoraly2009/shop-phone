@@ -184,7 +184,9 @@ function MainProduct() {
             />
           </div>
           <div className="product_data-create">
-            <Button type="primary">Create Product</Button>
+            <Link to="/admin/products/create">
+              <Button type="primary">Create Product</Button>
+            </Link>
           </div>
         </div>
         <div className="product_data-table">

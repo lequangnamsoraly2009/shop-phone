@@ -1,3 +1,17 @@
 .product_breadcrumb{
     margin-top: 5px;
 }
+
+.create-header{ 
+    display: flex;
+}
+
+.create-header-title{
+    margin: 20px auto;
+}
+
+.create-header-title span{
+    font-size: 24px;
+    font-weight: 700;
+    color: rgb(25,144,255);
+}
