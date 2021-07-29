@@ -1,7 +1,6 @@
 import { Col } from "antd";
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import ProductPage from "./pages/productPage";
 import CategoryPage from "./pages/categoryPage";
 import OrderPage from "./pages/orderPage";
 import UserPage from "./pages/userPage";
@@ -12,13 +11,14 @@ import DiscountPage from "./pages/discountPage";
 import ContactPage from "./pages/contactPage";
 import AboutPape from "./pages/aboutPage";
 import HelpPage from "./pages/helpPage";
+import ProductPage from "./pages/productPage";
 
 function Admin() {
   const match = useRouteMatch();
   return (
     <Col className="gutter-row" span={20}>
       <Switch>
-        <Route path={`${match.url}/products`} exact component={ProductPage} />
+        <Route path={`${match.url}/products`} component={ProductPage} />
         <Route path={`${match.url}/categories`} exact component={CategoryPage} />
         <Route path={`${match.url}/orders`} exact component={OrderPage} />
         <Route path={`${match.url}/users`} exact component={UserPage} />
