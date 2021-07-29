@@ -13,13 +13,15 @@ function getBase64(file) {
 }
 
 function UploadImage() {
-  const [fileList, setFileList] = useState([]);
+  const [file, setFile] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
 
+  // console.log(file)
+
   const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+    setFile(newFileList);
   };
 
   const handleCancel = () => {
@@ -48,11 +50,11 @@ function UploadImage() {
       <Upload
         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture-card"
-        fileList={fileList}
+        fileList={file}
         onPreview={handlePreview}
         onChange={onChange}
       >
-        {fileList.length >= 1 ? null : uploadButton}
+        {file.length >= 1 ? null : uploadButton}
       </Upload>
       <Modal
         visible={previewVisible}
