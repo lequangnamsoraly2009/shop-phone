@@ -23,6 +23,7 @@
   flex-direction: row;
   width: 100px;
   justify-content: space-between;
+  margin-right: 50px;
 }
 
 /* .header_nav-notifi .header_nav-setting .header_nav-avatar {

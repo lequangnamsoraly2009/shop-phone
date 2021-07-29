@@ -22,11 +22,11 @@ function HeaderAdmin() {
   
   return (
     <Header className="header_admin">
-      <div className="header_wrapper container-fluid">
+      <div className="header_wrapper">
         <div className="header_logo">
           <a
             href="/home"
-            className="mobileHidden"
+            // className="mobileHidden"
             style={{ color: "#fff", fontWeight: 500 }}
           >
             <SkinOutlined style={{ fontSize: 40, margin: "auto" }} />

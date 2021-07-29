@@ -35,7 +35,7 @@ function SideBar() {
   };
 
   return (
-    <Col className="gutter-row" span={4}>
+    <Col className="gutter-row" span={3}>
       <Menu
         style={{ width: "100%" }}
         // defaultSelectedKeys={["1"]}

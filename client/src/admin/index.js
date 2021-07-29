@@ -16,7 +16,7 @@ import ProductPage from "./pages/productPage";
 function Admin() {
   const match = useRouteMatch();
   return (
-    <Col className="gutter-row" span={20}>
+    <Col className="gutter-row" span={21}>
       <Switch>
         <Route path={`${match.url}/products`} component={ProductPage} />
         <Route path={`${match.url}/categories`} exact component={CategoryPage} />

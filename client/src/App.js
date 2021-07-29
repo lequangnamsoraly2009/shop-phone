@@ -33,17 +33,17 @@ function App() {
         <Layout>
           <HeaderAdmin />
           <Content>
-            <div className="container-fluid">
+            {/* <div className="container-fluid"> */}
               <Row gutter={16}>
                 <SideBar />
                 <Switch>
                   <Route path="/admin" component={Admin} />
-                  <Col className="gutter-row" span={20}>
+                  <Col className="gutter-row" span={21}>
                     <Route path="/home" component={DashBoard} />
                   </Col>
                 </Switch>
               </Row>
-            </div>
+            {/* </div> */}
           </Content>
           <FooterAmdin />
         </Layout>

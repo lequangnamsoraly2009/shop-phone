@@ -46,8 +46,6 @@ function MainProduct() {
     dispatch(setSearchFilter(value));
   };
 
-
-
   const columns = [
     {
       title: "STT",
@@ -64,6 +62,7 @@ function MainProduct() {
           {record.title}
         </a>
       ),
+      align: "center",
     },
     {
       title: "Images",
@@ -76,19 +75,23 @@ function MainProduct() {
           alt={record.title}
         />
       ),
+      align: "center",
     },
     {
       title: "Category",
       dataIndex: "nameCategory",
       key: "nameCategory",
       render: (text, record, index) => <span>{record.nameCategory}</span>,
+      align: "center",
     },
+
     {
       title: "Sold",
       dataIndex: "numberSold",
       key: "numberSold",
       render: (text, record, index) => <span>{record.numberSold}</span>,
       sorter: (a, b) => a.numberSold - b.numberSold,
+      align: "center",
     },
     {
       title: "Amount",
@@ -96,6 +99,7 @@ function MainProduct() {
       key: "storage",
       render: (text, record, index) => <span>{record.storage}</span>,
       sorter: (a, b) => a.storage - b.storage,
+      align: "center",
     },
     {
       title: "Sale",
@@ -103,6 +107,7 @@ function MainProduct() {
       key: "sale",
       render: (text, record, index) => <span>{record.sale}%</span>,
       sorter: (a, b) => a.sale - b.sale,
+      align: "center",
     },
     {
       title: "Price",
@@ -110,6 +115,7 @@ function MainProduct() {
       key: "price",
       render: (text, record, index) => <span>{record.price}$</span>,
       sorter: (a, b) => a.price - b.price,
+      align: "center",
     },
     {
       title: "New Price",
@@ -119,6 +125,7 @@ function MainProduct() {
           {Math.floor(record.price - record.price * (record.sale / 100))}$
         </span>
       ),
+      align: "center",
     },
     {
       title: "Status",
@@ -129,12 +136,13 @@ function MainProduct() {
           <Tag color="green">{record.status}</Tag>
         </>
       ),
+      align: "center",
     },
     {
       title: "Action",
       key: "action",
       render: (text, record, index) => (
-        <Space size="middle">
+        <Space size="large">
           <Link to="/">
             <EditOutlined />
           </Link>
@@ -143,11 +151,12 @@ function MainProduct() {
           </Link>
         </Space>
       ),
+      align: "center",
     },
   ];
 
   return (
-    <div>
+    <div className="container-admin">
       <div className="header_page">
         <h3>Products</h3>
       </div>
@@ -180,9 +189,11 @@ function MainProduct() {
         </div>
         <div className="product_data-table">
           <Table
+            // bordered={{false}}
             pagination={{ position: ["none", "none"] }}
             columns={columns}
-            dataSource={productsFilter.slice(0,10)}
+            dataSource={productsFilter.slice(0, 10)}
+            bordered={true}
           />
         </div>
         <div className="product_data-pagination">
