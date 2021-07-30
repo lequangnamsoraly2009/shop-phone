@@ -1,7 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Upload } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import API from "../../../../../api/axiosClient";
 import Swal from "sweetalert2";
@@ -16,10 +16,19 @@ function getBase64(file) {
 }
 
 function UploadImage(props) {
+
   const [file, setFile] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
+
+  // Load image when edit image
+  useEffect(() => {
+    if(props.param.id){
+      // Chac chan se co loi o day. The`
+      setFile([{uid: "-1",name: "hi.jpeg", status: "done", url: props.images?.url}])
+    }
+  },[props.param.id,props.images?.url])
 
   const { token } = useSelector((state) => state.token);
   // console.log(file[0]);

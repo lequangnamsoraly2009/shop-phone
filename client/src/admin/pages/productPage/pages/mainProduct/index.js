@@ -38,6 +38,7 @@ function MainProduct() {
 
   const dispatch = useDispatch();
 
+  // When turning pages, run this function
   const handleChangePage = async (page, pageSize) => {
     try {
       setIsLoading(true)
@@ -46,13 +47,13 @@ function MainProduct() {
           page * 20
         }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
       );
-      setIsLoading(false)
       dispatch(setPaginationFilter(response.data.products));
       const data = response.data.products.slice(
         (page - 1) * pageSize,
         page * pageSize
       );
       dispatch(getProductsFilter(data));
+      setIsLoading(false)
     } catch (error) {
       alert(error.message);
     }
@@ -120,13 +121,13 @@ function MainProduct() {
       title: "STT",
       width: 40,
       key: "stt",
-      render: (text, record, index) => <span>{index + 1}</span>,
+      render: (text,record,index) => <span>{index + 1}</span>,
     },
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text, record, index) => (
+      render: (text,record,index) => (
         <a style={{ textTransform: "capitalize" }} href="/">
           {record.title}
         </a>
@@ -137,7 +138,7 @@ function MainProduct() {
       title: "Images",
       dataIndex: "images",
       key: "images",
-      render: (text, record, index) => (
+      render: (text,record,index) => (
         <img
           style={{ height: 40, width: 40, objectFit: "scale-down" }}
           src={record.images.url}
@@ -150,7 +151,7 @@ function MainProduct() {
       title: "Category",
       dataIndex: "nameCategory",
       key: "nameCategory",
-      render: (text, record, index) => <span>{record.nameCategory}</span>,
+      render: (text,record,index) => <span>{record.nameCategory}</span>,
       align: "center",
     },
 
@@ -158,7 +159,7 @@ function MainProduct() {
       title: "Sold",
       dataIndex: "numberSold",
       key: "numberSold",
-      render: (text, record, index) => <span>{record.numberSold}</span>,
+      render: (text,record,index) => <span>{record.numberSold}</span>,
       sorter: (a, b) => a.numberSold - b.numberSold,
       align: "center",
     },
@@ -166,7 +167,7 @@ function MainProduct() {
       title: "Amount",
       dataIndex: "storage",
       key: "storage",
-      render: (text, record, index) => <span>{record.storage}</span>,
+      render: (text,record,index) => <span>{record.storage}</span>,
       sorter: (a, b) => a.storage - b.storage,
       align: "center",
     },
@@ -174,7 +175,7 @@ function MainProduct() {
       title: "Sale",
       dataIndex: "sale",
       key: "sale",
-      render: (text, record, index) => <span>{record.sale}%</span>,
+      render: (text,record,index) => <span>{record.sale}%</span>,
       sorter: (a, b) => a.sale - b.sale,
       align: "center",
     },
@@ -182,14 +183,14 @@ function MainProduct() {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      render: (text, record, index) => <span>{record.price}$</span>,
+      render: (text,record,index) => <span>{record.price}$</span>,
       sorter: (a, b) => a.price - b.price,
       align: "center",
     },
     {
       title: "New Price",
       key: "newprice",
-      render: (text, record, index) => (
+      render: (text,record,index) => (
         <span>
           {Math.floor(record.price - record.price * (record.sale / 100))}$
         </span>
@@ -200,7 +201,7 @@ function MainProduct() {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (text, record, index) => (
+      render: (text,record,index) => (
         <>
           <Tag color="green">{record.status}</Tag>
         </>
@@ -210,11 +211,11 @@ function MainProduct() {
     {
       title: "Action",
       key: "action",
-      render: (text, record, index) => (
+      render: (text,record,index) => (
         <Space size="large">
-          <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
+          <Link to={`/admin/products/edit/${record._id}`} style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <EditOutlined />
-          </div>
+          </Link>
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <Popconfirm
               title="Are you sure delete it?"
@@ -276,11 +277,10 @@ function MainProduct() {
         <div className="product_data-table">
         <Skeleton active loading={isLoading} paragraph={{rows: 10}} title={{width: "100%"}}>
           <Table
-            // bordered={{false}}
             pagination={{ position: ["none", "none"] }}
             columns={columns}
             dataSource={productsFilter.slice(0, 10)}
-            bordered={true}
+            // bordered={true}
           />
         </Skeleton>
         </div>

@@ -1,12 +1,12 @@
 import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Input, Form, Select, Button } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UploadImage from "../uploadImage";
 import "./createProduct.css";
 import { useSelector } from "react-redux";
 import API from "../../../../../api/axiosClient";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -21,11 +21,16 @@ const layout = {
 
 function CreateProduct() {
   const { categories } = useSelector((state) => state.categories);
+  const { productsFilter } = useSelector((state) => state.productsFilter);
   const { token } = useSelector((state) => state.token);
 
   const history = useHistory();
+  const param = useParams();
 
   const [image, setImage] = useState({});
+  const [itemEdit, setItemEdit] = useState({});
+  const {category,color,description,images,memory,price,product_id,sale,status,storage,title} = itemEdit;
+
   const onFinishForm = async (values) => {
     try {
       let nameCate = {};
@@ -44,7 +49,7 @@ function CreateProduct() {
         }
       );
       setImage({});
-      history.push("/admin/products")
+      history.push("/admin/products");
       Swal.fire({
         position: "center",
         icon: "success",
@@ -66,6 +71,18 @@ function CreateProduct() {
   const callbackFunction = (childData) => {
     setImage(childData);
   };
+
+  // Area Update Product
+  useEffect(() => {
+    if (param.id) {
+      productsFilter.forEach((product) => {
+        if (product._id === param.id) {
+          setItemEdit(product);
+        }
+      });
+    }
+  }, [param.id, productsFilter]);
+
   return (
     <div>
       <div className="product_breadcrumb">
@@ -89,10 +106,10 @@ function CreateProduct() {
             <span>Upload Image:</span>
           </div>
           <div className="create_upload-img-up">
-            <UploadImage parentCallback={callbackFunction} />
+            <UploadImage images={images} param={param} parentCallback={callbackFunction} />
             <span>Thumbnail</span>
           </div>
-          <div className="create_upload-img-up">
+          {/* <div className="create_upload-img-up">
             <UploadImage />
             <span>Image 1</span>
           </div>
@@ -107,7 +124,7 @@ function CreateProduct() {
           <div className="create_upload-img-up">
             <UploadImage />
             <span>Image 4</span>
-          </div>
+          </div> */}
         </div>
         <div className="create_upload-info">
           <Form
@@ -115,10 +132,7 @@ function CreateProduct() {
             onFinish={onFinishForm}
             {...layout}
             size="middle"
-            initialValues={{
-              sale: 0,
-              status: "Stocking",
-            }}
+            initialValues={{category,color,description,memory,price,product_id,sale,status,storage,title}}
           >
             <Form.Item
               label="Product Name"
@@ -247,7 +261,7 @@ function CreateProduct() {
             </Form.Item>
             <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
               <Button type="primary" htmlType="submit">
-                Submit
+                Create
               </Button>
             </Form.Item>
           </Form>
