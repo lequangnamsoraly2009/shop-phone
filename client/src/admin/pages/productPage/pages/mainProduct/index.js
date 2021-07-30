@@ -48,6 +48,7 @@ function MainProduct() {
 
   const handleOnclickReload = (e) => {
     e.preventDefault();
+    dispatch(setSearchFilter(""));
     window.location.reload();
   };
 

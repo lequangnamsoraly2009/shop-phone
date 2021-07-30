@@ -23,7 +23,7 @@ function CardItem({ product }) {
       style={{ height: 500 }}
       cover={
         <img
-          style={{ paddingTop: 20 }}
+          style={{ paddingTop: 20, height: 282, width: 282, objectFit: "scale-down" }}
           alt={product?.description}
           src={product?.images.url}
         />
