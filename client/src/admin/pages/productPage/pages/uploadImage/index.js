@@ -26,7 +26,7 @@ function UploadImage(props) {
   useEffect(() => {
     if(props.param.id){
       // Chac chan se co loi o day. The`
-      setFile([{uid: "-1",name: "hi.jpeg", status: "done", url: props.images?.url}])
+      setFile([{uid: "-1",name: "Test_thoi_lam_gi_cang.jpeg", status: "done", url: props.images?.url}])
     }
   },[props.param.id,props.images?.url])
 
