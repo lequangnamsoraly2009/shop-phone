@@ -21,7 +21,6 @@ import {
 import API from "../../../../../api/axiosClient";
 import Swal from "sweetalert2";
 
-
 const { Search } = Input;
 
 function MainProduct() {
@@ -32,7 +31,7 @@ function MainProduct() {
     searchFilter,
     paginationFilter,
   } = useSelector((state) => state.productsFilter);
-  const {token} = useSelector((state) => state.token);
+  const { token } = useSelector((state) => state.token);
 
   const dispatch = useDispatch();
 
@@ -64,31 +63,39 @@ function MainProduct() {
     window.location.reload();
   };
 
-  const handleDeleteProduct = async(e, _id, public_id) => {
+  const handleDeleteProduct = async (_id, public_id) => {
     try {
-      await API.post("/api/admin/delete-image", {public_id: public_id},{
+      const imagesProduct = API.post(
+        "/api/admin/delete-image",
+        { public_id: public_id },
+        {
+          headers: { Authorization: token },
+        }
+      );
+      console.log(_id);
+      const deleteProduct = API.delete(`/api/admin/products/${_id}`, {
         headers: { Authorization: token },
-      })
-      await API.delete(`/api/admin/products/${_id}`,{
-        headers: { Authorization: token },
-      })
+      });
+      await imagesProduct;
+      await deleteProduct;
       Swal.fire({
         position: "center",
-        icon: "eror",
+        icon: "success",
         title: "Delete Products Successful",
         showConfirmButton: false,
-        timer: 2000,
+        timer: 3000,
       });
+    window.location.reload();
     } catch (error) {
       Swal.fire({
         position: "center",
-        icon: "eror",
+        icon: "error",
         title: "Something wrongs. Please try it again !",
         showConfirmButton: false,
         timer: 2000,
       });
     }
-  }
+  };
 
   const handleCancelDeleteProduct = (e) => {
     e.preventDefault();
@@ -99,7 +106,7 @@ function MainProduct() {
       showConfirmButton: false,
       timer: 2000,
     });
-  }
+  };
 
   const columns = [
     {
@@ -204,10 +211,12 @@ function MainProduct() {
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <Popconfirm
               title="Are you sure delete it?"
-              onConfirm={() => handleDeleteProduct(record._id, record.images.public_id)}
+              onConfirm={() =>
+                handleDeleteProduct(record._id, record.images.public_id)
+              }
               onCancel={handleCancelDeleteProduct}
               okText="Xóa mẹ nó đi"
-              cancelText="Thôi đừng"          
+              cancelText="Thôi đừng"
             >
               <DeleteOutlined />
             </Popconfirm>
