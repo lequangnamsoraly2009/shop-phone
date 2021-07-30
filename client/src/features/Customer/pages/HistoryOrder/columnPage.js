@@ -9,7 +9,7 @@ export const columnTable = [
     render: (text, record, index) => (
       <div className="order-table-product">
         <a href={`/${record._id}`} className="order-table-img">
-          <img src={record.images.url} alt={record.images.public_id} />
+          <img src={record.images.url} alt={record.images.public_id} style={{height: 100, width: 100, objectFit:"scale-down"}} />
         </a>
         <div className="order-table-info">
           <a href={`/${record._id}`}>
