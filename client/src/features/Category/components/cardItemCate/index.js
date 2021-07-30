@@ -22,7 +22,12 @@ function CardItemCate({ product }) {
       style={{ height: 440 }}
       cover={
         <img
-          style={{ paddingTop: 20 }}
+          style={{
+            paddingTop: 20,
+            height: 235,
+            width: 235,
+            objectFit: "scale-down",
+          }}
           alt={product?.description}
           src={product?.images.url}
         />
