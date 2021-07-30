@@ -7,8 +7,9 @@ import {
   Space,
   Pagination,
   Popconfirm,
+  Skeleton,
 } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import "./product.css";
 import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -33,15 +34,19 @@ function MainProduct() {
   } = useSelector((state) => state.productsFilter);
   const { token } = useSelector((state) => state.token);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleChangePage = async (page, pageSize) => {
     try {
+      setIsLoading(true)
       const response = await API.get(
         `/api/filter/products?limit=${
           page * 20
         }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
       );
+      setIsLoading(false)
       dispatch(setPaginationFilter(response.data.products));
       const data = response.data.products.slice(
         (page - 1) * pageSize,
@@ -65,6 +70,7 @@ function MainProduct() {
 
   const handleDeleteProduct = async (_id, public_id) => {
     try {
+      setIsLoading(true)
       const imagesProduct = API.post(
         "/api/admin/delete-image",
         { public_id: public_id },
@@ -78,6 +84,7 @@ function MainProduct() {
       });
       await imagesProduct;
       await deleteProduct;
+      setIsLoading(false)
       Swal.fire({
         position: "center",
         icon: "success",
@@ -267,6 +274,7 @@ function MainProduct() {
           </div>
         </div>
         <div className="product_data-table">
+        <Skeleton active loading={isLoading} paragraph={{rows: 10}} title={{width: "100%"}}>
           <Table
             // bordered={{false}}
             pagination={{ position: ["none", "none"] }}
@@ -274,6 +282,7 @@ function MainProduct() {
             dataSource={productsFilter.slice(0, 10)}
             bordered={true}
           />
+        </Skeleton>
         </div>
         <div className="product_data-pagination">
           {paginationFilter.length <= 10 ? (
