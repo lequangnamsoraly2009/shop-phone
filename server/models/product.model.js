@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require('uuid');
 
 const productSchema = new mongoose.Schema(
   {
@@ -67,9 +68,8 @@ const productSchema = new mongoose.Schema(
     },
     key: {
       type: String,
-      default:
-        Math.random().toString(36).substring(2, 5) +
-        Math.random().toString(36).substring(2, 5),
+      default: uuidv4(), 
+      unique: true,
     },
   },
   {

@@ -1,4 +1,13 @@
-import { Breadcrumb, Table, Input, Button, Tag, Space, Pagination } from "antd";
+import {
+  Breadcrumb,
+  Table,
+  Input,
+  Button,
+  Tag,
+  Space,
+  Pagination,
+  Popconfirm,
+} from "antd";
 import React from "react";
 import "./product.css";
 import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
@@ -10,6 +19,8 @@ import {
   setSearchFilter,
 } from "../../../../../app/filterSlice";
 import API from "../../../../../api/axiosClient";
+import Swal from "sweetalert2";
+
 
 const { Search } = Input;
 
@@ -21,6 +32,7 @@ function MainProduct() {
     searchFilter,
     paginationFilter,
   } = useSelector((state) => state.productsFilter);
+  const {token} = useSelector((state) => state.token);
 
   const dispatch = useDispatch();
 
@@ -51,6 +63,43 @@ function MainProduct() {
     dispatch(setSearchFilter(""));
     window.location.reload();
   };
+
+  const handleDeleteProduct = async(e, _id, public_id) => {
+    try {
+      await API.post("/api/admin/delete-image", {public_id: public_id},{
+        headers: { Authorization: token },
+      })
+      await API.delete(`/api/admin/products/${_id}`,{
+        headers: { Authorization: token },
+      })
+      Swal.fire({
+        position: "center",
+        icon: "eror",
+        title: "Delete Products Successful",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "eror",
+        title: "Something wrongs. Please try it again !",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  }
+
+  const handleCancelDeleteProduct = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Ok Không sao. Chúa phù hộ em :v",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  }
 
   const columns = [
     {
@@ -149,12 +198,20 @@ function MainProduct() {
       key: "action",
       render: (text, record, index) => (
         <Space size="large">
-          <Link to="/">
+          <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <EditOutlined />
-          </Link>
-          <Link to="/">
-            <DeleteOutlined />
-          </Link>
+          </div>
+          <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
+            <Popconfirm
+              title="Are you sure delete it?"
+              onConfirm={() => handleDeleteProduct(record._id, record.images.public_id)}
+              onCancel={handleCancelDeleteProduct}
+              okText="Xóa mẹ nó đi"
+              cancelText="Thôi đừng"          
+            >
+              <DeleteOutlined />
+            </Popconfirm>
+          </div>
         </Space>
       ),
       align: "center",
