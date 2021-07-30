@@ -91,7 +91,7 @@ function MainProduct() {
         icon: "success",
         title: "Delete Products Successful",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 4000,
       });
     window.location.reload();
     } catch (error) {
