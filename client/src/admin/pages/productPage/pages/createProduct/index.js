@@ -20,16 +20,29 @@ const layout = {
 };
 
 function CreateProduct() {
+  const initialState = {
+    category: "",
+    color: "",
+    description: "",
+    memory: "",
+    price: "",
+    product_id: "",
+    sale: "",
+    status: "",
+    storage: "",
+    title: "",
+    _id: "",
+  };
+
+  const [image, setImage] = useState({});
+  const [productEdit, setProductEdit] = useState({ initialState });
+
   const { categories } = useSelector((state) => state.categories);
   const { productsFilter } = useSelector((state) => state.productsFilter);
   const { token } = useSelector((state) => state.token);
 
   const history = useHistory();
   const param = useParams();
-
-  const [image, setImage] = useState({});
-  const [itemEdit, setItemEdit] = useState({});
-  const {category,color,description,images,memory,price,product_id,sale,status,storage,title} = itemEdit;
 
   const onFinishForm = async (values) => {
     try {
@@ -77,7 +90,20 @@ function CreateProduct() {
     if (param.id) {
       productsFilter.forEach((product) => {
         if (product._id === param.id) {
-          setItemEdit(product);
+          setProductEdit({
+            category: product.category,
+            color: product.color,
+            description: product.description,
+            memory: product.memory,
+            price: product.price,
+            product_id: product.product_id,
+            sale: product.sale,
+            status: product.status,
+            storage: product.storage,
+            title: product.title,
+            _id: product._id,
+          });
+          setImage(product.images);
         }
       });
     }
@@ -106,7 +132,11 @@ function CreateProduct() {
             <span>Upload Image:</span>
           </div>
           <div className="create_upload-img-up">
-            <UploadImage images={images} param={param} parentCallback={callbackFunction} />
+            <UploadImage
+              images={image}
+              param={param}
+              parentCallback={callbackFunction}
+            />
             <span>Thumbnail</span>
           </div>
           {/* <div className="create_upload-img-up">
@@ -128,15 +158,16 @@ function CreateProduct() {
         </div>
         <div className="create_upload-info">
           <Form
-            name="form-create"
             onFinish={onFinishForm}
             {...layout}
             size="middle"
-            initialValues={{category,color,description,memory,price,product_id,sale,status,storage,title}}
+            initialValues={productEdit}
+            scrollToFirstError
           >
             <Form.Item
               label="Product Name"
               name="title"
+              initialValue={productEdit.title}
               rules={[
                 { required: true, message: "Please input product name!" },
               ]}
