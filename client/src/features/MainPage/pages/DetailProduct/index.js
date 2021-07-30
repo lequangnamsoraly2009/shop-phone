@@ -106,13 +106,14 @@ function DetailProduct() {
           <div className="left-product-gallery">
             <div className="image-product-overview-wrapper">
               <div className="image-wrapper">
-                <img className="image-primary" src={image} alt={detailProduct.title} />
+                <img className="image-primary" src={image} alt={detailProduct.title} style={{width: 550, height: 550 , objectFit: "scale-down"}} />
               </div>
             </div>
             <ul className="thumbnail-list" style={{ listStyle: "none" }}>
               <li className="image-thumbnail">
                 <button>
                   <img
+                  style={{objectFit: "scale-down"}}
                     onClick={(e) =>
                       onClickShowImage(
                         e,
