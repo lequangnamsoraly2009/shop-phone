@@ -20,22 +20,12 @@ const layout = {
 };
 
 function CreateProduct() {
-  const initialState = {
-    category: "",
-    color: "",
-    description: "",
-    memory: "",
-    price: "",
-    product_id: "",
-    sale: "",
-    status: "",
-    storage: "",
-    title: "",
-    _id: "",
-  };
-
   const [image, setImage] = useState({});
-  const [productEdit, setProductEdit] = useState({ initialState });
+  // Check form edit or form create
+  const [onEdit, setOnEdit] = useState(false);
+
+  // Vcl that chu' . initialValues không được xét bằng useState. Muốn thay đổi initialValues bằng dynamic thì dùng form.setFieldsValue() -> Mất 2 tiếng ngu
+  const [form] = Form.useForm();
 
   const { categories } = useSelector((state) => state.categories);
   const { productsFilter } = useSelector((state) => state.productsFilter);
@@ -54,13 +44,24 @@ function CreateProduct() {
       });
       let images = { ...image?.response };
       const product = { ...values, nameCategory: nameCate, images: images };
-      await API.post(
-        "/api/admin/products",
-        { ...product },
-        {
-          headers: { Authorization: token },
-        }
-      );
+
+      if (onEdit) {
+        await API.put(
+          `/api/admin/products/${param.id}`,
+          { ...product },
+          {
+            headers: { Authorization: token },
+          }
+        );
+      } else {
+        await API.post(
+          "/api/admin/products",
+          { ...product },
+          {
+            headers: { Authorization: token },
+          }
+        );
+      }
       setImage({});
       history.push("/admin/products");
       Swal.fire({
@@ -85,12 +86,15 @@ function CreateProduct() {
     setImage(childData);
   };
 
+  
+
   // Area Update Product
   useEffect(() => {
     if (param.id) {
+      setOnEdit(true);
       productsFilter.forEach((product) => {
         if (product._id === param.id) {
-          setProductEdit({
+          form.setFieldsValue({
             category: product.category,
             color: product.color,
             description: product.description,
@@ -106,8 +110,10 @@ function CreateProduct() {
           setImage(product.images);
         }
       });
+    } else {
+      setOnEdit(false);
     }
-  }, [param.id, productsFilter]);
+  }, [param.id, productsFilter, form]);
 
   return (
     <div>
@@ -136,6 +142,7 @@ function CreateProduct() {
               images={image}
               param={param}
               parentCallback={callbackFunction}
+              onEdit={onEdit}
             />
             <span>Thumbnail</span>
           </div>
@@ -161,13 +168,14 @@ function CreateProduct() {
             onFinish={onFinishForm}
             {...layout}
             size="middle"
-            initialValues={productEdit}
-            scrollToFirstError
+            form={form}
+            initialValues={{
+              status: "Stocking",
+            }}
           >
             <Form.Item
               label="Product Name"
               name="title"
-              initialValue={productEdit.title}
               rules={[
                 { required: true, message: "Please input product name!" },
               ]}
@@ -292,7 +300,7 @@ function CreateProduct() {
             </Form.Item>
             <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
               <Button type="primary" htmlType="submit">
-                Create
+                {onEdit ? "Update" : "Create"}
               </Button>
             </Form.Item>
           </Form>

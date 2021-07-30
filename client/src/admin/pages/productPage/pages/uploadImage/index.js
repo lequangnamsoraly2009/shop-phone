@@ -24,40 +24,68 @@ function UploadImage(props) {
 
   // Load image when edit image
   useEffect(() => {
-    if(props.param.id){
-      // Chac chan se co loi o day. The`
-      setFile([{uid: "-1",name: "Test_thoi_lam_gi_cang.jpeg", status: "done", url: props.images?.url}])
+    if(props.param.id) {
+      if(props.images.url === undefined){
+        console.log("Edit success image")
+      }
+      else{
+        setFile([{uid: "-1",name: "Test_thoi_lam_gi_cang.jpeg", status: "done", url: props.images?.url}])
+      }
     }
   },[props.param.id,props.images?.url])
 
   const { token } = useSelector((state) => state.token);
-  // console.log(file[0]);
 
   const onChange = ({ fileList: newFileList }) => {
-    setFile(newFileList);
+    if(props.param.id){
+      setFile(newFileList);
+    }
+    else{
+      setFile(newFileList);
+    }
     const status = newFileList[0]?.status;
-    // console.log(status)
     if (status === "done") {
       props.parentCallback(newFileList[0]);
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Image Upload Success",
-        showConfirmButton: false,
-        timer: 2000,
-      });
+      if(props.onEdit){
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Update Image Different Success",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }else{
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Image Upload Success",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
     }
   };
 
   const onRemove = async (file) => {
     try {
-      await API.post(
-        "/api/admin/delete-image",
-        { public_id: file.response.public_id },
-        {
-          headers: { Authorization: token },
-        }
-      );
+      // Nếu edit thì nhảy vào cái này
+      if(props.onEdit===true){
+        await API.post(
+          "/api/admin/delete-image",
+          { public_id: props.images?.public_id },
+          {
+            headers: { Authorization: token },
+          }
+        );
+      }else{
+        await API.post(
+          "/api/admin/delete-image",
+          { public_id: file.response.public_id },
+          {
+            headers: { Authorization: token },
+          }
+        );
+      }
       Swal.fire({
         position: "center",
         icon: "success",
