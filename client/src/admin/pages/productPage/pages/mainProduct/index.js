@@ -119,6 +119,7 @@ function MainProduct() {
   const columns = [
     {
       title: "STT",
+      dataIndex: "stt",
       width: 40,
       key: "stt",
       render: (text,record,index) => <span>{index + 1}</span>,
@@ -141,8 +142,8 @@ function MainProduct() {
       render: (text,record,index) => (
         <img
           style={{ height: 40, width: 40, objectFit: "scale-down" }}
-          src={record.images.url}
-          alt={record.title}
+          src={record.images?.url}
+          alt={record?.title}
         />
       ),
       align: "center",

@@ -85,9 +85,6 @@ function CreateProduct() {
   const callbackFunction = (childData) => {
     setImage(childData);
   };
-
-  
-
   // Area Update Product
   useEffect(() => {
     if (param.id) {

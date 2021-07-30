@@ -1,5 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Upload } from "antd";
+import { Spin, Upload } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -22,24 +22,28 @@ function UploadImage(props) {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
 
-  // Load image when edit image
+  const { token } = useSelector((state) => state.token);
+
+
+  // Load image when edit image and dont set new Image here
   useEffect(() => {
     if(props.param.id) {
       if(props.images.url === undefined){
         console.log("Edit success image")
       }
       else{
-        setFile([{uid: "-1",name: "Test_thoi_lam_gi_cang.jpeg", status: "done", url: props.images?.url}])
+        setFile([{uid: "-1",name: "Preview Image By Soraly", status: "done", url: props.images?.url}])
       }
     }
   },[props.param.id,props.images?.url])
 
-  const { token } = useSelector((state) => state.token);
 
   const onChange = ({ fileList: newFileList }) => {
+    // On Edit -> Update Image Here
     if(props.param.id){
       setFile(newFileList);
     }
+    // On Create -> Create Image Here
     else{
       setFile(newFileList);
     }
@@ -140,7 +144,11 @@ function UploadImage(props) {
       <Modal
         visible={previewVisible}
         title={previewTitle}
-        footer={null}
+        footer={
+          <>
+            <Spin size="small" />
+          </>
+        }
         onCancel={handleCancel}
       >
         <img alt="example" style={{ width: "100%" }} src={previewImage} />
