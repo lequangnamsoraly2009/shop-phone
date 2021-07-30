@@ -76,7 +76,7 @@ function MainProduct() {
       key: "images",
       render: (text, record, index) => (
         <img
-          style={{ height: 40, width: 40 }}
+          style={{ height: 40, width: 40, objectFit: "scale-down" }}
           src={record.images.url}
           alt={record.title}
         />

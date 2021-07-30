@@ -82,7 +82,7 @@ function Cart() {
       render: (text, record, index) => (
         <>
           <div className="cart-product-infor">
-            <img src={record.images.url} alt="hi" />
+            <img src={record.images.url}  alt="hi" />
             <a style={{ textTransform: "capitalize" }} href={`/${record._id}`}>
               {record.title}
             </a>
