@@ -1,5 +1,5 @@
 import { EyeOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Skeleton, Table, Input, Space } from "antd";
+import { Breadcrumb, Button, Skeleton, Table, Input, Space, Pagination } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -16,6 +16,8 @@ function MainUser() {
   const { users, searchUsers, paginationUsers } = useSelector(
     (state) => state.usersAdmin
   );
+
+  const {token} = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,10 +32,34 @@ function MainUser() {
   const onSearch = async (value) => {
     dispatch(setSearchUsers(value.toLowerCase()));
     const response = await API.get(
-      `/users/all_users?limit=${20}&&&email[regex]=${searchUsers}`
+      `/users/all_users?limit=${20}&&&email[regex]=${searchUsers}`,{
+          headers: { Authorization: token }
+      }
     );
     dispatch(getAllUsers(response.data.users));
     dispatch(setPaginationUsers(response.data.users));
+  };
+
+   // Change Page Here
+   const handleChangePage = async (page, pageSize) => {
+    try {
+      setIsLoading(true);
+      const response = await API.get(
+        `/users/all_users?limit=${20}&&&email[regex]=${searchUsers}`,{
+            headers: { Authorization: token }
+        }
+      );
+      dispatch(setPaginationUsers(response.data.users));
+      // xét data categories khi change page
+      const data = response.data.users.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+      );
+      dispatch(getAllUsers(data));
+      setIsLoading(false);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   // Columns Table Category -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
@@ -170,22 +196,22 @@ function MainUser() {
               rowKey="_id"
               pagination={{ position: ["none", "none"] }}
               columns={columns}
-              dataSource={users}
+              dataSource={users.slice(0,2)}
             />
           </Skeleton>
         </div>
         <div className="product_data-pagination">
-          {/* {paginationCategories.length <= 10 ? (
+          {paginationUsers.length <= 2 ? (
             ""
           ) : (
             <Pagination
               defaultCurrent={1}
-              total={paginationCategories.length}
+              total={paginationUsers.length}
               showSizeChanger={false}
-              pageSize={10}
+              pageSize={2}
               onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
-          )} */}
+          )}
         </div>
       </div>
     </div>

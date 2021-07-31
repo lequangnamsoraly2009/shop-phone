@@ -56,7 +56,7 @@ function MainCategory() {
           page * 20
         }&&&nameCategorySearch[regex]=${searchCategories}`
       );
-      console.log(response.data.categories);
+      // console.log(response.data.categories);
       dispatch(setPaginationCategories(response.data.categories));
       // xét data categories khi change page
       const data = response.data.categories.slice(
