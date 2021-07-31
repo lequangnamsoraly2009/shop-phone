@@ -120,7 +120,7 @@ function MainCategory() {
             />
           </div>
           <div className="product_data-create">
-            <Link to="/admin/products/create">
+            <Link to="/admin/categories/create">
               <Button type="primary">New Category</Button>
             </Link>
           </div>
