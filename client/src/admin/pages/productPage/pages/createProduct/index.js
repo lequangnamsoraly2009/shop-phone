@@ -121,7 +121,7 @@ function CreateProduct() {
           </Breadcrumb.Item>
           <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
           <Breadcrumb.Item href="/admin/products">Products</Breadcrumb.Item>
-          <Breadcrumb.Item>Create Product</Breadcrumb.Item>
+          <Breadcrumb.Item>{!onEdit ? "Create" : "Update"} Product</Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="create_header">
