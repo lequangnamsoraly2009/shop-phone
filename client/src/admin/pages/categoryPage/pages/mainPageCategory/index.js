@@ -65,7 +65,7 @@ function MainCategory() {
       render: (text, record, index) => (
         <Space size="large">
           <Link
-            to={`/admin/products/edit/${record._id}`}
+            to={`/admin/categories/edit/${record._id}`}
             style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
           >
             <EditOutlined />
