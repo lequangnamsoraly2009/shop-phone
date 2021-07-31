@@ -79,7 +79,6 @@ function MainProduct() {
           headers: { Authorization: token },
         }
       );
-      console.log(_id);
       const deleteProduct = API.delete(`/api/admin/products/${_id}`, {
         headers: { Authorization: token },
       });
@@ -89,7 +88,7 @@ function MainProduct() {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Delete Products Successful",
+        title: "Delete Product Successful",
         showConfirmButton: false,
         timer: 4000,
       });

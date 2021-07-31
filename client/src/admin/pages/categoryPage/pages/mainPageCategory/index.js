@@ -9,16 +9,65 @@ import {
   Space,
   Table,
 } from "antd";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import {useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import API from "../../../../../api/axiosClient";
 
 const { Search } = Input;
 
 function MainCategory() {
   const { categories } = useSelector((state) => state.categories);
-  console.log(categories);
+  const { token } = useSelector((state) => state.token);
 
+  const [isLoading, setIsLoading] = useState(false);
+//   const dispatch = useDispatch();
+
+
+  const handleOnclickReload = (e) => {
+    e.preventDefault();
+    // dispatch(setSearchFilter(""));
+    window.location.reload();
+  };
+
+
+  const handleDeleteProduct = async (_id) => {
+    try {
+      setIsLoading(true);
+      await API.delete(`/api/admin/products/${_id}`, {
+        headers: { Authorization: token },
+      });
+      setIsLoading(false);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Delete Category Successful",
+        showConfirmButton: false,
+        timer: 4000,
+      });
+      window.location.reload();
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something wrongs. Please try it again !",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
+
+  const handleCancelDeleteCategory = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Ok Không sao. Chúa phù hộ em :v",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  };
   const columns = [
     {
       title: "STT",
@@ -49,16 +98,20 @@ function MainCategory() {
       title: "Create At",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (text, record, index) => <span>{new Date(record.createdAt).toLocaleString("en-GB")}</span>,
+      render: (text, record, index) => (
+        <span>{new Date(record.createdAt).toLocaleString("en-GB")}</span>
+      ),
       align: "center",
     },
     {
-        title: "Update At",
-        dataIndex: "updatedAt",
-        key: "updatedAt",
-        render: (text, record, index) => <span>{new Date(record.updatedAt).toLocaleString("en-GB")}</span>,
-        align: "center",
-      },
+      title: "Update At",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (text, record, index) => (
+        <span>{new Date(record.updatedAt).toLocaleString("en-GB")}</span>
+      ),
+      align: "center",
+    },
     {
       title: "Action",
       key: "action",
@@ -73,10 +126,8 @@ function MainCategory() {
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <Popconfirm
               title="Are you sure delete it?"
-              // onConfirm={() =>
-              //   handleDeleteProduct(record._id, record.images.public_id)
-              // }
-              // onCancel={handleCancelDeleteProduct}
+              onConfirm={() => handleDeleteProduct(record._id)}
+              onCancel={handleCancelDeleteCategory}
               okText="Xóa mẹ nó đi"
               cancelText="Thôi đừng"
             >
@@ -108,7 +159,7 @@ function MainCategory() {
         </div>
         <div className="product_data-wrapper">
           <div className="product_data-create">
-            <Button type="primary">Reload Page</Button>
+            <Button onClick={handleOnclickReload} type="primary">Reload Page</Button>
           </div>
           <div className="product_data-search">
             <Search
@@ -126,12 +177,12 @@ function MainCategory() {
           </div>
         </div>
         <div className="product_data-table">
-          {/* <Skeleton
+          <Skeleton
             active
-            // loading={isLoading}
+            loading={isLoading}
             paragraph={{ rows: 10 }}
             title={{ width: "100%" }}
-          > */}
+          >
           <Table
             rowKey="_id"
             pagination={{ position: ["none", "none"] }}
@@ -139,7 +190,7 @@ function MainCategory() {
             dataSource={categories.slice(0, 10)}
             // bordered={true}
           />
-          {/* </Skeleton> */}
+          </Skeleton>
         </div>
         {/* <div className="product_data-pagination">
           {paginationFilter.length <= 10 ? (
