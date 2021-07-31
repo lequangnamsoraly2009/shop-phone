@@ -3,16 +3,28 @@ import { Breadcrumb, Button, Skeleton, Table, Input, Space } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getAllUsers, setPaginationUsers, setSearchUsers } from "../../../../../app/userSlice.admin";
+import {
+  getAllUsers,
+  setPaginationUsers,
+  setSearchUsers,
+} from "../../../../../app/userSlice.admin";
 import API from "../../../../../api/axiosClient";
 
 const { Search } = Input;
 
 function MainUser() {
-  const { users, searchUsers, paginationUsers } = useSelector((state) => state.usersAdmin);
+  const { users, searchUsers, paginationUsers } = useSelector(
+    (state) => state.usersAdmin
+  );
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Reload Page
+  const handleOnclickReload = (e) => {
+    e.preventDefault();
+    dispatch(setSearchUsers(""));
+    window.location.reload();
+  };
 
   // Search Categories Here
   const onSearch = async (value) => {
@@ -56,7 +68,7 @@ function MainUser() {
       dataIndex: "email",
       key: "email",
       render: (text, record, index) => (
-        <span style={{ textTransform: "capitalize" }}>{record.email}</span>
+        <span >{record.email}</span>
       ),
       align: "center",
     },
@@ -73,7 +85,7 @@ function MainUser() {
       title: "Phone",
       dataIndex: "phone",
       key: "phone",
-      render: (text, record, index) => <span>0{record.phone}</span>,
+      render: (text, record, index) => <span>+{record.prefix}{record.phone.slice(1)}</span>,
       align: "center",
     },
     {
@@ -138,11 +150,13 @@ function MainUser() {
               allowClear
               enterButton="Search Category"
               size="middle"
-                onSearch={onSearch}
+              onSearch={onSearch}
             />
           </div>
           <div className="product_data-create">
-            <Button type="primary">Reload Page</Button>
+            <Button onClick={handleOnclickReload} type="primary">
+              Reload Page
+            </Button>
           </div>
         </div>
         <div className="product_data-table">
