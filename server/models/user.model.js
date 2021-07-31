@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema(
     gender: {
       type: String,
       required: true,
+      default: "Unknown"
     },
     phone: {
       type: String,
@@ -42,6 +43,10 @@ const userSchema = new mongoose.Schema(
     },
     introduction: {
       type: String,
+    },
+    typeUser:{
+      type: String,
+      default: "Unconfimred"
     }
   },
   {

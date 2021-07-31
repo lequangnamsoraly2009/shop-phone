@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const userController = require('../controllers/user.controller')
 const auth = require('../middleware/auth');
+const authAdmin = require('../middleware/authAdmin')
 
 router.post('/register', userController.register)
 router.post('/login', userController.login)
@@ -13,6 +14,7 @@ router.patch("/password", auth, userController.changePassword)
 router.patch("/infor", auth, userController.updateInforUser)
 router.patch('/addcart', auth, userController.addCart)
 router.get('/history', auth, userController.historyOrder)
+router.get('/all_users', auth,authAdmin,userController.getAllUsers);
 
 
 

@@ -11,7 +11,69 @@ const {
 // Generator 1 regex
 const regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
 
+class APIfeatures {
+  constructor(query, queryString) {
+    this.query = query;
+    this.queryString = queryString;
+  }
+
+  filtering() {
+    const queryObj = { ...this.queryString }; //queryString = req.query
+
+    const excludedFields = ["page", "sort", "limit"];
+    excludedFields.forEach((element) => delete queryObj[element]);
+
+    let queryStr = JSON.stringify(queryObj);
+
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lt|lte|regex)\b/g,
+      (match) => "$" + match
+    );
+
+    this.query.find(JSON.parse(queryStr));
+
+    return this;
+  }
+  sorting() {
+    if (this.queryString.sort) {
+      const sortBy = this.queryString.sort.split(",").join(" ");
+      this.query = this.query.sort(sortBy);
+    } else {
+      this.query =
+        this.query.sort("-createdAt") && this.query.sort("-updatedAt");
+    }
+    return this;
+  }
+  pagination() {
+    const page = this.queryString.page * 1 || 1;
+    const limit = this.queryString.limit * 1 || 20;
+    const skip = (page - 1) * limit;
+    this.query = this.query.skip(skip).limit(limit);
+    return this;
+  }
+}
+
 const userController = {
+  // Admin Used
+  getAllUsers: async (req, res) => {
+    try {
+      const features = new APIfeatures(Users.find(), req.query)
+        .filtering()
+        .sorting()
+        .pagination();
+      const users = await features.query;
+      res.json({
+        status: "success",
+        result: users.length,
+        users: users,
+      });
+      // const response = await Users.find();
+      // res.json({users : response})
+    } catch (error) {
+      res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  // User Used
   register: async (req, res) => {
     try {
       const { userName, email, password, gender, phone, prefix } = req.body;

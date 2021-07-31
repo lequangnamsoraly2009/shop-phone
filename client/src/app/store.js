@@ -17,6 +17,7 @@ import cartReducer from "./cartSlice";
 import historyReducer from "./historySlice";
 import categoryReducer from "./categorySlice";
 import productFilterReducer from "./filterSlice";
+import usersAdminReducer from "./userSlice.admin"
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
   carts: cartReducer,
   histories: historyReducer,
   categories: categoryReducer,
-  productsFilter: productFilterReducer
+  productsFilter: productFilterReducer,
+  usersAdmin: usersAdminReducer,
 });
 
 const persistConfig = {

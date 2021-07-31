@@ -5,10 +5,12 @@ import Swal from "sweetalert2";
 import { getUser, isAAdmin, isABuyer } from "../app/userSlice";
 import { getCarts, getCartsPending } from "../app/cartSlice";
 import { getHistory } from "../app/historySlice";
-import API from  "./axiosClient"
+import API from "./axiosClient";
+import { getAllUsers } from "../app/userSlice.admin";
 
 const UserAPI = () => {
   const { token } = useSelector((state) => state.token);
+  const { searchUsers } = useSelector((state) => state.usersAdmin);
 
   const dispatch = useDispatch();
 
@@ -50,6 +52,22 @@ const UserAPI = () => {
       getHistoryCustomer();
     }
   }, [token, dispatch]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const response = await API.get(
+        `/users/all_users?limit=${1 * 20}&&&email[regex]=${searchUsers}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+
+      dispatch(getAllUsers(response.data.users));
+      // dispatch(setPaginationCategories(response.data.categories));
+      //   console.log(response);
+    };
+    getUsers();
+  }, [dispatch, searchUsers,token]);
 };
 
 export default UserAPI;

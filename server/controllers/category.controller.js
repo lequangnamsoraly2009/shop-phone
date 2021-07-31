@@ -9,7 +9,7 @@ class APIfeatures {
   filtering() {
     const queryObj = { ...this.queryString }; //queryString = req.query
 
-    const excludedFields = ["page", "limit"];
+    const excludedFields = ["page", "sort", "limit"];
     excludedFields.forEach((element) => delete queryObj[element]);
 
     let queryStr = JSON.stringify(queryObj);
@@ -55,6 +55,7 @@ const categoryController = {
         result: categories.length,
         categories: categories,
       });
+      
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
