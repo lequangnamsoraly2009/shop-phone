@@ -126,7 +126,7 @@ function CreateProduct() {
       </div>
       <div className="create_header">
         <div className="create_header-title">
-          <span>CREATE NEW PRODUCT</span>
+          <span>{!onEdit ? "CREATE" : "UPDATE"} NEW PRODUCT</span>
         </div>
       </div>
       <div className="create_content">
