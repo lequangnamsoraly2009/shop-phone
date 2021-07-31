@@ -137,10 +137,13 @@
 }
 
 /* People also viewed */
+
+.related-products{
+  width: 100%;
+}
 .related-products-list{
   overflow: hidden;
-  /* height: 466px; */
-  /* display: grid; */
   display: flex;
-  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
 }
+
+

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 const {Paragraph} = Typography
 
-function CardItem({ product }) {
+function CardItem({ product}) {
   const history = useHistory();
 
   const onClickDetails = () => {

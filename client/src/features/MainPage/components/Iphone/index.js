@@ -25,6 +25,9 @@ function Iphone() {
       setIphones(response.data.products);
     };
     getNewArrivals();
+    return () => {
+      setIphones([]); // This worked for me
+    };
   }, []);
 
   const handleClick = () => {
@@ -55,8 +58,8 @@ function Iphone() {
         <Row gutter={[16, 24]}>
           {iphones.map((product) => {
             return (
-              <Col key={product._id}className="gutter-row" span={6}>
-                <CardItem product={product}/>
+              <Col key={product._id} className="gutter-row" span={6}>
+                <CardItem product={product} />
               </Col>
             );
           })}

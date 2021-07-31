@@ -17,7 +17,6 @@ function DetailProduct() {
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
 
-
   const { products } = useSelector((state) => state.products);
   const { token } = useSelector((state) => state.token);
   const { carts } = useSelector((state) => state.carts);
@@ -343,7 +342,7 @@ function DetailProduct() {
               .slice(0, 4)
               .map((product) => {
                 return product.product_id !== detailProduct.product_id ? (
-                  <Col key={product._id} className="gutter-row" span={6}>
+                  <Col key={product._id} className="gutter-row" span={24}>
                     <CardItem key={product._id} product={product} />
                   </Col>
                 ) : null;
