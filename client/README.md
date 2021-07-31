@@ -11,3 +11,4 @@
     - Admin ẩn products khi không muốn xuất hiện ở trang chủ
     - Rate Product. Idea: Use Select to User choose star -> Save db of product by array object -> Rate Product: Trung Bình Cộng of list Array rated: 2.5 get 2.5 if 2.4 get 2. 2.6 -> 3
     - Fix Align-Item = Center for Table (Not Yet)
+    - Research WebHook VNPay

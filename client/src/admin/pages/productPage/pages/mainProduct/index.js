@@ -121,7 +121,7 @@ function MainProduct() {
       dataIndex: "stt",
       width: 40,
       key: "stt",
-      render: (text, record, index) => <span>{index + 1}</span>,
+      render: (text, record, index) => <span>{paginationFilter.findIndex(x => x._id === record._id)+1}</span>,
     },
     {
       title: "Name",

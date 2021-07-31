@@ -56,7 +56,7 @@ function MainCategory() {
           page * 20
         }&&&nameCategorySearch[regex]=${searchCategories}`
       );
-      console.log(response.data.categories)
+      console.log(response.data.categories);
       dispatch(setPaginationCategories(response.data.categories));
       // xét data categories khi change page
       const data = response.data.categories.slice(
@@ -64,13 +64,12 @@ function MainCategory() {
         page * pageSize
       );
       dispatch(getCategories(data));
-      
+
       setIsLoading(false);
     } catch (error) {
       alert(error.message);
     }
   };
-
 
   // Delete Categories
   const handleDeleteProduct = async (_id) => {
@@ -118,7 +117,7 @@ function MainCategory() {
       dataIndex: "stt",
       width: 40,
       key: "stt",
-      render: (text, record, index) => <span>{index + 1}</span>,
+      render: (text, record, index) => <span>{paginationCategories.findIndex(x => x._id === record._id)+1}</span>,
     },
     {
       title: "ID Category",
@@ -231,10 +230,15 @@ function MainCategory() {
             title={{ width: "100%" }}
           >
             <Table
+              // onRow={(record, rowIndex) => {
+              //   for(let i =1 ; i<= categories.length;i++){
+              //     return rowIndex = i;
+              //   }
+              // }}
               rowKey="_id"
               pagination={{ position: ["none", "none"] }}
               columns={columns}
-              dataSource={categories.slice(0, 10)}
+              dataSource={categories}
               // bordered={true}
             />
           </Skeleton>
