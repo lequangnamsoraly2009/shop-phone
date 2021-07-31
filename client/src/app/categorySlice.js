@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     categories: [],
+    searchCategories: "",
+    paginationCategories: [],
 };
 
 const categorySlice = createSlice({
@@ -10,6 +12,12 @@ const categorySlice = createSlice({
     reducers:{
         getCategories: (state, action )=>{
             state.categories = action.payload;
+        },
+        setSearchCategories: (state, action) => {
+            state.searchCategories = action.payload;
+        },
+        setPaginationCategories: (state, action) => {
+            state.paginationCategories = action.payload;
         }    
     },
     extraReducers:{}
@@ -17,6 +25,6 @@ const categorySlice = createSlice({
 
 const {actions,reducer} = categorySlice;
 
-export const {getCategories} = actions;
+export const {getCategories,setSearchCategories,setPaginationCategories} = actions;
 
 export default reducer;

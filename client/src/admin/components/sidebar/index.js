@@ -23,6 +23,7 @@ import {
   setSearchFilter,
   setSortFilter,
 } from "../../../app/filterSlice";
+import { setSearchCategories } from "../../../app/categorySlice";
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -32,13 +33,14 @@ function SideBar() {
     dispatch(setPageFilter(1));
     dispatch(setSearchFilter(""));
     dispatch(setSortFilter(""));
+    dispatch(setSearchCategories(""));
   };
 
   return (
     <Col className="gutter-row" span={3}>
       <Menu
         style={{ width: "100%" }}
-        // defaultSelectedKeys={["1"]}
+        defaultSelectedKeys={["1"]}
         mode="inline"
         theme="light"
       >
@@ -52,7 +54,9 @@ function SideBar() {
             </Link>
           </Menu.Item>
           <Menu.Item icon={<CoffeeOutlined />} key="3">
-            <Link to="/admin/categories">Categories</Link>
+            <Link onClick={() => onClickResetTable()} to="/admin/categories">
+              Categories
+            </Link>
           </Menu.Item>
           <Menu.Item icon={<DashboardOutlined />} key="4">
             <Link to="/admin/orders">Orders</Link>

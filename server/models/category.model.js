@@ -6,7 +6,13 @@ const categorySchema = new mongoose.Schema({
         required: true,
         trim: true,
         unique: true,
-    }
+    },
+    nameCategorySearch: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true,
+    },
 },{
     timestamps: true
 })

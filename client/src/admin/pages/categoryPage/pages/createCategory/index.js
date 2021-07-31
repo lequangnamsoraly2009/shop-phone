@@ -96,7 +96,7 @@ function CreateCategory() {
             <HomeOutlined />
           </Breadcrumb.Item>
           <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
-          <Breadcrumb.Item href="/admin/products">Categories</Breadcrumb.Item>
+          <Breadcrumb.Item href="/admin/categories">Categories</Breadcrumb.Item>
           <Breadcrumb.Item>
             {!onEdit ? "Create" : "Update"} Category
           </Breadcrumb.Item>

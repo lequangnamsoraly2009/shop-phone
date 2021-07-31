@@ -23,16 +23,16 @@ class APIfeatures {
 
     return this;
   }
-  //   sorting() {
-  //     if (this.queryString.sort) {
-  //       const sortBy = this.queryString.sort.split(",").join(" ");
-  //       this.query = this.query.sort(sortBy);
-  //     } else {
-  //       this.query =
-  //         this.query.sort("-createdAt") && this.query.sort("-updatedAt");
-  //     }
-  //     return this;
-  //   }
+  sorting() {
+    if (this.queryString.sort) {
+      const sortBy = this.queryString.sort.split(",").join(" ");
+      this.query = this.query.sort(sortBy);
+    } else {
+      this.query =
+        this.query.sort("-createdAt") && this.query.sort("-updatedAt");
+    }
+    return this;
+  }
   pagination() {
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 20;
@@ -47,12 +47,13 @@ const categoryController = {
     try {
       const features = new APIfeatures(Category.find(), req.query)
         .filtering()
+        .sorting()
         .pagination();
       const categories = await features.query;
       res.json({
         status: "success",
         result: categories.length,
-        products: categories,
+        categories: categories,
       });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
@@ -68,7 +69,7 @@ const categoryController = {
           .status(400)
           .json({ status: false, message: "Category already exists" });
       // New Category
-      const newCategory = new Category({ nameCategory });
+      const newCategory = new Category({ nameCategory, nameCategorySearch: nameCategory.toLowerCase() });
 
       await newCategory.save();
       res.json("Create success a category");

@@ -9,29 +9,43 @@ import {
   Space,
   Table,
 } from "antd";
-import React, { useState } from "react";
-import {useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import API from "../../../../../api/axiosClient";
+import {
+  getCategories,
+  setPaginationCategories,
+  setSearchCategories,
+} from "../../../../../app/categorySlice";
 
 const { Search } = Input;
 
 function MainCategory() {
-  const { categories } = useSelector((state) => state.categories);
+  const { categories, searchCategories, paginationCategories } = useSelector(
+    (state) => state.categories
+  );
+  console.log(categories);
   const { token } = useSelector((state) => state.token);
 
   const [isLoading, setIsLoading] = useState(false);
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-
+  // Reload Page
   const handleOnclickReload = (e) => {
     e.preventDefault();
-    // dispatch(setSearchFilter(""));
+    dispatch(setSearchCategories(""));
     window.location.reload();
   };
-
-
+  // Search Categories Here
+  const onSearch = async (value) => {
+    const response = await API.get(
+      `/api/category?limit=${20}&&&nameCategorySearch[regex]=${value.toLowerCase()}`
+    );
+    dispatch(getCategories(response.data.categories));
+  };
+  // Delete Categories
   const handleDeleteProduct = async (_id) => {
     try {
       setIsLoading(true);
@@ -58,6 +72,7 @@ function MainCategory() {
     }
   };
 
+  // Cancel Delete Category
   const handleCancelDeleteCategory = (e) => {
     e.preventDefault();
     Swal.fire({
@@ -68,6 +83,8 @@ function MainCategory() {
       timer: 2000,
     });
   };
+
+  // Columns Table Category -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
   const columns = [
     {
       title: "STT",
@@ -139,6 +156,7 @@ function MainCategory() {
       align: "center",
     },
   ];
+
   return (
     <div className="container-admin">
       <div className="header_page">
@@ -159,7 +177,9 @@ function MainCategory() {
         </div>
         <div className="product_data-wrapper">
           <div className="product_data-create">
-            <Button onClick={handleOnclickReload} type="primary">Reload Page</Button>
+            <Button onClick={handleOnclickReload} type="primary">
+              Reload Page
+            </Button>
           </div>
           <div className="product_data-search">
             <Search
@@ -167,7 +187,7 @@ function MainCategory() {
               allowClear
               enterButton="Search Category"
               size="middle"
-              //   onSearch={onSearch}
+              onSearch={onSearch}
             />
           </div>
           <div className="product_data-create">
@@ -183,17 +203,17 @@ function MainCategory() {
             paragraph={{ rows: 10 }}
             title={{ width: "100%" }}
           >
-          <Table
-            rowKey="_id"
-            pagination={{ position: ["none", "none"] }}
-            columns={columns}
-            dataSource={categories.slice(0, 10)}
-            // bordered={true}
-          />
+            <Table
+              rowKey="_id"
+              pagination={{ position: ["none", "none"] }}
+              columns={columns}
+              dataSource={categories.slice(0,10)}
+              // bordered={true}
+            />
           </Skeleton>
         </div>
-        {/* <div className="product_data-pagination">
-          {paginationFilter.length <= 10 ? (
+        <div className="product_data-pagination">
+          {/* {paginationFilter.length <= 10 ? (
             ""
           ) : (
             <Pagination
@@ -201,10 +221,10 @@ function MainCategory() {
               total={paginationFilter.length}
               showSizeChanger={false}
               pageSize={10}
-              onChange={(page, pageSize) => handleChangePage(page, pageSize)}
+              // onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
-          )}
-        </div> */}
+          )} */}
+        </div>
       </div>
     </div>
   );
