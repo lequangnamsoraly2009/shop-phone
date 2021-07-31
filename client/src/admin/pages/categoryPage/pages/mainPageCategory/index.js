@@ -23,10 +23,9 @@ import {
 const { Search } = Input;
 
 function MainCategory() {
-  const { categories, searchCategories, paginationCategories } = useSelector(
+  const { categories,searchCategories,paginationCategories } = useSelector(
     (state) => state.categories
   );
-  console.log(categories);
   const { token } = useSelector((state) => state.token);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -40,8 +39,9 @@ function MainCategory() {
   };
   // Search Categories Here
   const onSearch = async (value) => {
+    dispatch(setSearchCategories(value.toLowerCase()));
     const response = await API.get(
-      `/api/category?limit=${20}&&&nameCategorySearch[regex]=${value.toLowerCase()}`
+      `/api/category?limit=${20}&&&nameCategorySearch[regex]=${searchCategories}`
     );
     dispatch(getCategories(response.data.categories));
   };
