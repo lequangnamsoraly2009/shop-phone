@@ -6,7 +6,7 @@ import { getUser, isAAdmin, isABuyer } from "../app/userSlice";
 import { getCarts, getCartsPending } from "../app/cartSlice";
 import { getHistory } from "../app/historySlice";
 import API from "./axiosClient";
-import { getAllUsers } from "../app/userSlice.admin";
+import { getAllUsers, setPaginationUsers } from "../app/userSlice.admin";
 
 const UserAPI = () => {
   const { token } = useSelector((state) => state.token);
@@ -61,9 +61,8 @@ const UserAPI = () => {
           headers: { Authorization: token },
         }
       );
-
       dispatch(getAllUsers(response.data.users));
-      // dispatch(setPaginationCategories(response.data.categories));
+      dispatch(setPaginationUsers(response.data.users));
       //   console.log(response);
     };
     getUsers();

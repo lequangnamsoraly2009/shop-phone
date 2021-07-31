@@ -1,20 +1,29 @@
 import { EyeOutlined, HomeOutlined } from "@ant-design/icons";
-import {
-  Breadcrumb,
-  Button,
-  //   Skeleton,
-  Table,
-  Input,
-  Space,
-} from "antd";
-import React from "react";
-import { useSelector } from "react-redux";
+import { Breadcrumb, Button, Skeleton, Table, Input, Space } from "antd";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getAllUsers, setPaginationUsers, setSearchUsers } from "../../../../../app/userSlice.admin";
+import API from "../../../../../api/axiosClient";
 
 const { Search } = Input;
 
 function MainUser() {
-  const { users } = useSelector((state) => state.usersAdmin);
+  const { users, searchUsers, paginationUsers } = useSelector((state) => state.usersAdmin);
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  // Search Categories Here
+  const onSearch = async (value) => {
+    dispatch(setSearchUsers(value.toLowerCase()));
+    const response = await API.get(
+      `/users/all_users?limit=${20}&&&email[regex]=${searchUsers}`
+    );
+    dispatch(getAllUsers(response.data.users));
+    dispatch(setPaginationUsers(response.data.users));
+  };
+
   // Columns Table Category -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
   const columns = [
     {
@@ -22,7 +31,9 @@ function MainUser() {
       dataIndex: "stt",
       width: 40,
       key: "stt",
-        render: (text, record, index) => <span>{users.findIndex(x => x._id === record._id)+1}</span>,
+      render: (text, record, index) => (
+        <span>{users.findIndex((x) => x._id === record._id) + 1}</span>
+      ),
     },
     {
       title: "ID User",
@@ -55,7 +66,7 @@ function MainUser() {
       key: "gender",
       render: (text, record, index) => (
         <span style={{ textTransform: "capitalize" }}>{record.gender}</span>
-      ),      
+      ),
       align: "center",
     },
     {
@@ -127,7 +138,7 @@ function MainUser() {
               allowClear
               enterButton="Search Category"
               size="middle"
-              //   onSearch={onSearch}
+                onSearch={onSearch}
             />
           </div>
           <div className="product_data-create">
@@ -135,19 +146,19 @@ function MainUser() {
           </div>
         </div>
         <div className="product_data-table">
-          {/* <Skeleton
+          <Skeleton
             active
-            // loading={isLoading}
+            loading={isLoading}
             paragraph={{ rows: 10 }}
             title={{ width: "100%" }}
-          > */}
-          <Table
-            rowKey="_id"
-            pagination={{ position: ["none", "none"] }}
-            columns={columns}
-            dataSource={users}
-          />
-          {/* </Skeleton> */}
+          >
+            <Table
+              rowKey="_id"
+              pagination={{ position: ["none", "none"] }}
+              columns={columns}
+              dataSource={users}
+            />
+          </Skeleton>
         </div>
         <div className="product_data-pagination">
           {/* {paginationCategories.length <= 10 ? (
