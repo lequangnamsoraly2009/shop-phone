@@ -75,9 +75,10 @@ function MainCategory() {
   const handleDeleteProduct = async (_id) => {
     try {
       setIsLoading(true);
-      await API.delete(`/api/admin/products/${_id}`, {
+      await API.delete(`/api/admin/category/${_id}`, {
         headers: { Authorization: token },
       });
+      console.log(_id)
       setIsLoading(false);
       Swal.fire({
         position: "center",
