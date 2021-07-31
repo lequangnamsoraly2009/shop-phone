@@ -140,10 +140,15 @@
 
 .related-products{
   width: 100%;
+  
 }
 .related-products-list{
   overflow: hidden;
   display: flex;
+}
+
+.related-products-list .ant-row{
+  width: 100%;
 }
 
 

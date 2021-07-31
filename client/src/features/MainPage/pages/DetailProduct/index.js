@@ -342,7 +342,7 @@ function DetailProduct() {
               .slice(0, 4)
               .map((product) => {
                 return product.product_id !== detailProduct.product_id ? (
-                  <Col key={product._id} className="gutter-row" span={24}>
+                  <Col key={product._id} className="gutter-row" span={6}>
                     <CardItem key={product._id} product={product} />
                   </Col>
                 ) : null;
