@@ -9,7 +9,7 @@ import {
   Space,
   Table,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -23,7 +23,7 @@ import {
 const { Search } = Input;
 
 function MainCategory() {
-  const { categories,searchCategories,paginationCategories } = useSelector(
+  const { categories, searchCategories, paginationCategories } = useSelector(
     (state) => state.categories
   );
   const { token } = useSelector((state) => state.token);
@@ -44,7 +44,34 @@ function MainCategory() {
       `/api/category?limit=${20}&&&nameCategorySearch[regex]=${searchCategories}`
     );
     dispatch(getCategories(response.data.categories));
+    dispatch(setPaginationCategories(response.data.categories));
   };
+
+  // Change Page Here
+  const handleChangePage = async (page, pageSize) => {
+    try {
+      setIsLoading(true);
+      const response = await API.get(
+        `/api/category?limit=${
+          page * 20
+        }&&&nameCategorySearch[regex]=${searchCategories}`
+      );
+      console.log(response.data.categories)
+      dispatch(setPaginationCategories(response.data.categories));
+      // xét data categories khi change page
+      const data = response.data.categories.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+      );
+      dispatch(getCategories(data));
+      
+      setIsLoading(false);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+
   // Delete Categories
   const handleDeleteProduct = async (_id) => {
     try {
@@ -207,23 +234,23 @@ function MainCategory() {
               rowKey="_id"
               pagination={{ position: ["none", "none"] }}
               columns={columns}
-              dataSource={categories.slice(0,10)}
+              dataSource={categories.slice(0, 10)}
               // bordered={true}
             />
           </Skeleton>
         </div>
         <div className="product_data-pagination">
-          {/* {paginationFilter.length <= 10 ? (
+          {paginationCategories.length <= 10 ? (
             ""
           ) : (
             <Pagination
               defaultCurrent={1}
-              total={paginationFilter.length}
+              total={paginationCategories.length}
               showSizeChanger={false}
               pageSize={10}
-              // onChange={(page, pageSize) => handleChangePage(page, pageSize)}
+              onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
-          )} */}
+          )}
         </div>
       </div>
     </div>

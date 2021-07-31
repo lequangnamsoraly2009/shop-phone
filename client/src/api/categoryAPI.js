@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import API from "../api/axiosClient";
-import { getCategories } from "../app/categorySlice";
+import { getCategories, setPaginationCategories } from "../app/categorySlice";
 
 const CategoryAPI = () => {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const CategoryAPI = () => {
         }&&&nameCategorySearch[regex]=${searchCategories}`
       );
       dispatch(getCategories(response.data.categories));
+      dispatch(setPaginationCategories(response.data.categories));
       //   console.log(response);
     };
     getAllCategories();
