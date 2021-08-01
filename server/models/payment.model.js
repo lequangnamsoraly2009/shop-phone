@@ -30,8 +30,9 @@ const paymentSchema = new mongoose.Schema(
       default: [],
     },
     status: {
-      type: Boolean,
-      default: false,
+      type: String,
+      required: true,
+      default: "Pending",
     },
     notes: {
       type: String,

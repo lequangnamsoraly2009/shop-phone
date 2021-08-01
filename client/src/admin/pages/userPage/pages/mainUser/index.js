@@ -113,6 +113,29 @@ function MainUser() {
       align: "center",
     },
     {
+      title: "Type",
+      dataIndex: "typeUser",
+      key: "typeUser",
+      render: (text, record, index) => (
+        <>
+          {record.typeUser === "Unconfirmed" ? (
+            <span style={{ textTransform: "capitalize", color: "gray" }}>
+              {record.typeUser}
+            </span>
+          ) : record.typeUser === "Block" ? (
+            <span style={{ textTransform: "capitalize", color: "red"  }}>
+              {record.typeUser}
+            </span>
+          ) : (
+            <span style={{ textTransform: "capitalize", color: "green"  }}>
+              {record.typeUser}
+            </span>
+          )}
+        </>
+      ),
+      align: "center",
+    },
+    {
       title: "Gender",
       dataIndex: "gender",
       key: "gender",
