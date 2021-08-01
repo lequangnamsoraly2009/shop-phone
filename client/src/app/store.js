@@ -17,7 +17,8 @@ import cartReducer from "./cartSlice";
 import historyReducer from "./historySlice";
 import categoryReducer from "./categorySlice";
 import productFilterReducer from "./filterSlice";
-import usersAdminReducer from "./userSlice.admin"
+import usersAdminReducer from "./userSlice.admin";
+import paymentReducer from "./paymentSlice";
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   categories: categoryReducer,
   productsFilter: productFilterReducer,
   usersAdmin: usersAdminReducer,
+  payments: paymentReducer,
 });
 
 const persistConfig = {

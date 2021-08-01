@@ -214,9 +214,9 @@ function MainUser() {
         <div className="product_data-wrapper">
           <div className="product_data-search">
             <Search
-              placeholder="Search Product"
+              placeholder="Search User"
               allowClear
-              enterButton="Search Category"
+              enterButton="Search User"
               size="middle"
               onSearch={onSearch}
             />
