@@ -1,15 +1,35 @@
 import { EyeOutlined, HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Skeleton, Table, Input, Space } from "antd";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {
+  getPayments,
+  setPaginationPayments,
+  setSearchPayments,
+} from "../../../../app/paymentSlice";
+import API from "../../../../api/axiosClient";
 
 const { Search } = Input;
 
 function MainOrder() {
-  const onSearch = async (value) => {};
-
-  const { payments } = useSelector((state) => state.payments);
+  const { token } = useSelector((state) => state.token);
+  const { payments, searchPayments, paginationPayments } = useSelector(
+    (state) => state.payments
+  );
+  const dispatch = useDispatch();
+  // Search Categories Here
+  const onSearch = async (value) => {
+    dispatch(setSearchPayments(value.toLowerCase()));
+    const response = await API.get(
+      `/api/admin/payment?limit&&&email[regex]=${searchPayments}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    dispatch(getPayments(response.data.payments));
+    dispatch(setPaginationPayments(response.data.payments));
+  };
 
   // Columns Table Category -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
   const columns = [
@@ -19,9 +39,7 @@ function MainOrder() {
       width: 40,
       key: "stt",
       render: (text, record, index) => (
-        <span>
-          {payments.findIndex((x) => x._id === record._id) + 1}
-        </span>
+        <span>{payments.findIndex((x) => x._id === record._id) + 1}</span>
       ),
     },
     {
@@ -52,7 +70,9 @@ function MainOrder() {
       dataIndex: "phone",
       key: "phone",
       render: (text, record, index) => (
-        <span style={{ textTransform: "capitalize" }}>{record.phone}</span>
+        <span style={{ textTransform: "capitalize" }}>
+          {record.phone === undefined ? "Unknown" : record.phone}
+        </span>
       ),
       align: "center",
     },
