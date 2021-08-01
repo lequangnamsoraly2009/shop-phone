@@ -79,7 +79,7 @@ function MainCategory() {
       await API.delete(`/api/admin/category/${_id}`, {
         headers: { Authorization: token },
       });
-      console.log(_id)
+      // console.log(_id)
       setIsLoading(false);
       Swal.fire({
         position: "center",

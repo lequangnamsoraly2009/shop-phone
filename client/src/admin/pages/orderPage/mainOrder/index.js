@@ -1,6 +1,14 @@
 import { EyeOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Skeleton, Table, Input, Space, Pagination } from "antd";
-import React, { useState } from "react";
+import {
+  Breadcrumb,
+  Button,
+  Skeleton,
+  Table,
+  Input,
+  Space,
+  Pagination,
+} from "antd";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -17,23 +25,36 @@ function MainOrder() {
   const { payments, searchPayments, paginationPayments } = useSelector(
     (state) => state.payments
   );
+  console.log(payments);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-
-  // Search Categories Here
-  const onSearch = async (value) => {
-    dispatch(setSearchPayments(value.toLowerCase()));
-    const response = await API.get(
-      `/api/admin/payment?limit=20&&&email[regex]=${searchPayments}`
-    );
-    dispatch(getPayments(response.data.payments));
-    dispatch(setPaginationPayments(response.data.payments));
-  };
 
   const handleOnclickReload = (e) => {
     e.preventDefault();
     dispatch(setSearchPayments(""));
     window.location.reload();
+  };
+
+  //   When user press F5 or refresh page
+  useEffect(() => {
+    if (window.performance) {
+      if (performance.navigation.type === 1) {
+        dispatch(setSearchPayments(""));
+      }
+    }
+  }, [dispatch]);
+
+  // Search Categories Here
+  const onSearch = async (value) => {
+    dispatch(setSearchPayments(value.toLowerCase()));
+    const response = await API.get(
+      `/api/admin/payment?&&&email[regex]=${searchPayments}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    dispatch(getPayments(response.data.payments.slice(0, 10)));
+    dispatch(setPaginationPayments(response.data.payments));
   };
 
   // Change Page Here
@@ -206,15 +227,13 @@ function MainOrder() {
             paragraph={{ rows: 10 }}
             title={{ width: "100%" }}
           >
-          <Table
-            style={{ border: "1px solid #000" }}
-            bordered
-            showHeader
-            rowKey="_id"
-            pagination={{ position: ["none", "none"] }}
-            columns={columns}
-            dataSource={payments}
-          />
+            <Table
+              style={{ border: "1px solid #000" }}
+              rowKey="_id"
+              pagination={{ position: ["none", "none"] }}
+              columns={columns}
+              dataSource={payments}
+            />
           </Skeleton>
         </div>
         <div className="product_data-pagination">

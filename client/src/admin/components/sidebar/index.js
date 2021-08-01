@@ -25,6 +25,7 @@ import {
 } from "../../../app/filterSlice";
 import { setSearchCategories } from "../../../app/categorySlice";
 import { setSearchUsers } from "../../../app/userSlice.admin";
+import { setSearchPayments } from "../../../app/paymentSlice";
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function SideBar() {
     dispatch(setSortFilter(""));
     dispatch(setSearchCategories(""));
     dispatch(setSearchUsers(""));
+    dispatch(setSearchPayments(""));
   };
 
   return (
@@ -61,7 +63,7 @@ function SideBar() {
             </Link>
           </Menu.Item>
           <Menu.Item icon={<DashboardOutlined />} key="4">
-            <Link to="/admin/orders">Orders</Link>
+            <Link onClick={onClickResetTable} to="/admin/orders">Orders</Link>
           </Menu.Item>
           <Menu.Item icon={<UsergroupAddOutlined />} key="5">
             <Link to="/admin/users" onClick={onClickResetTable}>

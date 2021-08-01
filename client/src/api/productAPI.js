@@ -22,17 +22,16 @@ const ProductAPI = () => {
   useEffect(() => {
     const getAllPayments = async () => {
       const response = await API.get(
-        `/api/admin/payment/?limit=20&&&email[regex]=${searchPayments}`,
+        `/api/admin/payment?limit=${1*20}&&&email[regex]=${searchPayments}`,
         {
           headers: { Authorization: token },
         }
       );
-      // const response = await API.get(`/api/products?limit=${1*20}&&&title[regex]=samsung`);
+      dispatch(getPayments(response.data.payments.slice(0,10)));
       dispatch(setPaginationPayments(response.data.payments));
-      dispatch(getPayments(response.data.payments));
     };
     getAllPayments();
-  }, [dispatch, searchPayments, token]);
+  }, [dispatch, searchPayments,token]);
 };
 
 export default ProductAPI;
