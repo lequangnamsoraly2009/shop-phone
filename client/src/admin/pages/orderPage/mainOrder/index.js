@@ -1,16 +1,15 @@
 import { EyeOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Skeleton, Table,Input, Space } from "antd";
+import { Breadcrumb, Button, Skeleton, Table, Input, Space } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const { Search } = Input;
 
-
 function MainOrder() {
   const onSearch = async (value) => {};
 
-    // const {payments} = useSelector((state) => state.payments);
+  const { payments } = useSelector((state) => state.payments);
 
   // Columns Table Category -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
   const columns = [
@@ -21,7 +20,7 @@ function MainOrder() {
       key: "stt",
       render: (text, record, index) => (
         <span>
-          {/* {paginationUsers.findIndex((x) => x._id === record._id) + 1} */}
+          {payments.findIndex((x) => x._id === record._id) + 1}
         </span>
       ),
     },
@@ -49,25 +48,21 @@ function MainOrder() {
       align: "center",
     },
     {
-        title: "Phone",
-        dataIndex: "phone",
-        key: "phone",
-        render: (text, record, index) => (
-          <span style={{ textTransform: "capitalize" }}>{record.phone}</span>
-        ),
-        align: "center",
-      },
-      {
-        title: "Products Number",
-        dataIndex: "cart",
-        key: "cart",
-        render: (text, record, index) => (
-          <span>  
-            {record.cart.length}
-          </span>
-        ),
-        align: "center",
-      },
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+      render: (text, record, index) => (
+        <span style={{ textTransform: "capitalize" }}>{record.phone}</span>
+      ),
+      align: "center",
+    },
+    {
+      title: "Products Number",
+      dataIndex: "cart",
+      key: "cart",
+      render: (text, record, index) => <span>{record.cart.length}</span>,
+      align: "center",
+    },
     {
       title: "Status",
       dataIndex: "status",
@@ -79,11 +74,11 @@ function MainOrder() {
               {record.status}
             </span>
           ) : record.status === "Cancel" ? (
-            <span style={{ textTransform: "capitalize", color: "gray"  }}>
+            <span style={{ textTransform: "capitalize", color: "gray" }}>
               {record.status}
             </span>
           ) : (
-            <span style={{ textTransform: "capitalize", color: "green"  }}>
+            <span style={{ textTransform: "capitalize", color: "green" }}>
               {record.status}
             </span>
           )}
@@ -162,8 +157,8 @@ function MainOrder() {
             showHeader
             rowKey="_id"
             pagination={{ position: ["none", "none"] }}
-              columns={columns}
-            //   dataSource={users}
+            columns={columns}
+            dataSource={payments}
           />
           {/* </Skeleton> */}
         </div>
