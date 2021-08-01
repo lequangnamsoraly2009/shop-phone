@@ -63,7 +63,7 @@ const UserAPI = () => {
       );
       const responseFilter = response.data.users.filter((user) => user.role !== 1);
       dispatch(setPaginationUsers(responseFilter));
-      dispatch(getAllUsers(responseFilter));
+      dispatch(getAllUsers(responseFilter.slice(0,10)));
     };
     getUsers();
   }, [dispatch, searchUsers, token]);

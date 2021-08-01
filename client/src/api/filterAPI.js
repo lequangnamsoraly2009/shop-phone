@@ -20,7 +20,6 @@ const ProductFilterAPI = () => {
           pageFilter * 20
         }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
       );
-      // const response = await API.get(`/api/products?limit=${1*20}&&&title[regex]=`);
       dispatch(getProductsFilter(response.data.products));
       dispatch(setPaginationFilter(response.data.products));
       dispatch(setResultFilter(response.data.result));

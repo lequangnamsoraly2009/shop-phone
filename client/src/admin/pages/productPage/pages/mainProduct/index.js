@@ -9,7 +9,7 @@ import {
   Popconfirm,
   Skeleton,
 } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./product.css";
 import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -58,6 +58,15 @@ function MainProduct() {
       alert(error.message);
     }
   };
+
+  //   When user press F5 or refresh page
+  useEffect(() => {
+    if (window.performance) {
+      if (performance.navigation.type === 1) {
+        dispatch(setSearchFilter(""));
+      }
+    }
+  }, [dispatch]);
 
   const onSearch = (value) => {
     dispatch(setSearchFilter(value));

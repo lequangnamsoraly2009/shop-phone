@@ -8,7 +8,7 @@ import {
   Space,
   Pagination,
 } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -36,6 +36,15 @@ function MainUser() {
     window.location.reload();
   };
 
+  //   When user press F5 or refresh page
+  useEffect(() => {
+    if (window.performance) {
+      if (performance.navigation.type === 1) {
+        dispatch(setSearchUsers(""));
+      }
+    }
+  }, [dispatch]);
+
   // Search Categories Here
   const onSearch = async (value) => {
     dispatch(setSearchUsers(value.toLowerCase()));
@@ -48,7 +57,7 @@ function MainUser() {
     const responseFilter = response.data.users.filter(
       (user) => user.role !== 1
     );
-    dispatch(getAllUsers(responseFilter));
+    dispatch(getAllUsers(responseFilter.slice(0, 10)));
     dispatch(setPaginationUsers(responseFilter));
   };
 
@@ -123,11 +132,11 @@ function MainUser() {
               {record.typeUser}
             </span>
           ) : record.typeUser === "Block" ? (
-            <span style={{ textTransform: "capitalize", color: "red"  }}>
+            <span style={{ textTransform: "capitalize", color: "red" }}>
               {record.typeUser}
             </span>
           ) : (
-            <span style={{ textTransform: "capitalize", color: "green"  }}>
+            <span style={{ textTransform: "capitalize", color: "green" }}>
               {record.typeUser}
             </span>
           )}
