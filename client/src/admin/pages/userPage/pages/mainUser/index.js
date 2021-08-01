@@ -20,7 +20,6 @@ function MainUser() {
   const {token} = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  console.log(users)
 
   // Reload Page
   const handleOnclickReload = (e) => {
@@ -47,7 +46,7 @@ function MainUser() {
     try {
       setIsLoading(true);
       const response = await API.get(
-        `/users/all_users?limit=${page*pageSize*2}&&&email[regex]=${searchUsers}`,{
+        `/users/all_users?limit=${page*20}&&&email[regex]=${searchUsers}`,{
             headers: { Authorization: token }
         }
       );
@@ -195,6 +194,8 @@ function MainUser() {
             title={{ width: "100%" }}
           >
             <Table
+              bordered={true}
+              showHeader
               rowKey="_id"
               pagination={{ position: ["none", "none"] }}
               columns={columns}

@@ -1,0 +1,19 @@
+.user_data-infor{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 30px;
+}
+.user_data-infor-left{
+    width: 30%;
+    border-right: 1px solid #999;
+    display: flex;
+}
+
+.user_data-infor-left .user_data-infor-avatar{
+    margin: 0 auto;
+}
+
+.user_data-infor-right{
+    width: 70%;
+}

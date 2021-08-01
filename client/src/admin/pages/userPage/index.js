@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import DetailUser from "./pages/detailUser";
 import MainUser from "./pages/mainUser";
 
 function UserPage() {
@@ -7,8 +8,7 @@ function UserPage() {
   return (
     <Switch>
       <Route path={`${match.url}/`} exact component={MainUser} />
-      {/* <Route path={`${match.url}/create`} component={CreateCategory} /> */}
-      {/* <Route path={`${match.url}/edit/:id`} component={CreateCategory} /> */}
+      <Route path={`${match.url}/:id`} component={DetailUser} />
     </Switch>
   );
 }
