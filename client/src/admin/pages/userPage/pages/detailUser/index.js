@@ -86,7 +86,13 @@ function DetailUser() {
                 {detailUser.gender}
               </Descriptions.Item>
               <Descriptions.Item label="Type User">
-                {detailUser.typeUser}
+                {detailUser.typeUser === "Unconfirmed" ? (
+                  <span style={{ color: "gray" }}>{detailUser.typeUser}</span>
+                ) : detailUser.typeUser === "Block" ? (
+                  <span style={{ color: "red" }}>{detailUser.typeUser}</span>
+                ) : (
+                  <span style={{ color: "green" }}>{detailUser.typeUser}</span>
+                )}
               </Descriptions.Item>
               <Descriptions.Item
                 style={{ textTransform: "capitalize" }}

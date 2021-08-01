@@ -45,8 +45,11 @@ function MainUser() {
         headers: { Authorization: token },
       }
     );
-    dispatch(getAllUsers(response.data.users));
-    dispatch(setPaginationUsers(response.data.users));
+    const responseFilter = response.data.users.filter(
+      (user) => user.role !== 1
+    );
+    dispatch(getAllUsers(responseFilter));
+    dispatch(setPaginationUsers(responseFilter));
   };
 
   // Change Page Here
@@ -59,12 +62,13 @@ function MainUser() {
           headers: { Authorization: token },
         }
       );
-      dispatch(setPaginationUsers(response.data.users));
-      // xét data categories khi change page
-      const data = response.data.users.slice(
-        (page - 1) * pageSize,
-        page * pageSize
+      const responseFilter = response.data.users.filter(
+        (user) => user.role !== 1
       );
+
+      dispatch(setPaginationUsers(responseFilter));
+      // xét data categories khi change page
+      const data = responseFilter.slice((page - 1) * pageSize, page * pageSize);
       dispatch(getAllUsers(data));
       setIsLoading(false);
     } catch (error) {

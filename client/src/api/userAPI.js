@@ -61,11 +61,12 @@ const UserAPI = () => {
           headers: { Authorization: token },
         }
       );
-      dispatch(getAllUsers(response.data.users));
-      dispatch(setPaginationUsers(response.data.users));
+      const responseFilter = response.data.users.filter((user) => user.role !== 1);
+      dispatch(setPaginationUsers(responseFilter));
+      dispatch(getAllUsers(responseFilter));
     };
     getUsers();
-  }, [dispatch, searchUsers,token]);
+  }, [dispatch, searchUsers, token]);
 };
 
 export default UserAPI;

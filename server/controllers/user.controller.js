@@ -67,8 +67,6 @@ const userController = {
         result: users.length,
         users: users,
       });
-      // const response = await Users.find();
-      // res.json({users : response})
     } catch (error) {
       res.status(500).json({ status: false, message: error.message });
     }
