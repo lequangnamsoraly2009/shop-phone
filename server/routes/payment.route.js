@@ -9,6 +9,7 @@ router
 
 router
   .route("/admin/payment")
-  .get(auth, authAdmin, paymentController.getPayments)
+  .get(auth, paymentController.getPayments)
+  // Đã xóa tạm thằng middleware admin ra để nó đỡ load 2 lần
 
   module.exports = router;

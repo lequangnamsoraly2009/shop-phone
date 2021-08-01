@@ -28,8 +28,8 @@ const ProductAPI = () => {
         }
       );
       // const response = await API.get(`/api/products?limit=${1*20}&&&title[regex]=samsung`);
-      dispatch(getPayments(response.data.payments));
       dispatch(setPaginationPayments(response.data.payments));
+      dispatch(getPayments(response.data.payments));
     };
     getAllPayments();
   }, [dispatch, searchPayments, token]);

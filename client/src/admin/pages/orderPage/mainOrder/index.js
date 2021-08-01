@@ -1,6 +1,6 @@
 import { EyeOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Skeleton, Table, Input, Space } from "antd";
-import React from "react";
+import { Breadcrumb, Button, Skeleton, Table, Input, Space, Pagination } from "antd";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -18,17 +18,48 @@ function MainOrder() {
     (state) => state.payments
   );
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
   // Search Categories Here
   const onSearch = async (value) => {
     dispatch(setSearchPayments(value.toLowerCase()));
     const response = await API.get(
-      `/api/admin/payment?limit&&&email[regex]=${searchPayments}`,
-      {
-        headers: { Authorization: token },
-      }
+      `/api/admin/payment?limit=20&&&email[regex]=${searchPayments}`
     );
     dispatch(getPayments(response.data.payments));
     dispatch(setPaginationPayments(response.data.payments));
+  };
+
+  const handleOnclickReload = (e) => {
+    e.preventDefault();
+    dispatch(setSearchPayments(""));
+    window.location.reload();
+  };
+
+  // Change Page Here
+  const handleChangePage = async (page, pageSize) => {
+    try {
+      setIsLoading(true);
+      const response = await API.get(
+        `/api/admin/payment?limit=${
+          page * 20
+        }&&&email[regex]=${searchPayments}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+
+      dispatch(setPaginationPayments(response.data.payments));
+      // xét data categories khi change page
+      const data = response.data.payments.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+      );
+      dispatch(getPayments(data));
+      setIsLoading(false);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   // Columns Table Category -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
@@ -39,7 +70,9 @@ function MainOrder() {
       width: 40,
       key: "stt",
       render: (text, record, index) => (
-        <span>{payments.findIndex((x) => x._id === record._id) + 1}</span>
+        <span>
+          {paginationPayments.findIndex((x) => x._id === record._id) + 1}
+        </span>
       ),
     },
     {
@@ -121,7 +154,7 @@ function MainOrder() {
       render: (text, record, index) => (
         <Space size="large">
           <Link
-            to={`/admin/users/${record._id}`}
+            to={`/admin/orders/${record._id}`}
             style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
           >
             <EyeOutlined />
@@ -161,16 +194,18 @@ function MainOrder() {
             />
           </div>
           <div className="product_data-create">
-            <Button type="primary">Reload Page</Button>
+            <Button onClick={handleOnclickReload} type="primary">
+              Reload Page
+            </Button>
           </div>
         </div>
         <div className="product_data-table">
-          {/* <Skeleton
+          <Skeleton
             active
-            // loading={isLoading}
+            loading={isLoading}
             paragraph={{ rows: 10 }}
             title={{ width: "100%" }}
-          > */}
+          >
           <Table
             style={{ border: "1px solid #000" }}
             bordered
@@ -180,20 +215,20 @@ function MainOrder() {
             columns={columns}
             dataSource={payments}
           />
-          {/* </Skeleton> */}
+          </Skeleton>
         </div>
         <div className="product_data-pagination">
-          {/* {paginationUsers.length <= 10 ? (
+          {paginationPayments.length <= 10 ? (
             ""
           ) : (
             <Pagination
               defaultCurrent={1}
-              total={paginationUsers.length}
+              total={paginationPayments.length}
               showSizeChanger={false}
               pageSize={10}
               onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
-          )} */}
+          )}
         </div>
       </div>
     </div>
