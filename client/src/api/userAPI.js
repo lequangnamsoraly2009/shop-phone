@@ -63,7 +63,6 @@ const UserAPI = () => {
       );
       dispatch(getAllUsers(response.data.users));
       dispatch(setPaginationUsers(response.data.users));
-      //   console.log(response);
     };
     getUsers();
   }, [dispatch, searchUsers,token]);

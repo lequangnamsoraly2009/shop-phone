@@ -1,6 +1,6 @@
 import { EyeOutlined, HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Skeleton, Table, Input, Space, Pagination } from "antd";
-import React, { useState } from "react";
+import React, {useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -20,6 +20,7 @@ function MainUser() {
   const {token} = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  console.log(users)
 
   // Reload Page
   const handleOnclickReload = (e) => {
@@ -32,7 +33,7 @@ function MainUser() {
   const onSearch = async (value) => {
     dispatch(setSearchUsers(value.toLowerCase()));
     const response = await API.get(
-      `/users/all_users?limit=${20}&&&email[regex]=${searchUsers}`,{
+      `/users/all_users?limit&&&email[regex]=${searchUsers}`,{
           headers: { Authorization: token }
       }
     );
@@ -40,12 +41,13 @@ function MainUser() {
     dispatch(setPaginationUsers(response.data.users));
   };
 
+
    // Change Page Here
    const handleChangePage = async (page, pageSize) => {
     try {
       setIsLoading(true);
       const response = await API.get(
-        `/users/all_users?limit=${20}&&&email[regex]=${searchUsers}`,{
+        `/users/all_users?limit=${page*pageSize*2}&&&email[regex]=${searchUsers}`,{
             headers: { Authorization: token }
         }
       );
@@ -70,7 +72,7 @@ function MainUser() {
       width: 40,
       key: "stt",
       render: (text, record, index) => (
-        <span>{users.findIndex((x) => x._id === record._id) + 1}</span>
+        <span>{paginationUsers.findIndex((x) => x._id === record._id) + 1}</span>
       ),
     },
     {
@@ -196,19 +198,19 @@ function MainUser() {
               rowKey="_id"
               pagination={{ position: ["none", "none"] }}
               columns={columns}
-              dataSource={users.slice(0,2)}
+              dataSource={users}
             />
           </Skeleton>
         </div>
         <div className="product_data-pagination">
-          {paginationUsers.length <= 2 ? (
+          {paginationUsers.length <= 10 ? (
             ""
           ) : (
             <Pagination
               defaultCurrent={1}
               total={paginationUsers.length}
               showSizeChanger={false}
-              pageSize={2}
+              pageSize={10}
               onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
           )}

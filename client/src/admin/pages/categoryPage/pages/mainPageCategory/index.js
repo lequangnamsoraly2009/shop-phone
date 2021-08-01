@@ -26,6 +26,7 @@ function MainCategory() {
   const { categories, searchCategories, paginationCategories } = useSelector(
     (state) => state.categories
   );
+  // console.log(categories);
   const { token } = useSelector((state) => state.token);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +42,7 @@ function MainCategory() {
   const onSearch = async (value) => {
     dispatch(setSearchCategories(value.toLowerCase()));
     const response = await API.get(
-      `/api/category?limit=${20}&&&nameCategorySearch[regex]=${searchCategories}`
+      `/api/category?limit&&&nameCategorySearch[regex]=${searchCategories}`
     );
     dispatch(getCategories(response.data.categories));
     dispatch(setPaginationCategories(response.data.categories));
@@ -231,16 +232,10 @@ function MainCategory() {
             title={{ width: "100%" }}
           >
             <Table
-              // onRow={(record, rowIndex) => {
-              //   for(let i =1 ; i<= categories.length;i++){
-              //     return rowIndex = i;
-              //   }
-              // }}
               rowKey="_id"
               pagination={{ position: ["none", "none"] }}
               columns={columns}
               dataSource={categories}
-              // bordered={true}
             />
           </Skeleton>
         </div>
