@@ -1,5 +1,5 @@
 import { HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Image,Avatar } from "antd";
+import { Breadcrumb, Image, Avatar, Descriptions, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -44,19 +44,66 @@ function DetailUser() {
         </div>
         <div className="user_data-infor">
           <div className="user_data-infor-left">
-              <div className="user_data-infor-">
-
-              </div>
+            <div className="avatar-title">
+              <span style={{ fontSize: 16 }}>User Avatar</span>
+            </div>
             <div className="user_data-infor-avatar">
-              <Avatar style={{height: 300, width:300, border: "1px solid #000"}}
+              <Avatar
+                style={{ height: 300, width: 300, border: "1px solid #000" }}
                 src={
                   <Image src="https://i.pinimg.com/474x/a7/b0/5e/a7b05eed960c1c288f05012082008f03.jpg" />
                 }
               />
             </div>
           </div>
-          <div className="product_data-infor-right">
-            <span>Hi Right</span>
+          <div className="user_data-infor-right">
+            <Descriptions title="User Info">
+              <Descriptions.Item
+                style={{ textTransform: "capitalize" }}
+                label="User Name"
+              >
+                {detailUser.userName}
+              </Descriptions.Item>
+              <Descriptions.Item label="Email">
+                {detailUser.email}
+              </Descriptions.Item>
+              <Descriptions.Item label="ID User">
+                {detailUser._id}
+              </Descriptions.Item>
+              <Descriptions.Item label="Telephone">
+                {detailUser.phone}
+              </Descriptions.Item>
+              <Descriptions.Item label="Age">
+                {detailUser.age}
+              </Descriptions.Item>
+              <Descriptions.Item label="Telephone">
+                {detailUser.phone}
+              </Descriptions.Item>
+              <Descriptions.Item
+                style={{ textTransform: "capitalize" }}
+                label="Gender"
+              >
+                {detailUser.gender}
+              </Descriptions.Item>
+              <Descriptions.Item label="Type User">
+                {detailUser.typeUser}
+              </Descriptions.Item>
+              <Descriptions.Item
+                style={{ textTransform: "capitalize" }}
+                label="Introduction Of User"
+              >
+                {detailUser.introduction}
+              </Descriptions.Item>
+            </Descriptions>
+            <div className="user_data-infor-right-change">
+              <span>Action With This User</span>
+              <div className="action">
+                <Button type="primary">Change Type</Button>
+                <Button type="primary">Send Notification</Button>
+                <Button type="primary">Send Voucher</Button>
+                <Button type="primary">Chat With User</Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

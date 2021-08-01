@@ -24,6 +24,7 @@ import {
   setSortFilter,
 } from "../../../app/filterSlice";
 import { setSearchCategories } from "../../../app/categorySlice";
+import { setSearchUsers } from "../../../app/userSlice.admin";
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function SideBar() {
     dispatch(setSearchFilter(""));
     dispatch(setSortFilter(""));
     dispatch(setSearchCategories(""));
+    dispatch(setSearchUsers(""));
   };
 
   return (
@@ -62,13 +64,15 @@ function SideBar() {
             <Link to="/admin/orders">Orders</Link>
           </Menu.Item>
           <Menu.Item icon={<UsergroupAddOutlined />} key="5">
-            <Link to="/admin/users">Users</Link>
+            <Link to="/admin/users" onClick={onClickResetTable}>
+              Users
+            </Link>
           </Menu.Item>
           <Menu.Item icon={<StarOutlined />} key="6">
             <Link to="/admin/information">Information</Link>
           </Menu.Item>
           <Menu.Item icon={<ExperimentOutlined />} key="7">
-            <Link to="/admin/notification">Notification</Link>
+            <Link to="/admin/chat">Message</Link>
           </Menu.Item>
           <Menu.Item icon={<SettingOutlined />} key="8">
             <Link to="/admin/setting">Setting</Link>

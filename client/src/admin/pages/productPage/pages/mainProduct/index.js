@@ -288,7 +288,8 @@ function MainProduct() {
               pagination={{ position: ["none", "none"] }}
               columns={columns}
               dataSource={productsFilter.slice(0, 10)}
-              // bordered={true}
+              bordered =  {true}
+              style={{border: "1px solid #000"}}
             />
           </Skeleton>
         </div>

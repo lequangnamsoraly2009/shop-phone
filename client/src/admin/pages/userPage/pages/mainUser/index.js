@@ -1,6 +1,14 @@
 import { EyeOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Skeleton, Table, Input, Space, Pagination } from "antd";
-import React, {useState } from "react";
+import {
+  Breadcrumb,
+  Button,
+  Skeleton,
+  Table,
+  Input,
+  Space,
+  Pagination,
+} from "antd";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -17,7 +25,7 @@ function MainUser() {
     (state) => state.usersAdmin
   );
 
-  const {token} = useSelector((state) => state.token);
+  const { token } = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,22 +40,23 @@ function MainUser() {
   const onSearch = async (value) => {
     dispatch(setSearchUsers(value.toLowerCase()));
     const response = await API.get(
-      `/users/all_users?limit&&&email[regex]=${searchUsers}`,{
-          headers: { Authorization: token }
+      `/users/all_users?limit&&&email[regex]=${searchUsers}`,
+      {
+        headers: { Authorization: token },
       }
     );
     dispatch(getAllUsers(response.data.users));
     dispatch(setPaginationUsers(response.data.users));
   };
 
-
-   // Change Page Here
-   const handleChangePage = async (page, pageSize) => {
+  // Change Page Here
+  const handleChangePage = async (page, pageSize) => {
     try {
       setIsLoading(true);
       const response = await API.get(
-        `/users/all_users?limit=${page*20}&&&email[regex]=${searchUsers}`,{
-            headers: { Authorization: token }
+        `/users/all_users?limit=${page * 20}&&&email[regex]=${searchUsers}`,
+        {
+          headers: { Authorization: token },
         }
       );
       dispatch(setPaginationUsers(response.data.users));
@@ -71,7 +80,9 @@ function MainUser() {
       width: 40,
       key: "stt",
       render: (text, record, index) => (
-        <span>{paginationUsers.findIndex((x) => x._id === record._id) + 1}</span>
+        <span>
+          {paginationUsers.findIndex((x) => x._id === record._id) + 1}
+        </span>
       ),
     },
     {
@@ -94,9 +105,7 @@ function MainUser() {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: (text, record, index) => (
-        <span >{record.email}</span>
-      ),
+      render: (text, record, index) => <span>{record.email}</span>,
       align: "center",
     },
     {
@@ -112,7 +121,12 @@ function MainUser() {
       title: "Phone",
       dataIndex: "phone",
       key: "phone",
-      render: (text, record, index) => <span>+{record.prefix}{record.phone.slice(1)}</span>,
+      render: (text, record, index) => (
+        <span>
+          +{record.prefix}
+          {record.phone.slice(1)}
+        </span>
+      ),
       align: "center",
     },
     {
@@ -194,7 +208,8 @@ function MainUser() {
             title={{ width: "100%" }}
           >
             <Table
-              bordered={true}
+              style={{ border: "1px solid #000" }}
+              bordered
               showHeader
               rowKey="_id"
               pagination={{ position: ["none", "none"] }}

@@ -236,6 +236,8 @@ function MainCategory() {
               pagination={{ position: ["none", "none"] }}
               columns={columns}
               dataSource={categories}
+              style={{border: "1px solid #000"}}
+
             />
           </Skeleton>
         </div>
