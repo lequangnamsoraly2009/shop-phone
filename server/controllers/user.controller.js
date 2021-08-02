@@ -356,6 +356,15 @@ const userController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  detectDevice: async (req, res) => {
+    try {
+      const useragent = req.useragent;
+      const deviceResult = req.device;
+      res.json({ useragent, deviceResult });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error });
+    }
+  },
 };
 
 const createAccessToken = (user) => {

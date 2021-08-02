@@ -169,6 +169,13 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.6"
 
+argparse@^1.0.7:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
+  integrity sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
+  dependencies:
+    sprintf-js "~1.0.2"
+
 array-flatten@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
@@ -677,6 +684,11 @@ escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+
+esprima@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.1.tgz#13b04cdb3e6c5d19df91ab6987a8695619b0aa71"
+  integrity sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==
 
 etag@~1.8.1:
   version "1.8.1"
@@ -1188,6 +1200,14 @@ js-tokens@^4.0.0:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
+js-yaml@^3.14.0:
+  version "3.14.1"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.14.1.tgz#dae812fdb3825fa306609a8717383c50c36a0537"
+  integrity sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
 json-bigint@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/json-bigint/-/json-bigint-1.0.0.tgz#ae547823ac0cad8398667f8cd9ef4730f5b01ff1"
@@ -1499,6 +1519,13 @@ node-addon-api@^3.1.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-3.2.1.tgz#81325e0a2117789c0128dab65e7e38f07ceba161"
   integrity sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==
+
+node-device-detector@^1.3.8:
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/node-device-detector/-/node-device-detector-1.3.8.tgz#f76531373be9963a9cb74bdc12582dd6cb4ae3c6"
+  integrity sha512-ZDIRD/XRnf683NaRgaxqypLTNjYvI/spiu2gjVVa7SY/XQ4Llg+yIX/2s7xHOOv9nC0LhzIvaMaCCUq6XgqjXg==
+  dependencies:
+    js-yaml "^3.14.0"
 
 node-fetch@^2.3.0, node-fetch@^2.6.1:
   version "2.6.1"
@@ -1968,6 +1995,11 @@ spdx-license-ids@^3.0.0:
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.9.tgz#8a595135def9592bda69709474f1cbeea7c2467f"
   integrity sha512-Ki212dKK4ogX+xDo4CtOZBVIwhsKBEfsEEcwmJfLQzirgc2jIWdzg40Unxz/HzEUqM1WFzVlQSMF9kZZ2HboLQ==
+
+sprintf-js@~1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
+  integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
 "statuses@>= 1.5.0 < 2", statuses@~1.5.0:
   version "1.5.0"

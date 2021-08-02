@@ -44,6 +44,26 @@ const UserAPI = () => {
 
   useEffect(() => {
     if (token) {
+      const getDetectDevice = async () => {
+        try {
+          const response = await API.get("/users/detect_device", {
+            headers: { Authorization: token },
+          });
+          console.log(response);
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `${error.response.data?.message}`,
+          });
+        }
+      };
+      getDetectDevice();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (token) {
       const getHistoryCustomer = async () => {
         const response = await API.get("/users/history", {
           headers: { Authorization: token },

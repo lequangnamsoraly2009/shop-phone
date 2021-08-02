@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const db = require("./database/config.db");
 
 const app = express();
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(
   })
 );
 
+
 //Routes
 
 app.use("/users", require("./routes/user.route"));
@@ -23,7 +25,6 @@ app.use("/api", require("./routes/category.route"));
 app.use("/api", require("./routes/payment.route"));
 app.use("/api/admin", require("./routes/uploadImage.route"));
 app.use("/api", require("./routes/product.route"));
-
 
 //Connect Mongoose
 db.onConnection();
