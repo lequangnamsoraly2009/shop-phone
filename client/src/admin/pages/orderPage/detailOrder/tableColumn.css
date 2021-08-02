@@ -1,94 +1,53 @@
-.order-date-delivery {
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .order-date-delivery span {
-    color: rgba(0, 0, 0, 1);
-  }
-  
-  /* Information Receiver */
-  
-  .order-infor-receiver {
-    margin: 20px 0;
-    padding-bottom: 30px;
-    border-bottom: 1px solid rgb(184, 184, 184);
-  }
-  
-  .order-infor-address-wrapper {
-    display: flex;
-    flex-direction: column;
-  
-  }
-  
-  .order-infor-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .order-infor-address,
-  .order-infor-delivery {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .order-table-product {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .order-table-img {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .order-table-img img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-  
-  .order-table-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-left: 20px;
-  }
-  
-  /* Total */
-  .order-total {
-    margin: 20px 50px;
-    display: flex;
-    justify-content: flex-end;
-    border-top: 1px solid rgb(189, 189, 189);
-  }
-  
-  .order-total-wrapper {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .order-total-item {
-    margin: 5px 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-  
-  /* Order Notes */
-  
-  /* .order-note{
-  
-  } */
-  
-  /* Order button */
-  
-  .order-button{
-      margin: 30px auto;
-      width: 500px;
-  }
-  
+.container-special{
+  border: 1px solid rgba(165, 164, 164, 0.137);
+  margin-top: 10px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(66, 65, 65, 0.2)
+}
+
+/* Order Header Features */
+.order_header{
+  display: flex;
+  flex-direction: column;
+}
+
+.order_header-buyer{
+  margin: 10px 0 0 30px;
+}
+
+.order_header-buyer span{
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+
+.order-table-product {
+  display: flex;
+  flex-direction: row;
+}
+
+.order-table-img {
+  width: 100px;
+  height: 100px;
+}
+
+.order-table-img img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.order-table-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 20px;
+}
+
+/*  Order Footer */
+.order-footer{
+  margin: 20px;
+}
