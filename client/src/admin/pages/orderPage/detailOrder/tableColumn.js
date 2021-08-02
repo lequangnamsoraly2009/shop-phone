@@ -145,12 +145,12 @@ export const columnDataReceiver = [
     render: (text, record, index) => <span>{record.numberOrderUser}</span>,
   },
   {
-    title: "Note",
-    dataIndex: "note",
+    title: "Notes",
+    dataIndex: "notes",
     width: "30%",
-    key: "note",
+    key: "notes",
     align: "center",
-    render: (text, record, index) => <span>{record.note}</span>,
+    render: (text, record, index) => <span>{record.notes}</span>,
   },
   {
     title: "Address",
