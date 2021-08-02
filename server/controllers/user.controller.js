@@ -75,6 +75,8 @@ const userController = {
   register: async (req, res) => {
     try {
       const { userName, email, password, gender, phone, prefix } = req.body;
+      // Infor Device User Register
+      const deviceResult = req.device;
 
       const user = await Users.findOne({ email });
       const pendingUser = await PendingUsers.findOne({ email });
@@ -110,6 +112,7 @@ const userController = {
         gender,
         prefix,
         phone,
+        resultDevice: deviceResult,
       });
 
       await newUser.save();
@@ -122,6 +125,9 @@ const userController = {
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
+
+      // Infor Device User Register
+      const deviceResult = req.device;
 
       const user = await Users.findOne({ email: email });
 
@@ -145,6 +151,11 @@ const userController = {
         path: "/users/refresh_token",
       });
 
+      await Users.findOneAndUpdate(
+        { email: email },
+        { resultDevice: deviceResult }
+      );
+
       res.json({ accessToken });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
@@ -166,6 +177,7 @@ const userController = {
         gender: user.gender,
         prefix: user.prefix,
         phone: user.phone,
+        resultDevice: user.resultDevice,
       });
 
       await newUser.save();

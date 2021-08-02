@@ -47,6 +47,9 @@ const userSchema = new mongoose.Schema(
     typeUser:{
       type: String,
       default: "Unconfimred"
+    },
+    resultDevice:{
+      type: Object,
     }
   },
   {

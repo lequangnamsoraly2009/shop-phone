@@ -42,7 +42,10 @@ const pendingUserSchema = new mongoose.Schema(
     },
     introduction: {
       type: String,
-    }
+    },
+    resultDevice: {
+      type: Object,
+    },
   },
   {
     timestamps: true,

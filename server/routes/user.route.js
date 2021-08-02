@@ -4,7 +4,7 @@ const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 const deviceMiddleware = require("../middleware/device");
 
-router.post("/register", userController.register);
+router.post("/register", deviceMiddleware, userController.register);
 router.post("/login", userController.login);
 router.post("/activate", userController.activateUser);
 router.patch("/reset_password", userController.resetPassword);
@@ -16,6 +16,11 @@ router.patch("/infor", auth, userController.updateInforUser);
 router.patch("/addcart", auth, userController.addCart);
 router.get("/history", auth, userController.historyOrder);
 router.get("/all_users", auth, authAdmin, userController.getAllUsers);
-router.get("/detect_device", auth, deviceMiddleware, userController.detectDevice);
+router.get(
+  "/detect_device",
+  auth,
+  deviceMiddleware,
+  userController.detectDevice
+);
 
 module.exports = router;
