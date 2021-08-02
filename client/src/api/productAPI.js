@@ -8,6 +8,7 @@ const ProductAPI = () => {
   const dispatch = useDispatch();
   const { searchPayments } = useSelector((state) => state.payments);
   const { token } = useSelector((state) => state.token);
+  const { isAdmin } = useSelector((state) => state.user);
 
   useEffect(() => {
     const getAllProducts = async () => {
@@ -17,10 +18,11 @@ const ProductAPI = () => {
     };
     getAllProducts();
   }, [dispatch]);
+
   // Xài ké thằng này cho payments :v
 
   useEffect(() => {
-    if (token) {
+    if (token && isAdmin === true) {
       const getAllPayments = async () => {
         const response = await API.get(
           `/api/admin/payment?limit=${1 * 20}&&&email[regex]=${searchPayments}`,
@@ -33,7 +35,7 @@ const ProductAPI = () => {
       };
       getAllPayments();
     }
-  }, [dispatch, searchPayments, token]);
+  }, [dispatch, searchPayments, token, isAdmin]);
 };
 
 export default ProductAPI;

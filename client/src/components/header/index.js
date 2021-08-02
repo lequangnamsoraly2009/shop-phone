@@ -1,7 +1,7 @@
 import { Anchor, Badge, Button, Drawer, Dropdown, Menu } from "antd";
 import { Header } from "antd/lib/layout/layout";
 import "./header.css";
-import React, { useState } from "react";
+import React, {useState } from "react";
 import { Input } from "antd";
 import {
   AudioOutlined,
@@ -34,6 +34,7 @@ import {
   setSearchFilter,
   setSortFilter,
 } from "../../app/filterSlice";
+
 const { Search } = Input;
 
 function HeaderNav() {
@@ -55,6 +56,7 @@ function HeaderNav() {
   const onClose = () => {
     setVisible(false);
   };
+
 
   // Logout
   const onClickLogout = async (e) => {
@@ -107,7 +109,7 @@ function HeaderNav() {
     dispatch(setCategoryFilter(""));
     dispatch(setPageFilter(1));
     dispatch(setSortFilter(""));
-  }
+  };
 
   const menu = (
     <Menu style={{ width: 200, left: -50 }}>
@@ -337,7 +339,11 @@ function HeaderNav() {
             </li>
             <li className="nav-item">
               <Dropdown overlay={menu} arrow={true}>
-                <a className="ant-dropdown-link" href="/category" onClick={onClickGetAll}>
+                <a
+                  className="ant-dropdown-link"
+                  href="/category"
+                  onClick={onClickGetAll}
+                >
                   CATEGORY <DownOutlined />
                 </a>
               </Dropdown>

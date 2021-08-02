@@ -11,6 +11,7 @@ import { getAllUsers, setPaginationUsers } from "../app/userSlice.admin";
 const UserAPI = () => {
   const { token } = useSelector((state) => state.token);
   const { searchUsers } = useSelector((state) => state.usersAdmin);
+  const { isAdmin } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -54,7 +55,7 @@ const UserAPI = () => {
   }, [token, dispatch]);
 
   useEffect(() => {
-    if (token) {
+    if (token && isAdmin === true) {
       const getUsers = async () => {
         const response = await API.get(
           `/users/all_users?limit=${1 * 20}&&&email[regex]=${searchUsers}`,
@@ -70,7 +71,7 @@ const UserAPI = () => {
       };
       getUsers();
     }
-  }, [dispatch, searchUsers, token]);
+  }, [dispatch, searchUsers, token, isAdmin]);
 };
 
 export default UserAPI;
