@@ -216,6 +216,7 @@ function HeaderNav() {
                     <div className="user-dropdown-title">
                       <a href="/customer/infor">Your Information</a>
                       <a href="/customer/history">History Order</a>
+                      <a href="/customer/device">Current Device</a>
                       <a href="/" onClick={onClickLogout}>
                         Logout
                       </a>

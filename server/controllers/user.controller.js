@@ -126,8 +126,6 @@ const userController = {
     try {
       const { email, password } = req.body;
 
-      // Infor Device User Register
-      const deviceResult = req.device;
 
       const user = await Users.findOne({ email: email });
 
@@ -150,11 +148,6 @@ const userController = {
         httpOnly: true,
         path: "/users/refresh_token",
       });
-
-      await Users.findOneAndUpdate(
-        { email: email },
-        { resultDevice: deviceResult }
-      );
 
       res.json({ accessToken });
     } catch (error) {

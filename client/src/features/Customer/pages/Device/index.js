@@ -1,16 +1,15 @@
-import { Breadcrumb, Row, Col, Menu } from "antd";
 import React, { useState } from "react";
-import "./information.css";
-import ChangePass from "../../components/changePass";
-import UpdateInfor from "../../components/updateInfor";
+import { Breadcrumb, Row, Col, Menu } from "antd";
+import DeviceUser from "../../components/deviceUser";
+import BrowserUser from "../../components/browserUser";
 
-function InformationCustomer() {
+function Device() {
   const [showInformation, setShowInformation] = useState(true);
 
-  const handleClickShowPass = () => {
+  const handleClickShowBrowser = () => {
     setShowInformation(false);
   };
-  const handleClickShowInfor = () => {
+  const handleClickShowDevice = () => {
     setShowInformation(true);
   };
 
@@ -20,12 +19,12 @@ function InformationCustomer() {
         <Breadcrumb separator=">">
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
           <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
-            account information
+            Information Current Device
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <Row gutter={{ xs: 4, sm: 8, md: 8, lg: 12 }}>
-        <Col className="gutter-row" span={4}>
+        <Col className="gutter-row" span={6}>
           <div className="infor-menu">
             <Menu
               style={{ width: "100%" }}
@@ -33,21 +32,21 @@ function InformationCustomer() {
               // defaultOpenKeys={["sub1"]}
               mode="inline"
             >
-              <Menu.Item key="1" onClick={handleClickShowInfor}>
-                Information
+              <Menu.Item key="1" onClick={handleClickShowDevice}>
+                Information Device
               </Menu.Item>
-              <Menu.Item key="2" onClick={handleClickShowPass}>
-                Change Password
+              <Menu.Item key="2" onClick={handleClickShowBrowser}>
+                Information Browser
               </Menu.Item>
             </Menu>
           </div>
         </Col>
-        <Col className="gutter-row" span={20}>
-          {showInformation === true ? <UpdateInfor /> : <ChangePass />}
+        <Col className="gutter-row" span={18}>
+          {showInformation === true ? <DeviceUser /> : <BrowserUser />}
         </Col>
       </Row>
     </div>
   );
 }
 
-export default InformationCustomer;
+export default Device;
