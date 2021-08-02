@@ -1,4 +1,4 @@
-import { HomeOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Input, Form } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -24,6 +24,11 @@ function CreateCategory() {
   const { categories } = useSelector((state) => state.categories);
 
   const history = useHistory();
+
+  const backPreviousPage = (e) => {
+    e.preventDefault();
+    history.goBack();
+  };
 
   const onFinishForm = async (values) => {
     try {
@@ -89,7 +94,18 @@ function CreateCategory() {
   }, [param.id, categories, form]);
 
   return (
-    <div>
+    <div className="container-admin">
+      <div className="header_page">
+        <h3>
+          <Button
+            style={{ marginRight: 10 }}
+            type="dashed"
+            icon={<ArrowLeftOutlined />}
+            onClick={backPreviousPage}
+          />
+          Change New Name Category
+        </h3>
+      </div>
       <div className="product_breadcrumb">
         <Breadcrumb>
           <Breadcrumb.Item href="">

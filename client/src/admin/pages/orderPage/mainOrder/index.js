@@ -21,13 +21,13 @@ import API from "../../../../api/axiosClient";
 const { Search } = Input;
 
 function MainOrder() {
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
   const { token } = useSelector((state) => state.token);
   const { payments, searchPayments, paginationPayments } = useSelector(
     (state) => state.payments
   );
-  console.log(payments);
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnclickReload = (e) => {
     e.preventDefault();

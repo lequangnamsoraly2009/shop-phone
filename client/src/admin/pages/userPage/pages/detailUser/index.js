@@ -1,14 +1,21 @@
-import { HomeOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Image, Avatar, Descriptions, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "./detailUser.css";
 
 function DetailUser() {
   const params = useParams();
   const { users } = useSelector((state) => state.usersAdmin);
   const [detailUser, setDetailUser] = useState({});
+
+  const history = useHistory();
+
+  const backPreviousPage = (e) => {
+    e.preventDefault();
+    history.goBack();
+  };
 
   useEffect(() => {
     users.forEach((user) => {
@@ -18,12 +25,18 @@ function DetailUser() {
     });
   }, [params, users]);
 
-  console.log(detailUser);
-
   return (
     <div className="container-admin">
       <div className="header_page">
-        <h3>Detail Users</h3>
+        <h3>
+          <Button
+            style={{ marginRight: 10 }}
+            type="dashed"
+            icon={<ArrowLeftOutlined />}
+            onClick={backPreviousPage}
+          />
+          Detail Users
+        </h3>
       </div>
       <div className="product_breadcrumb">
         <Breadcrumb>

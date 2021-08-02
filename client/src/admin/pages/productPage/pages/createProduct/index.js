@@ -1,4 +1,4 @@
-import { HomeOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Input, Form, Select, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import UploadImage from "../uploadImage";
@@ -33,6 +33,11 @@ function CreateProduct() {
 
   const history = useHistory();
   const param = useParams();
+
+  const backPreviousPage = (e) => {
+    e.preventDefault();
+    history.goBack();
+  };
 
   const onFinishForm = async (values) => {
     try {
@@ -113,7 +118,12 @@ function CreateProduct() {
   }, [param.id, productsFilter, form]);
 
   return (
-    <div>
+    <div className="container-admin">
+      <div className="header_page">
+        <h3>
+          <Button style={{marginRight: 10}} type="dashed" icon={<ArrowLeftOutlined />} onClick={backPreviousPage} />Create New Product
+        </h3>
+      </div>
       <div className="product_breadcrumb">
         <Breadcrumb>
           <Breadcrumb.Item href="">
