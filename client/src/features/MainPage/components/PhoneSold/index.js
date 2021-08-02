@@ -10,6 +10,7 @@ import {
   setSortFilter,
 } from "../../../../app/filterSlice";
 import API from "../../../../api/axiosClient";
+import { Link } from "react-router-dom";
 
 function PhoneSold() {
   const [bestSellers, setBetSellers] = useState([]);
@@ -55,8 +56,8 @@ function PhoneSold() {
         </Row>
       </div>
       <div style={{ display: "flex" }}>
-        <a
-          href="/category"
+        <Link
+          to="/category"
           className="btn"
           style={{ margin: "20px auto", cursor: "pointer" }}
           onClick={handleOnClick}
@@ -66,7 +67,7 @@ function PhoneSold() {
           <span></span>
           <span></span>
           See More
-        </a>
+        </Link>
       </div>
     </section>
   );

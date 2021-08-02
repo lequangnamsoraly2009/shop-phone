@@ -9,6 +9,7 @@ import {
   setSearchFilter,
   setSortFilter,
 } from "../../../../app/filterSlice";
+import { Link } from "react-router-dom";
 
 function Iphone() {
   const [iphones, setIphones] = useState([]);
@@ -66,18 +67,18 @@ function Iphone() {
         </Row>
       </div>
       <div style={{ display: "flex" }}>
-        <a
+        <Link
           className="btn"
           style={{ margin: "20px auto", cursor: "pointer" }}
           onClick={handleClick}
-          href="/category"
+          to="/category"
         >
           <span></span>
           <span></span>
           <span></span>
           <span></span>
           See More
-        </a>
+        </Link>
       </div>
     </section>
   );

@@ -10,6 +10,7 @@ import {
   setSearchFilter,
   setSortFilter,
 } from "../../../../app/filterSlice";
+import { Link } from "react-router-dom";
 
 function NewArrivals() {
   const [newArrivals, setNewArrivals] = useState([]);
@@ -63,8 +64,8 @@ function NewArrivals() {
         </Row>
       </div>
       <div style={{ display: "flex" }}>
-        <a
-          href="/category"
+        <Link
+          to="/category"
           className="btn"
           style={{ margin: "20px auto", cursor: "pointer" }}
           onClick={handleClick}
@@ -74,7 +75,7 @@ function NewArrivals() {
           <span></span>
           <span></span>
           See More
-        </a>
+        </Link>
       </div>
     </section>
   );
