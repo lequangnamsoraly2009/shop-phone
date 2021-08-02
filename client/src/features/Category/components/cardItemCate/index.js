@@ -72,7 +72,7 @@ function CardItemCate({ product }) {
             <p
               style={{
                 margin: 5,
-                fontSize: 14,
+                fontSize: 12,
               }}
             >
               TP.Ho Chi Minh
@@ -109,12 +109,12 @@ function CardItemCate({ product }) {
           }}
         >
           <p style={{ margin: "0px 5px", fontWeight: 800, fontSize: 14 }}>
-            {product?.price - (product?.price * product?.sale) / 100} $
+            {Math.round(product?.price - (product?.price * product?.sale) / 100)} $
           </p>
           <p
             style={{
               margin: "0px 5px",
-              fontSize: 14,
+              fontSize: 12,
             }}
           >
             TP.Ho Chi Minh

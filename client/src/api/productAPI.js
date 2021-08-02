@@ -20,18 +20,20 @@ const ProductAPI = () => {
   // Xài ké thằng này cho payments :v
 
   useEffect(() => {
-    const getAllPayments = async () => {
-      const response = await API.get(
-        `/api/admin/payment?limit=${1*20}&&&email[regex]=${searchPayments}`,
-        {
-          headers: { Authorization: token },
-        }
-      );
-      dispatch(getPayments(response.data.payments.slice(0,10)));
-      dispatch(setPaginationPayments(response.data.payments));
-    };
-    getAllPayments();
-  }, [dispatch, searchPayments,token]);
+    if (token) {
+      const getAllPayments = async () => {
+        const response = await API.get(
+          `/api/admin/payment?limit=${1 * 20}&&&email[regex]=${searchPayments}`,
+          {
+            headers: { Authorization: token },
+          }
+        );
+        dispatch(getPayments(response.data.payments.slice(0, 10)));
+        dispatch(setPaginationPayments(response.data.payments));
+      };
+      getAllPayments();
+    }
+  }, [dispatch, searchPayments, token]);
 };
 
 export default ProductAPI;

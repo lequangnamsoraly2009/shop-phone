@@ -1,7 +1,7 @@
 .header_admin {
   height: 80px;
   width: 100%;
-  background-color: rgb(1,21,41);
+  background-color: rgb(1, 21, 41);
 }
 
 .header_wrapper {
@@ -26,10 +26,6 @@
   margin-right: 50px;
 }
 
-/* .header_nav-notifi .header_nav-setting .header_nav-avatar {
-    margin: 0 10px;
-} */
-
 .header_nav-avatar {
   position: relative;
 }
@@ -38,3 +34,4 @@
   position: absolute;
   top: 12px;
 }
+

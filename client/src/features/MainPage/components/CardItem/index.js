@@ -1,11 +1,11 @@
-import { Card, Rate,Typography } from "antd";
+import { Card, Rate, Typography } from "antd";
 import React from "react";
 import "./cardItem.css";
 import { useHistory } from "react-router-dom";
 
-const {Paragraph} = Typography
+const { Paragraph } = Typography;
 
-function CardItem({ product}) {
+function CardItem({ product }) {
   const history = useHistory();
 
   const onClickDetails = () => {
@@ -23,7 +23,12 @@ function CardItem({ product}) {
       style={{ height: 500 }}
       cover={
         <img
-          style={{ paddingTop: 20, height: 282, width: 282, objectFit: "scale-down" }}
+          style={{
+            paddingTop: 20,
+            height: 282,
+            width: 282,
+            objectFit: "scale-down",
+          }}
           alt={product?.description}
           src={product?.images.url}
         />
@@ -40,7 +45,7 @@ function CardItem({ product}) {
       {/* <Meta title={product?.title} className="card-item-title" /> */}
       <Paragraph
         className="card-item-title"
-        ellipsis={{rows: 2, expandable: false}}
+        ellipsis={{ rows: 2, expandable: false }}
       >
         {product?.title}
       </Paragraph>
@@ -74,7 +79,7 @@ function CardItem({ product}) {
             <p
               style={{
                 margin: 5,
-                fontSize: 14,
+                fontSize: 12,
               }}
             >
               Ho Chi Minh City
@@ -111,12 +116,15 @@ function CardItem({ product}) {
           }}
         >
           <p style={{ margin: "0px 5px", fontWeight: 800, fontSize: 14 }}>
-            {product?.price - (product?.price * product?.sale) / 100} $
+            {Math.round(
+              product?.price - (product?.price * product?.sale) / 100
+            )}{" "}
+            $
           </p>
           <p
             style={{
               margin: "0px 5px",
-              fontSize: 14,
+              fontSize: 12,
             }}
           >
             Ho Chi Minh City

@@ -54,18 +54,22 @@ const UserAPI = () => {
   }, [token, dispatch]);
 
   useEffect(() => {
-    const getUsers = async () => {
-      const response = await API.get(
-        `/users/all_users?limit=${1 * 20}&&&email[regex]=${searchUsers}`,
-        {
-          headers: { Authorization: token },
-        }
-      );
-      const responseFilter = response.data.users.filter((user) => user.role !== 1);
-      dispatch(setPaginationUsers(responseFilter));
-      dispatch(getAllUsers(responseFilter.slice(0,10)));
-    };
-    getUsers();
+    if (token) {
+      const getUsers = async () => {
+        const response = await API.get(
+          `/users/all_users?limit=${1 * 20}&&&email[regex]=${searchUsers}`,
+          {
+            headers: { Authorization: token },
+          }
+        );
+        const responseFilter = response.data.users.filter(
+          (user) => user.role !== 1
+        );
+        dispatch(setPaginationUsers(responseFilter));
+        dispatch(getAllUsers(responseFilter.slice(0, 10)));
+      };
+      getUsers();
+    }
   }, [dispatch, searchUsers, token]);
 };
 
