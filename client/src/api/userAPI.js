@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 // import axios from "axios";
-import { getUser, isAAdmin, isABuyer } from "../app/userSlice";
+import { getDeviceUser, getUser, isAAdmin, isABuyer } from "../app/userSlice";
 import { getCarts, getCartsPending } from "../app/cartSlice";
 import { getHistory } from "../app/historySlice";
 import API from "./axiosClient";
@@ -42,6 +42,7 @@ const UserAPI = () => {
     }
   }, [token, dispatch]);
 
+  // Get Information Device
   useEffect(() => {
     if (token) {
       const getDetectDevice = async () => {
@@ -49,7 +50,7 @@ const UserAPI = () => {
           const response = await API.get("/users/detect_device", {
             headers: { Authorization: token },
           });
-          console.log(response);
+          dispatch(getDeviceUser(response.data.deviceResult));
         } catch (error) {
           Swal.fire({
             icon: "error",
@@ -60,7 +61,8 @@ const UserAPI = () => {
       };
       getDetectDevice();
     }
-  }, [token]);
+  }, [token, dispatch]);
+
 
   useEffect(() => {
     if (token) {
@@ -74,6 +76,7 @@ const UserAPI = () => {
     }
   }, [token, dispatch]);
 
+  // Get All Users For Admin
   useEffect(() => {
     if (token && isAdmin === true) {
       const getUsers = async () => {

@@ -6,6 +6,7 @@ const initialState = {
   user: {},
   isLoading: false,
   isLoggedIn: false,
+  deviceUser: {},
 };
 
 const userSlice = createSlice({
@@ -14,6 +15,9 @@ const userSlice = createSlice({
   reducers: {
     loginPending: (state) => {
       state.isLoading = true;
+    },
+    getDeviceUser: (state, action) => {
+      state.deviceUser = action.payload;
     },
     getUser: (state, action) => {
       state.user = action.payload;
@@ -41,6 +45,13 @@ const userSlice = createSlice({
 
 const { actions, reducer } = userSlice;
 
-export const { getUser, isAAdmin, isABuyer, loginPending, getLogout } = actions;
+export const {
+  getDeviceUser,
+  getUser,
+  isAAdmin,
+  isABuyer,
+  loginPending,
+  getLogout,
+} = actions;
 
 export default reducer;
