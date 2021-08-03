@@ -5,6 +5,7 @@ import "./dashboard.css";
 import { HomeOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { Pie } from "react-chartjs-2";
+import CardTotal from "./components/cardTotal";
 
 function DashBoard() {
   const { deviceUsers } = useSelector((state) => state.usersAdmin);
@@ -89,14 +90,20 @@ function DashBoard() {
     });
     return [chrome, chrome_mb, ie, safari, diff];
   };
-
   const dataPieOs = {
     labels: ["Android", "iOS", "Windows", "MacOs", "Linux", "Different"],
     datasets: [
       {
         label: "Dataset OS (%)",
         data: dataOs(),
-        backgroundColor: ["tomato", "paleturquoise", "purple", "pink", "dimgray", "teal"],
+        backgroundColor: [
+          "tomato",
+          "paleturquoise",
+          "purple",
+          "pink",
+          "dimgray",
+          "teal",
+        ],
       },
     ],
   };
@@ -173,6 +180,12 @@ function DashBoard() {
               </div>
             </Col>
           </Row>
+        </div>
+        <div className="chart-card-list">
+          <CardTotal />
+        </div>
+        <div>
+          
         </div>
       </div>
     </Col>
