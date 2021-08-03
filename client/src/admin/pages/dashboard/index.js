@@ -29,18 +29,20 @@ function DashBoard() {
   //   );
   // }, 0);
 
-  const monthFilter = 7;
-
   useEffect(() => {
     const getPaymentsMonth = async () => {
-      const response = await API.post(
-        "/api/payment_filter",
-        { monthFilter },
-        {
-          headers: { Authorization: token },
-        }
-      );
-      console.log(response);
+      let arrResult = [];
+      for (let monthFilter = 1; monthFilter <= 12; monthFilter++) {
+        const response = await API.post(
+          "/api/payment_filter",
+          { monthFilter },
+          {
+            headers: { Authorization: token },
+          }
+        );
+        arrResult.push(response.data.result);
+      }
+      console.log(arrResult);
     };
     getPaymentsMonth();
   }, [token]);

@@ -64,20 +64,32 @@ const paymentController = {
   getFilterDatePayments: async (req, res) => {
     try {
       const { monthFilter } = req.body;
-      console.log(monthFilter);
-      const filterPayments = await Payments.find({
-        createdAt: {
-          $gte: `2021-${monthFilter}-01`,
-          $lt: `2021-${monthFilter + 1}-01`,
-        },
-      });
-
-      console.log(filterPayments);
-      res.json({
-        status: "success",
-        result: filterPayments.length,
-        filterPayments: filterPayments,
-      });
+      
+      if (monthFilter === 12) {
+        const filterPayments = await Payments.find({
+          createdAt: {
+            $gte: `2021-${monthFilter}-01`,
+            $lte: `2021-${monthFilter}-31`,
+          },
+        });
+        res.json({
+          status: "success",
+          result: filterPayments.length,
+          filterPayments: filterPayments,
+        });
+      } else {
+        const filterPayments = await Payments.find({
+          createdAt: {
+            $gte: `2021-${monthFilter}-01`,
+            $lt: `2021-${monthFilter + 1}-01`,
+          },
+        });
+        res.json({
+          status: "success",
+          result: filterPayments.length,
+          filterPayments: filterPayments,
+        });
+      }
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
