@@ -11,7 +11,7 @@ function CardTotal() {
   const { payments } = useSelector((state) => state.payments);
   const {categories} = useSelector((state) => state.categories);
   return (
-    <div style={{ margin: "0px 30px" }}>
+    <div style={{ margin: "20px 30px" }}>
       <Row gutter={16}>
         <Col span={6}>
           <Card style={{ border: "1px solid #aaa" }}>

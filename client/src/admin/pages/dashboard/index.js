@@ -9,21 +9,24 @@ import CardTotal from "./components/cardTotal";
 import { MonthsOfYear } from "../../utils/month";
 
 function DashBoard() {
+  const { payments } = useSelector((state) => state.payments);
   const { operatingSystem, client, device, dataPaymentFilterMonth } =
     useSelector((state) => state.dashboards);
 
-  // const totalPrice = payments.reduce((payment1, payment2) => {
-  //   return (
-  //     payment1 +
-  //     payment2.cart.reduce((item1, item2) => {
-  //       return (
-  //         item1 +
-  //         (item2.price * item2.quantity -
-  //           Math.round((item2.price * item2.quantity * item2.sale) / 100))
-  //       );
-  //     }, 0)
-  //   );
-  // }, 0);
+  const totalPrice = payments.reduce((payment1, payment2) => {
+    return (
+      payment1 +
+      payment2.cart.reduce((item1, item2) => {
+        return (
+          item1 +
+          (item2.price * item2.quantity -
+            Math.round((item2.price * item2.quantity * item2.sale) / 100))
+        );
+      }, 0)
+    );
+  }, 0);
+
+  console.log(totalPrice);
 
   const dataOs = () => {
     let and = 0;
@@ -204,6 +207,7 @@ function DashBoard() {
           </Row>
         </div>
         <div className="chart-card-list">
+          <span>Some parameters of the website</span>
           <CardTotal />
         </div>
         <div className="chart-data-payments">
