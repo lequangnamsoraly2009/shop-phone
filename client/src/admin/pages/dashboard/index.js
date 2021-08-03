@@ -1,27 +1,16 @@
 import { Breadcrumb, Col, Row } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import "../page.css";
 import "./dashboard.css";
 import { HomeOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Pie, Line } from "react-chartjs-2";
 import CardTotal from "./components/cardTotal";
-import API from "../../../api/axiosClient";
 import { MonthsOfYear } from "../../utils/month";
-import {
-  setDataPaymentFilterMonth,
-  setClient,
-  setDevice,
-  setOperatingSystem,
-} from "../../../app/dashBoardSlice";
 
 function DashBoard() {
-  const { token } = useSelector((state) => state.token);
-  const { deviceUsers } = useSelector((state) => state.usersAdmin);
   const { operatingSystem, client, device, dataPaymentFilterMonth } =
     useSelector((state) => state.dashboards);
-
-  const dispatch = useDispatch();
 
   // const totalPrice = payments.reduce((payment1, payment2) => {
   //   return (
@@ -35,22 +24,6 @@ function DashBoard() {
   //     }, 0)
   //   );
   // }, 0);
-
-
-
-  useEffect(() => {
-    let oSys = [];
-    let cli = [];
-    let device = [];
-    deviceUsers.forEach((user) => {
-      oSys.push(user.resultDevice?.os);
-      cli.push(user.resultDevice?.client);
-      device.push(user.resultDevice?.device);
-    });
-    dispatch(setOperatingSystem(oSys));
-    dispatch(setClient(cli));
-    dispatch(setDevice(device));
-  }, [deviceUsers, dispatch]);
 
   const dataOs = () => {
     let and = 0;

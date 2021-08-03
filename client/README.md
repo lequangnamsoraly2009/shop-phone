@@ -14,3 +14,4 @@
     - Research WebHook VNPay
     - Change Type Notification For User
     - Notification For User
+    - IMPORTANT: DashBoard Load Data Render Two Times

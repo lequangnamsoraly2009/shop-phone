@@ -1,9 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDataPaymentFilterMonth } from "../app/dashBoardSlice";
+import {
+  setClient,
+  setDataPaymentFilterMonth,
+  setDevice,
+  setOperatingSystem,
+} from "../app/dashBoardSlice";
 import API from "./axiosClient";
 
 function DashboardAPI() {
+  const { deviceUsers } = useSelector((state) => state.usersAdmin);
   const { token } = useSelector((state) => state.token);
   const dispatch = useDispatch();
 
@@ -25,6 +31,20 @@ function DashboardAPI() {
     };
     getPaymentsMonth();
   }, [token, dispatch]);
+
+  useEffect(() => {
+    let oSys = [];
+    let cli = [];
+    let device = [];
+    deviceUsers.forEach((user) => {
+      oSys.push(user.resultDevice?.os);
+      cli.push(user.resultDevice?.client);
+      device.push(user.resultDevice?.device);
+    });
+    dispatch(setOperatingSystem(oSys));
+    dispatch(setClient(cli));
+    dispatch(setDevice(device));
+  }, [deviceUsers, dispatch]);
 }
 
 export default DashboardAPI;
