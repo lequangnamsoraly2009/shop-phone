@@ -19,25 +19,25 @@ function DeviceUser() {
               <span style={{ fontWeight: 700 }}>
                 ID:{" "}
                 <span style={{ fontWeight: 500, marginLeft: 10, color: "green" }}>
-                  {deviceUser.device.id}
+                  {deviceUser?.device.id}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
                 Type:{" "}
                 <span style={{ fontWeight: 500, marginLeft: 10, color: "green" }}>
-                  {deviceUser.device.type}
+                  {deviceUser?.device.type}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
                 Brand:{" "}
                 <span style={{ fontWeight: 500, marginLeft: 10, color: "green" }}>
-                  {deviceUser.device.brand}
+                  {deviceUser?.device.brand}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
                 Model:{" "}
                 <span style={{ fontWeight: 500, marginLeft: 10, color: "green" }}>
-                  {deviceUser.device.model}
+                  {deviceUser?.device.model}
                 </span>
               </span>
             </div>
@@ -47,31 +47,31 @@ function DeviceUser() {
               <span style={{ fontWeight: 700 }}>
                 Name:{" "}
                 <span style={{ fontWeight: 500, marginLeft: 10, color: "green" }}>
-                  {deviceUser.os.name}
+                  {deviceUser?.os.name}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
                 Short Name:{" "}
                 <span style={{ fontWeight: 500, marginLeft: 10, color: "green" }}>
-                  {deviceUser.os.short_name}
+                  {deviceUser?.os.short_name}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
                 Version:{" "}
                 <span style={{ fontWeight: 500, marginLeft: 10, color: "green" }}>
-                  {deviceUser.os.version}
+                  {deviceUser?.os.version}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
                 Platform:{" "}
                 <span style={{ fontWeight: 500, marginLeft: 10, color: "green" }}>
-                  {deviceUser.os.platform}
+                  {deviceUser?.os.platform}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
                 Family:{" "}
                 <span style={{ fontWeight: 500, marginLeft: 10, color: "green" }}>
-                  {deviceUser.os.family}
+                  {deviceUser?.os.family}
                 </span>
               </span>
             </div>

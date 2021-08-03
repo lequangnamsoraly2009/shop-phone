@@ -6,7 +6,6 @@ const initialState = {
   user: {},
   isLoading: false,
   isLoggedIn: false,
-  deviceUser: {},
 };
 
 const userSlice = createSlice({
@@ -16,9 +15,7 @@ const userSlice = createSlice({
     loginPending: (state) => {
       state.isLoading = true;
     },
-    getDeviceUser: (state, action) => {
-      state.deviceUser = action.payload;
-    },
+   
     getUser: (state, action) => {
       state.user = action.payload;
       state.isLoading = false;
@@ -46,7 +43,6 @@ const userSlice = createSlice({
 const { actions, reducer } = userSlice;
 
 export const {
-  getDeviceUser,
   getUser,
   isAAdmin,
   isABuyer,

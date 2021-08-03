@@ -22,7 +22,7 @@ function BrowserUser() {
                 <span
                   style={{ textTransform: "capitalize" ,fontWeight: 500, marginLeft: 10, color: "green" }}
                 >
-                  {deviceUser.client.type}
+                  {deviceUser?.client.type}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
@@ -30,7 +30,7 @@ function BrowserUser() {
                 <span
                   style={{ fontWeight: 500, marginLeft: 10, color: "green" }}
                 >
-                  {deviceUser.client.name}
+                  {deviceUser?.client.name}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
@@ -38,7 +38,7 @@ function BrowserUser() {
                 <span
                   style={{ fontWeight: 500, marginLeft: 10, color: "green" }}
                 >
-                  {deviceUser.client.short_name}
+                  {deviceUser?.client.short_name}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
@@ -46,7 +46,7 @@ function BrowserUser() {
                 <span
                   style={{ fontWeight: 500, marginLeft: 10, color: "green" }}
                 >
-                  {deviceUser.client.version}
+                  {deviceUser?.client.version}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
@@ -54,7 +54,7 @@ function BrowserUser() {
                 <span
                   style={{ fontWeight: 500, marginLeft: 10, color: "green" }}
                 >
-                  {deviceUser.client.engine}
+                  {deviceUser?.client.engine}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
@@ -63,7 +63,7 @@ function BrowserUser() {
                   style={{ fontWeight: 500, marginLeft: 10, color: "green" }}
                 >
                   
-                  {deviceUser.client.engine_version ? deviceUser.client.engine_version : "Unknown"}
+                  {deviceUser?.client.engine_version ? deviceUser?.client.engine_version : "Unknown"}
                 </span>
               </span>
               <span style={{ fontWeight: 700 }}>
@@ -71,7 +71,7 @@ function BrowserUser() {
                 <span
                   style={{ fontWeight: 500, marginLeft: 10, color: "green" }}
                 >
-                  {deviceUser.client.family}
+                  {deviceUser?.client.family}
                 </span>
               </span>
             </div>

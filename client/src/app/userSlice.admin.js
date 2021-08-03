@@ -4,6 +4,7 @@ const initialState = {
   users: [],
   searchUsers: "",
   paginationUsers: [],
+  deviceUsers: [],
 };
 
 const userAdminSlice = createSlice({
@@ -12,6 +13,9 @@ const userAdminSlice = createSlice({
   reducers: {
     getAllUsers: (state, action) => {
       state.users = action.payload;
+    },
+    getAllUserDevices: (state, action) => {
+      state.deviceUsers = action.payload;
     },
     setSearchUsers: (state, action) => {
       state.searchUsers = action.payload;
@@ -25,6 +29,11 @@ const userAdminSlice = createSlice({
 
 const { actions, reducer } = userAdminSlice;
 
-export const { getAllUsers, setSearchUsers, setPaginationUsers } = actions;
+export const {
+  getAllUsers,
+  getAllUserDevices,
+  setSearchUsers,
+  setPaginationUsers,
+} = actions;
 
 export default reducer;

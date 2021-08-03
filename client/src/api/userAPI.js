@@ -2,11 +2,15 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 // import axios from "axios";
-import { getDeviceUser, getUser, isAAdmin, isABuyer } from "../app/userSlice";
+import { getUser, isAAdmin, isABuyer } from "../app/userSlice";
 import { getCarts, getCartsPending } from "../app/cartSlice";
 import { getHistory } from "../app/historySlice";
 import API from "./axiosClient";
-import { getAllUsers, setPaginationUsers } from "../app/userSlice.admin";
+import {
+  getAllUserDevices,
+  getAllUsers,
+  setPaginationUsers,
+} from "../app/userSlice.admin";
 
 const UserAPI = () => {
   const { token } = useSelector((state) => state.token);
@@ -42,28 +46,6 @@ const UserAPI = () => {
     }
   }, [token, dispatch]);
 
-  // Get Information Device
-  useEffect(() => {
-    if (token) {
-      const getDetectDevice = async () => {
-        try {
-          const response = await API.get("/users/detect_device", {
-            headers: { Authorization: token },
-          });
-          dispatch(getDeviceUser(response.data.deviceResult));
-        } catch (error) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: `${error.response.data?.message}`,
-          });
-        }
-      };
-      getDetectDevice();
-    }
-  }, [token, dispatch]);
-
-
   useEffect(() => {
     if (token) {
       const getHistoryCustomer = async () => {
@@ -90,6 +72,7 @@ const UserAPI = () => {
           (user) => user.role !== 1
         );
         dispatch(setPaginationUsers(responseFilter));
+        dispatch(getAllUserDevices(responseFilter));
         dispatch(getAllUsers(responseFilter.slice(0, 10)));
       };
       getUsers();

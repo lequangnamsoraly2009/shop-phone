@@ -3,8 +3,11 @@ import React from "react";
 import "../page.css";
 import "./dashboard.css";
 import { HomeOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 function DashBoard() {
+  const { deviceUsers } = useSelector((state) => state.usersAdmin);
+  console.log(deviceUsers);
   return (
     <Col className="gutter-row" span={21}>
       <div>
