@@ -18,12 +18,14 @@ import { useDispatch} from "react-redux";
 import { getLogout } from "../../../app/userSlice";
 import { removeToken } from "../../../app/tokenSlice";
 import Swal from "sweetalert2";
+import DashboardAPI from "../../../api/dashboardAPI";
 
 function HeaderAdmin() {
   UserAPI();
   ProductAPI();
   CategoryAPI();
   ProductFilterAPI();
+  DashboardAPI();
 
   const dispatch = useDispatch();
   const history = useHistory();

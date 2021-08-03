@@ -1,22 +1,27 @@
 import { Breadcrumb, Col, Row } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../page.css";
 import "./dashboard.css";
 import { HomeOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { Pie, Bar, Line } from "react-chartjs-2";
+import { useDispatch, useSelector } from "react-redux";
+import { Pie, Line } from "react-chartjs-2";
 import CardTotal from "./components/cardTotal";
 import API from "../../../api/axiosClient";
 import { MonthsOfYear } from "../../utils/month";
+import {
+  setDataPaymentFilterMonth,
+  setClient,
+  setDevice,
+  setOperatingSystem,
+} from "../../../app/dashBoardSlice";
 
 function DashBoard() {
   const { token } = useSelector((state) => state.token);
   const { deviceUsers } = useSelector((state) => state.usersAdmin);
-  // const { payments } = useSelector((state) => state.payments);
-  const [operatingSystem, setOperatingSystem] = useState([]);
-  const [client, setClient] = useState([]);
-  const [device, setDevice] = useState([]);
-  const [dataPaymentFilterMonth, setDataPaymentFilterMonth] = useState([]);
+  const { operatingSystem, client, device, dataPaymentFilterMonth } =
+    useSelector((state) => state.dashboards);
+
+  const dispatch = useDispatch();
 
   // const totalPrice = payments.reduce((payment1, payment2) => {
   //   return (
@@ -31,24 +36,7 @@ function DashBoard() {
   //   );
   // }, 0);
 
-  // Get data for every month -> Chart Bar Data Payments For 2021
-  useEffect(() => {
-    const getPaymentsMonth = async () => {
-      let arrResult = [];
-      for (let monthFilter = 1; monthFilter <= 12; monthFilter++) {
-        const response = await API.post(
-          "/api/payment_filter",
-          { monthFilter },
-          {
-            headers: { Authorization: token },
-          }
-        );
-        arrResult.push(response.data.result);
-      }
-      setDataPaymentFilterMonth(arrResult);
-    };
-    getPaymentsMonth();
-  }, [token]);
+
 
   useEffect(() => {
     let oSys = [];
@@ -59,10 +47,10 @@ function DashBoard() {
       cli.push(user.resultDevice?.client);
       device.push(user.resultDevice?.device);
     });
-    setOperatingSystem(oSys);
-    setClient(cli);
-    setDevice(device);
-  }, [deviceUsers]);
+    dispatch(setOperatingSystem(oSys));
+    dispatch(setClient(cli));
+    dispatch(setDevice(device));
+  }, [deviceUsers, dispatch]);
 
   const dataOs = () => {
     let and = 0;

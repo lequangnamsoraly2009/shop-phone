@@ -19,6 +19,7 @@ import categoryReducer from "./categorySlice";
 import productFilterReducer from "./filterSlice";
 import usersAdminReducer from "./userSlice.admin";
 import paymentReducer from "./paymentSlice";
+import dashboardReducer from "./dashBoardSlice";
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   productsFilter: productFilterReducer,
   usersAdmin: usersAdminReducer,
   payments: paymentReducer,
+  dashboards: dashboardReducer,
 });
 
 const persistConfig = {
