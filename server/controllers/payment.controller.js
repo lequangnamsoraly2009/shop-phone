@@ -47,7 +47,6 @@ class APIfeatures {
 const paymentController = {
   getPayments: async (req, res) => {
     try {
-      // const filter = await Payments.find({createdAt : {$gte: "2021-07-01", $lt: "2021-08-01"}})
       const features = new APIfeatures(Payments.find(), req.query)
         .filtering()
         .sorting()
@@ -57,6 +56,27 @@ const paymentController = {
         status: "success",
         result: payments.length,
         payments: payments,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  getFilterDatePayments: async (req, res) => {
+    try {
+      const { monthFilter } = req.body;
+      console.log(monthFilter);
+      const filterPayments = await Payments.find({
+        createdAt: {
+          $gte: `2021-${monthFilter}-01`,
+          $lt: `2021-${monthFilter + 1}-01`,
+        },
+      });
+
+      console.log(filterPayments);
+      res.json({
+        status: "success",
+        result: filterPayments.length,
+        filterPayments: filterPayments,
       });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });

@@ -6,28 +6,45 @@ import { HomeOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { Pie } from "react-chartjs-2";
 import CardTotal from "./components/cardTotal";
+import API from "../../../api/axiosClient";
 
 function DashBoard() {
+  const { token } = useSelector((state) => state.token);
   const { deviceUsers } = useSelector((state) => state.usersAdmin);
-  const { payments } = useSelector((state) => state.payments);
+  // const { payments } = useSelector((state) => state.payments);
   const [operatingSystem, setOperatingSystem] = useState([]);
   const [client, setClient] = useState([]);
   const [device, setDevice] = useState([]);
 
+  // const totalPrice = payments.reduce((payment1, payment2) => {
+  //   return (
+  //     payment1 +
+  //     payment2.cart.reduce((item1, item2) => {
+  //       return (
+  //         item1 +
+  //         (item2.price * item2.quantity -
+  //           Math.round((item2.price * item2.quantity * item2.sale) / 100))
+  //       );
+  //     }, 0)
+  //   );
+  // }, 0);
 
-  const totalPrice = payments.reduce((payment1, payment2) => {
-    return (
-      payment1 +
-      payment2.cart.reduce((item1, item2) => {
-        return (
-          item1 +
-          (item2.price * item2.quantity -
-            Math.round((item2.price * item2.quantity * item2.sale) / 100))
-        );
-      }, 0)
-    );
-  }, 0);
-  console.log(payments);
+  const monthFilter = 7;
+
+  useEffect(() => {
+    const getPaymentsMonth = async () => {
+      const response = await API.post(
+        "/api/payment_filter",
+        { monthFilter },
+        {
+          headers: { Authorization: token },
+        }
+      );
+      console.log(response);
+    };
+    getPaymentsMonth();
+  }, [token]);
+  // console.log(payments);
 
   useEffect(() => {
     let oSys = [];
