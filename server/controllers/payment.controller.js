@@ -47,6 +47,7 @@ class APIfeatures {
 const paymentController = {
   getPayments: async (req, res) => {
     try {
+      // const filter = await Payments.find({createdAt : {$gte: "2021-07-01", $lt: "2021-08-01"}})
       const features = new APIfeatures(Payments.find(), req.query)
         .filtering()
         .sorting()

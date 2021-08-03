@@ -27,7 +27,7 @@ function DashBoard() {
       }, 0)
     );
   }, 0);
-  console.log(totalPrice);
+  console.log(payments);
 
   useEffect(() => {
     let oSys = [];
