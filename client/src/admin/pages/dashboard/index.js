@@ -26,10 +26,6 @@ function DashBoard() {
     setDevice(device);
   }, [deviceUsers]);
 
-  console.log({ operatingSystem: operatingSystem });
-  console.log({ client: client });
-  console.log({ device: device });
-
   const dataOs = () => {
     let and = 0;
     let ios = 0;
@@ -46,7 +42,7 @@ function DashBoard() {
         and += 1;
       } else if (item?.name === "iOS") {
         ios += 1;
-      } else if (item?.name === "Linux") {
+      } else if (item?.name === "GNU/Linux") {
         linux += 1;
       } else {
         diff += 1;
@@ -55,13 +51,80 @@ function DashBoard() {
     return [and, ios, win, mac, linux, diff];
   };
 
-  const dataPie = {
+  const dataDevice = () => {
+    let desktop = 0;
+    let smartphone = 0;
+    let diff = 0;
+    device.forEach((item) => {
+      if (item?.type === "desktop") {
+        desktop += 1;
+      } else if (item?.type === "smartphone") {
+        smartphone += 1;
+      } else {
+        diff += 1;
+      }
+    });
+    return [desktop, smartphone, diff];
+  };
+
+  const dataBrowser = () => {
+    let chrome = 0;
+    let chrome_mb = 0;
+    let ie = 0;
+    let safari = 0;
+    let diff = 0;
+
+    client.forEach((item) => {
+      if (item?.name === "Chrome") {
+        chrome += 1;
+      } else if (item?.name === "Chrome Mobile") {
+        chrome_mb += 1;
+      } else if (item?.name === "Internet Explorer") {
+        ie += 1;
+      } else if (item?.name === "Mobile Safari") {
+        safari += 1;
+      } else {
+        diff += 1;
+      }
+    });
+    return [chrome, chrome_mb, ie, safari, diff];
+  };
+
+  const dataPieOs = {
     labels: ["Android", "iOS", "Windows", "MacOs", "Linux", "Different"],
     datasets: [
       {
         label: "Dataset OS (%)",
         data: dataOs(),
-        backgroundColor: ["red", "green", "purple", "blue", "black", "yellow"],
+        backgroundColor: ["tomato", "paleturquoise", "purple", "pink", "dimgray", "teal"],
+      },
+    ],
+  };
+
+  const dataPieBrowser = {
+    labels: [
+      "Chrome",
+      "Chrome Mobile",
+      "Internet Explorer",
+      "Mobile Safari",
+      "Different",
+    ],
+    datasets: [
+      {
+        label: "Dataset Browser (%)",
+        data: dataBrowser(),
+        backgroundColor: ["tomato", "paleturquoise", "purple", "pink", "teal"],
+      },
+    ],
+  };
+
+  const dataPieDevice = {
+    labels: ["Desktop", "Smartphone", "Different"],
+    datasets: [
+      {
+        label: "Dataset Device (%)",
+        data: dataDevice(),
+        backgroundColor: ["tomato", "paleturquoise", "teal"],
       },
     ],
   };
@@ -84,17 +147,29 @@ function DashBoard() {
           <Row gutter={16}>
             <Col className="gutter-row" span={8}>
               <div className="chart-os">
-                <Pie data={dataPie} options={{ maintainAspectRatio: false }} />
+                <span>Number Registration OS</span>
+                <Pie
+                  data={dataPieOs}
+                  options={{ maintainAspectRatio: false }}
+                />
               </div>
             </Col>
             <Col className="gutter-row" span={8}>
               <div className="chart-os">
-                <Pie data={dataPie} options={{ maintainAspectRatio: false }} />
+                <span>Number Registration Browser</span>
+                <Pie
+                  data={dataPieBrowser}
+                  options={{ maintainAspectRatio: false }}
+                />
               </div>
             </Col>
             <Col className="gutter-row" span={8}>
               <div className="chart-os">
-                <Pie data={dataPie} options={{ maintainAspectRatio: false }} />
+                <span>Number Registration Device</span>
+                <Pie
+                  data={dataPieDevice}
+                  options={{ maintainAspectRatio: false }}
+                />
               </div>
             </Col>
           </Row>
