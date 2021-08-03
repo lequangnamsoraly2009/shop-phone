@@ -4,9 +4,10 @@ import "../page.css";
 import "./dashboard.css";
 import { HomeOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { Pie } from "react-chartjs-2";
+import { Pie, Bar, Line } from "react-chartjs-2";
 import CardTotal from "./components/cardTotal";
 import API from "../../../api/axiosClient";
+import { MonthsOfYear } from "../../utils/month";
 
 function DashBoard() {
   const { token } = useSelector((state) => state.token);
@@ -15,6 +16,7 @@ function DashBoard() {
   const [operatingSystem, setOperatingSystem] = useState([]);
   const [client, setClient] = useState([]);
   const [device, setDevice] = useState([]);
+  const [dataPaymentFilterMonth, setDataPaymentFilterMonth] = useState([]);
 
   // const totalPrice = payments.reduce((payment1, payment2) => {
   //   return (
@@ -29,6 +31,7 @@ function DashBoard() {
   //   );
   // }, 0);
 
+  // Get data for every month -> Chart Bar Data Payments For 2021
   useEffect(() => {
     const getPaymentsMonth = async () => {
       let arrResult = [];
@@ -42,11 +45,10 @@ function DashBoard() {
         );
         arrResult.push(response.data.result);
       }
-      console.log(arrResult);
+      setDataPaymentFilterMonth(arrResult);
     };
     getPaymentsMonth();
   }, [token]);
-  // console.log(payments);
 
   useEffect(() => {
     let oSys = [];
@@ -171,6 +173,30 @@ function DashBoard() {
     ],
   };
 
+  const dataPaymentMonths = {
+    labels: MonthsOfYear,
+    datasets: [
+      {
+        label: "Number Payments Of This Month",
+        data: dataPaymentFilterMonth,
+        backgroundColor: [
+          "tomato",
+          "paleturquoise",
+          "purple",
+          "pink",
+          "teal",
+          "black",
+          "gray",
+          "yellow",
+          "orange",
+          "green",
+          "acid green",
+          "blond",
+        ],
+      },
+    ],
+  };
+
   return (
     <Col className="gutter-row" span={21}>
       <div>
@@ -219,7 +245,16 @@ function DashBoard() {
         <div className="chart-card-list">
           <CardTotal />
         </div>
-        <div></div>
+        <div className="chart-data-payments">
+          <span>Summary of monthly orders</span>
+          <div className="chart-data-month">
+            <Line
+              data={dataPaymentMonths}
+              options={{ maintainAspectRatio: false }}
+              height={300}
+            />
+          </div>
+        </div>
       </div>
     </Col>
   );
