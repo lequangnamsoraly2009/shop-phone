@@ -1,4 +1,4 @@
-import { Breadcrumb, Col } from "antd";
+import { Breadcrumb, Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import "../page.css";
 import "./dashboard.css";
@@ -55,8 +55,6 @@ function DashBoard() {
     return [and, ios, win, mac, linux, diff];
   };
 
-  console.log(dataOs());
-
   const dataPie = {
     labels: ["Android", "iOS", "Windows", "MacOs", "Linux", "Different"],
     datasets: [
@@ -82,13 +80,24 @@ function DashBoard() {
             <Breadcrumb.Item>Home</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        <div>
-          <Pie
-            data={dataPie}
-            width={300}
-            height={300}
-            options={{ maintainAspectRatio: false }}
-          />
+        <div className="chart-dashboard">
+          <Row gutter={16}>
+            <Col className="gutter-row" span={8}>
+              <div className="chart-os">
+                <Pie data={dataPie} options={{ maintainAspectRatio: false }} />
+              </div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div className="chart-os">
+                <Pie data={dataPie} options={{ maintainAspectRatio: false }} />
+              </div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div className="chart-os">
+                <Pie data={dataPie} options={{ maintainAspectRatio: false }} />
+              </div>
+            </Col>
+          </Row>
         </div>
       </div>
     </Col>
