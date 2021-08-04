@@ -102,6 +102,7 @@ function DashBoard() {
     let chrome_mb = 0;
     let ie = 0;
     let safari = 0;
+    let firefox = 0;
     let diff = 0;
 
     client.forEach((item) => {
@@ -113,11 +114,14 @@ function DashBoard() {
         ie += 1;
       } else if (item?.name === "Mobile Safari") {
         safari += 1;
+      }
+      else if (item?.name === "Firefox") {
+        firefox += 1;
       } else {
         diff += 1;
       }
     });
-    return [chrome, chrome_mb, ie, safari, diff];
+    return [chrome, chrome_mb, ie, safari,firefox, diff];
   };
   const dataPieOs = {
     labels: ["Android", "iOS", "Windows", "MacOs", "Linux", "Different"],
@@ -143,13 +147,14 @@ function DashBoard() {
       "Chrome Mobile",
       "Internet Explorer",
       "Mobile Safari",
+      "FireFox",
       "Different",
     ],
     datasets: [
       {
         label: "Dataset Browser (%)",
         data: dataBrowser(),
-        backgroundColor: ["tomato", "paleturquoise", "purple", "pink", "teal"],
+        backgroundColor: ["tomato", "paleturquoise","gray", "purple", "pink", "teal"],
       },
     ],
   };
