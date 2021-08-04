@@ -4,7 +4,8 @@ const initialState = {
   operatingSystem: [],
   client: [],
   device: [],
-  dataPaymentFilterMonth: [],
+  numberPaymentFilterMonth: [],
+  dataPaymentFilterMonth: []
 };
 
 const dashBoardSlice = createSlice({
@@ -20,6 +21,9 @@ const dashBoardSlice = createSlice({
     setDevice: (state, action) => {
       state.device = action.payload;
     },
+    setNumberPaymentFilterMonth: (state, action) => {
+      state.numberPaymentFilterMonth = action.payload;
+    },
     setDataPaymentFilterMonth: (state, action) => {
       state.dataPaymentFilterMonth = action.payload;
     },
@@ -33,7 +37,8 @@ export const {
   setOperatingSystem,
   setClient,
   setDevice,
-  setDataPaymentFilterMonth,
+  setNumberPaymentFilterMonth,
+  setDataPaymentFilterMonth
 } = actions;
 
 export default reducer;

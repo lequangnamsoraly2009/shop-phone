@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setClient,
-  setDataPaymentFilterMonth,
+  setNumberPaymentFilterMonth,
   setDevice,
   setOperatingSystem,
+  setDataPaymentFilterMonth,
 } from "../app/dashBoardSlice";
 import API from "./axiosClient";
 
@@ -17,6 +18,7 @@ function DashboardAPI() {
   useEffect(() => {
     const getPaymentsMonth = async () => {
       let arrResult = [];
+      let arrDataPayments = [];
       for (let monthFilter = 1; monthFilter <= 12; monthFilter++) {
         const response = await API.post(
           "/api/payment_filter",
@@ -26,8 +28,10 @@ function DashboardAPI() {
           }
         );
         arrResult.push(response.data.result);
+        arrDataPayments.push(response.data.filterPayments);
       }
-      dispatch(setDataPaymentFilterMonth(arrResult));
+      dispatch(setNumberPaymentFilterMonth(arrResult));
+      dispatch(setDataPaymentFilterMonth(arrDataPayments));
     };
     getPaymentsMonth();
   }, [token, dispatch]);

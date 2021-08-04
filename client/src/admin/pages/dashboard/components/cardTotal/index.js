@@ -21,7 +21,7 @@ function CardTotal() {
               //   precision={2}
               valueStyle={{ color: "#cf1322" }}
               prefix={<UserOutlined />}
-              suffix="Users"
+              suffix=" Users"
             />
           </Card>
         </Col>
@@ -32,7 +32,7 @@ function CardTotal() {
               value={products.length}
               valueStyle={{ color: "#cf1322" }}
               prefix={<IoCubeOutline />}
-              suffix="Units"
+              suffix=" Units"
             />
           </Card>
         </Col>
@@ -44,18 +44,18 @@ function CardTotal() {
               //   precision={2}
               prefix={<BsBag />}
               valueStyle={{ color: "#cf1322" }}
-              suffix="Payments"
+              suffix=" Payments"
             />
           </Card>
         </Col>
         <Col span={6}>
           <Card style={{ border: "1px solid #aaa" }}>
             <Statistic
-              title="Total Categories"
+              title="Total Categories "
               value={categories.length}
               prefix={<IoApertureOutline />}
               valueStyle={{ color: "#cf1322" }}
-              suffix="Categories"
+              suffix=" Categories"
             />
           </Card>
         </Col>

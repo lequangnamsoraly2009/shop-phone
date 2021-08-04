@@ -1,32 +1,59 @@
 import { Breadcrumb, Col, Row } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../page.css";
 import "./dashboard.css";
 import { HomeOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { Pie, Line } from "react-chartjs-2";
+import { Pie, Line, Bar } from "react-chartjs-2";
 import CardTotal from "./components/cardTotal";
 import { MonthsOfYear } from "../../utils/month";
 
 function DashBoard() {
   const { payments } = useSelector((state) => state.payments);
-  const { operatingSystem, client, device, dataPaymentFilterMonth } =
-    useSelector((state) => state.dashboards);
+  const {
+    operatingSystem,
+    client,
+    device,
+    numberPaymentFilterMonth,
+    dataPaymentFilterMonth,
+  } = useSelector((state) => state.dashboards);
 
-  const totalPrice = payments.reduce((payment1, payment2) => {
-    return (
-      payment1 +
-      payment2.cart.reduce((item1, item2) => {
-        return (
-          item1 +
-          (item2.price * item2.quantity -
-            Math.round((item2.price * item2.quantity * item2.sale) / 100))
-        );
-      }, 0)
-    );
-  }, 0);
+  const [pricePaymentMonths, setPricePaymentMonths] = useState([]);
+  const [totalPriceYears, setTotalPriceYears] = useState([]);
 
-  console.log(totalPrice);
+  useEffect(() => {
+    const totalPriceMonth = [];
+    dataPaymentFilterMonth.forEach((item) => {
+      totalPriceMonth.push(
+        item?.reduce((payment1, payment2) => {
+          return (
+            payment1 +
+            payment2.cart.reduce((item1, item2) => {
+              return (
+                item1 +
+                (item2.price * item2.quantity -
+                  Math.round((item2.price * item2.quantity * item2.sale) / 100))
+              );
+            }, 0)
+          );
+        }, 0)
+      );
+    });
+    const totalPrice = payments.reduce((payment1, payment2) => {
+      return (
+        payment1 +
+        payment2.cart.reduce((item1, item2) => {
+          return (
+            item1 +
+            (item2.price * item2.quantity -
+              Math.round((item2.price * item2.quantity * item2.sale) / 100))
+          );
+        }, 0)
+      );
+    }, 0);
+    setTotalPriceYears(totalPrice);
+    setPricePaymentMonths(totalPriceMonth);
+  }, [dataPaymentFilterMonth, payments]);
 
   const dataOs = () => {
     let and = 0;
@@ -137,12 +164,36 @@ function DashBoard() {
     ],
   };
 
-  const dataPaymentMonths = {
+  const numberPaymentMonths = {
     labels: MonthsOfYear,
     datasets: [
       {
         label: "Number Payments Of This Month",
-        data: dataPaymentFilterMonth,
+        data: numberPaymentFilterMonth,
+        backgroundColor: [
+          "tomato",
+          "paleturquoise",
+          "purple",
+          "pink",
+          "teal",
+          "black",
+          "gray",
+          "yellow",
+          "orange",
+          "green",
+          "acid green",
+          "blond",
+        ],
+      },
+    ],
+  };
+
+  const dataPaymentMonths = {
+    labels: MonthsOfYear,
+    datasets: [
+      {
+        label: "Total Price Of This Month ($)",
+        data: pricePaymentMonths,
         backgroundColor: [
           "tomato",
           "paleturquoise",
@@ -214,6 +265,16 @@ function DashBoard() {
           <span>Summary of monthly orders</span>
           <div className="chart-data-month">
             <Line
+              data={numberPaymentMonths}
+              options={{ maintainAspectRatio: false }}
+              height={300}
+            />
+          </div>
+        </div>
+        <div className="chart-data-payments">
+          <span>Total sales per month</span>
+          <div className="chart-data-month">
+            <Bar
               data={dataPaymentMonths}
               options={{ maintainAspectRatio: false }}
               height={300}
