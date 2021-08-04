@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Pie, Line, Bar } from "react-chartjs-2";
 import CardTotal from "./components/cardTotal";
 import { MonthsOfYear } from "../../utils/month";
+import CardSales from "./components/cardSales";
 
 function DashBoard() {
   const { payments } = useSelector((state) => state.payments);
@@ -260,6 +261,13 @@ function DashBoard() {
         <div className="chart-card-list">
           <span>Some parameters of the website</span>
           <CardTotal />
+        </div>
+        <div className="chart-card-list">
+          <span>Sales fluctuating</span>
+          <CardSales
+            pricePaymentMonths={pricePaymentMonths}
+            totalPriceYears={totalPriceYears}
+          />
         </div>
         <div className="chart-data-payments">
           <span>Summary of monthly orders</span>
