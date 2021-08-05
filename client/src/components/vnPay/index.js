@@ -15,7 +15,7 @@ function VNPAY() {
 
   const onClickHandle = async () => {
     try {
-      await API.post(
+      const response = await API.post(
         "/api/create_payment_url",
         {
           ...fakeData,
@@ -27,6 +27,7 @@ function VNPAY() {
           },
         }
       );
+      window.open(response.data.vnpUrl);
       // history.push(`${response.data.data}`);
       // console.log(response);
     } catch (error) {

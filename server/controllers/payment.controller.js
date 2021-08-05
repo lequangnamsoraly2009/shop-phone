@@ -196,7 +196,9 @@ const paymentController = {
     //Neu muon dung Redirect thi dong dong ben duoi
     // res.status(200).json({ code: "00", data: vnpUrl });
     //Neu muon dung Redirect thi mo dong ben duoi va dong dong ben tren
-    res.redirect(vnpUrl);
+    res.json({
+      vnpUrl:vnpUrl
+    })
   },
   dataPaymentByVNPay: async (req, res) => {
     let vnp_Params = req.query;

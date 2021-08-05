@@ -62,6 +62,7 @@ function App() {
                 path="/customer"
                 component={isLoggedIn ? Customer : PageNotFound}
               />
+              {/* Test VN Pay */}
               <Route
                 path="/test_vnpay"
                 component={isLoggedIn ? VNPAY : PageNotFound}
