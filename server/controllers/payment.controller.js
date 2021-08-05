@@ -194,58 +194,58 @@ const paymentController = {
     vnpUrl += "?" + querystring.stringify(vnp_Params, { encode: true });
 
     //Neu muon dung Redirect thi dong dong ben duoi
-    // res.status(200).json({code: '00', data: vnpUrl})
+    // res.status(200).json({ code: "00", data: vnpUrl });
     //Neu muon dung Redirect thi mo dong ben duoi va dong dong ben tren
     res.redirect(vnpUrl);
   },
   dataPaymentByVNPay: async (req, res) => {
     let vnp_Params = req.query;
-    let secureHash = vnp_Params['vnp_SecureHash'];
+    let secureHash = vnp_Params["vnp_SecureHash"];
 
-    delete vnp_Params['vnp_SecureHash'];
-    delete vnp_Params['vnp_SecureHashType'];
+    delete vnp_Params["vnp_SecureHash"];
+    delete vnp_Params["vnp_SecureHashType"];
 
     vnp_Params = sortObject(vnp_Params);
-    let secretKey = config.get('vnp_HashSecret');
-    let signData = secretKey + querystring.stringify(vnp_Params, { encode: false });
-    
+    let secretKey = config.get("vnp_HashSecret");
+    let signData =
+      secretKey + querystring.stringify(vnp_Params, { encode: false });
 
     let checkSum = sha256(signData);
 
-    if(secureHash === checkSum){
-        let orderId = vnp_Params['vnp_TxnRef'];
-        let rspCode = vnp_Params['vnp_ResponseCode'];
-        //Kiem tra du lieu co hop le khong, cap nhat trang thai don hang va gui ket qua cho VNPAY theo dinh dang duoi
-        res.status(200).json({RspCode: '00', Message: 'success'})
-    }
-    else {
-        res.status(200).json({RspCode: '97', Message: 'Fail checksum'})
+    if (secureHash === checkSum) {
+      let orderId = vnp_Params["vnp_TxnRef"];
+      let rspCode = vnp_Params["vnp_ResponseCode"];
+      res.json({ orderId, rspCode });
+      //Kiem tra du lieu co hop le khong, cap nhat trang thai don hang va gui ket qua cho VNPAY theo dinh dang duoi
+      res.status(200).json({ RspCode: "00", Message: "success" });
+    } else {
+      res.status(200).json({ RspCode: "97", Message: "Fail checksum" });
     }
   },
   returnPaymentByVNPay: async (req, res) => {
     let vnp_Params = req.query;
 
-    let secureHash = vnp_Params['vnp_SecureHash'];
+    let secureHash = vnp_Params["vnp_SecureHash"];
 
-    delete vnp_Params['vnp_SecureHash'];
-    delete vnp_Params['vnp_SecureHashType'];
+    delete vnp_Params["vnp_SecureHash"];
+    delete vnp_Params["vnp_SecureHashType"];
 
     vnp_Params = sortObject(vnp_Params);
 
-    let tmnCode = config.get('vnp_TmnCode');
-    let secretKey = config.get('vnp_HashSecret');    
+    let tmnCode = config.get("vnp_TmnCode");
+    let secretKey = config.get("vnp_HashSecret");
 
-    let signData = secretKey + querystring.stringify(vnp_Params, { encode: false });
-
+    let signData =
+      secretKey + querystring.stringify(vnp_Params, { encode: false });
 
     let checkSum = sha256(signData);
 
-    if(secureHash === checkSum){
-        //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
+    if (secureHash === checkSum) {
+      //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
 
-        res.render('success', {code: vnp_Params['vnp_ResponseCode']})
+      res.render("success", { code: vnp_Params["vnp_ResponseCode"] });
     }
-  }
+  },
 };
 
 const countSoldAndStorage = async (id, quantity, oldSold, oldStorage) => {

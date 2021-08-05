@@ -15,17 +15,20 @@ function VNPAY() {
 
   const onClickHandle = async () => {
     try {
-      const response = await API.post(
+      await API.post(
         "/api/create_payment_url",
         {
           ...fakeData,
         },
         {
-          headers: { Authorization: token },
+          headers: {
+            Authorization: token,
+            "Access-Control-Allow-Headers": "*",
+          },
         }
       );
       // history.push(`${response.data.data}`);
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.log("Fix");
     }
