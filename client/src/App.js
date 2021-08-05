@@ -25,6 +25,7 @@ import FooterAmdin from "./admin/components/footer";
 import SideBar from "./admin/components/sidebar";
 import DashBoard from "./admin/pages/dashboard";
 import VNPAY from "./components/vnPay";
+import CheckSumVNPay from "./components/checksum";
 
 function App() {
   const { isLoggedIn, isAdmin } = useSelector((state) => state.user);
@@ -64,6 +65,10 @@ function App() {
               <Route
                 path="/test_vnpay"
                 component={isLoggedIn ? VNPAY : PageNotFound}
+              />
+              <Route
+                path="/checksum_vnpay"
+                component={isLoggedIn ? CheckSumVNPay : PageNotFound}
               />
               <Route component={PageNotFound} />
             </Switch>

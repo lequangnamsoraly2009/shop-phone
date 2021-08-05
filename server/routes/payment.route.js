@@ -5,6 +5,7 @@ const authAdmin = require("../middleware/authAdmin");
 
 router.route("/payment").post(auth, paymentController.createPayment);
 router.route("/create_payment_url").post(auth, paymentController.createPaymentByVNPay);
+router.route("/vnpay_ipn").get(auth, paymentController.dataPaymentByVNPay);
 
 
 router.route("/payment_filter").post(auth, paymentController.getFilterDatePayments);

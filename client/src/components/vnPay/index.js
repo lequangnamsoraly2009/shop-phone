@@ -5,10 +5,9 @@ import API from "../../api/axiosClient";
 
 function VNPAY() {
   const { token } = useSelector((state) => state.token);
-
   const fakeData = {
-    amount: 10000,
-    bankCode: "NCB",
+    amount: 192929,
+    bankCode: "",
     orderDescription: "Co gi dau",
     orderType: "SmartPhone",
     language: "vn",
@@ -25,6 +24,7 @@ function VNPAY() {
           headers: { Authorization: token },
         }
       );
+      // history.push(`${response.data.data}`);
       console.log(response);
     } catch (error) {
       console.log("Fix");
