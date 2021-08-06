@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import API from "../../../../../api/axiosClient";
 import {
+  getAllCategories,
   getCategories,
   setPaginationCategories,
   setSearchCategories,
@@ -41,11 +42,12 @@ function MainCategory() {
   // Search Categories Here
   const onSearch = async (value) => {
     dispatch(setSearchCategories(value.toLowerCase()));
-    const response = await API.get(
-      `/api/category?limit&&&nameCategorySearch[regex]=${searchCategories}`
-    );
-    dispatch(getCategories(response.data.categories));
-    dispatch(setPaginationCategories(response.data.categories));
+    dispatch(getAllCategories(searchCategories));
+    // const response = await API.get(
+    //   `/api/category?limit&&&nameCategorySearch[regex]=${searchCategories}`
+    // );
+    // dispatch(getCategories(response.data.categories));
+    // dispatch(setPaginationCategories(response.data.categories));
   };
 
   // Change Page Here

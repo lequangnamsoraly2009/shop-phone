@@ -1,5 +1,5 @@
 import { Col, Row, Menu } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AppstoreOutlined,
   FilterOutlined,
@@ -10,7 +10,13 @@ import "./categorymain.css";
 import ListItem from "../../components/listItem";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setCategoryFilter, setPageFilter, setSearchFilter, setSortFilter } from "../../../../app/filterSlice";
+import {
+  setCategoryFilter,
+  setPageFilter,
+  setSearchFilter,
+  setSortFilter,
+} from "../../../../app/filterSlice";
+import { getAllCategories } from "../../../../app/categorySlice";
 
 const { SubMenu } = Menu;
 
@@ -18,6 +24,9 @@ function Category() {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
 
+  useEffect(() => {
+    dispatch(getAllCategories(""));
+  }, [dispatch]);
 
   const handleClickCategory = (cateID) => {
     dispatch(setCategoryFilter(`category=${cateID}`));
@@ -26,12 +35,12 @@ function Category() {
     dispatch(setSortFilter(""));
   };
 
-  const handleClickGetAll = () =>{
+  const handleClickGetAll = () => {
     dispatch(setCategoryFilter(""));
     dispatch(setSearchFilter(""));
     dispatch(setPageFilter(1));
     dispatch(setSortFilter(""));
-  }
+  };
 
   return (
     <div className="container-fluid">
@@ -49,7 +58,7 @@ function Category() {
                   style={{ padding: 0 }}
                   key="1"
                   icon={<AppstoreOutlined spin />}
-                  onClick={()=>handleClickGetAll()}
+                  onClick={() => handleClickGetAll()}
                 >
                   <span>All Category</span>
                 </Menu.Item>

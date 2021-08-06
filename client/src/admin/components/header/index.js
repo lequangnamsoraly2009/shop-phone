@@ -10,7 +10,6 @@ import React from "react";
 import "./header.css";
 import UserAPI from "../../../api/userAPI";
 import ProductAPI from "../../../api/productAPI";
-import CategoryAPI from "../../../api/categoryAPI";
 import ProductFilterAPI from "../../../api/filterAPI";
 import API from "../../../api/axiosClient";
 import { persistor } from "../../../app/store";
@@ -23,7 +22,6 @@ import DashboardAPI from "../../../api/dashboardAPI";
 function HeaderAdmin() {
   UserAPI();
   ProductAPI();
-  CategoryAPI();
   ProductFilterAPI();
   DashboardAPI();
 

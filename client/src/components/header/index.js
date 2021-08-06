@@ -26,7 +26,6 @@ import {
 import UserAPI from "../../api/userAPI";
 import ProductAPI from "../../api/productAPI";
 import { Link, useHistory } from "react-router-dom";
-import CategoryAPI from "../../api/categoryAPI";
 import ProductFilterAPI from "../../api/filterAPI";
 import {
   setCategoryFilter,
@@ -41,7 +40,6 @@ function HeaderNav() {
   const [visible, setVisible] = useState(false);
   UserAPI();
   ProductAPI();
-  CategoryAPI();
   ProductFilterAPI();
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
