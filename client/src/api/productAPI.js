@@ -13,6 +13,11 @@ const ProductFilterAPI = {
       }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
     );
   },
+  getAllProducts: () => {
+    return API.get(
+      `/api/products`
+    );
+  },
   deleteImageClound: (public_id, token) => {
     return API.post(
       "/api/admin/delete-image",

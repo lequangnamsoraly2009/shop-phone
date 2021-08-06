@@ -46,15 +46,9 @@ class APIfeatures {
 const productController = {
   getProducts: async (req, res) => {
     try {
-      const features = new APIfeatures(Products.find(), req.query)
-        .filtering()
-        .sorting()
-        .pagination();
-
-      const products = await features.query;
+      const products = await Products.find();
       res.json({
         status: "success",
-        result: products.length,
         products: products,
       });
     } catch (error) {

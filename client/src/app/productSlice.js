@@ -14,7 +14,16 @@ export const getAllProductsFilter = createAsyncThunk(
   }
 );
 
+export const getAllProducts = createAsyncThunk(
+  "/product/getAllProduct",
+  async () => {
+    const response = await ProductFilterAPI.getAllProducts();
+    return response.data.products;
+  }
+);
+
 const initialState = {
+  products: [],
   productsFilter: [],
   categoryFilter: "",
   sortFilter: "",
@@ -50,6 +59,9 @@ const productFilterSlice = createSlice({
     [getAllProductsFilter.fulfilled]: (state, action) => {
       state.productsFilter = action.payload;
       state.paginationFilter = action.payload;
+    },
+    [getAllProducts.fulfilled]: (state, action) => {
+      state.products = action.payload;
     },
   },
 });

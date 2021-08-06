@@ -164,6 +164,7 @@ function HeaderNav() {
             enterButton="Search"
             size="large"
             suffix={suffix}
+            allowClear
             onSearch={onSearch}
           />
           <Search
@@ -173,6 +174,7 @@ function HeaderNav() {
             // enterButton="Search"
             // size="large"
             // suffix={suffix}
+            allowClear
             onSearch={onSearch}
           />
           <div className="mobileHidden">

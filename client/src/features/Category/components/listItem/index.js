@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import "./listitem.css";
 import CardItemCate from "../cardItemCate";
 import {
+  getAllProductsFilter,
   getProductsFilter,
   setPaginationFilter,
-  setSortFilter,
 } from "../../../../app/productSlice";
 import API from "../../../../api/axiosClient";
 
@@ -17,12 +17,20 @@ function ListItem() {
     categoryFilter,
     sortFilter,
     searchFilter,
+    pageFilter,
   } = useSelector((state) => state.productsFilter);
 
   const dispatch = useDispatch();
 
   const handleClickSort = (e) => {
-    dispatch(setSortFilter(e.target.value));
+    dispatch(
+      getAllProductsFilter({
+        categoryFilter,
+        sortFilter: e.target.value,
+        searchFilter,
+        pageFilter,
+      })
+    );
   };
 
   const handleChangePage = async (page, pageSize) => {

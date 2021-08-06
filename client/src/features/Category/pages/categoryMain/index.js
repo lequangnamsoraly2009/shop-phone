@@ -5,17 +5,11 @@ import {
   FilterOutlined,
   PhoneOutlined,
 } from "@ant-design/icons";
-// import { Link } from "react-router-dom";
 import "./categorymain.css";
 import ListItem from "../../components/listItem";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import {
-  setCategoryFilter,
-  setPageFilter,
-  setSearchFilter,
-  setSortFilter,
-} from "../../../../app/productSlice";
+import { getAllProductsFilter } from "../../../../app/productSlice";
 import { getAllCategories } from "../../../../app/categorySlice";
 
 const { SubMenu } = Menu;
@@ -23,23 +17,42 @@ const { SubMenu } = Menu;
 function Category() {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
+  const { pageFilter, categoryFilter, sortFilter, searchFilter } = useSelector(
+    (state) => state.productsFilter
+  );
 
   useEffect(() => {
     dispatch(getAllCategories(""));
-  }, [dispatch]);
+    dispatch(
+      getAllProductsFilter({
+        categoryFilter,
+        sortFilter,
+        searchFilter,
+        pageFilter,
+      })
+    );
+  }, [dispatch, pageFilter, categoryFilter, sortFilter, searchFilter]);
 
   const handleClickCategory = (cateID) => {
-    dispatch(setCategoryFilter(`category=${cateID}`));
-    dispatch(setSearchFilter(""));
-    dispatch(setPageFilter(1));
-    dispatch(setSortFilter(""));
+    dispatch(
+      getAllProductsFilter({
+        categoryFilter: `category=${cateID}`,
+        sortFilter: "",
+        searchFilter: "",
+        pageFilter,
+      })
+    );
   };
 
   const handleClickGetAll = () => {
-    dispatch(setCategoryFilter(""));
-    dispatch(setSearchFilter(""));
-    dispatch(setPageFilter(1));
-    dispatch(setSortFilter(""));
+    dispatch(
+      getAllProductsFilter({
+        categoryFilter: "",
+        sortFilter: "",
+        searchFilter: "",
+        pageFilter,
+      })
+    );
   };
 
   return (
@@ -66,7 +79,6 @@ function Category() {
                   key="smart-phone"
                   icon={<PhoneOutlined spin />}
                   title="List Categories"
-                  //   style={{padding: 0}}
                 >
                   {categories.map((cate) => {
                     return (

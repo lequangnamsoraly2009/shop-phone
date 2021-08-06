@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./detailProduct.css";
 import CardItem from "../../components/CardItem";
-// import UserAPI from "../../../../api/userAPI";
 import Swal from "sweetalert2";
 import { addCart } from "../../../../app/cartSlice";
 import API from "../../../../api/axiosClient";
+import { getAllProducts } from "../../../../app/productSlice";
 
 const { Option } = Select;
 
@@ -17,19 +17,25 @@ function DetailProduct() {
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
 
-  const { products } = useSelector((state) => state.products);
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
+
+  const { productsFilter, products } = useSelector(
+    (state) => state.productsFilter
+  );
   const { token } = useSelector((state) => state.token);
   const { carts } = useSelector((state) => state.carts);
   const { categories } = useSelector((state) => state.categories);
-
   const params = useParams();
+  console.log(products);
 
   useEffect(() => {
     if (params) {
       products.forEach((product) => {
         if (product._id === params.id) {
           setDetailProduct(product);
-          setImage(product?.images?.url)
+          setImage(product?.images?.url);
         }
       });
     }
@@ -38,7 +44,14 @@ function DetailProduct() {
         setCategoryDetail(item.nameCategory);
       }
     });
-  }, [params, products, categories, detailProduct.category]);
+  }, [
+    params,
+    dispatch,
+    productsFilter,
+    categories,
+    products,
+    detailProduct.category,
+  ]);
 
   // console.log(detailProduct);
   const onClickShowImage = (e, src) => {
@@ -105,19 +118,21 @@ function DetailProduct() {
           <div className="left-product-gallery">
             <div className="image-product-overview-wrapper">
               <div className="image-wrapper">
-                <img className="image-primary" src={image} alt={detailProduct.title} style={{width: 550, height: 550 , objectFit: "scale-down"}} />
+                <img
+                  className="image-primary"
+                  src={image}
+                  alt={detailProduct.title}
+                  style={{ width: 550, height: 550, objectFit: "scale-down" }}
+                />
               </div>
             </div>
             <ul className="thumbnail-list" style={{ listStyle: "none" }}>
               <li className="image-thumbnail">
                 <button>
                   <img
-                  style={{objectFit: "scale-down"}}
+                    style={{ objectFit: "scale-down" }}
                     onClick={(e) =>
-                      onClickShowImage(
-                        e,
-                        detailProduct?.images?.url
-                      )
+                      onClickShowImage(e, detailProduct?.images?.url)
                     }
                     src={detailProduct?.images?.url}
                     alt={detailProduct.title}
@@ -127,7 +142,7 @@ function DetailProduct() {
               <li className="image-thumbnail">
                 <button>
                   <img
-                    style={{objectFit: "cover"}}
+                    style={{ objectFit: "cover" }}
                     onClick={(e) =>
                       onClickShowImage(
                         e,
