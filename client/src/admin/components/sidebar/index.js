@@ -23,7 +23,9 @@ import {
   setSearchFilter,
   setSortFilter,
 } from "../../../app/filterSlice";
-import { getAllCategories, setSearchCategories } from "../../../app/categorySlice";
+import {
+  getAllCategories,
+} from "../../../app/categorySlice";
 import { setSearchUsers } from "../../../app/userSlice.admin";
 import { setSearchPayments } from "../../../app/paymentSlice";
 
@@ -35,10 +37,8 @@ function SideBar() {
     dispatch(setPageFilter(1));
     dispatch(setSearchFilter(""));
     dispatch(setSortFilter(""));
-    dispatch(setSearchCategories(""));
     dispatch(setSearchUsers(""));
     dispatch(setSearchPayments(""));
-    dispatch(getAllCategories(""));
   };
 
   return (
@@ -59,12 +59,17 @@ function SideBar() {
             </Link>
           </Menu.Item>
           <Menu.Item icon={<CoffeeOutlined />} key="3">
-            <Link onClick={() => onClickResetTable()} to="/admin/categories">
+            <Link
+              onClick={() => dispatch(getAllCategories(""))}
+              to="/admin/categories"
+            >
               Categories
             </Link>
           </Menu.Item>
           <Menu.Item icon={<DashboardOutlined />} key="4">
-            <Link onClick={onClickResetTable} to="/admin/orders">Orders</Link>
+            <Link onClick={onClickResetTable} to="/admin/orders">
+              Orders
+            </Link>
           </Menu.Item>
           <Menu.Item icon={<UsergroupAddOutlined />} key="5">
             <Link to="/admin/users" onClick={onClickResetTable}>

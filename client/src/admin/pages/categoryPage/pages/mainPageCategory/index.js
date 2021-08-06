@@ -9,7 +9,7 @@ import {
   Space,
   Table,
 } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -19,6 +19,7 @@ import {
   getAllCategories,
   getCategories,
   setPaginationCategories,
+  setSearchCategories,
 } from "../../../../../app/categorySlice";
 
 const { Search } = Input;
@@ -34,9 +35,14 @@ function MainCategory() {
 
   // Reload Page
   const handleOnclickReload = () => {
+    dispatch(setSearchCategories(""));
     dispatch(getAllCategories(""));
     window.location.reload();
   };
+
+  useEffect(() => {
+    dispatch(getAllCategories(searchCategories));
+  }, [searchCategories,dispatch]);
 
   // Search Categories Here
   const onSearch = (value) => {

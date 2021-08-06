@@ -13,6 +13,24 @@ const CategoryAPI = {
       headers: { Authorization: token },
     });
   },
+  editCategory: (values, param, token) => {
+    return API.put(
+      `/api/admin/category/${param.id}`,
+      { ...values },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
+  createCategory: (values, token) => {
+    return API.post(
+      "/api/admin/category",
+      { ...values },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  }
 };
 
 export default CategoryAPI;

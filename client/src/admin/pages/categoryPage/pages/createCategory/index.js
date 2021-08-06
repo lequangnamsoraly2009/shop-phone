@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import API from "../../../../../api/axiosClient";
+import CategoryAPI from "../../../../../api/categoryAPI";
 
 const layout = {
   labelCol: {
@@ -16,9 +16,10 @@ const layout = {
 };
 
 function CreateCategory() {
-  const [form] = Form.useForm();
-  const param = useParams();
   const [onEdit, setOnEdit] = useState(false);
+  
+  const param = useParams();
+  const [form] = Form.useForm();
 
   const { token } = useSelector((state) => state.token);
   const { categories } = useSelector((state) => state.categories);
@@ -33,13 +34,7 @@ function CreateCategory() {
   const onFinishForm = async (values) => {
     try {
       if (onEdit) {
-        await API.put(
-          `/api/admin/category/${param.id}`,
-          { ...values },
-          {
-            headers: { Authorization: token },
-          }
-        );
+        await CategoryAPI.editCategory(values, param, token);
         history.push("/admin/categories");
         Swal.fire({
           position: "center",
@@ -49,13 +44,7 @@ function CreateCategory() {
           timer: 2000,
         });
       } else {
-        await API.post(
-          "/api/admin/category",
-          { ...values },
-          {
-            headers: { Authorization: token },
-          }
-        );
+        await CategoryAPI.createCategory(values, token);
         history.push("/admin/categories");
         Swal.fire({
           position: "center",
@@ -77,6 +66,7 @@ function CreateCategory() {
   };
 
   // Area Update Product
+  // Form của thằng Antd này không cho phép load data trực tiếp lên mà phải dùng thằng Form của useForm
   useEffect(() => {
     if (param.id) {
       setOnEdit(true);
