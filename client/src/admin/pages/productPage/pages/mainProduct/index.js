@@ -15,12 +15,14 @@ import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getAllProductsFilter,
   getProductsFilter,
   setPaginationFilter,
   setSearchFilter,
-} from "../../../../../app/filterSlice";
+} from "../../../../../app/productSlice";
 import API from "../../../../../api/axiosClient";
 import Swal from "sweetalert2";
+import ProductFilterAPI from "../../../../../api/productAPI";
 
 const { Search } = Input;
 
@@ -29,6 +31,7 @@ function MainProduct() {
     productsFilter,
     categoryFilter,
     sortFilter,
+    pageFilter,
     searchFilter,
     paginationFilter,
   } = useSelector((state) => state.productsFilter);
@@ -38,15 +41,27 @@ function MainProduct() {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(
+      getAllProductsFilter({
+        categoryFilter:"",
+        sortFilter:"",
+        searchFilter: "",
+        pageFilter,
+      })
+    );
+  }, [dispatch, categoryFilter, searchFilter, pageFilter, sortFilter]);
+
   // When turning pages, run this function
   const handleChangePage = async (page, pageSize) => {
     try {
       setIsLoading(true);
-      const response = await API.get(
-        `/api/filter/products?limit=${
-          page * 20
-        }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
-      );
+      const response = await ProductFilterAPI.getAllProductsFilter({
+        categoryFilter,
+        sortFilter,
+        searchFilter,
+        pageFilter: page,
+      });
       dispatch(setPaginationFilter(response.data.products));
       const data = response.data.products.slice(
         (page - 1) * pageSize,
@@ -68,13 +83,27 @@ function MainProduct() {
     }
   }, [dispatch]);
 
-  const onSearch = (value) => {
-    dispatch(setSearchFilter(value));
+  const onSearch = (values) => {
+    dispatch(
+      getAllProductsFilter({
+        categoryFilter,
+        sortFilter,
+        searchFilter: values.toLowerCase(),
+        pageFilter,
+      })
+    );
   };
 
   const handleOnclickReload = (e) => {
     e.preventDefault();
-    dispatch(setSearchFilter(""));
+    dispatch(
+      getAllProductsFilter({
+        categoryFilter: "",
+        sortFilter: "",
+        searchFilter: "",
+        pageFilter,
+      })
+    );
     window.location.reload();
   };
 
@@ -130,7 +159,11 @@ function MainProduct() {
       dataIndex: "stt",
       width: 40,
       key: "stt",
-      render: (text, record, index) => <span>{paginationFilter.findIndex(x => x._id === record._id)+1}</span>,
+      render: (text, record, index) => (
+        <span>
+          {paginationFilter.findIndex((x) => x._id === record._id) + 1}
+        </span>
+      ),
     },
     {
       title: "Name",
@@ -297,8 +330,8 @@ function MainProduct() {
               pagination={{ position: ["none", "none"] }}
               columns={columns}
               dataSource={productsFilter.slice(0, 10)}
-              bordered =  {true}
-              style={{border: "1px solid #000"}}
+              bordered={true}
+              style={{ border: "1px solid #000" }}
             />
           </Skeleton>
         </div>

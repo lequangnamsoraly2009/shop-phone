@@ -8,7 +8,7 @@ import {
   setPageFilter,
   setSearchFilter,
   setSortFilter,
-} from "../../../../app/filterSlice";
+} from "../../../../app/productSlice";
 import API from "../../../../api/axiosClient";
 import { Link } from "react-router-dom";
 

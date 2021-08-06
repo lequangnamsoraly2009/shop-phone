@@ -1,40 +1,45 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import API from "../api/axiosClient";
-import { getPayments, setPaginationPayments } from "../app/paymentSlice";
-import { getProducts } from "../app/productSlice";
+import API from "./axiosClient";
 
-const ProductAPI = () => {
-  const dispatch = useDispatch();
-  const { searchPayments } = useSelector((state) => state.payments);
-  const { token } = useSelector((state) => state.token);
-  const { isAdmin } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    const getAllProducts = async () => {
-      const response = await API.get(`/api/products`);
-      dispatch(getProducts(response.data.products));
-    };
-    getAllProducts();
-  }, [dispatch]);
-
-  // Xài ké thằng này cho payments :v
-
-  useEffect(() => {
-    if (token && isAdmin === true) {
-      const getAllPayments = async () => {
-        const response = await API.get(
-          `/api/admin/payment?limit=${1 * 20}&&&email[regex]=${searchPayments}`,
-          {
-            headers: { Authorization: token },
-          }
-        );
-        dispatch(getPayments(response.data.payments.slice(0, 10)));
-        dispatch(setPaginationPayments(response.data.payments));
-      };
-      getAllPayments();
-    }
-  }, [dispatch, searchPayments, token, isAdmin]);
+const ProductFilterAPI = {
+  getAllProductsFilter: ({
+    categoryFilter,
+    sortFilter,
+    searchFilter,
+    pageFilter,
+  }) => {
+    return API.get(
+      `/api/filter/products?limit=${
+        pageFilter * 20
+      }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
+    );
+  },
+  deleteImageClound: (public_id, token) => {
+    return API.post(
+      "/api/admin/delete-image",
+      { public_id: public_id },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
+  editProduct: ({ paramID, product, token }) => {
+    return API.put(
+      `/api/admin/products/${paramID}`,
+      { ...product },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
+  createProduct: ({ product, token }) => {
+    return API.post(
+      "/api/admin/products",
+      { ...product },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
 };
 
-export default ProductAPI;
+export default ProductFilterAPI;

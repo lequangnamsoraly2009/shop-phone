@@ -72,6 +72,7 @@ function CreateCategory() {
       setOnEdit(true);
       categories.forEach((category) => {
         if (category._id === param.id) {
+          // Here Faqs of Antd
           form.setFieldsValue({
             nameCategory: category.nameCategory,
             _id: category._id,

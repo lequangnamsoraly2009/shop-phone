@@ -3,12 +3,21 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./listitem.css";
 import CardItemCate from "../cardItemCate";
-import {getProductsFilter, setPaginationFilter, setSortFilter } from "../../../../app/filterSlice";
+import {
+  getProductsFilter,
+  setPaginationFilter,
+  setSortFilter,
+} from "../../../../app/productSlice";
 import API from "../../../../api/axiosClient";
 
 function ListItem() {
-
-  const { productsFilter, paginationFilter,categoryFilter,sortFilter,searchFilter } = useSelector((state) => state.productsFilter);
+  const {
+    productsFilter,
+    paginationFilter,
+    categoryFilter,
+    sortFilter,
+    searchFilter,
+  } = useSelector((state) => state.productsFilter);
 
   const dispatch = useDispatch();
 
@@ -16,7 +25,7 @@ function ListItem() {
     dispatch(setSortFilter(e.target.value));
   };
 
-  const handleChangePage = async(page, pageSize) => {
+  const handleChangePage = async (page, pageSize) => {
     try {
       const response = await API.get(
         `/api/filter/products?limit=${
@@ -68,7 +77,7 @@ function ListItem() {
           ) : (
             <>
               <Row gutter={[12, 12]}>
-                {productsFilter.slice(0,20).map((product) => {
+                {productsFilter.slice(0, 20).map((product) => {
                   return (
                     <Col key={product._id} className="gutter-row" span={6}>
                       <CardItemCate product={product} />

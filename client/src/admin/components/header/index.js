@@ -9,8 +9,6 @@ import { Link, useHistory } from "react-router-dom";
 import React from "react";
 import "./header.css";
 import UserAPI from "../../../api/userAPI";
-import ProductAPI from "../../../api/productAPI";
-import ProductFilterAPI from "../../../api/filterAPI";
 import API from "../../../api/axiosClient";
 import { persistor } from "../../../app/store";
 import { useDispatch} from "react-redux";
@@ -21,8 +19,6 @@ import DashboardAPI from "../../../api/dashboardAPI";
 
 function HeaderAdmin() {
   UserAPI();
-  ProductAPI();
-  ProductFilterAPI();
   DashboardAPI();
 
   const dispatch = useDispatch();

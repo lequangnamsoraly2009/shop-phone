@@ -12,11 +12,10 @@ import {
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import tokenReducer from "./tokenSlice";
 import userReducer from "./userSlice";
-import productReducer from "./productSlice";
+import productFilterReducer from "./productSlice";
 import cartReducer from "./cartSlice";
 import historyReducer from "./historySlice";
 import categoryReducer from "./categorySlice";
-import productFilterReducer from "./filterSlice";
 import usersAdminReducer from "./userSlice.admin";
 import paymentReducer from "./paymentSlice";
 import dashboardReducer from "./dashBoardSlice";
@@ -24,7 +23,6 @@ import dashboardReducer from "./dashBoardSlice";
 const rootReducer = combineReducers({
   token: tokenReducer,
   user: userReducer,
-  products: productReducer,
   carts: cartReducer,
   histories: historyReducer,
   categories: categoryReducer,

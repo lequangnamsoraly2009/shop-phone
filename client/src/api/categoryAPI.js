@@ -30,7 +30,7 @@ const CategoryAPI = {
         headers: { Authorization: token },
       }
     );
-  }
+  },
 };
 
 export default CategoryAPI;

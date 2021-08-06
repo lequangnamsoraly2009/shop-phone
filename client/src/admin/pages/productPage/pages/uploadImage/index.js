@@ -3,8 +3,8 @@ import { Spin, Upload } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import API from "../../../../../api/axiosClient";
 import Swal from "sweetalert2";
+import ProductFilterAPI from "../../../../../api/productAPI";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -16,7 +16,6 @@ function getBase64(file) {
 }
 
 function UploadImage(props) {
-
   const [file, setFile] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -24,41 +23,52 @@ function UploadImage(props) {
 
   const { token } = useSelector((state) => state.token);
 
-
   // Load image when edit image and dont set new Image here
   useEffect(() => {
-    if(props.param.id) {
-      if(props.images.url === undefined){
-        console.log("Edit success image")
-      }
-      else{
-        setFile([{uid: "-1",name: "Preview Image By Soraly", status: "done", url: props.images?.url}])
+    if (props.param.id) {
+      if (props.images.url === undefined) {
+        console.log("Edit success image");
+      } else {
+        setFile([
+          {
+            uid: "-1",
+            name: "Preview Image By Soraly",
+            status: "done",
+            url: props.images?.url,
+          },
+        ]);
       }
     }
-  },[props.param.id,props.images?.url])
-
+  }, [props.param.id, props.images?.url]);
 
   const onChange = ({ fileList: newFileList }) => {
     // On Edit -> Update Image Here
-    if(props.param.id){
-      setFile(newFileList);
+    if (props.param.id) {
+      if (newFileList === undefined) {
+        props.parentCallback(props.images);
+      } else {
+        setFile(newFileList);
+        const status = newFileList[0]?.status;
+        if (status === "done") {
+          props.parentCallback(newFileList[0]);
+          if (props.onEdit) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Update Image Different Success",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+          }
+        }
+      }
     }
     // On Create -> Create Image Here
-    else{
+    else {
       setFile(newFileList);
-    }
-    const status = newFileList[0]?.status;
-    if (status === "done") {
-      props.parentCallback(newFileList[0]);
-      if(props.onEdit){
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Update Image Different Success",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      }else{
+      const status = newFileList[0]?.status;
+      if (status === "done") {
+        props.parentCallback(newFileList[0]);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -72,22 +82,16 @@ function UploadImage(props) {
 
   const onRemove = async (file) => {
     try {
-      // Nếu edit thì nhảy vào cái này
-      if(props.onEdit===true){
-        await API.post(
-          "/api/admin/delete-image",
-          { public_id: props.images?.public_id },
-          {
-            headers: { Authorization: token },
-          }
+      // Nếu edit thì nhảy vào cái này => nó cũng là xóa
+      if (props.onEdit === true) {
+        await ProductFilterAPI.deleteImageClound(
+          props.images?.public_id,
+          token
         );
-      }else{
-        await API.post(
-          "/api/admin/delete-image",
-          { public_id: file.response.public_id },
-          {
-            headers: { Authorization: token },
-          }
+      } else {
+        await ProductFilterAPI.deleteImageClound(
+          file.response.public_id,
+          token
         );
       }
       Swal.fire({
@@ -129,6 +133,7 @@ function UploadImage(props) {
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
+
   return (
     <>
       <Upload

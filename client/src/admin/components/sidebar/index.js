@@ -18,14 +18,13 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
+  getAllProductsFilter,
   setCategoryFilter,
   setPageFilter,
   setSearchFilter,
   setSortFilter,
-} from "../../../app/filterSlice";
-import {
-  getAllCategories,
-} from "../../../app/categorySlice";
+} from "../../../app/productSlice";
+import { getAllCategories } from "../../../app/categorySlice";
 import { setSearchUsers } from "../../../app/userSlice.admin";
 import { setSearchPayments } from "../../../app/paymentSlice";
 
@@ -54,7 +53,19 @@ function SideBar() {
             <Link to="/home">Home</Link>
           </Menu.Item>
           <Menu.Item icon={<DesktopOutlined />} key="2">
-            <Link onClick={onClickResetTable} to="/admin/products">
+            <Link
+              onClick={() =>
+                dispatch(
+                  getAllProductsFilter({
+                    categoryFilter: "",
+                    sortFilter: "",
+                    searchFilter: "",
+                    pageFilter: 1,
+                  })
+                )
+              }
+              to="/admin/products"
+            >
               Products
             </Link>
           </Menu.Item>

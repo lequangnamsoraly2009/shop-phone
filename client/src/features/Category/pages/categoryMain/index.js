@@ -15,7 +15,7 @@ import {
   setPageFilter,
   setSearchFilter,
   setSortFilter,
-} from "../../../../app/filterSlice";
+} from "../../../../app/productSlice";
 import { getAllCategories } from "../../../../app/categorySlice";
 
 const { SubMenu } = Menu;

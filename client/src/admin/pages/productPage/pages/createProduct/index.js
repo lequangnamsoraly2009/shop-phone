@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import UploadImage from "../uploadImage";
 import "./createProduct.css";
 import { useSelector } from "react-redux";
-import API from "../../../../../api/axiosClient";
 import Swal from "sweetalert2";
 import { useHistory, useParams } from "react-router-dom";
+import ProductFilterAPI from "../../../../../api/productAPI";
 
 const { Option } = Select;
 
@@ -23,7 +23,6 @@ function CreateProduct() {
   const [image, setImage] = useState({});
   // Check form edit or form create
   const [onEdit, setOnEdit] = useState(false);
-
   // Vcl that chu' . initialValues không được xét bằng useState. Muốn thay đổi initialValues bằng dynamic thì dùng form.setFieldsValue() -> Mất 2 tiếng ngu
   const [form] = Form.useForm();
 
@@ -47,25 +46,14 @@ function CreateProduct() {
           nameCate = item.nameCategory;
         }
       });
-      let images = { ...image?.response };
-      const product = { ...values, nameCategory: nameCate, images: images };
-
       if (onEdit) {
-        await API.put(
-          `/api/admin/products/${param.id}`,
-          { ...product },
-          {
-            headers: { Authorization: token },
-          }
-        );
+        let images = { ...image};
+        const product = { ...values, nameCategory: nameCate, images: images };
+        await ProductFilterAPI.editProduct({paramID:param.id, product, token})
       } else {
-        await API.post(
-          "/api/admin/products",
-          { ...product },
-          {
-            headers: { Authorization: token },
-          }
-        );
+        let images = { ...image?.response };
+        const product = { ...values, nameCategory: nameCate, images: images };
+        await ProductFilterAPI.createProduct({product,token})
       }
       setImage({});
       history.push("/admin/products");

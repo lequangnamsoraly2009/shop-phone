@@ -46,13 +46,7 @@ function MainCategory() {
 
   // Search Categories Here
   const onSearch = (value) => {
-    // dispatch(setSearchCategories(value.toLowerCase()));
     dispatch(getAllCategories(value.toLowerCase()));
-    // const response = await API.get(
-    //   `/api/category?limit&&&nameCategorySearch[regex]=${searchCategories}`
-    // );
-    // dispatch(getCategories(response.data.categories));
-    // dispatch(setPaginationCategories(response.data.categories));
   };
 
   // Change Page Here

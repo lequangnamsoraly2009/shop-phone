@@ -24,23 +24,19 @@ import {
   removeCartPayMentTemp,
 } from "../../app/cartSlice";
 import UserAPI from "../../api/userAPI";
-import ProductAPI from "../../api/productAPI";
 import { Link, useHistory } from "react-router-dom";
-import ProductFilterAPI from "../../api/filterAPI";
 import {
   setCategoryFilter,
   setPageFilter,
   setSearchFilter,
   setSortFilter,
-} from "../../app/filterSlice";
+} from "../../app/productSlice";
 
 const { Search } = Input;
 
 function HeaderNav() {
   const [visible, setVisible] = useState(false);
   UserAPI();
-  ProductAPI();
-  ProductFilterAPI();
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
   const { carts } = useSelector((state) => state.carts);
