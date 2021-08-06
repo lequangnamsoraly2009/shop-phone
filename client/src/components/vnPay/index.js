@@ -27,7 +27,9 @@ function VNPAY() {
           },
         }
       );
-      window.open(response.data.vnpUrl);
+      // window.open(response.data.vnpUrl);
+      // Change URL current page 
+      window.location.replace(response.data.vnpUrl);
       // history.push(`${response.data.data}`);
       // console.log(response);
     } catch (error) {
