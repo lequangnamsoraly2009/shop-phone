@@ -3,8 +3,8 @@ import UserAPI from "../api/userAPI";
 
 export const getAllAdminUsers = createAsyncThunk(
   "/usersAdmin/getAllAdminUsers",
-  async ({ searchUsers }, token) => {
-    const response = await UserAPI.getAllAdminUsers({ searchUsers }, token);
+  async ({ searchUsers , token}) => {
+    const response = await UserAPI.getAllAdminUsers({ searchUsers , token});
     return response.data.users;
   }
 );

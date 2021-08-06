@@ -6,9 +6,14 @@ const UserAPI = {
       headers: { Authorization: token },
     });
   },
-  getAllAdminUsers: ({searchUsers}, token) => {
+  getAllAdminUsers: ({ searchUsers, token }) => {
+    return API.get(`/users/all_users?limit&&&email[regex]=${searchUsers}`, {
+      headers: { Authorization: token },
+    });
+  },
+  getUsersPagination: ({ searchUsers, page, token }) => {
     return API.get(
-      `/users/all_users?limit=&&&email[regex]=${searchUsers}`,
+      `/users/all_users?limit=${page * 11}&&&email[regex]=${searchUsers}`,
       {
         headers: { Authorization: token },
       }

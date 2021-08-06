@@ -98,7 +98,7 @@ function DetailOrder() {
             <span>List Items Order</span>
           </div>
           <Table
-            // rowKey={(record) => record._id}
+            rowKey={"_id"}
             style={{ marginLeft: 50 }}
             columns={columnTable}
             dataSource={detailOrder.cart}

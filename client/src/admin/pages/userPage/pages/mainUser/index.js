@@ -12,11 +12,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
+  getAllAdminUsers,
   getAllUsers,
   setPaginationUsers,
   setSearchUsers,
 } from "../../../../../app/userSlice.admin";
 import API from "../../../../../api/axiosClient";
+import UserAPI from "../../../../../api/userAPI";
 
 const { Search } = Input;
 
@@ -28,6 +30,10 @@ function MainUser() {
   const { token } = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(getAllAdminUsers({ searchUsers, token }));
+  }, [dispatch, token, searchUsers]);
 
   // Reload Page
   const handleOnclickReload = (e) => {
@@ -45,36 +51,23 @@ function MainUser() {
     }
   }, [dispatch]);
 
-  // Search Categories Here
   const onSearch = async (value) => {
     dispatch(setSearchUsers(value.toLowerCase()));
-    const response = await API.get(
-      `/users/all_users?limit&&&email[regex]=${searchUsers}`,
-      {
-        headers: { Authorization: token },
-      }
-    );
-    const responseFilter = response.data.users.filter(
-      (user) => user.role !== 1
-    );
-    dispatch(getAllUsers(responseFilter.slice(0, 10)));
-    dispatch(setPaginationUsers(responseFilter));
+    dispatch(getAllAdminUsers({ searchUsers: value.toLowerCase(), token }));
   };
 
   // Change Page Here
   const handleChangePage = async (page, pageSize) => {
     try {
       setIsLoading(true);
-      const response = await API.get(
-        `/users/all_users?limit=${page * 20}&&&email[regex]=${searchUsers}`,
-        {
-          headers: { Authorization: token },
-        }
-      );
+      const response = await UserAPI.getUsersPagination({
+        searchUsers,
+        page,
+        token,
+      });
       const responseFilter = response.data.users.filter(
         (user) => user.role !== 1
       );
-
       dispatch(setPaginationUsers(responseFilter));
       // xét data categories khi change page
       const data = responseFilter.slice((page - 1) * pageSize, page * pageSize);
@@ -127,8 +120,8 @@ function MainUser() {
       key: "typeUser",
       render: (text, record, index) => (
         <>
-          {record.typeUser === "Unconfirmed" ? (
-            <span style={{ textTransform: "capitalize", color: "gray" }}>
+          {record.typeUser === "Confirmed" ? (
+            <span style={{ textTransform: "capitalize", color: "green" }}>
               {record.typeUser}
             </span>
           ) : record.typeUser === "Block" ? (
@@ -136,7 +129,7 @@ function MainUser() {
               {record.typeUser}
             </span>
           ) : (
-            <span style={{ textTransform: "capitalize", color: "green" }}>
+            <span style={{ textTransform: "capitalize", color: "gray" }}>
               {record.typeUser}
             </span>
           )}
@@ -223,7 +216,7 @@ function MainUser() {
         <div className="product_data-wrapper">
           <div className="product_data-search">
             <Search
-              placeholder="Search User"
+              placeholder="Search Email User"
               allowClear
               enterButton="Search User"
               size="middle"
