@@ -17,7 +17,7 @@ import {
   setPaginationPayments,
   setSearchPayments,
 } from "../../../../app/paymentSlice";
-import API from "../../../../api/axiosClient";
+import PaymentAPI from "../../../../api/paymentAPI";
 
 const { Search } = Input;
 
@@ -50,6 +50,7 @@ function MainOrder() {
 
   // Search Categories Here
   const onSearch = (value) => {
+    dispatch(setSearchPayments(value.toLowerCase()));
     dispatch(getAllPayments({ searchPayments: value.toLowerCase(), token }));
   };
 
@@ -57,14 +58,11 @@ function MainOrder() {
   const handleChangePage = async (page, pageSize) => {
     try {
       setIsLoading(true);
-      const response = await API.get(
-        `/api/admin/payment?limit=${
-          page * 20
-        }&&&email[regex]=${searchPayments}`,
-        {
-          headers: { Authorization: token },
-        }
-      );
+      const response = await PaymentAPI.getPaymentsPagination({
+        searchPayments,
+        page,
+        token,
+      });
 
       dispatch(setPaginationPayments(response.data.payments));
       // xét data categories khi change page

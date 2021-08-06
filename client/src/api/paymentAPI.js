@@ -9,6 +9,14 @@ const PaymentAPI = {
       }
     );
   },
+  getPaymentsPagination: ({ searchPayments, page, token }) => {
+    return API.get(
+      `/api/admin/payment?limit=${page * 11}&&&email[regex]=${searchPayments}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
 };
 
 export default PaymentAPI;
