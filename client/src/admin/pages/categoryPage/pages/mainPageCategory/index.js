@@ -14,11 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import API from "../../../../../api/axiosClient";
+import CategoryAPI from "../../../../../api/categoryAPI";
 import {
   getAllCategories,
   getCategories,
   setPaginationCategories,
-  setSearchCategories,
 } from "../../../../../app/categorySlice";
 
 const { Search } = Input;
@@ -27,22 +27,21 @@ function MainCategory() {
   const { categories, searchCategories, paginationCategories } = useSelector(
     (state) => state.categories
   );
-  // console.log(categories);
   const { token } = useSelector((state) => state.token);
 
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   // Reload Page
-  const handleOnclickReload = (e) => {
-    e.preventDefault();
-    dispatch(setSearchCategories(""));
+  const handleOnclickReload = () => {
+    dispatch(getAllCategories(""));
     window.location.reload();
   };
+
   // Search Categories Here
-  const onSearch = async (value) => {
-    dispatch(setSearchCategories(value.toLowerCase()));
-    dispatch(getAllCategories(searchCategories));
+  const onSearch = (value) => {
+    // dispatch(setSearchCategories(value.toLowerCase()));
+    dispatch(getAllCategories(value.toLowerCase()));
     // const response = await API.get(
     //   `/api/category?limit&&&nameCategorySearch[regex]=${searchCategories}`
     // );
@@ -59,7 +58,6 @@ function MainCategory() {
           page * 20
         }&&&nameCategorySearch[regex]=${searchCategories}`
       );
-      // console.log(response.data.categories);
       dispatch(setPaginationCategories(response.data.categories));
       // xét data categories khi change page
       const data = response.data.categories.slice(
@@ -67,7 +65,6 @@ function MainCategory() {
         page * pageSize
       );
       dispatch(getCategories(data));
-
       setIsLoading(false);
     } catch (error) {
       alert(error.message);
@@ -78,10 +75,7 @@ function MainCategory() {
   const handleDeleteProduct = async (_id) => {
     try {
       setIsLoading(true);
-      await API.delete(`/api/admin/category/${_id}`, {
-        headers: { Authorization: token },
-      });
-      // console.log(_id)
+      await CategoryAPI.deleteCategory(_id, token);
       setIsLoading(false);
       Swal.fire({
         position: "center",
@@ -121,7 +115,11 @@ function MainCategory() {
       dataIndex: "stt",
       width: 40,
       key: "stt",
-      render: (text, record, index) => <span>{paginationCategories.findIndex(x => x._id === record._id)+1}</span>,
+      render: (text, record, index) => (
+        <span>
+          {paginationCategories.findIndex((x) => x._id === record._id) + 1}
+        </span>
+      ),
     },
     {
       title: "ID Category",
@@ -238,8 +236,7 @@ function MainCategory() {
               pagination={{ position: ["none", "none"] }}
               columns={columns}
               dataSource={categories}
-              style={{border: "1px solid #000"}}
-
+              style={{ border: "1px solid #000" }}
             />
           </Skeleton>
         </div>

@@ -23,7 +23,7 @@ import {
   setSearchFilter,
   setSortFilter,
 } from "../../../app/filterSlice";
-import { setSearchCategories } from "../../../app/categorySlice";
+import { getAllCategories, setSearchCategories } from "../../../app/categorySlice";
 import { setSearchUsers } from "../../../app/userSlice.admin";
 import { setSearchPayments } from "../../../app/paymentSlice";
 
@@ -38,6 +38,7 @@ function SideBar() {
     dispatch(setSearchCategories(""));
     dispatch(setSearchUsers(""));
     dispatch(setSearchPayments(""));
+    dispatch(getAllCategories(""));
   };
 
   return (

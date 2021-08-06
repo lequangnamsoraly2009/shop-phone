@@ -8,20 +8,11 @@ const CategoryAPI = {
       }&&&nameCategorySearch[regex]=${searchCategories}`
     );
   },
-
-  // useEffect(() => {
-  //   const getAllCategories = async () => {
-  //     const response = await API.get(
-  //       `/api/category?limit=${
-  //         1 * 20
-  //       }&&&nameCategorySearch[regex]=${searchCategories}`
-  //     );
-  //     dispatch(getCategories(response.data.categories));
-  //     dispatch(setPaginationCategories(response.data.categories));
-  //     //   console.log(response);
-  //   };
-  //   getAllCategories();
-  // }, [dispatch,searchCategories]);
+  deleteCategory: (_id, token) => {
+    return API.delete(`/api/admin/category/${_id}`, {
+      headers: { Authorization: token },
+    });
+  },
 };
 
 export default CategoryAPI;
