@@ -6,24 +6,31 @@ import {
 import { Badge, Avatar, Dropdown, Menu } from "antd";
 import { Header } from "antd/lib/layout/layout";
 import { Link, useHistory } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import "./header.css";
-import UserAPI from "../../../api/userAPI";
 import API from "../../../api/axiosClient";
 import { persistor } from "../../../app/store";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getLogout } from "../../../app/userSlice";
 import { removeToken } from "../../../app/tokenSlice";
 import Swal from "sweetalert2";
 import DashboardAPI from "../../../api/dashboardAPI";
+import { getAllAdminUsers } from "../../../app/userSlice.admin";
 
 function HeaderAdmin() {
-  UserAPI();
   DashboardAPI();
+
+  const { token } = useSelector((state) => state.token);
+  const { isAdmin } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
+  useEffect(() => {
+    if (token && isAdmin === true) {
+      dispatch(getAllAdminUsers({ searchUsers: "" }, token));
+    }
+  }, [token, isAdmin, dispatch]);
 
   // Logout
   const handleClickLogout = async () => {
@@ -36,7 +43,7 @@ function HeaderAdmin() {
 
       dispatch(getLogout());
       dispatch(removeToken());
-     
+
       history.push("/buyer/login");
       Swal.fire({
         position: "center",

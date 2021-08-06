@@ -7,7 +7,7 @@ import { IoCubeOutline,IoApertureOutline } from "react-icons/io5";
 
 function CardTotal() {
   const { deviceUsers } = useSelector((state) => state.usersAdmin);
-  const { products } = useSelector((state) => state.products);
+  const { products } = useSelector((state) => state.productsFilter);
   const { payments } = useSelector((state) => state.payments);
   const {categories} = useSelector((state) => state.categories);
   return (

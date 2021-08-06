@@ -16,28 +16,18 @@ import {
   WhatsAppOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import {
-  getAllProductsFilter,
-  setCategoryFilter,
-  setPageFilter,
-  setSearchFilter,
-  setSortFilter,
-} from "../../../app/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProductsFilter } from "../../../app/productSlice";
 import { getAllCategories } from "../../../app/categorySlice";
 import { setSearchUsers } from "../../../app/userSlice.admin";
-import { setSearchPayments } from "../../../app/paymentSlice";
+import { getAllPayments } from "../../../app/paymentSlice";
 
 function SideBar() {
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.token);
 
   const onClickResetTable = () => {
-    dispatch(setCategoryFilter(""));
-    dispatch(setPageFilter(1));
-    dispatch(setSearchFilter(""));
-    dispatch(setSortFilter(""));
     dispatch(setSearchUsers(""));
-    dispatch(setSearchPayments(""));
   };
 
   return (
@@ -78,7 +68,12 @@ function SideBar() {
             </Link>
           </Menu.Item>
           <Menu.Item icon={<DashboardOutlined />} key="4">
-            <Link onClick={onClickResetTable} to="/admin/orders">
+            <Link
+              onClick={() =>
+                dispatch(getAllPayments({ searchPayments: "", token }))
+              }
+              to="/admin/orders"
+            >
               Orders
             </Link>
           </Menu.Item>

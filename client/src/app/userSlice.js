@@ -1,4 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import UserAPI from "../api/userAPI";
+
+export const getUserLogin = createAsyncThunk(
+  "/user/getUserLogin",
+  async (token) => {
+    const response = await UserAPI.getUserLogin(token);
+    return response.data;
+  }
+);
 
 const initialState = {
   isBuyer: false,
@@ -15,7 +24,7 @@ const userSlice = createSlice({
     loginPending: (state) => {
       state.isLoading = true;
     },
-   
+
     getUser: (state, action) => {
       state.user = action.payload;
       state.isLoading = false;
@@ -37,17 +46,22 @@ const userSlice = createSlice({
       state.isLoggedIn = false;
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [getUserLogin.fulfilled]: (state, action) => {
+      const dataUser = action.payload;
+      if (dataUser.role === 0) {
+        state.isBuyer = true;
+      } else {
+        state.isAdmin = true;
+      }
+      state.isLoggedIn = true;
+      state.user = dataUser;
+    },
+  },
 });
 
 const { actions, reducer } = userSlice;
 
-export const {
-  getUser,
-  isAAdmin,
-  isABuyer,
-  loginPending,
-  getLogout,
-} = actions;
+export const { getUser, isAAdmin, isABuyer, loginPending, getLogout } = actions;
 
 export default reducer;

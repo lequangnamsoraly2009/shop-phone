@@ -17,10 +17,6 @@ function DetailProduct() {
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllProducts());
-  }, [dispatch]);
-
   const { productsFilter, products } = useSelector(
     (state) => state.productsFilter
   );
@@ -28,7 +24,10 @@ function DetailProduct() {
   const { carts } = useSelector((state) => state.carts);
   const { categories } = useSelector((state) => state.categories);
   const params = useParams();
-  console.log(products);
+
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
   useEffect(() => {
     if (params) {

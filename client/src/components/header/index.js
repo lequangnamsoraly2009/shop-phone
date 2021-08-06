@@ -1,7 +1,7 @@
 import { Anchor, Badge, Button, Drawer, Dropdown, Menu } from "antd";
 import { Header } from "antd/lib/layout/layout";
 import "./header.css";
-import React, {useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "antd";
 import {
   AudioOutlined,
@@ -14,11 +14,12 @@ import SubMenu from "antd/lib/menu/SubMenu";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "antd/lib/avatar/avatar";
 import API from "../../api/axiosClient";
-import { getLogout } from "../../app/userSlice";
+import { getLogout, getUserLogin } from "../../app/userSlice";
 import { persistor } from "../../app/store";
 import Swal from "sweetalert2";
 import { removeToken } from "../../app/tokenSlice";
 import {
+  getCartUser,
   removeAddressTemp,
   removeCart,
   removeCartPayMentTemp,
@@ -38,9 +39,17 @@ function HeaderNav() {
 
   const { isLoggedIn, isBuyer, user } = useSelector((state) => state.user);
   const { carts } = useSelector((state) => state.carts);
+  const { token } = useSelector((state) => state.token);
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getUserLogin(token));
+      dispatch(getCartUser(token));
+    }
+  }, [token, dispatch]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -48,7 +57,6 @@ function HeaderNav() {
   const onClose = () => {
     setVisible(false);
   };
-
 
   // Logout
   const onClickLogout = async (e) => {

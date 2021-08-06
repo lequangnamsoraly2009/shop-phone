@@ -1,4 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import CartAPI from "../api/cartAPI";
+
+export const getCartUser = createAsyncThunk("/carts/getCartUser", async(token)=>{
+  const response = await CartAPI.getCartUser(token);
+  return response.data.cart;
+})
 
 const initialState = {
   carts: [],
@@ -57,7 +63,11 @@ const cartSlice = createSlice({
       state.addressTemp = {};
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [getCartUser.fulfilled]: (state, action) => {
+      state.carts = action.payload;
+    }
+  },
 });
 
 const { actions, reducer } = cartSlice;

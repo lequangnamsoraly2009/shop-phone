@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
+  getAllPayments,
   getPayments,
   setPaginationPayments,
   setSearchPayments,
@@ -29,8 +30,11 @@ function MainOrder() {
     (state) => state.payments
   );
 
-  const handleOnclickReload = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    dispatch(getAllPayments({ searchPayments, token }));
+  }, [token, dispatch, searchPayments]);
+
+  const handleOnclickReload = () => {
     dispatch(setSearchPayments(""));
     window.location.reload();
   };
@@ -45,16 +49,8 @@ function MainOrder() {
   }, [dispatch]);
 
   // Search Categories Here
-  const onSearch = async (value) => {
-    dispatch(setSearchPayments(value.toLowerCase()));
-    const response = await API.get(
-      `/api/admin/payment?&&&email[regex]=${searchPayments}`,
-      {
-        headers: { Authorization: token },
-      }
-    );
-    dispatch(getPayments(response.data.payments.slice(0, 10)));
-    dispatch(setPaginationPayments(response.data.payments));
+  const onSearch = (value) => {
+    dispatch(getAllPayments({ searchPayments: value.toLowerCase(), token }));
   };
 
   // Change Page Here

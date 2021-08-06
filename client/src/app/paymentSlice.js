@@ -1,4 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import PaymentAPI from "../api/paymentAPI";
+
+export const getAllPayments = createAsyncThunk(
+  "/payment/getAllPayments",
+  async ({ searchPayments, token }) => {
+    const response = await PaymentAPI.getAllPayments({ searchPayments, token });
+    return response.data.payments;
+  }
+);
 
 const initialState = {
   payments: [],
@@ -20,7 +29,12 @@ const paymentSlice = createSlice({
       state.paginationPayments = action.payload;
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [getAllPayments.fulfilled]: (state, action) => {
+      state.payments = action.payload;
+      state.paginationPayments = action.payload;
+    },
+  },
 });
 
 const { actions, reducer } = paymentSlice;
