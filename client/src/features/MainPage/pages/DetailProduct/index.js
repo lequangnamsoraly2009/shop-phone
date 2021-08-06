@@ -53,7 +53,6 @@ function DetailProduct() {
     detailProduct.category,
   ]);
 
-  // console.log(detailProduct);
   const onClickShowImage = (e, src) => {
     e.preventDefault();
     setImage(src);

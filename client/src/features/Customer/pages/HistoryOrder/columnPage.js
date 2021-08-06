@@ -12,7 +12,7 @@ export const columnTable = [
           <img src={record.images.url} alt={record.images.public_id} style={{height: 100, width: 100, objectFit:"scale-down"}} />
         </a>
         <div className="order-table-info">
-          <a href={`/${record._id}`}>
+          <a href={`/detail/${record._id}`}>
             <span style={{ fontSize: 15, fontWeight: 600 }}>
               {record.title.toUpperCase()}
             </span>
