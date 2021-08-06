@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Breadcrumb, Table, Tooltip } from "antd";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./history.css";
+import { getHistoryCustomer } from "../../../../app/historySlice";
 
 function HistoryCustomer() {
   const { history } = useSelector((state) => state.histories);
-  // console.log(history);
+  const { token } = useSelector((state) => state.token);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getHistoryCustomer(token));
+  }, [dispatch, token]);
 
   const columns = [
     {
@@ -114,7 +121,7 @@ function HistoryCustomer() {
         <h2>Your History Order</h2>
       </div>
       <div className="history-table">
-        <Table columns={columns} dataSource={history} />
+        <Table columns={columns} rowKey="_id" dataSource={history} />
         {/* Theem key vao dataSource */}
       </div>
     </div>
