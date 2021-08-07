@@ -19,8 +19,6 @@ app.use(
     useTempFiles: true,
   })
 );
-
-
 //Routes
 
 app.use("/users", require("./routes/user.route"));

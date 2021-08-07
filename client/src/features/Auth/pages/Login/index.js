@@ -59,7 +59,7 @@ function Login() {
                 src="https://bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"
               />
             </a>
-            <a href="/" className="google-login__button">
+            <a href="/auth/google" className="google-login__button">
               <img
                 width="129px"
                 height="37px"
