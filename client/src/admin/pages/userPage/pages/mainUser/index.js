@@ -17,7 +17,6 @@ import {
   setPaginationUsers,
   setSearchUsers,
 } from "../../../../../app/userSlice.admin";
-import API from "../../../../../api/axiosClient";
 import UserAPI from "../../../../../api/userAPI";
 
 const { Search } = Input;

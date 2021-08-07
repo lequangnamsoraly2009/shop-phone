@@ -26,10 +26,6 @@ function SideBar() {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.token);
 
-  const onClickResetTable = () => {
-    dispatch(setSearchUsers(""));
-  };
-
   return (
     <Col className="gutter-row" span={3}>
       <Menu
@@ -78,7 +74,7 @@ function SideBar() {
             </Link>
           </Menu.Item>
           <Menu.Item icon={<UsergroupAddOutlined />} key="5">
-            <Link to="/admin/users" onClick={onClickResetTable}>
+            <Link to="/admin/users" onClick={()=> setSearchUsers("")}>
               Users
             </Link>
           </Menu.Item>

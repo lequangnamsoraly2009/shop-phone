@@ -1,4 +1,8 @@
-.header_admin {
+.ant-layout-header {
+  height: 80px !important;
+}
+
+.ant-layout-header .header_admin {
   height: 80px;
   width: 100%;
   background-color: rgb(1, 21, 41);
@@ -34,4 +38,3 @@
   position: absolute;
   top: 12px;
 }
-
