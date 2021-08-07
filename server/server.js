@@ -3,24 +3,31 @@ const express = require("express");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
+const passport = require("passport");
 
 const db = require("./database/config.db");
+// Passport
+
+require("./helper/passportGoogle")(passport);
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-  origin: '*',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 app.use(
   fileUpload({
     useTempFiles: true,
   })
 );
-//Routes
+app.use(passport.initialize())
 
+//Routes
 app.use("/users", require("./routes/user.route"));
 app.use("/api", require("./routes/category.route"));
 app.use("/api", require("./routes/payment.route"));

@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
+    googleId: {
+      type: String,
+    },
     userName: {
       type: String,
       required: true,
@@ -12,9 +15,13 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    picture:{
+      type: String,
+      default: ""
+    },
     password: {
       type: String,
-      required: true,
+      required: false,
     },
     gender: {
       type: String,
@@ -23,11 +30,13 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: true,
+      default: ""
+      // required: true,
     },
     prefix: {
       type: String,
-      required: true,
+      default: ""
+      // required: true,
     },
     role: {
       type: Number,
@@ -43,6 +52,7 @@ const userSchema = new mongoose.Schema(
     },
     introduction: {
       type: String,
+      default: ""
     },
     typeUser:{
       type: String,
@@ -50,6 +60,7 @@ const userSchema = new mongoose.Schema(
     },
     resultDevice:{
       type: Object,
+      default: {}
     }
   },
   {
