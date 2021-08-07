@@ -28,7 +28,7 @@ function HeaderAdmin() {
 
   useEffect(() => {
     if (token && isAdmin === true) {
-      dispatch(getAllAdminUsers({ searchUsers: "" }, token));
+      dispatch(getAllAdminUsers({ searchUsers: "", token }));
     }
   }, [token, isAdmin, dispatch]);
 
