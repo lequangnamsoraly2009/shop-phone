@@ -8,6 +8,7 @@ const passport = require("passport");
 router.post("/register", deviceMiddleware, userController.register);
 router.post("/login", userController.login);
 // Login with google credentials
+router.post("/login_google",deviceMiddleware,userController.loginGoogle)
 
 router.post("/activate", userController.activateUser);
 router.patch("/reset_password", userController.resetPassword);

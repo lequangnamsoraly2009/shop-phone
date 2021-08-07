@@ -126,7 +126,6 @@ const userController = {
     try {
       const { email, password } = req.body;
 
-
       const user = await Users.findOne({ email: email });
 
       if (!user) {
@@ -368,6 +367,49 @@ const userController = {
       res.json({ useragent, deviceResult });
     } catch (error) {
       return res.status(500).json({ status: false, message: error });
+    }
+  },
+  loginGoogle: async (req, res) => {
+    try {
+      const { email, name, googleId, imageUrl } = req.body;
+      const deviceResult = req.device;
+
+      const user = await Users.findOne({ email });
+      if (user) {
+        const accessToken = createAccessToken({ id: user._id });
+        const refreshToken = createRefreshToken({ id: user._id });
+
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          path: "/users/refresh_token",
+        });
+
+        res.json({ accessToken });
+      } else {
+        const newUser = await Users({
+          userName: name,
+          email,
+          resultDevice: deviceResult,
+          googleId,
+          picture: imageUrl,
+          methodLogin: 2,
+        });
+
+        await newUser.save();
+        // Login successful, create access token and refresh token
+
+        const accessToken = createAccessToken({ id: newUser._id });
+        const refreshToken = createRefreshToken({ id: newUser._id });
+
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          path: "/users/refresh_token",
+        });
+
+        res.json({ accessToken });
+      }
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
     }
   },
 };

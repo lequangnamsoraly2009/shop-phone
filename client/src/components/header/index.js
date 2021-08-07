@@ -32,6 +32,7 @@ import {
   setSearchFilter,
   setSortFilter,
 } from "../../app/productSlice";
+import { GoogleLogout } from "react-google-login";
 
 const { Search } = Input;
 
@@ -57,6 +58,33 @@ function HeaderNav() {
   };
   const onClose = () => {
     setVisible(false);
+  };
+  // Logout GoogleLogout
+  const onClickLogoutGoogle = async () => {
+    try {
+      await API.get("/users/logout");
+      persistor.purge("persist:root");
+
+      localStorage.removeItem("firstLogin");
+      localStorage.removeItem("persist:root");
+
+      dispatch(getLogout());
+      dispatch(removeToken());
+      dispatch(removeCart());
+      dispatch(removeCartPayMentTemp());
+      dispatch(removeAddressTemp());
+      history.push("/home");
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Good bye! See you soon! 😭",
+        text: "You have logged out successfully!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   // Logout
@@ -112,7 +140,7 @@ function HeaderNav() {
     dispatch(setSortFilter(""));
   };
 
-  const onClickSearchCategory = (cateID)=>{
+  const onClickSearchCategory = (cateID) => {
     dispatch(setCategoryFilter(`category=${cateID}`));
     dispatch(
       getAllProductsFilter({
@@ -122,36 +150,74 @@ function HeaderNav() {
         pageFilter: 1,
       })
     );
-  }
+  };
 
   const menu = (
     <Menu style={{ width: 200, left: -50 }}>
       <Menu.Item key="0">
-        <Link to="/category" onClick={()=>onClickSearchCategory("60fda6f142896d2fbb6d9ae4")}>Iphone</Link>
+        <Link
+          to="/category"
+          onClick={() => onClickSearchCategory("60fda6f142896d2fbb6d9ae4")}
+        >
+          Iphone
+        </Link>
       </Menu.Item>
       <Menu.Item key="1">
-        <Link to="/category" onClick={()=>onClickSearchCategory("60fda6f542896d2fbb6d9ae7")}>SamSung</Link>
+        <Link
+          to="/category"
+          onClick={() => onClickSearchCategory("60fda6f542896d2fbb6d9ae7")}
+        >
+          SamSung
+        </Link>
       </Menu.Item>
       <Menu.Item key="3">
-        <Link to="/category" onClick={()=>onClickSearchCategory("60fda71642896d2fbb6d9af0")}>Nokia</Link>
+        <Link
+          to="/category"
+          onClick={() => onClickSearchCategory("60fda71642896d2fbb6d9af0")}
+        >
+          Nokia
+        </Link>
       </Menu.Item>
       <Menu.Item key="4">
-        <Link to="/category" onClick={()=>onClickSearchCategory("60fda70b42896d2fbb6d9aed")}>VsMart</Link>
+        <Link
+          to="/category"
+          onClick={() => onClickSearchCategory("60fda70b42896d2fbb6d9aed")}
+        >
+          VsMart
+        </Link>
       </Menu.Item>
       <Menu.Item key="5">
-        <Link to="/category" onClick={()=>onClickSearchCategory("60fda72342896d2fbb6d9af6")}>Xiaomi</Link>
+        <Link
+          to="/category"
+          onClick={() => onClickSearchCategory("60fda72342896d2fbb6d9af6")}
+        >
+          Xiaomi
+        </Link>
       </Menu.Item>
       <Menu.Item key="6">
-        <Link to="/category" onClick={()=>onClickSearchCategory("60fda70442896d2fbb6d9aea")}>OPPO</Link>
+        <Link
+          to="/category"
+          onClick={() => onClickSearchCategory("60fda70442896d2fbb6d9aea")}
+        >
+          OPPO
+        </Link>
       </Menu.Item>
       <Menu.Item key="7">
-        <Link to="/category" onClick={()=>onClickSearchCategory("60fda71d42896d2fbb6d9af3")}>Vivo</Link>
+        <Link
+          to="/category"
+          onClick={() => onClickSearchCategory("60fda71d42896d2fbb6d9af3")}
+        >
+          Vivo
+        </Link>
       </Menu.Item>
     </Menu>
   );
 
   return (
-    <Header className="header-public" style={{ background: "#fff", padding: 0 }}>
+    <Header
+      className="header-public"
+      style={{ background: "#fff", padding: 0 }}
+    >
       <div className="container-fluid header-wrapper">
         <div className="header">
           <div className="logo">
@@ -232,9 +298,26 @@ function HeaderNav() {
                       <a href="/customer/infor">Your Information</a>
                       <a href="/customer/history">History Order</a>
                       <a href="/customer/device">Current Device</a>
-                      <a href="/" onClick={onClickLogout}>
-                        Logout
-                      </a>
+                      {user.methodLogin === 1 ? (
+                        <a href="/" onClick={onClickLogout}>
+                          Logout
+                        </a>
+                      ) : (
+                        <GoogleLogout
+                          clientId="191429477921-djsmrc5pi7mig0q7b609idkaqmiqi55f.apps.googleusercontent.com"
+                          // buttonText="Logout"
+                          render={(renderProps) => (
+                            <a
+                              href="/"
+                              onClick={renderProps.onClick}
+                              disabled={renderProps.disabled}
+                            >
+                              Logout
+                            </a>
+                          )}
+                          onLogoutSuccess={onClickLogoutGoogle}
+                        ></GoogleLogout>
+                      )}
                     </div>
                   </div>
                 </div>

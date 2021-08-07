@@ -61,6 +61,10 @@ const userSchema = new mongoose.Schema(
     resultDevice:{
       type: Object,
       default: {}
+    },
+    methodLogin:{
+      type: Number,
+      default: 1
     }
   },
   {

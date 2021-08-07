@@ -1,29 +1,19 @@
 import { Form, Input, Button, Checkbox, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import API from "../../../../api/axiosClient";
 import "./login.css";
 import { setToken } from "../../../../app/tokenSlice";
 import { loginPending } from "../../../../app/userSlice";
+import GoogleLogin from "react-google-login";
 
 function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [loadingLogin, setLoadingLogin] = useState(false);
-
-  // const onClickLoginGoogle = async () => {
-  //   try {
-  //     const a = await axios.get("http://localhost:3001/users/google", {
-  //       headers: { "Access-Control-Allow-Origin": "*" },
-  //     });
-  //     console.log(a);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const onSubmitForm = async (values) => {
     try {
@@ -50,6 +40,37 @@ function Login() {
       setLoadingLogin(false);
     }
   };
+
+  const onSuccessGoogle = async (values) => {
+    try {
+      dispatch(loginPending());
+      setLoadingLogin(true);
+      const response = await API.post("/users/login_google", {
+        ...values.profileObj,
+      });
+      dispatch(setToken(response.data.accessToken));
+      localStorage.setItem("firstLogin", true);
+      setLoadingLogin(false);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Signed in successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      history.push("/home");
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error.response.data.message}`,
+      });
+      setLoadingLogin(false);
+    }
+  };
+  const onFailureGoogle = (response) => {
+    console.log("Fail res", response);
+  };
   return (
     <div className="container-fluid">
       {loadingLogin === true ? (
@@ -70,17 +91,24 @@ function Login() {
                 src="https://bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"
               />
             </a>
-            <Link
-              className="social-logingoogle-login__button"
-              // onClick={onClickLoginGoogle}
-            >
-              <img
-                width="129px"
-                height="37px"
-                alt="google-login__button"
-                src="https://bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"
-              />
-            </Link>
+            <GoogleLogin
+              clientId="191429477921-djsmrc5pi7mig0q7b609idkaqmiqi55f.apps.googleusercontent.com"
+              render={(renderProps) => (
+                <img
+                  style={{ cursor: "pointer" }}
+                  width="129px"
+                  height="37px"
+                  alt="google-login__button"
+                  src="https://bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                />
+              )}
+              onSuccess={onSuccessGoogle}
+              onFailure={onFailureGoogle}
+              isSignedIn={true}
+              cookiePolicy={"single_host_origin"}
+            />
           </div>
           <div className="login-form__wrap">
             <Form
