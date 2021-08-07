@@ -26,6 +26,7 @@ import {
 } from "../../app/cartSlice";
 import { Link, useHistory } from "react-router-dom";
 import {
+  getAllProductsFilter,
   setCategoryFilter,
   setPageFilter,
   setSearchFilter,
@@ -111,28 +112,40 @@ function HeaderNav() {
     dispatch(setSortFilter(""));
   };
 
+  const onClickSearchCategory = (cateID)=>{
+    dispatch(setCategoryFilter(`category=${cateID}`));
+    dispatch(
+      getAllProductsFilter({
+        categoryFilter: `category=${cateID}`,
+        sortFilter: "",
+        searchFilter: "",
+        pageFilter: 1,
+      })
+    );
+  }
+
   const menu = (
     <Menu style={{ width: 200, left: -50 }}>
       <Menu.Item key="0">
-        <a href="/category">Iphone</a>
+        <Link to="/category" onClick={()=>onClickSearchCategory("60fda6f142896d2fbb6d9ae4")}>Iphone</Link>
       </Menu.Item>
       <Menu.Item key="1">
-        <a href="/category">SamSung</a>
+        <Link to="/category" onClick={()=>onClickSearchCategory("60fda6f542896d2fbb6d9ae7")}>SamSung</Link>
       </Menu.Item>
       <Menu.Item key="3">
-        <a href="/category">Nokia</a>
+        <Link to="/category" onClick={()=>onClickSearchCategory("60fda71642896d2fbb6d9af0")}>Nokia</Link>
       </Menu.Item>
       <Menu.Item key="4">
-        <a href="/category">VsMart</a>
+        <Link to="/category" onClick={()=>onClickSearchCategory("60fda70b42896d2fbb6d9aed")}>VsMart</Link>
       </Menu.Item>
       <Menu.Item key="5">
-        <a href="/category">Xiaomi</a>
+        <Link to="/category" onClick={()=>onClickSearchCategory("60fda72342896d2fbb6d9af6")}>Xiaomi</Link>
       </Menu.Item>
       <Menu.Item key="6">
-        <a href="/category">OPPO</a>
+        <Link to="/category" onClick={()=>onClickSearchCategory("60fda70442896d2fbb6d9aea")}>OPPO</Link>
       </Menu.Item>
       <Menu.Item key="7">
-        <a href="/category">Vivo</a>
+        <Link to="/category" onClick={()=>onClickSearchCategory("60fda71d42896d2fbb6d9af3")}>Vivo</Link>
       </Menu.Item>
     </Menu>
   );
@@ -342,13 +355,13 @@ function HeaderNav() {
             </li>
             <li className="nav-item">
               <Dropdown overlay={menu} arrow={true}>
-                <a
+                <Link
                   className="ant-dropdown-link"
-                  href="/category"
+                  to="/category"
                   onClick={onClickGetAll}
                 >
                   CATEGORY <DownOutlined />
-                </a>
+                </Link>
               </Dropdown>
             </li>
             <li className="nav-item">

@@ -51,10 +51,8 @@ exports.sendResetPasswordEmail = ({toUser, newPassword}) => {
     subject: 'Soraly Shop - Reset Password',
     html: `
       <h3> Hello ${toUser.userName} </h3>
-      <p>Tôi đéo hiểu tại sao bạn lại quên mật khẩu? Có mỗi cái mật khẩu mà bạn còn quên thì trên cuộc đời này còn thứ gì quan trọng để bạn nhớ nữa? Lần này tôi thương tôi mới cho bạn mật khẩu mới nhé!</p>
+      <p>Tôi đéo hiểu tại sao bạn lại quên mật khẩu? Có mỗi cái mật khẩu mà bạn còn quên thì trên cuộc đời này còn thứ gì quan trọng để bạn nhớ nữa?</p>
       <p>Mật khẩu mới của bạn đây nè: <i>${newPassword}</i></p>
-      <p> Đăng nhập lại nhớ đổi lại mật khẩu đi !! 😡 </p>
-      <p>Cách đổi mật khẩu cho bạn nếu bạn là <i>Tấm Chiếu Mới</i> đây: Biểu tượng User (cái mà có tên với cái hình chữ U ấy) -> Change Password</p>
       <p>Nhấn vào đây mà quay lại đăng nhập đi: <a target="_blank" href="${process.env.DOMAIN}/buyer/login">Login Now</a></p>
       <p>Cảm ơn và không hẹn gặp lại </p>
       <p>Soraly Argry 😡!</p>

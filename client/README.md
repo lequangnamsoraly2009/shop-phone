@@ -1,12 +1,12 @@
 # Note (Mấy cái này chưa làm. Note lại làm sau):
     - Page Not Found Don't Work With DashBoard and Detail Product (DONE!)
-    - Category Header Menu Dropdown (Unfinished)
+    - Category Header Menu Dropdown (DONE!)
     - Detail Products Choose Options And Sale Price (25%)
     - Login With Facebook and Google (Not Yet)
     - Address Shipping Bug (Unfinished)
-    - Load Product -> Load Detail Product - Remove load full products to redux (Not Yet)
+    - Load Product -> Load Detail Product - Remove load full products to redux (DONE!)
     - DashBoard Admin (Processing!!!) 
-    - Wrong Password -> Fix It
+    - Wrong Password -> Fix It (DONE!)
     - Loading Spin when load data
     - Admin ẩn products khi không muốn xuất hiện ở trang chủ
     - Rate Product. Idea: Use Select to User choose star -> Save db of product by array object -> Rate Product: Trung Bình Cộng of list Array rated: 2.5 get 2.5 if 2.4 get 2. 2.6 -> 3

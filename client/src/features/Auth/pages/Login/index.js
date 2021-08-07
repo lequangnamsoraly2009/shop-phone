@@ -12,8 +12,8 @@ import { loginPending } from "../../../../app/userSlice";
 function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [loadingLogin, setLoadingLogin] = useState(false); // bugs here
-
+  const [loadingLogin, setLoadingLogin] = useState(false); 
+  
   const onSubmitForm = async (values) => {
     try {
       dispatch(loginPending());
