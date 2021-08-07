@@ -8,15 +8,6 @@ const passport = require("passport");
 router.post("/register", deviceMiddleware, userController.register);
 router.post("/login", userController.login);
 // Login with google credentials
-router.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-  })
-);
-router.get("/google/callback", passport.authenticate("google"), (req,res)=>{
-  res.redirect("http://localhost:3000/");
-});
 
 router.post("/activate", userController.activateUser);
 router.patch("/reset_password", userController.resetPassword);

@@ -3,12 +3,13 @@ const express = require("express");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
-const passport = require("passport");
+// const passport = require("passport");
+// const session = require("express-session");
 
 const db = require("./database/config.db");
 // Passport
 
-require("./helper/passportGoogle")(passport);
+// require("./helper/passport")(passport);
 
 const app = express();
 
@@ -25,7 +26,11 @@ app.use(
     useTempFiles: true,
   })
 );
-app.use(passport.initialize())
+// app.use(session({ resave: false,
+//   saveUninitialized: true,
+//   secret: 'SECRET' }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 //Routes
 app.use("/users", require("./routes/user.route"));

@@ -1,8 +1,8 @@
 import { Form, Input, Button, Checkbox, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch} from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import API from "../../../../api/axiosClient";
 import "./login.css";
@@ -12,8 +12,19 @@ import { loginPending } from "../../../../app/userSlice";
 function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [loadingLogin, setLoadingLogin] = useState(false); 
-  
+  const [loadingLogin, setLoadingLogin] = useState(false);
+
+  // const onClickLoginGoogle = async () => {
+  //   try {
+  //     const a = await axios.get("http://localhost:3001/users/google", {
+  //       headers: { "Access-Control-Allow-Origin": "*" },
+  //     });
+  //     console.log(a);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const onSubmitForm = async (values) => {
     try {
       dispatch(loginPending());
@@ -59,14 +70,17 @@ function Login() {
                 src="https://bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"
               />
             </a>
-            <a href="/auth/google" className="google-login__button">
+            <Link
+              className="social-logingoogle-login__button"
+              // onClick={onClickLoginGoogle}
+            >
               <img
                 width="129px"
                 height="37px"
                 alt="google-login__button"
                 src="https://bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"
               />
-            </a>
+            </Link>
           </div>
           <div className="login-form__wrap">
             <Form
