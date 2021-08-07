@@ -138,7 +138,7 @@ function HeaderNav() {
   );
 
   return (
-    <Header style={{ background: "#fff", padding: 0 }}>
+    <Header className="header-public" style={{ background: "#fff", padding: 0 }}>
       <div className="container-fluid header-wrapper">
         <div className="header">
           <div className="logo">

@@ -12,7 +12,7 @@ import PublicRouter from "./router/public";
 function App() {
   const {isAdmin } = useSelector((state) => state.user);
   return (
-    <Router>{isAdmin === true ? <PrivateRouter /> : <PublicRouter />}</Router>
+    <Router>{isAdmin ? <PrivateRouter /> : <PublicRouter />}</Router>
   );
 }
 
