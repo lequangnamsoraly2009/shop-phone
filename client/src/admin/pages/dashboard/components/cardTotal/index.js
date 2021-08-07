@@ -7,7 +7,7 @@ import { IoCubeOutline,IoApertureOutline } from "react-icons/io5";
 
 function CardTotal() {
   const { deviceUsers } = useSelector((state) => state.usersAdmin);
-  const { products } = useSelector((state) => state.productsFilter);
+  const { productsFilter } = useSelector((state) => state.productsFilter);
   const { payments } = useSelector((state) => state.payments);
   const {categories} = useSelector((state) => state.categories);
   return (
@@ -29,7 +29,7 @@ function CardTotal() {
           <Card style={{ border: "1px solid #aaa" }}>
             <Statistic
               title="Total Products"
-              value={products.length}
+              value={productsFilter.length}
               valueStyle={{ color: "#cf1322" }}
               prefix={<IoCubeOutline style={{marginRight: 5}} />}
               suffix="Units"
