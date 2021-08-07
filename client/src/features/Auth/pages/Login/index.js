@@ -12,16 +12,16 @@ import { loginPending } from "../../../../app/userSlice";
 function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [a, setA] = useState(false); // bugs here
+  const [loadingLogin, setLoadingLogin] = useState(false); // bugs here
 
   const onSubmitForm = async (values) => {
     try {
       dispatch(loginPending());
-      setA(true);
+      setLoadingLogin(true);
       const response = await API.post("/users/login", { ...values });
       dispatch(setToken(response.data.accessToken));
       localStorage.setItem("firstLogin", true);
-      setA(false);
+      setLoadingLogin(false);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -36,11 +36,12 @@ function Login() {
         title: "Oops...",
         text: `${error.response.data.message}`,
       });
+      setLoadingLogin(false);
     }
   };
   return (
     <div className="container-fluid">
-      {a === true ? (
+      {loadingLogin === true ? (
         <div className="loading-page">
           <Spin size="large" />
         </div>
