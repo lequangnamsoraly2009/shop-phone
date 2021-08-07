@@ -73,15 +73,6 @@ function HeaderNav() {
       dispatch(removeCart());
       dispatch(removeCartPayMentTemp());
       dispatch(removeAddressTemp());
-      history.push("/home");
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Good bye! See you soon! 😭",
-        text: "You have logged out successfully!",
-        showConfirmButton: false,
-        timer: 2000,
-      });
     } catch (error) {
       alert(error.message);
     }
@@ -102,7 +93,6 @@ function HeaderNav() {
       dispatch(removeCart());
       dispatch(removeCartPayMentTemp());
       dispatch(removeAddressTemp());
-      history.push("/home");
       Swal.fire({
         position: "center",
         icon: "success",
