@@ -11,8 +11,7 @@ import DetailProductMain from "../../features/MainPage/pages";
 import CategoryPage from "../../features/Category";
 import AuthPage from "../../features/Auth";
 import Customer from "../../features/Customer";
-import VNPAY from "../../components/vnPay";
-import CheckSumVNPay from "../../components/checksum";
+
 
 function PublicRouter() {
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -32,15 +31,6 @@ function PublicRouter() {
           <Route
             path="/customer"
             component={isLoggedIn ? Customer : PageNotFound}
-          />
-          {/* Test VN Pay */}
-          <Route
-            path="/test_vnpay"
-            component={isLoggedIn ? VNPAY : PageNotFound}
-          />
-          <Route
-            path="/checksum_vnpay"
-            component={isLoggedIn ? CheckSumVNPay : PageNotFound}
           />
           <Route component={PageNotFound} />
         </Switch>
