@@ -14,9 +14,7 @@ const ProductFilterAPI = {
     );
   },
   getAllProducts: () => {
-    return API.get(
-      `/api/products`
-    );
+    return API.get(`/api/products`);
   },
   deleteImageClound: (public_id, token) => {
     return API.post(

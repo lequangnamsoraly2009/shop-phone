@@ -3,9 +3,7 @@ import API from "../api/axiosClient";
 const CategoryAPI = {
   getAllCategories: (searchCategories) => {
     return API.get(
-      `/api/category?limit=${
-        1 * 20
-      }&&&nameCategorySearch[regex]=${searchCategories}`
+      `/api/category?limit&&&nameCategorySearch[regex]=${searchCategories}`
     );
   },
   deleteCategory: (_id, token) => {

@@ -1,15 +1,39 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Card, Col, Row, Statistic } from "antd";
-import React from "react";
-import { useSelector } from "react-redux";
-import { BsBag } from 'react-icons/bs';
-import { IoCubeOutline,IoApertureOutline } from "react-icons/io5";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { BsBag } from "react-icons/bs";
+import { IoCubeOutline, IoApertureOutline } from "react-icons/io5";
+import { getAllPayments } from "../../../../../app/paymentSlice";
+import { getAllCategories } from "../../../../../app/categorySlice";
+import { getAllProducts } from "../../../../../app/productSlice";
 
 function CardTotal() {
   const { deviceUsers } = useSelector((state) => state.usersAdmin);
-  const { productsFilter } = useSelector((state) => state.productsFilter);
-  const { payments } = useSelector((state) => state.payments);
-  const {categories} = useSelector((state) => state.categories);
+  const { products } = useSelector((state) => state.productsFilter);
+  const { payments, searchPayments } = useSelector((state) => state.payments);
+  const { categories, searchCategories } = useSelector(
+    (state) => state.categories
+  );
+  const { token } = useSelector((state) => state.token);
+
+  const dispatch = useDispatch();
+
+  // Get data of payments
+  useEffect(() => {
+    dispatch(getAllPayments({ searchPayments, token }));
+  }, [searchPayments, token, dispatch]);
+
+  // Get data of categories
+  useEffect(() => {
+    dispatch(getAllCategories({ searchCategories }));
+  }, [dispatch, searchCategories]);
+
+  // Get data of products
+  useEffect(() => {
+    dispatch(getAllProducts())
+  },[dispatch])
+
   return (
     <div style={{ margin: "20px 30px" }}>
       <Row gutter={16}>
@@ -20,7 +44,7 @@ function CardTotal() {
               value={deviceUsers.length}
               //   precision={2}
               valueStyle={{ color: "#cf1322" }}
-              prefix={<UserOutlined style={{marginRight: 5}}/>}
+              prefix={<UserOutlined style={{ marginRight: 5 }} />}
               suffix="Users"
             />
           </Card>
@@ -29,9 +53,9 @@ function CardTotal() {
           <Card style={{ border: "1px solid #aaa" }}>
             <Statistic
               title="Total Products"
-              value={productsFilter.length}
+              value={products.length}
               valueStyle={{ color: "#cf1322" }}
-              prefix={<IoCubeOutline style={{marginRight: 5}} />}
+              prefix={<IoCubeOutline style={{ marginRight: 5 }} />}
               suffix="Units"
             />
           </Card>
@@ -42,7 +66,7 @@ function CardTotal() {
               title="Total Orders"
               value={payments.length}
               //   precision={2}
-              prefix={<BsBag style={{marginRight: 5}} />}
+              prefix={<BsBag style={{ marginRight: 5 }} />}
               valueStyle={{ color: "#cf1322" }}
               suffix="Payments"
             />
@@ -53,7 +77,7 @@ function CardTotal() {
             <Statistic
               title="Total Categories "
               value={categories.length}
-              prefix={<IoApertureOutline style={{marginRight: 5}} />}
+              prefix={<IoApertureOutline style={{ marginRight: 5 }} />}
               valueStyle={{ color: "#cf1322" }}
               suffix="Categories"
             />
