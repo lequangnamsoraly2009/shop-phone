@@ -1,20 +1,21 @@
 const mongoose  = require('mongoose');
 
-const categorySchema = new mongoose.Schema({
-    nameCategory: {
+const messageSchema = new mongoose.Schema({
+    roomId: {
         type: String,
         required: true,
-        trim: true,
         unique: true,
     },
-    nameCategorySearch: {
+    user: {
+        type: Object,
+        required: true,
+    },
+    message:{
         type: String,
         required: true,
-        trim: true,
-        unique: true,
-    },
+    }
 },{
     timestamps: true
 })
 
-module.exports = mongoose.model("Category", categorySchema);
+module.exports = mongoose.model("Messages", messageSchema);
