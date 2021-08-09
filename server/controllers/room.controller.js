@@ -28,11 +28,6 @@ const roomController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  //   Tạo room cho user ngay sau khi đăng kí bằng account local hoặc đăng kí bằng google account
-  createRoom: async (req, res) => {
-    try {
-    } catch (error) {}
-  },
 };
 
 module.exports = userController;
