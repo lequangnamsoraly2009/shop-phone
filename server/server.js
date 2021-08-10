@@ -45,6 +45,13 @@ db.onConnection();
 const port = process.env.PORT || 5000;
 // const port = 3001;
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
+});
+
+// Config socketio
+const io = require("socket.io")(server);
+
+io.on("connection", (socket) => {
+  console.log(socket.id); 
 });
