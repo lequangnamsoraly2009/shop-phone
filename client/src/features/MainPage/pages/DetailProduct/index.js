@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, Col, Rate, Row, Select } from "antd";
+import { Breadcrumb, Col, Rate, Row, Select, Tabs } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "./detailProduct.css";
 import CardItem from "../../components/CardItem";
 import Swal from "sweetalert2";
@@ -10,12 +10,14 @@ import API from "../../../../api/axiosClient";
 import { getAllProducts } from "../../../../app/productSlice";
 
 const { Option } = Select;
+const { TabPane } = Tabs;
 
 function DetailProduct() {
   const [detailProduct, setDetailProduct] = useState([]);
   const [categoryDetail, setCategoryDetail] = useState("");
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { productsFilter, products } = useSelector(
     (state) => state.productsFilter
@@ -98,6 +100,10 @@ function DetailProduct() {
         text: "This product has been added to your cart !",
       });
     }
+  };
+
+  const handleOnchange = (key) => {
+    history.push(`/detail/${detailProduct._id}/${key}`);
   };
 
   return (
@@ -362,6 +368,20 @@ function DetailProduct() {
               })}
           </Row>
         </div>
+      </div>
+      <div>
+        <Tabs defaultActiveKey="1" onChange={(key) => handleOnchange(key)}>
+          <TabPane tab="Tab 1" key="comment">
+            Comment
+          </TabPane>
+
+          <TabPane tab="Tab 2" key="2">
+            Content of Tab Pane 2
+          </TabPane>
+          <TabPane tab="Tab 3" key="3">
+            Content of Tab Pane 3
+          </TabPane>
+        </Tabs>
       </div>
     </div>
   );
