@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { addCart } from "../../../../app/cartSlice";
 import API from "../../../../api/axiosClient";
 import { getAllProducts } from "../../../../app/productSlice";
+import MobileSystem from "./components/system";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -103,7 +104,7 @@ function DetailProduct() {
   };
 
   const handleOnchange = (key) => {
-    history.push(`/detail/${detailProduct._id}/${key}`);
+    // history.push(`/detail/${detailProduct._id}/${key}`);
   };
 
   return (
@@ -369,16 +370,23 @@ function DetailProduct() {
           </Row>
         </div>
       </div>
-      <div>
-        <Tabs defaultActiveKey="1" onChange={(key) => handleOnchange(key)}>
-          <TabPane tab="Tab 1" key="comment">
-            Comment
+      <div className="information_product-more">
+        <Tabs
+          defaultActiveKey="system"
+          centered
+          size="large"
+          onChange={(key) => handleOnchange(key)}
+        >
+          <TabPane tab="Mobile System" key="system">
+              <MobileSystem />
           </TabPane>
-
-          <TabPane tab="Tab 2" key="2">
-            Content of Tab Pane 2
+          <TabPane tab="Quality evalution" key="evalution">
+            Quality evalution
           </TabPane>
-          <TabPane tab="Tab 3" key="3">
+          <TabPane tab="Product Reviews" key="reviews">
+            Product Reviews
+          </TabPane>
+          <TabPane tab="Questions And Answers" key="QandA">
             Content of Tab Pane 3
           </TabPane>
         </Tabs>
