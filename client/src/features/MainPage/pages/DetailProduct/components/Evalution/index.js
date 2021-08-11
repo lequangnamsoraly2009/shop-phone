@@ -5,10 +5,11 @@ function Evalution() {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <>
+    <div className="evalution">
       <div
-        className="evalution"
-        style={showMore ? { height: "auto" } : { height: 300 , overflow: "hidden" }}
+        style={
+          showMore ? { height: "auto" } : { height: 300, overflow: "hidden" }
+        }
       >
         <div className="evalution-wrapper">
           <h2>Description</h2>
@@ -90,6 +91,7 @@ function Evalution() {
           textAlign: "center",
           backgroundColor: "rgb(228, 228, 228)",
           cursor: "pointer",
+          margin: "20px 0 0 0",
         }}
         onClick={() => setShowMore(!showMore)}
       >
@@ -97,9 +99,9 @@ function Evalution() {
         <span></span>
         <span></span>
         <span></span>
-        Show More
+        {showMore ? "Show Less" : "Show More"}
       </div>
-    </>
+    </div>
   );
 }
 

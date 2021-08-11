@@ -1,6 +1,7 @@
 .evalution{
 
     border: 1px solid rgba(216, 216, 216, 0.582);
+    border-bottom: 0;
 }
 
 .evalution-wrapper{
