@@ -11,6 +11,7 @@ import { getAllProducts } from "../../../../app/productSlice";
 import MobileSystem from "./components/system";
 import Evalution from "./components/Evalution";
 import QuestionAndAnswers from "./components/Question";
+import Reviews from "./components/Reviews";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -385,10 +386,10 @@ function DetailProduct() {
             <Evalution />
           </TabPane>
           <TabPane tab="Product Reviews" key="reviews">
-            <QuestionAndAnswers />
+            <Reviews />
           </TabPane>
           <TabPane tab="Questions And Answers" key="QandA">
-            Content of Tab Pane 3
+            <QuestionAndAnswers />
           </TabPane>
         </Tabs>
       </div>

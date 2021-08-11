@@ -1,0 +1,20 @@
+.reviews {
+}
+
+.reviews_top {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.reviews_top-star {
+  width: 30%;
+}
+
+.reviews_top-progress {
+  width: 40%;
+}
+
+.reviews_top-create {
+  width: 30%;
+}
