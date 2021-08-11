@@ -10,6 +10,7 @@ import API from "../../../../api/axiosClient";
 import { getAllProducts } from "../../../../app/productSlice";
 import MobileSystem from "./components/system";
 import Evalution from "./components/Evalution";
+import QuestionAndAnswers from "./components/Question";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -384,7 +385,7 @@ function DetailProduct() {
             <Evalution />
           </TabPane>
           <TabPane tab="Product Reviews" key="reviews">
-            Product Reviews
+            <QuestionAndAnswers />
           </TabPane>
           <TabPane tab="Questions And Answers" key="QandA">
             Content of Tab Pane 3
