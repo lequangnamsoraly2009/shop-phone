@@ -1,3 +1,23 @@
 .evalution{
-    
+
+    border: 1px solid rgba(216, 216, 216, 0.582);
+}
+
+.evalution-wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 1px solid rgba(216, 216, 216,0.5)
+}
+
+.evalution-wrapper h2{
+    width: 20%;
+    padding: 10px 30px;
+    border-right: 1px solid rgba(216, 216, 216, .582);
+}
+
+.evalution-wrapper span{
+    width: 80%;
+    padding: 10px 30px;
+
 }

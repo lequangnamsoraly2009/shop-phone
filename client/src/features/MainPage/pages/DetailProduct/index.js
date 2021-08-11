@@ -9,6 +9,7 @@ import { addCart } from "../../../../app/cartSlice";
 import API from "../../../../api/axiosClient";
 import { getAllProducts } from "../../../../app/productSlice";
 import MobileSystem from "./components/system";
+import Evalution from "./components/Evalution";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -377,10 +378,10 @@ function DetailProduct() {
           onChange={(key) => handleOnchange(key)}
         >
           <TabPane tab="Mobile System" key="system">
-              <MobileSystem detailProduct={detailProduct} />
+            <MobileSystem detailProduct={detailProduct} />
           </TabPane>
           <TabPane tab="Quality evalution" key="evalution">
-            Quality evalution
+            <Evalution />
           </TabPane>
           <TabPane tab="Product Reviews" key="reviews">
             Product Reviews
