@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Breadcrumb, Col, Rate, Row, Select, Tabs } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./detailProduct.css";
 import CardItem from "../../components/CardItem";
 import Swal from "sweetalert2";
@@ -18,7 +18,6 @@ function DetailProduct() {
   const [categoryDetail, setCategoryDetail] = useState("");
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const { productsFilter, products } = useSelector(
     (state) => state.productsFilter
