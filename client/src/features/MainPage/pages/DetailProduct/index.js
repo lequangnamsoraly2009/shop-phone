@@ -378,7 +378,7 @@ function DetailProduct() {
           onChange={(key) => handleOnchange(key)}
         >
           <TabPane tab="Mobile System" key="system">
-              <MobileSystem />
+              <MobileSystem detailProduct={detailProduct} />
           </TabPane>
           <TabPane tab="Quality evalution" key="evalution">
             Quality evalution

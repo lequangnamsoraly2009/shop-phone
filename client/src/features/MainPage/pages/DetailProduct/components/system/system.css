@@ -1,0 +1,31 @@
+.system {
+  border: 1px solid rgba(228, 227, 227, 0.514);
+  border-radius: 5px;
+}
+.system-wrapper {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid rgba(233, 233, 233, 0.514);
+  width: 100%;
+}
+
+.system-title {
+  width: 30%;
+  display: flex;
+  border-right: 1px solid rgb(228, 226, 226);
+  height: 30px;
+}
+
+.system-title span {
+  margin: auto;
+}
+
+.system-value {
+  width: 70%;
+  padding-left: 20px;
+  display: flex;
+}
+
+.system-value span {
+  margin: auto 0;
+}
