@@ -1,0 +1,22 @@
+.question{
+    width: 100%;
+}
+
+.question-left{
+    width: 20%;
+}
+
+.question_left-header{
+    padding: 20px 0;
+    border-top: 1px solid rgba(155, 154, 154, 0.521);
+    border-bottom: 1px solid rgba(155, 154, 154, 0.521);
+    margin-bottom: 20px;
+}
+
+.question_left-header span{
+    font-weight: 700;
+}
+
+.question-right{
+    width: 80%;
+}
