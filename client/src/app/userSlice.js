@@ -15,6 +15,7 @@ const initialState = {
   user: {},
   isLoading: false,
   isLoggedIn: false,
+  socket: null,
 };
 
 const userSlice = createSlice({
@@ -24,19 +25,8 @@ const userSlice = createSlice({
     loginPending: (state) => {
       state.isLoading = true;
     },
-
-    getUser: (state, action) => {
-      state.user = action.payload;
-      state.isLoading = false;
-      state.isLoggedIn = true;
-    },
-    isABuyer: (state, action) => {
-      state.isBuyer = action.payload;
-      state.isAdmin = false;
-    },
-    isAAdmin: (state, action) => {
-      state.isBuyer = false;
-      state.isAdmin = action.payload;
+    getSocket: (state, action) => {
+      state.socket = action.payload;
     },
     getLogout: (state, action) => {
       state.isBuyer = false;
@@ -44,6 +34,7 @@ const userSlice = createSlice({
       state.user = {};
       state.isLoading = false;
       state.isLoggedIn = false;
+      state.socket = null;
     },
   },
   extraReducers: {
@@ -62,6 +53,6 @@ const userSlice = createSlice({
 
 const { actions, reducer } = userSlice;
 
-export const { getUser, isAAdmin, isABuyer, loginPending, getLogout } = actions;
+export const { getSocket, loginPending, getLogout } = actions;
 
 export default reducer;
