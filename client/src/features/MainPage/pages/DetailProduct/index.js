@@ -382,7 +382,7 @@ function DetailProduct() {
             <Evalution />
           </TabPane>
           <TabPane tab="Product Reviews" key="reviews">
-            <Reviews />
+            <Reviews detailProduct={detailProduct} />
           </TabPane>
           <TabPane tab="Questions And Answers" key="QandA">
             <QuestionAndAnswers />

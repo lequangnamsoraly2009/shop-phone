@@ -4,7 +4,7 @@ import { Progress, Rate } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import "./reviews.css";
 
-function Reviews() {
+function Reviews({ detailProduct }) {
   return (
     <div className="reviews">
       <div className="reviews_top">
@@ -13,11 +13,15 @@ function Reviews() {
             <span>Customer Rating</span>
           </div>
           <div className="reviews_top-star-point">
-            <span>4.7</span>
-            <StarFilled style={{ color: "red", fontSize: "22px" }} />
+            {detailProduct.numberReviews === 0 ? (
+              <span>0</span>
+            ) : (
+              <span>{detailProduct.rating / detailProduct.numberReviews}</span>
+            )}
+            <StarFilled style={{ color: "red", fontSize: "22px"}} />
           </div>
           <div className="reviews_top-star-count">
-            <span>(123 Reviews)</span>
+            <span>({detailProduct.numberReviews} Reviews)</span>
           </div>
         </div>
         <div className="reviews_top-progress">
