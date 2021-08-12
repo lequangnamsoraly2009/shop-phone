@@ -1,10 +1,25 @@
-import React from "react";
-import { Progress, Rate } from "antd";
+import React, { useState } from "react";
+import { Button, Progress, Rate } from "antd";
 
 import { StarFilled } from "@ant-design/icons";
 import "./reviews.css";
+import Modal from "antd/lib/modal/Modal";
 
 function Reviews({ detailProduct }) {
+  const [visible, setVisible] = useState(false);
+
+  const handleCancel = () => {
+    setVisible(false)
+  };
+
+  const handleOk = () =>{
+    setVisible(false)
+  }
+
+  const showModal = () => {
+    setVisible(true)
+  };
+
   return (
     <div className="reviews">
       <div className="reviews_top">
@@ -18,7 +33,7 @@ function Reviews({ detailProduct }) {
             ) : (
               <span>{detailProduct.rating / detailProduct.numberReviews}</span>
             )}
-            <StarFilled style={{ color: "red", fontSize: "22px"}} />
+            <StarFilled style={{ color: "red", fontSize: "22px" }} />
           </div>
           <div className="reviews_top-star-count">
             <span>({detailProduct.numberReviews} Reviews)</span>
@@ -98,7 +113,7 @@ function Reviews({ detailProduct }) {
                 cursor: "pointer",
                 letterSpacing: "1px",
               }}
-              // onClick={addCartItem}
+              onClick={showModal}
             >
               <span></span>
               <span></span>
@@ -107,6 +122,33 @@ function Reviews({ detailProduct }) {
               Write a Review
             </div>
           </div>
+          <Modal
+            visible={visible}
+            title="Title"
+            onOk={handleOk}
+            onCancel={handleCancel}
+            footer={[
+              <Button key="back" onClick={handleCancel}>
+                Return
+              </Button>,
+              <Button key="submit" type="primary" onClick={handleOk}>
+                Submit
+              </Button>,
+              <Button
+                type="primary"
+                // loading={loading}
+                onClick={handleOk}
+              >
+                Search on Google
+              </Button>,
+            ]}
+          >
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+          </Modal>
         </div>
       </div>
       <div className="reviews_bot">
