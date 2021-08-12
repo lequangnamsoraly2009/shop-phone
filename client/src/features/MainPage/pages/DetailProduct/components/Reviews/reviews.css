@@ -5,6 +5,8 @@
   display: flex;
   flex-direction: row;
   width: 100%;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(173, 172, 172, 0.568);
 }
 
 .reviews_top-star {

@@ -1,7 +1,7 @@
 import React from "react";
-import { Progress } from "antd";
+import { Progress, Rate } from "antd";
 
-import { StarOutlined, StarFilled } from "@ant-design/icons";
+import { StarFilled } from "@ant-design/icons";
 import "./reviews.css";
 
 function Reviews() {
@@ -14,7 +14,7 @@ function Reviews() {
           </div>
           <div className="reviews_top-star-point">
             <span>4.7</span>
-            <StarFilled style={{color: "red", fontSize: "22px"}} />
+            <StarFilled style={{ color: "red", fontSize: "22px" }} />
           </div>
           <div className="reviews_top-star-count">
             <span>(123 Reviews)</span>
@@ -83,7 +83,7 @@ function Reviews() {
           </div>
         </div>
         <div className="reviews_top-create">
-          <div style={{ display: "flex", margin: "auto 0"}}>
+          <div style={{ display: "flex", margin: "auto 0" }}>
             <div
               className="btn"
               style={{
@@ -101,6 +101,31 @@ function Reviews() {
               <span></span>
               <span></span>
               Write a Review
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="reviews_bot">
+        <div className="reviews_bot-header">
+          <span>Customer Reviews</span>
+        </div>
+        <div className="reviews_bot-list">
+          <div className="reviews_bot-list-item">
+            <div className="reviews_bot-list-item-header">
+              <p>Soraly XYZ</p>
+              <span>- Ngày 2021-08-10 13:23:25</span>
+            </div>
+            <div className="reviews_bot-list-item-comment">
+              <div className="star">
+                <Rate disabled defaultValue={5} style={{ color: "red" }} />
+              </div>
+              <div className="comment">
+                <span>
+                  Mua hàng Cellphones online lần đầu mà chắc cũng là lần cuối.
+                  Con máy cũng 20 củ mà nhận được thì bị trầy. Thời gian giãn
+                  cách nên không đi mua trực tiếp được lại bị vậy. Chán thực sự.
+                </span>
+              </div>
             </div>
           </div>
         </div>
