@@ -82,11 +82,19 @@
   margin-right: 10px;
 }
 
+.product-generated{
+  display: flex;
+  flex-direction: row;
+}
+
+.product-generated p{
+  margin-top: 3px;
+}
 
 /* Product Variations */
 
 .product-variations {
-  margin-top: 50px;
+  margin-top: 0px;
 }
 
 .product-memory {

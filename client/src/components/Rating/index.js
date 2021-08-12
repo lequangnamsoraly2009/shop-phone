@@ -2,13 +2,13 @@ import { StarOutlined, StarFilled } from "@ant-design/icons";
 import React from "react";
 import "./rating.css";
 
-function Rating({ detailProduct }) {
+function Rating({ rate }) {
   const percentRate =
-    100 - (detailProduct.rating / detailProduct.numberReviews) * 20;
+    100 - (rate.rating / rate.numberReviews) * 20;
 
   const style_star = {
     clipPath:
-      detailProduct.numberReviews === 0
+    rate.numberReviews === 0
         ? "inset(0 100% 0 0)"
         : `inset(0 ${percentRate}% 0 0)`,
   };

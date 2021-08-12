@@ -1,7 +1,8 @@
-import { Card, Rate, Typography } from "antd";
+import { Card, Typography } from "antd";
 import React from "react";
 import "./cardItem.css";
 import { useHistory } from "react-router-dom";
+import Rating from "../../../../components/Rating";
 
 const { Paragraph } = Typography;
 
@@ -50,7 +51,7 @@ function CardItem({ product }) {
         {product?.title}
       </Paragraph>
       <div className="card-item-rate">
-        <Rate disabled allowHalf defaultValue={4.5} />
+        <Rating rate={product} />
         <div className="card-item-sold">
           <span>Sold: </span>
           <span>{product?.numberSold}</span>

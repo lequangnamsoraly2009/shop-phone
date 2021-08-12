@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, Col, Rate, Row, Select, Tabs } from "antd";
+import { Breadcrumb, Col, Row, Select, Tabs } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./detailProduct.css";
@@ -12,7 +12,7 @@ import MobileSystem from "./components/system";
 import Evalution from "./components/Evalution";
 import QuestionAndAnswers from "./components/Question";
 import Reviews from "./components/Reviews";
-import Rating from "./components/Rating";
+import Rating from "../../../../components/Rating";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -232,8 +232,8 @@ function DetailProduct() {
               </div>
             </div>
             <div className="product-generated">
-              <Rating detailProduct={detailProduct} />
-              <a href="#rate">100 rated </a>
+              <Rating rate={detailProduct} />
+              <p>({detailProduct.numberReviews})</p>
             </div>
           </div>
           <div className="product-variations">
