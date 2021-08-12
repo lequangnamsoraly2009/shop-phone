@@ -14,7 +14,7 @@ import SubMenu from "antd/lib/menu/SubMenu";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "antd/lib/avatar/avatar";
 import API from "../../api/axiosClient";
-import { getLogout, getSocket, getUserLogin } from "../../app/userSlice";
+import { getLogout, getUserLogin } from "../../app/userSlice";
 import { persistor } from "../../app/store";
 import Swal from "sweetalert2";
 import { removeToken } from "../../app/tokenSlice";
@@ -33,7 +33,6 @@ import {
   setSortFilter,
 } from "../../app/productSlice";
 import { GoogleLogout } from "react-google-login";
-import io from "socket.io-client";
 
 const { Search } = Input;
 
@@ -48,13 +47,10 @@ function HeaderNav() {
   const history = useHistory();
 
   useEffect(() => {
-    const socket = io();
     if (token) {
       dispatch(getUserLogin(token));
       dispatch(getCartUser(token));
-      dispatch(getSocket(socket));
     }
-    return () => socket.close();
   }, [token, dispatch]);
 
   const showDrawer = () => {

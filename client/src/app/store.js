@@ -19,6 +19,7 @@ import categoryReducer from "./categorySlice";
 import usersAdminReducer from "./userSlice.admin";
 import paymentReducer from "./paymentSlice";
 import dashboardReducer from "./dashBoardSlice";
+// import socketReducer from "./socketSlice";
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -30,13 +31,14 @@ const rootReducer = combineReducers({
   usersAdmin: usersAdminReducer,
   payments: paymentReducer,
   dashboards: dashboardReducer,
+  // socket: socketReducer,
 });
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["histories"],
+  blacklist: ["histories","socket"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

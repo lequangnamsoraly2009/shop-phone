@@ -40,7 +40,6 @@ app.use("/api/admin", require("./routes/uploadImage.route"));
 app.use("/api", require("./routes/product.route"));
 app.use("/api", require("./routes/reviewComment.route"));
 
-
 //Connect Mongoose
 db.onConnection();
 
@@ -55,9 +54,9 @@ const server = app.listen(port, () => {
 const io = require("socket.io")(server);
 
 io.on("connection", (socket) => {
-  console.log("Connected: " + socket.userId);
+  console.log("Connected: " + socket.id);
 
   socket.on("disconnect", () => {
-    console.log("Disconnected: " + socket.userId);
+    console.log("Disconnected: " + socket.id);
   });
 });

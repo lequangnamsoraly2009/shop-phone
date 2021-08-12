@@ -13,6 +13,7 @@ import Evalution from "./components/Evalution";
 import QuestionAndAnswers from "./components/Question";
 import Reviews from "./components/Reviews";
 import Rating from "../../../../components/Rating";
+import io from "socket.io-client"
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -21,6 +22,8 @@ function DetailProduct() {
   const [detailProduct, setDetailProduct] = useState([]);
   const [categoryDetail, setCategoryDetail] = useState("");
   const [image, setImage] = useState("");
+  const [socket,setSocket] = useState(null);
+
   const dispatch = useDispatch();
 
   const { productsFilter, products } = useSelector(
@@ -30,6 +33,14 @@ function DetailProduct() {
   const { carts } = useSelector((state) => state.carts);
   const { categories } = useSelector((state) => state.categories);
   const params = useParams();
+
+  useEffect(()=>{
+    const socket = io();
+    setSocket(socket)
+    return () => socket.close();
+  },[])
+
+  console.log(socket.id)
 
   useEffect(() => {
     dispatch(getAllProducts());
