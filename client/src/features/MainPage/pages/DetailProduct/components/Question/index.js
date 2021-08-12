@@ -14,9 +14,9 @@ function QuestionAndAnswers() {
           style={{
             width: "100%",
             textAlign: "center",
-            backgroundColor: "rgb(201,232,242)",
+            backgroundColor: "rgb(253,92,50)",
             cursor: "pointer",
-            color: "rgb(236, 71, 93)",
+            color: "#fff",
             letterSpacing: "1px",
           }}
           //   onClick={addCartItem}
@@ -33,9 +33,9 @@ function QuestionAndAnswers() {
             marginTop: 10,
             width: "100%",
             textAlign: "center",
-            backgroundColor: "rgb(201,232,242)",
+            backgroundColor: "rgb(253,92,50)",
             cursor: "pointer",
-            color: "rgb(236, 71, 93)",
+            color: "#fff",
             letterSpacing: "1px",
           }}
           //   onClick={addCartItem}

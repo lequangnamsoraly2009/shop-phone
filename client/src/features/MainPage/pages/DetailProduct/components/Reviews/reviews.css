@@ -12,9 +12,41 @@
 }
 
 .reviews_top-progress {
-  width: 40%;
+  width: 50%;
 }
 
 .reviews_top-create {
-  width: 30%;
+  width: 20%;
+}
+
+/* Review Progress */
+
+.reviews_top-progress {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviews_top-progress-star {
+  display: flex;
+  width: 100%;
+}
+
+.reviews_top-progress-star-1 {
+  width: 10%;
+}
+
+.reviews_top-progress-star-1 span {
+  margin-right: 3px;
+}
+
+.reviews_top-progress-star-2 {
+  width: 70%;
+}
+
+.reviews_top-progress-star-3 {
+  width: 20%;
+  display: flex;
+}
+.reviews_top-progress-star-3 span {
+  margin: 0 auto;
 }

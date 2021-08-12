@@ -26,7 +26,7 @@ function CardItem({ product }) {
           style={{
             paddingTop: 20,
             height: 282,
-            width: 282,
+            width: 275,
             objectFit: "scale-down",
           }}
           alt={product?.description}
