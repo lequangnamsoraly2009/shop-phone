@@ -12,6 +12,7 @@ import MobileSystem from "./components/system";
 import Evalution from "./components/Evalution";
 import QuestionAndAnswers from "./components/Question";
 import Reviews from "./components/Reviews";
+import Rating from "./components/Rating";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -231,12 +232,7 @@ function DetailProduct() {
               </div>
             </div>
             <div className="product-generated">
-              <Rate
-                allowHalf
-                defaultValue={5}
-                value={4.5}
-                style={{ color: "red" }}
-              />
+              <Rating detailProduct={detailProduct} />
               <a href="#rate">100 rated </a>
             </div>
           </div>

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 const productSchema = new mongoose.Schema(
   {
@@ -68,8 +68,16 @@ const productSchema = new mongoose.Schema(
     },
     key: {
       type: String,
-      default: uuidv4(), 
+      default: uuidv4(),
       unique: true,
+    },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    numberReviews: {
+      type: Number,
+      default: 0,
     },
   },
   {
