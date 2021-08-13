@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Rate } from "antd";
 
 function ModelReview({ visible, onCancel, onFinish }) {
   const [form] = Form.useForm();
@@ -23,6 +23,9 @@ function ModelReview({ visible, onCancel, onFinish }) {
       }}
     >
       <Form form={form} layout="vertical" name="form_in_modal">
+        <Form.Item name="rating" label="Rate (Hover to change)">
+          <Rate defaultValue={0} style={{ color: "red", border: "1px solid rgba(173, 172, 172, 0.568)" }} />
+        </Form.Item>
         <Form.Item
           name="title"
           label="Title"
@@ -35,12 +38,16 @@ function ModelReview({ visible, onCancel, onFinish }) {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="message" label="Description" rules={[
+        <Form.Item
+          name="message"
+          label="Description"
+          rules={[
             {
               required: true,
               message: "Please input the description of review!",
             },
-          ]}>
+          ]}
+        >
           <Input type="textarea" />
         </Form.Item>
       </Form>

@@ -46,7 +46,7 @@ function ListComments() {
   return (
     <Comment
       actions={actions}
-      author={<a>Han Solo</a>}
+      author="Han Solo"
       avatar={
         <Avatar
           src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -54,11 +54,14 @@ function ListComments() {
         />
       }
       content={
-        <p>
-          We supply a series of design principles, practical patterns and high
-          quality design resources (Sketch and Axure), to help people create
-          their product prototypes beautifully and efficiently.
-        </p>
+        <>
+          <h3>Content Title</h3>
+          <span>
+            We supply a series of design principles, practical patterns and high
+            quality design resources (Sketch and Axure), to help people create
+            their product prototypes beautifully and efficiently.
+          </span>
+        </>
       }
       datetime={
         <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>

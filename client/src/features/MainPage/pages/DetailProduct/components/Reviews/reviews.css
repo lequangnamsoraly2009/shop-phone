@@ -79,3 +79,14 @@
 .reviews_top-progress-star-3 span {
   margin: 0 auto;
 }
+
+/*  */
+.reviews_bot-header{
+  margin: 5px;
+}
+
+.reviews_bot-header span{
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0 40px;
+}
