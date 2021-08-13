@@ -3,12 +3,16 @@ import React from "react";
 import "./rating.css";
 
 function Rating({ rate }) {
-  const percentRate =
-    100 - (rate.rating / rate.numberReviews) * 20;
+  let percentRate = 0;
+  if (rate.numberReviews) {
+    percentRate = 100 - (rate.rating / rate.numberReviews) * 20;
+  } else {
+    percentRate = 100 - rate.rating * 20;
+  }
 
   const style_star = {
     clipPath:
-    rate.numberReviews === 0
+      rate.numberReviews === 0
         ? "inset(0 100% 0 0)"
         : `inset(0 ${percentRate}% 0 0)`,
   };

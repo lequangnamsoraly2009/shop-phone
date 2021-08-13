@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Progress } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import "./reviews.css";
@@ -10,12 +10,14 @@ import API from "../../../../../../api/axiosClient";
 function Reviews({ detailProduct, socket }) {
   const [visible, setVisible] = useState(false);
   const { user } = useSelector((state) => state.user);
+  const [reviews, setReviews] = useState([]);
+  const [loadingReview, setLoadingReview] = useState(false);
 
   const onFinish = async (values) => {
     const { message, rating, title } = values;
     setVisible(false);
 
-    const createdAt = new Date().toISOString(); 
+    const createdAt = new Date().toISOString();
 
     socket.emit("createCommentReview", {
       userName: user.userName,
@@ -23,13 +25,30 @@ function Reviews({ detailProduct, socket }) {
       rating,
       title,
       product_id: detailProduct._id,
-      createdAt
+      createdAt,
     });
 
     if (rating && rating !== 0) {
-      await API.patch(`/api/products/${detailProduct._id}`,{rating});
+      await API.patch(`/api/products/${detailProduct._id}`, { rating });
     }
   };
+
+  useEffect(() => {
+    const loadDataReview = async () => {
+      try {
+        setLoadingReview(true);
+        const response = await API.get(
+          `/api/review-comments/${detailProduct._id}`
+        );
+
+        setReviews(response.data.reviews);
+        setLoadingReview(false);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    loadDataReview();
+  }, [detailProduct._id]);
 
   const showModal = () => {
     setVisible(true);
@@ -46,7 +65,13 @@ function Reviews({ detailProduct, socket }) {
             {detailProduct.numberReviews === 0 ? (
               <span>0</span>
             ) : (
-              <span>{(Math.round((detailProduct.rating / detailProduct.numberReviews)*100)/100).toFixed(1)}</span>
+              <span>
+                {(
+                  Math.round(
+                    (detailProduct.rating / detailProduct.numberReviews) * 100
+                  ) / 100
+                ).toFixed(1)}
+              </span>
             )}
             <StarFilled style={{ color: "red", fontSize: "22px" }} />
           </div>
@@ -151,7 +176,9 @@ function Reviews({ detailProduct, socket }) {
           <span>Customer Reviews</span>
         </div>
         <div className="reviews_bot-list">
-          <ListComments />
+          {reviews.map((review) => (
+            <ListComments key={review._id} review={review} />
+          ))}
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { createElement, useState } from "react";
-import { Comment, Tooltip, Avatar } from "antd";
+import { Comment, Tooltip, Avatar, Rate } from "antd";
 import moment from "moment";
 import {
   DislikeOutlined,
@@ -7,8 +7,9 @@ import {
   DislikeFilled,
   LikeFilled,
 } from "@ant-design/icons";
+import Rating from "../../../../../../components/Rating";
 
-function ListComments() {
+function ListComments({ review }) {
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [action, setAction] = useState(null);
@@ -46,26 +47,26 @@ function ListComments() {
   return (
     <Comment
       actions={actions}
-      author="Han Solo"
+      author={review.userName}
       avatar={
         <Avatar
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          alt="Han Solo"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrc-3zHHM18E7n_TuFEs26rqEKbR5n3dp0lA&usqp=CAU"
+          alt={review.userName}
         />
       }
       content={
         <>
-          <h3>Content Title</h3>
-          <span>
-            We supply a series of design principles, practical patterns and high
-            quality design resources (Sketch and Axure), to help people create
-            their product prototypes beautifully and efficiently.
-          </span>
+          {/* <h3><Rate disabled defaultValue={review.rating} style={{color: "red"}} /> {review.title}</h3> */}
+          <div style={{display: "flex"}}>
+            {review.rating !== 0 && <Rating rate={review} />}{" "}
+            <h3 style={{fontSize: 20, marginLeft: 10}}>{review.title}</h3>
+          </div>
+          <span>{review.message}</span>
         </>
       }
       datetime={
-        <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
-          <span>{moment().fromNow()}</span>
+        <Tooltip title={moment(review.createdAt).format("YYYY-MM-DD HH:mm:ss")}>
+          <span>{moment(review.createdAt).fromNow()}</span>
         </Tooltip>
       }
     />
