@@ -1,12 +1,36 @@
 const ReviewComments = require("../models/reviewComment.model");
 
+class APIfeatures{
+  constructor(query, queryString){
+      this.query = query;
+      this.queryString = queryString;
+  }
+  sorting(){
+      this.query = this.query.sort('-createdAt')
+      return this;
+  }
+  paginating(){
+      const page = this.queryString.page * 1 || 1
+      const limit = this.queryString.limit * 1 || 5
+      const skip = (page - 1) * limit
+      this.query = this.query.skip(skip).limit(limit)
+      return this;
+  }
+}
+
 const reviewCommentController = {
   getReviewComments: async (req, res) => {
     try {
-      const reviewComments = await ReviewComments.find({
-        product_id: req.params.id,
-      });
-      res.json({ reviewComments });
+      const features = new APIfeatures(ReviewComments.find({product_id: req.params.id}),req.query).sorting().paginating()
+
+      const reviews = await features.query
+
+      res.json({
+        status: 'success',
+        result: reviews.length,
+        reviews
+    })
+
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
