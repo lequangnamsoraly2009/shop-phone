@@ -52,13 +52,24 @@ const server = app.listen(port, () => {
 
 // Config socketio
 const io = require("socket.io")(server);
+const ReviewComments = require("./models/reviewComment.model");
 
 io.on("connection", (socket) => {
   console.log("Connected: " + socket.id);
 
-  socket.on('createCommentReview', msg => {
-    console.log(msg)
-  })
+  socket.on("createCommentReview", async (msg) => {
+    const { userName, message, rating, title, product_id, createdAt } = msg;
+
+    const newReview = new ReviewComments({
+      userName,
+      message,
+      rating,
+      title,
+      product_id,
+      createdAt,
+    });
+    await newReview.save();
+  });
 
   socket.on("disconnect", () => {
     console.log("Disconnected: " + socket.id);
