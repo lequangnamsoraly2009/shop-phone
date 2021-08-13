@@ -1,23 +1,19 @@
 import React, { useState } from "react";
-import { Button, Progress, Rate } from "antd";
-
+import {Progress, Rate } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import "./reviews.css";
-import Modal from "antd/lib/modal/Modal";
+import ModelReview from "./modelReview";
 
 function Reviews({ detailProduct }) {
   const [visible, setVisible] = useState(false);
 
-  const handleCancel = () => {
-    setVisible(false)
+  const onFinish = (values) => {
+    console.log(values);
+    setVisible(false);
   };
 
-  const handleOk = () =>{
-    setVisible(false)
-  }
-
   const showModal = () => {
-    setVisible(true)
+    setVisible(true);
   };
 
   return (
@@ -122,33 +118,7 @@ function Reviews({ detailProduct }) {
               Write a Review
             </div>
           </div>
-          <Modal
-            visible={visible}
-            title="Title"
-            onOk={handleOk}
-            onCancel={handleCancel}
-            footer={[
-              <Button key="back" onClick={handleCancel}>
-                Return
-              </Button>,
-              <Button key="submit" type="primary" onClick={handleOk}>
-                Submit
-              </Button>,
-              <Button
-                type="primary"
-                // loading={loading}
-                onClick={handleOk}
-              >
-                Search on Google
-              </Button>,
-            ]}
-          >
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-          </Modal>
+          <ModelReview visible={visible} onFinish={onFinish} onCancel={()=>{setVisible(false)}}/>
         </div>
       </div>
       <div className="reviews_bot">
