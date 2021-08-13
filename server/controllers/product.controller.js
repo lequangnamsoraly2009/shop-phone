@@ -55,7 +55,7 @@ const productController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  // get product by filter 
+  // get product by filter
   getFilterProducts: async (req, res) => {
     try {
       const features = new APIfeatures(Products.find(), req.query)
@@ -87,7 +87,7 @@ const productController = {
         storage,
         sale,
         nameCategory,
-        memory
+        memory,
       } = req.body;
 
       if (!images)
@@ -118,7 +118,7 @@ const productController = {
         storage,
         sale,
         nameCategory,
-        memory
+        memory,
       });
 
       await newProduct.save();
@@ -174,6 +174,21 @@ const productController = {
         }
       );
 
+      res.json({ message: "Update a product successful !!! " });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  updatePatchProduct: async (req, res) => {
+    try {
+      const { rating } = req.body;
+      await Products.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          rating,
+          numberReviews: numberReviews + 1,
+        }
+      );
       res.json({ message: "Update a product successful !!! " });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });

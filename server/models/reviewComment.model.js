@@ -17,6 +17,7 @@ const reviewCommentSchema = new mongoose.Schema(
     },
     images: {
       type: Object,
+      default: {}
     },
     product_id: {
       type: String,
@@ -35,7 +36,7 @@ const reviewCommentSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    replys: {
+    replies: {
       type: Array,
     },
   },

@@ -13,7 +13,7 @@ import Evalution from "./components/Evalution";
 import QuestionAndAnswers from "./components/Question";
 import Reviews from "./components/Reviews";
 import Rating from "../../../../components/Rating";
-// import io from "socket.io-client"
+import io from "socket.io-client"
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -22,7 +22,7 @@ function DetailProduct() {
   const [detailProduct, setDetailProduct] = useState([]);
   const [categoryDetail, setCategoryDetail] = useState("");
   const [image, setImage] = useState("");
-  // const [socket,setSocket] = useState(null);
+  const [socket,setSocket] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -36,11 +36,11 @@ function DetailProduct() {
 
   // Socket Config
 
-  // useEffect(()=>{
-  //   const socket = io();
-  //   setSocket(socket)
-  //   return () => socket.close();
-  // },[])
+  useEffect(()=>{
+    const socket = io();
+    setSocket(socket)
+    return () => socket.close();
+  },[])
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -393,7 +393,7 @@ function DetailProduct() {
             <Evalution />
           </TabPane>
           <TabPane tab="Product Reviews" key="reviews">
-            <Reviews detailProduct={detailProduct} />
+            <Reviews detailProduct={detailProduct} socket={socket}/>
           </TabPane>
           <TabPane tab="Questions And Answers" key="QandA">
             <QuestionAndAnswers />

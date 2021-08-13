@@ -1,16 +1,30 @@
 import React, { useState } from "react";
-import { Progress, Rate } from "antd";
+import { Progress } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import "./reviews.css";
-import ModelReview from "./modelReview";
 import ListComments from "./listComment";
+import ModalReview from "./modelReview";
+import { useSelector } from "react-redux";
+import API from "../../../../../../api/axiosClient";
 
-function Reviews({ detailProduct }) {
+function Reviews({ detailProduct, socket }) {
   const [visible, setVisible] = useState(false);
+  const { user } = useSelector((state) => state.user);
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    const { message, rating, title } = values;
     setVisible(false);
+
+    socket.emit("createCommentReview", {
+      userName: user.userName,
+      message,
+      rating,
+      title,
+      product_id: detailProduct._id,
+    });
+    if (rating && rating !== 0) {
+      await API.patch(`/api/products/${detailProduct._id}`,{rating});
+    }
   };
 
   const showModal = () => {
@@ -119,7 +133,7 @@ function Reviews({ detailProduct }) {
               Write a Review
             </div>
           </div>
-          <ModelReview
+          <ModalReview
             visible={visible}
             onFinish={onFinish}
             onCancel={() => {

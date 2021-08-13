@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Form, Input, Rate } from "antd";
 
-function ModelReview({ visible, onCancel, onFinish }) {
+function ModalReview({ visible, onCancel, onFinish }) {
   const [form] = Form.useForm();
   return (
     <Modal
@@ -22,9 +22,9 @@ function ModelReview({ visible, onCancel, onFinish }) {
           });
       }}
     >
-      <Form form={form} layout="vertical" name="form_in_modal">
+      <Form form={form} layout="vertical" name="form_in_modal" initialValues={{rating: 0} }>
         <Form.Item name="rating" label="Rate (Hover to change)">
-          <Rate defaultValue={0} style={{ color: "red", border: "1px solid rgba(173, 172, 172, 0.568)" }} />
+          <Rate style={{ color: "red", border: "1px solid rgba(173, 172, 172, 0.568)" }} />
         </Form.Item>
         <Form.Item
           name="title"
@@ -55,4 +55,4 @@ function ModelReview({ visible, onCancel, onFinish }) {
   );
 }
 
-export default ModelReview;
+export default ModalReview;
