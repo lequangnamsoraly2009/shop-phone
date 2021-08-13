@@ -1,11 +1,46 @@
-import React from 'react'
+import React from "react";
+import { Modal, Form, Input, Radio } from "antd";
 
-function ModelReview() {
-    return (
-        <div>
-            
-        </div>
-    )
+function ModelReview({ visible, onCancel, onFinish }) {
+  const [form] = Form.useForm();
+  return (
+    <Modal
+      visible={visible}
+      title="Create a new review"
+      okText="Post"
+      cancelText="Cancel"
+      onCancel={onCancel}
+      onOk={() => {
+        form
+          .validateFields()
+          .then((values) => {
+            form.resetFields();
+            onFinish(values);
+          })
+          .catch((info) => {
+            console.log("Validate Failed:", info);
+          });
+      }}
+    >
+      <Form form={form} layout="vertical" name="form_in_modal">
+        <Form.Item
+          name="title"
+          label="Title"
+          rules={[
+            {
+              required: true,
+              message: "Please input the title of review!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item name="description" label="Description">
+          <Input type="textarea" />
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
 }
 
-export default ModelReview
+export default ModelReview;
