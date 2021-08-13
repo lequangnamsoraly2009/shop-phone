@@ -182,14 +182,20 @@ const productController = {
   updatePatchProduct: async (req, res) => {
     try {
       const { rating } = req.body;
-      await Products.findByIdAndUpdate(
-        { _id: req.params.id },
-        {
-          rating,
-          numberReviews: numberReviews + 1,
-        }
-      );
-      res.json({ message: "Update a product successful !!! " });
+      
+      if(rating && rating !== 0){
+        const product = await Products.findById(req.params.id)
+        if(!product) return res.status(400).json({msg: 'Product does not exist.'})
+
+        let num = product.numberReviews;
+        let rate = product.rating;
+
+        await Products.findOneAndUpdate({_id: req.params.id}, {
+            rating: rate + rating, numberReviews: num + 1
+        })
+
+        res.json({msg: 'Update success'})
+    }
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

@@ -42,7 +42,7 @@ function Reviews({ detailProduct, socket }) {
             {detailProduct.numberReviews === 0 ? (
               <span>0</span>
             ) : (
-              <span>{detailProduct.rating / detailProduct.numberReviews}</span>
+              <span>{(Math.round((detailProduct.rating / detailProduct.numberReviews)*100)/100).toFixed(1)}</span>
             )}
             <StarFilled style={{ color: "red", fontSize: "22px" }} />
           </div>
