@@ -27,6 +27,14 @@ const reviewCommentSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    like: {
+      type: Number,
+      default: 0,
+    },
+    dislike: {
+      type: Number,
+      default: 0,
+    },
     replys: {
       type: Array,
     },

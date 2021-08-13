@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import {Progress, Rate } from "antd";
+import { Progress, Rate } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import "./reviews.css";
 import ModelReview from "./modelReview";
+import ListComments from "./listComment";
 
 function Reviews({ detailProduct }) {
   const [visible, setVisible] = useState(false);
@@ -118,7 +119,13 @@ function Reviews({ detailProduct }) {
               Write a Review
             </div>
           </div>
-          <ModelReview visible={visible} onFinish={onFinish} onCancel={()=>{setVisible(false)}}/>
+          <ModelReview
+            visible={visible}
+            onFinish={onFinish}
+            onCancel={() => {
+              setVisible(false);
+            }}
+          />
         </div>
       </div>
       <div className="reviews_bot">
@@ -126,7 +133,7 @@ function Reviews({ detailProduct }) {
           <span>Customer Reviews</span>
         </div>
         <div className="reviews_bot-list">
-          <div className="reviews_bot-list-item">
+          {/* <div className="reviews_bot-list-item">
             <div className="reviews_bot-list-item-header">
               <p>Soraly XYZ</p>
               <span>- Ngày 2021-08-10 13:23:25</span>
@@ -143,7 +150,8 @@ function Reviews({ detailProduct }) {
                 </span>
               </div>
             </div>
-          </div>
+          </div> */}
+          <ListComments />
         </div>
       </div>
     </div>

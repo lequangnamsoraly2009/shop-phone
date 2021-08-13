@@ -35,7 +35,12 @@ function ModelReview({ visible, onCancel, onFinish }) {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="message" label="Description">
+        <Form.Item name="message" label="Description" rules={[
+            {
+              required: true,
+              message: "Please input the description of review!",
+            },
+          ]}>
           <Input type="textarea" />
         </Form.Item>
       </Form>
