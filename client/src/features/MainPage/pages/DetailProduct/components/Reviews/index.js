@@ -15,13 +15,17 @@ function Reviews({ detailProduct, socket }) {
     const { message, rating, title } = values;
     setVisible(false);
 
+    const createdAt = new Date().toISOString(); 
+
     socket.emit("createCommentReview", {
       userName: user.userName,
       message,
       rating,
       title,
       product_id: detailProduct._id,
+      createdAt
     });
+
     if (rating && rating !== 0) {
       await API.patch(`/api/products/${detailProduct._id}`,{rating});
     }
@@ -147,24 +151,6 @@ function Reviews({ detailProduct, socket }) {
           <span>Customer Reviews</span>
         </div>
         <div className="reviews_bot-list">
-          {/* <div className="reviews_bot-list-item">
-            <div className="reviews_bot-list-item-header">
-              <p>Soraly XYZ</p>
-              <span>- Ngày 2021-08-10 13:23:25</span>
-            </div>
-            <div className="reviews_bot-list-item-comment">
-              <div className="star">
-                <Rate disabled defaultValue={5} style={{ color: "red" }} />
-              </div>
-              <div className="comment">
-                <span>
-                  Mua hàng Cellphones online lần đầu mà chắc cũng là lần cuối.
-                  Con máy cũng 20 củ mà nhận được thì bị trầy. Thời gian giãn
-                  cách nên không đi mua trực tiếp được lại bị vậy. Chán thực sự.
-                </span>
-              </div>
-            </div>
-          </div> */}
           <ListComments />
         </div>
       </div>
