@@ -76,7 +76,7 @@ function Reviews({ detailProduct, socket }) {
             <StarFilled style={{ color: "red", fontSize: "22px" }} />
           </div>
           <div className="reviews_top-star-count">
-            <span>({detailProduct.numberReviews} Reviews)</span>
+            <span>({detailProduct.numberReviews} Rating)</span>
           </div>
         </div>
         <div className="reviews_top-progress">

@@ -59,7 +59,7 @@ function ListComments({ review }) {
           {/* <h3><Rate disabled defaultValue={review.rating} style={{color: "red"}} /> {review.title}</h3> */}
           <div style={{display: "flex"}}>
             {review.rating !== 0 && <Rating rate={review} />}{" "}
-            <h3 style={{fontSize: 20, marginLeft: 10}}>{review.title}</h3>
+            <h3 style={{fontSize: 20}}>{review.title}</h3>
           </div>
           <span>{review.message}</span>
         </>
