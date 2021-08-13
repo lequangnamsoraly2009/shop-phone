@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Form, Input, Radio } from "antd";
+import { Modal, Form, Input } from "antd";
 
 function ModelReview({ visible, onCancel, onFinish }) {
   const [form] = Form.useForm();
@@ -35,7 +35,7 @@ function ModelReview({ visible, onCancel, onFinish }) {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="description" label="Description">
+        <Form.Item name="message" label="Description">
           <Input type="textarea" />
         </Form.Item>
       </Form>

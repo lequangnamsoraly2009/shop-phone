@@ -7,6 +7,10 @@ const reviewCommentSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
     message: {
       type: String,
       required: true,
