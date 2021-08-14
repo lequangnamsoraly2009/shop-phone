@@ -1,4 +1,4 @@
-import React, { createElement, useState } from "react";
+import React, { createElement, useCallback, useEffect, useState } from "react";
 import { Comment, Tooltip, Avatar, Form, Input, Button } from "antd";
 import moment from "moment";
 import {
@@ -11,14 +11,36 @@ import Rating from "../../../../../../components/Rating";
 import { useSelector } from "react-redux";
 
 // const { TextArea } = Input;
+const perPage = 3;
+let showCommentReviews = [];
 
 function ListComments({ review, socket }) {
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [action, setAction] = useState(null);
   const [reply, setReply] = useState(false);
+  const [replyCommentReview, setReplyCommentReview] = useState([]);
+  const [hideReplyComment, setHideReplyComment] = useState(false);
+  const [next, setNext] = useState(3);
 
   const { user } = useSelector((state) => state.user);
+
+  const loopWithSlice = useCallback(
+    (num) => {
+      let start =
+        review.replies.length - (perPage + num) < 0
+          ? 0
+          : review.replies.length - (perPage + num);
+      showCommentReviews = review.replies.slice(start, review.replies.length);
+      setHideReplyComment(start);
+      setReplyCommentReview(showCommentReviews);
+    },
+    [review.replies]
+  );
+
+  useEffect(() => {
+    loopWithSlice(0);
+  }, [loopWithSlice]);
 
   const like = () => {
     setLikes(1);
@@ -39,6 +61,16 @@ function ListComments({ review, socket }) {
   const handleHideReplyReview = () => {
     setReply(false);
   };
+
+  const handleShowMoreReplies = () =>{
+    loopWithSlice(next);
+    setNext(next+ perPage)
+  }
+
+  const handleShowLessReplies = () =>{
+    loopWithSlice(0);
+    setNext(3)
+  }
 
   const handleOnSubmit = async (values) => {
     const { message } = values;
@@ -80,10 +112,43 @@ function ListComments({ review, socket }) {
         </span>
       )}
     </>,
+    <>
+      {hideReplyComment > 0 ? (
+        <span key="comment-basic-reply-to" onClick={handleShowMoreReplies}>
+          Show more {hideReplyComment} replies
+        </span>
+      ) : (<span key="comment-basic-reply-to" onClick={handleShowLessReplies}>
+      Show less replies
+    </span>)}
+    </>,
+  ];
 
-    <span key="comment-basic-reply-to" onClick={handleHideReplyReview}>
-      Show more replies
-    </span>,
+  const actionReplies = [
+    <Tooltip key="comment-basic-like" title="Like">
+      <span onClick={like}>
+        {createElement(action === "liked" ? LikeFilled : LikeOutlined)}
+        <span className="comment-action">{likes}</span>
+      </span>
+    </Tooltip>,
+    <Tooltip key="comment-basic-dislike" title="Dislike">
+      <span onClick={dislike}>
+        {React.createElement(
+          action === "disliked" ? DislikeFilled : DislikeOutlined
+        )}
+        <span className="comment-action">{dislikes}</span>
+      </span>
+    </Tooltip>,
+    // <>
+    //   {reply === false ? (
+    //     <span key="comment-basic-reply-to" onClick={handleReplyReview}>
+    //       Reply
+    //     </span>
+    //   ) : (
+    //     <span key="comment-basic-reply-to" onClick={handleHideReplyReview}>
+    //       Hide reply
+    //     </span>
+    //   )}
+    // </>,
   ];
 
   const Editor = () => (
@@ -140,9 +205,9 @@ function ListComments({ review, socket }) {
         </>
       )}
       <div className="reply-review">
-        {review.replies?.map((rep) => (
+        {replyCommentReview.map((rep) => (
           <Comment
-            // actions={actions}
+            actions={actionReplies}
             key={rep._id}
             author={rep.userName}
             avatar={
