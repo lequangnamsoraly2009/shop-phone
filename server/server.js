@@ -54,15 +54,18 @@ const server = app.listen(port, () => {
 const io = require("socket.io")(server);
 const ReviewComments = require("./models/reviewComment.model");
 
-let users = [];
 io.on("connection", (socket) => {
-  console.log("Connected: " + socket.id);
+  // console.log("Connected: " + socket.id);
 
   socket.on("joinRoomReviewsProduct", async (id) => {
+    let users = [];
+
+    // Xem 1 kết nối là 1 user và gán cho nó id của socket
+    // Room có giá trị là của detailProduct id -> Id của product là 1 room id
     const user = { userId: socket.id, room: id };
-
+    // Kiểm tra trong danh sách các users có user nào không trùng với socket vừa kết nối ko
     const check = users.every((user) => user.userId !== socket.id);
-
+    // Nếu có -> Thì thêm socket vừa kết nối vào list users của socket
     if (check) {
       users.push(user);
       socket.join(user.room);
@@ -92,11 +95,10 @@ io.on("connection", (socket) => {
     });
     await newReview.save();
 
-    io.to(newReview.product_id).emit('sendReviewToClient', newReview);
-
+    io.to(newReview.product_id).emit("sendReviewToClient", newReview);
   });
 
   socket.on("disconnect", () => {
-    console.log("Disconnected: " + socket.id);
+    // console.log("Disconnected: " + socket.id);
   });
 });
