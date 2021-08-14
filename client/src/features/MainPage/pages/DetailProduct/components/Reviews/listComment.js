@@ -27,6 +27,7 @@ function ListComments({ review, socket }) {
 
   const { user } = useSelector((state) => state.user);
 
+  // Slice Comment replies
   const loopWithSlice = useCallback(
     (num) => {
       let start =
@@ -56,36 +57,43 @@ function ListComments({ review, socket }) {
     setAction("disliked");
   };
 
+  // Mở khung comment khi muốn comment lại thằng review
   const handleReplyReview = () => {
     setReply(true);
     setReplyChild(false);
   };
 
+  // Mở khung comment khi reply comment thằng con bên trong thằng review
   const handleReplyReviewChild = (values) => {
     setReplyChild(true);
     setReply(false);
     setUserReplyChild(values);
   };
 
+  // Hide khung comment khi reply thằng review 
   const handleHideReplyReview = () => {
     setReply(false);
   };
 
+  // Hide Khung Comment khi Reply comment con bên trong thằng review
   const handleHideReplyReviewChild = () => {
     setUserReplyChild("");
     setReplyChild(false);
   };
 
+  // Mở show thêm tin nhắn replies từ thằng review cha
   const handleShowMoreReplies = () => {
     loopWithSlice(next);
     setNext(next + perPage);
   };
 
+  // Đóng show tin nhắn replies lại 
   const handleShowLessReplies = () => {
     loopWithSlice(0);
     setNext(3);
   };
 
+  // Socket gửi comment reply với send là replyReview -> Thằng này là comment reply 
   const handleOnSubmit = async (values) => {
     const { message } = values;
 
@@ -100,6 +108,7 @@ function ListComments({ review, socket }) {
     });
   };
 
+  // Cái này là các actions của thằng review chính
   const actions = [
     <Tooltip key="comment-basic-like" title="Like">
       <span onClick={like}>
@@ -139,8 +148,7 @@ function ListComments({ review, socket }) {
     </>,
   ];
 
-  // const actionReplies = ;
-
+  // Nơi nhập tin nhắn trả lời lại review mà customer đăng
   const Editor = () => (
     <Form onFinish={handleOnSubmit}>
       <Form.Item name="message" initialValue={`@${review.userName}: `}>
@@ -154,6 +162,7 @@ function ListComments({ review, socket }) {
     </Form>
   );
 
+  // Nơi nhập tin nhắn trả lời lại tin nhắn của thằng comment con 
   const EditorReplyChild = () => (
     <Form onFinish={handleOnSubmit}>
       <Form.Item name="message" initialValue={`@${userReplyChild}: `}>
@@ -168,6 +177,7 @@ function ListComments({ review, socket }) {
   );
 
   return (
+    // Comment review được đăng của customer - Root
     <Comment
       actions={actions}
       author={review.userName}
@@ -179,7 +189,6 @@ function ListComments({ review, socket }) {
       }
       content={
         <>
-          {/* <h3><Rate disabled defaultValue={review.rating} style={{color: "red"}} /> {review.title}</h3> */}
           <div style={{ display: "flex" }}>
             {review.rating !== 0 && <Rating rate={review} />}{" "}
             <h3 style={{ fontSize: 20 }}>{review.title}</h3>
@@ -193,9 +202,9 @@ function ListComments({ review, socket }) {
         </Tooltip>
       }
     >
+      {/* Reply comment của thằng cha - Tree 0  */}
       {reply && (
         <>
-          {/* {comments.length > 0 && <CommentList comments={comments} />} */}
           <Comment
             avatar={
               <Avatar
@@ -207,6 +216,7 @@ function ListComments({ review, socket }) {
           />
         </>
       )}
+      {/* Reply comment con của thằng review cha - Tree 1 */}
       {replyChild && (
         <Comment
           avatar={
@@ -218,6 +228,7 @@ function ListComments({ review, socket }) {
           content={<EditorReplyChild />}
         />
       )}
+      {/* List comment review con của thằng review cha  - Tree 1*/}
       <div className="reply-review">
         {replyCommentReview.map((rep) => (
           <Comment
