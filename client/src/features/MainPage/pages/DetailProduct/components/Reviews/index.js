@@ -95,17 +95,18 @@ function Reviews({ detailProduct, socket }) {
   useEffect(() => {
     if (socket) {
       socket.on("sendReplyReviewToClient", (msg) => {
-        const newArr = [...reviews];
+        console.log(msg)
+        const newArr = [...allReviews];
         newArr.forEach((review) => {
           if (review._id === msg._id) {
-            review.reply = msg.reply;
+            review.replies = msg.replies;
           }
         });
-        setReviews(newArr);
+        setReviews(allReviews);
       });
       return () => socket.off("sendReplyReviewToClient");
     }
-  }, [socket, reviews]);
+  }, [socket, allReviews]);
 
   const showModal = () => {
     setVisible(true);

@@ -120,6 +120,7 @@ function ListComments({ review, socket }) {
         {review.replies?.map((rep) => (
           <Comment
             // actions={actions}
+            key={rep._id}
             author={rep.userName}
             avatar={
               <Avatar
