@@ -1,5 +1,5 @@
 import React, { createElement, useState } from "react";
-import { Comment, Tooltip, Avatar, Rate } from "antd";
+import { Comment, Tooltip, Avatar } from "antd";
 import moment from "moment";
 import {
   DislikeOutlined,

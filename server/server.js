@@ -54,8 +54,30 @@ const server = app.listen(port, () => {
 const io = require("socket.io")(server);
 const ReviewComments = require("./models/reviewComment.model");
 
+let users = [];
 io.on("connection", (socket) => {
   console.log("Connected: " + socket.id);
+
+  socket.on("joinRoomReviewsProduct", async (id) => {
+    const user = { userId: socket.id, room: id };
+
+    const check = users.every((user) => user.userId !== socket.id);
+
+    if (check) {
+      users.push(user);
+      socket.join(user.room);
+    } else {
+      users.map((user) => {
+        if (user.userId === socket.id) {
+          if (user.room !== id) {
+            socket.leave(user.room);
+            socket.join(user.room);
+            user.room = id;
+          }
+        }
+      });
+    }
+  });
 
   socket.on("createCommentReview", async (msg) => {
     const { userName, message, rating, title, product_id, createdAt } = msg;
@@ -69,6 +91,9 @@ io.on("connection", (socket) => {
       createdAt,
     });
     await newReview.save();
+
+    io.to(newReview.product_id).emit('sendReviewToClient', newReview);
+
   });
 
   socket.on("disconnect", () => {

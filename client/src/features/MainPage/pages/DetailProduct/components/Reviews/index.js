@@ -50,6 +50,23 @@ function Reviews({ detailProduct, socket }) {
     loadDataReview();
   }, [detailProduct._id]);
 
+  // Real Time
+  // Join Room
+  useEffect(() => {
+    if(socket){
+      socket.emit('joinRoomReviewsProduct',detailProduct._id)
+    }
+  },[socket,detailProduct._id])
+
+  useEffect(() => {
+    if(socket){
+      socket.on('sendReviewToClient', msg => {
+        setReviews([msg, ...reviews]);
+      })
+      return () => socket.off('sendReviewToClient')
+    }
+  },[socket,reviews])
+
   const showModal = () => {
     setVisible(true);
   };
@@ -173,7 +190,7 @@ function Reviews({ detailProduct, socket }) {
       </div>
       <div className="reviews_bot">
         <div className="reviews_bot-header">
-          <span>Customer Reviews</span>
+          <span>Customer Reviews ({reviews.length} reviews)</span>
         </div>
         <div className="reviews_bot-list">
           {reviews.map((review) => (
