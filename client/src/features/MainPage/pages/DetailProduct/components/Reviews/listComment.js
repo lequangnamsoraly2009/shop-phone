@@ -69,11 +69,20 @@ function ListComments({ review, socket }) {
         <span className="comment-action">{dislikes}</span>
       </span>
     </Tooltip>,
-    <span key="comment-basic-reply-to" onClick={handleReplyReview}>
-      Reply to
-    </span>,
+    <>
+      {reply === false ? (
+        <span key="comment-basic-reply-to" onClick={handleReplyReview}>
+          Reply
+        </span>
+      ) : (
+        <span key="comment-basic-reply-to" onClick={handleHideReplyReview}>
+          Hide reply
+        </span>
+      )}
+    </>,
+
     <span key="comment-basic-reply-to" onClick={handleHideReplyReview}>
-      Hide replies
+      Show more replies
     </span>,
   ];
 
