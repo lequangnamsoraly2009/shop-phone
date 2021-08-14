@@ -81,6 +81,12 @@
 }
 
 /*  */
+
+.reviews_bot{
+  display: flex;
+  flex-direction: column;
+}
+
 .reviews_bot-header{
   margin: 5px;
 }
@@ -89,4 +95,10 @@
   font-weight: 700;
   font-size: 18px;
   margin: 0 40px;
+}
+
+/* Pagination */
+.reviews-pagination{
+  display: flex;
+  margin: 20px auto;
 }

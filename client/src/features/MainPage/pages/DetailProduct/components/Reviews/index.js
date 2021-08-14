@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Progress } from "antd";
+import { Progress, Pagination } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import "./reviews.css";
 import ListComments from "./listComment";
@@ -11,7 +11,9 @@ function Reviews({ detailProduct, socket }) {
   const [visible, setVisible] = useState(false);
   const { user } = useSelector((state) => state.user);
   const [reviews, setReviews] = useState([]);
+  const [allReviews, setAllReviews] = useState([]);
   const [loadingReview, setLoadingReview] = useState(false);
+  const [page, setPage] = useState(1);
 
   const onFinish = async (values) => {
     const { message, rating, title } = values;
@@ -29,7 +31,9 @@ function Reviews({ detailProduct, socket }) {
     });
 
     if (rating && rating !== 0) {
-      await API.patch(`/api/products/${detailProduct._id}`, { rating });
+      await API.patch(`/api/products/${detailProduct._id}}`, {
+        rating,
+      });
     }
   };
 
@@ -38,9 +42,12 @@ function Reviews({ detailProduct, socket }) {
       try {
         setLoadingReview(true);
         const response = await API.get(
-          `/api/review-comments/${detailProduct._id}`
+          `/api/review-comments/${detailProduct._id}?limit=${page * 3}`
         );
-
+        const responseAll = await API.get(
+          `/api/review-all-comments/${detailProduct._id}`
+        );
+        setAllReviews(responseAll.data.reviews);
         setReviews(response.data.reviews);
         setLoadingReview(false);
       } catch (error) {
@@ -48,24 +55,42 @@ function Reviews({ detailProduct, socket }) {
       }
     };
     loadDataReview();
-  }, [detailProduct._id]);
+  }, [detailProduct._id, page]);
+
+  // Handle Change Page Review
+  const handleChangePageReviews = async (page, pageSize) => {
+    try {
+      setLoadingReview(true);
+      const response = await API.get(
+        `/api/review-comments/${detailProduct._id}?limit=${page * pageSize}`
+      );
+      const dataSlice = response.data.reviews.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+      );
+      setReviews(dataSlice);
+      setLoadingReview(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   // Real Time
   // Join Room
   useEffect(() => {
-    if(socket){
-      socket.emit('joinRoomReviewsProduct',detailProduct._id)
+    if (socket) {
+      socket.emit("joinRoomReviewsProduct", detailProduct._id);
     }
-  },[socket,detailProduct._id])
+  }, [socket, detailProduct._id]);
 
   useEffect(() => {
-    if(socket){
-      socket.on('sendReviewToClient', msg => {
+    if (socket) {
+      socket.on("sendReviewToClient", (msg) => {
         setReviews([msg, ...reviews]);
-      })
-      return () => socket.off('sendReviewToClient')
+      });
+      return () => socket.off("sendReviewToClient");
     }
-  },[socket,reviews])
+  }, [socket, reviews]);
 
   const showModal = () => {
     setVisible(true);
@@ -190,12 +215,27 @@ function Reviews({ detailProduct, socket }) {
       </div>
       <div className="reviews_bot">
         <div className="reviews_bot-header">
-          <span>Customer Reviews ({reviews.length} reviews)</span>
+          <span>Customer Reviews ({allReviews.length} reviews)</span>
         </div>
         <div className="reviews_bot-list">
           {reviews.map((review) => (
             <ListComments key={review._id} review={review} />
           ))}
+        </div>
+        <div className="reviews-pagination">
+          {allReviews.length <= 3 ? (
+            ""
+          ) : (
+            <Pagination
+              defaultCurrent={1}
+              total={allReviews.length}
+              showSizeChanger={false}
+              pageSize={3}
+              onChange={(page, pageSize) =>
+                handleChangePageReviews(page, pageSize)
+              }
+            />
+          )}
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ class APIfeatures{
   }
   paginating(){
       const page = this.queryString.page * 1 || 1
-      const limit = this.queryString.limit * 1 || 5
+      const limit = this.queryString.limit * 1 || 3
       const skip = (page - 1) * limit
       this.query = this.query.skip(skip).limit(limit)
       return this;
@@ -24,6 +24,20 @@ const reviewCommentController = {
       const features = new APIfeatures(ReviewComments.find({product_id: req.params.id}),req.query).sorting().paginating()
 
       const reviews = await features.query
+
+      res.json({
+        status: 'success',
+        result: reviews.length,
+        reviews
+    })
+
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  getAllReviewComments: async (req, res) => {
+    try {
+      const reviews = await ReviewComments.find({product_id: req.params.id});
 
       res.json({
         status: 'success',
