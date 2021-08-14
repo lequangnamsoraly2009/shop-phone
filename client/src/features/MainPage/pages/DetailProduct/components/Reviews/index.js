@@ -103,7 +103,7 @@ function Reviews({ detailProduct, socket }) {
         });
         setReviews(newArr);
       });
-      return () => socket.off("sendReviewToClient");
+      return () => socket.off("sendReplyReviewToClient");
     }
   }, [socket, reviews]);
 

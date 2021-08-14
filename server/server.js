@@ -96,7 +96,17 @@ io.on("connection", (socket) => {
     });
 
     if (send === "replyReview") {
-      
+      const { _id, userName, message, title, product_id, createdAt, rating } =
+      newReview;
+
+      const review = await ReviewComments.findById(product_id);
+
+      if (review) {
+        review.replies.push({ _id, userName, message, createdAt});
+
+        await review.save();
+        io.to(review.product_id).emit("sendReplyReviewToClient", review);
+      }
     } else {
       await newReview.save();
       io.to(newReview.product_id).emit("sendReviewToClient", newReview);

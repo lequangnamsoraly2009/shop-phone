@@ -116,8 +116,8 @@ function ListComments({ review, socket }) {
         </Tooltip>
       }
     >
-      {/* <div className="reply-review">
-        {review.reply?.map((rep) => (
+      <div className="reply-review">
+        {review.replies?.map((rep) => (
           <Comment
             // actions={actions}
             author={rep.userName}
@@ -136,12 +136,12 @@ function ListComments({ review, socket }) {
               <Tooltip
                 title={moment(rep.createdAt).format("YYYY-MM-DD HH:mm:ss")}
               >
-                <span>{moment(review.createdAt).fromNow()}</span>
+                <span>{moment(rep.createdAt).fromNow()}</span>
               </Tooltip>
             }
           />
         ))}
-      </div> */}
+      </div>
       {reply && (
         <>
           {/* {comments.length > 0 && <CommentList comments={comments} />} */}
