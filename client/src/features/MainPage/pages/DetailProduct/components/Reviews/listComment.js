@@ -116,6 +116,20 @@ function ListComments({ review, socket }) {
         </Tooltip>
       }
     >
+      {reply && (
+        <>
+          {/* {comments.length > 0 && <CommentList comments={comments} />} */}
+          <Comment
+            avatar={
+              <Avatar
+                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                alt={user.userName}
+              />
+            }
+            content={<Editor />}
+          />
+        </>
+      )}
       <div className="reply-review">
         {review.replies?.map((rep) => (
           <Comment
@@ -143,20 +157,6 @@ function ListComments({ review, socket }) {
           />
         ))}
       </div>
-      {reply && (
-        <>
-          {/* {comments.length > 0 && <CommentList comments={comments} />} */}
-          <Comment
-            avatar={
-              <Avatar
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                alt={user.userName}
-              />
-            }
-            content={<Editor />}
-          />
-        </>
-      )}
     </Comment>
   );
 }

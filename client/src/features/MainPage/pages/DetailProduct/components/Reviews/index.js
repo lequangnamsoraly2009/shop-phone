@@ -96,17 +96,17 @@ function Reviews({ detailProduct, socket }) {
     if (socket) {
       socket.on("sendReplyReviewToClient", (msg) => {
         console.log(msg)
-        const newArr = [...allReviews];
+        const newArr = [...reviews];
         newArr.forEach((review) => {
           if (review._id === msg._id) {
             review.replies = msg.replies;
           }
         });
-        setReviews(allReviews);
+        setReviews([...reviews]);
       });
       return () => socket.off("sendReplyReviewToClient");
     }
-  }, [socket, allReviews]);
+  }, [socket, reviews]);
 
   const showModal = () => {
     setVisible(true);
