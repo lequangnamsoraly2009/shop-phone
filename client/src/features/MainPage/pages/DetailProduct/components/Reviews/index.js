@@ -13,7 +13,6 @@ function Reviews({ detailProduct, socket }) {
   const [reviews, setReviews] = useState([]);
   const [allReviews, setAllReviews] = useState([]);
   const [loadingReview, setLoadingReview] = useState(false);
-  const [page, setPage] = useState(1);
 
   const onFinish = async (values) => {
     const { message, rating, title } = values;
@@ -42,7 +41,7 @@ function Reviews({ detailProduct, socket }) {
       try {
         setLoadingReview(true);
         const response = await API.get(
-          `/api/review-comments/${detailProduct._id}?limit=${page * 3}`
+          `/api/review-comments/${detailProduct._id}?limit=${1 * 3}`
         );
         const responseAll = await API.get(
           `/api/review-all-comments/${detailProduct._id}`
@@ -55,7 +54,7 @@ function Reviews({ detailProduct, socket }) {
       }
     };
     loadDataReview();
-  }, [detailProduct._id, page]);
+  }, [detailProduct._id]);
 
   // Handle Change Page Review
   const handleChangePageReviews = async (page, pageSize) => {
