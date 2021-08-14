@@ -19,6 +19,8 @@ function ListComments({ review, socket }) {
   const [dislikes, setDislikes] = useState(0);
   const [action, setAction] = useState(null);
   const [reply, setReply] = useState(false);
+  const [replyChild, setReplyChild] = useState(false);
+  const [userReplyChild, setUserReplyChild] = useState("");
   const [replyCommentReview, setReplyCommentReview] = useState([]);
   const [hideReplyComment, setHideReplyComment] = useState(false);
   const [next, setNext] = useState(3);
@@ -56,21 +58,33 @@ function ListComments({ review, socket }) {
 
   const handleReplyReview = () => {
     setReply(true);
+    setReplyChild(false);
+  };
+
+  const handleReplyReviewChild = (values) => {
+    setReplyChild(true);
+    setReply(false);
+    setUserReplyChild(values);
   };
 
   const handleHideReplyReview = () => {
     setReply(false);
   };
 
-  const handleShowMoreReplies = () =>{
-    loopWithSlice(next);
-    setNext(next+ perPage)
-  }
+  const handleHideReplyReviewChild = () => {
+    setUserReplyChild("");
+    setReplyChild(false);
+  };
 
-  const handleShowLessReplies = () =>{
+  const handleShowMoreReplies = () => {
+    loopWithSlice(next);
+    setNext(next + perPage);
+  };
+
+  const handleShowLessReplies = () => {
     loopWithSlice(0);
-    setNext(3)
-  }
+    setNext(3);
+  };
 
   const handleOnSubmit = async (values) => {
     const { message } = values;
@@ -117,43 +131,32 @@ function ListComments({ review, socket }) {
         <span key="comment-basic-reply-to" onClick={handleShowMoreReplies}>
           Show more {hideReplyComment} replies
         </span>
-      ) : (<span key="comment-basic-reply-to" onClick={handleShowLessReplies}>
-      Show less replies
-    </span>)}
+      ) : (
+        <span key="comment-basic-reply-to" onClick={handleShowLessReplies}>
+          Show less replies
+        </span>
+      )}
     </>,
   ];
 
-  const actionReplies = [
-    <Tooltip key="comment-basic-like" title="Like">
-      <span onClick={like}>
-        {createElement(action === "liked" ? LikeFilled : LikeOutlined)}
-        <span className="comment-action">{likes}</span>
-      </span>
-    </Tooltip>,
-    <Tooltip key="comment-basic-dislike" title="Dislike">
-      <span onClick={dislike}>
-        {React.createElement(
-          action === "disliked" ? DislikeFilled : DislikeOutlined
-        )}
-        <span className="comment-action">{dislikes}</span>
-      </span>
-    </Tooltip>,
-    // <>
-    //   {reply === false ? (
-    //     <span key="comment-basic-reply-to" onClick={handleReplyReview}>
-    //       Reply
-    //     </span>
-    //   ) : (
-    //     <span key="comment-basic-reply-to" onClick={handleHideReplyReview}>
-    //       Hide reply
-    //     </span>
-    //   )}
-    // </>,
-  ];
+  // const actionReplies = ;
 
   const Editor = () => (
     <Form onFinish={handleOnSubmit}>
       <Form.Item name="message" initialValue={`@${review.userName}: `}>
+        <Input.TextArea rows={4} />
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType="submit" type="primary">
+          Reply this review
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+
+  const EditorReplyChild = () => (
+    <Form onFinish={handleOnSubmit}>
+      <Form.Item name="message" initialValue={`@${userReplyChild}: `}>
         <Input.TextArea rows={4} />
       </Form.Item>
       <Form.Item>
@@ -204,10 +207,55 @@ function ListComments({ review, socket }) {
           />
         </>
       )}
+      {replyChild && (
+        <Comment
+          avatar={
+            <Avatar
+              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+              alt={user.userName}
+            />
+          }
+          content={<EditorReplyChild />}
+        />
+      )}
       <div className="reply-review">
         {replyCommentReview.map((rep) => (
           <Comment
-            actions={actionReplies}
+            actions={[
+              <Tooltip key="comment-basic-like" title="Like">
+                <span onClick={like}>
+                  {createElement(
+                    action === "liked" ? LikeFilled : LikeOutlined
+                  )}
+                  <span className="comment-action">{likes}</span>
+                </span>
+              </Tooltip>,
+              <Tooltip key="comment-basic-dislike" title="Dislike">
+                <span onClick={dislike}>
+                  {React.createElement(
+                    action === "disliked" ? DislikeFilled : DislikeOutlined
+                  )}
+                  <span className="comment-action">{dislikes}</span>
+                </span>
+              </Tooltip>,
+              <>
+                {replyChild === false ? (
+                  <span
+                    key="comment-basic-reply-to"
+                    onClick={() => handleReplyReviewChild(rep.userName)}
+                  >
+                    Reply
+                  </span>
+                ) : (
+                  <span
+                    key="comment-basic-reply-to"
+                    onClick={handleHideReplyReviewChild}
+                  >
+                    Hide reply
+                  </span>
+                )}
+              </>,
+            ]}
             key={rep._id}
             author={rep.userName}
             avatar={
