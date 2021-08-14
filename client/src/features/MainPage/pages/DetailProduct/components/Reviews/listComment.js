@@ -42,7 +42,16 @@ function ListComments({ review, socket }) {
 
   const handleOnSubmit = async (values) => {
     const { message } = values;
-    console.log(message)
+
+    const createdAt = new Date().toISOString();
+
+    socket.emit("createCommentReview", {
+      userName: user.userName,
+      message,
+      product_id: review._id,
+      createdAt,
+      send: "replyReview",
+    });
   };
 
   const actions = [

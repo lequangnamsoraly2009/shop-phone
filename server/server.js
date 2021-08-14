@@ -95,8 +95,12 @@ io.on("connection", (socket) => {
       createdAt,
     });
 
-    await newReview.save();
-    io.to(newReview.product_id).emit("sendReviewToClient", newReview);
+    if (send === "replyReview") {
+      
+    } else {
+      await newReview.save();
+      io.to(newReview.product_id).emit("sendReviewToClient", newReview);
+    }
   });
 
   socket.on("disconnect", () => {

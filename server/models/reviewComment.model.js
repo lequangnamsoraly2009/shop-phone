@@ -9,7 +9,7 @@ const reviewCommentSchema = new mongoose.Schema(
     },
     title: {
       type: String,
-      required: true,
+      default: ''
     },
     message: {
       type: String,
@@ -38,6 +38,7 @@ const reviewCommentSchema = new mongoose.Schema(
     },
     replies: {
       type: Array,
+      default: []
     },
   },
   {
