@@ -83,7 +83,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("createCommentReview", async (msg) => {
-    const { userName, message, rating, title, product_id, createdAt } = msg;
+    const { userName, message, rating, title, product_id, createdAt, send } =
+      msg;
 
     const newReview = new ReviewComments({
       userName,
@@ -93,8 +94,8 @@ io.on("connection", (socket) => {
       product_id,
       createdAt,
     });
-    await newReview.save();
 
+    await newReview.save();
     io.to(newReview.product_id).emit("sendReviewToClient", newReview);
   });
 

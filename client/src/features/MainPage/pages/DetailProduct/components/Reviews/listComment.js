@@ -1,5 +1,5 @@
 import React, { createElement, useState } from "react";
-import { Comment, Tooltip, Avatar } from "antd";
+import { Comment, Tooltip, Avatar, Form, Input, Button } from "antd";
 import moment from "moment";
 import {
   DislikeOutlined,
@@ -8,11 +8,17 @@ import {
   LikeFilled,
 } from "@ant-design/icons";
 import Rating from "../../../../../../components/Rating";
+import { useSelector } from "react-redux";
 
-function ListComments({ review }) {
+// const { TextArea } = Input;
+
+function ListComments({ review, socket }) {
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [action, setAction] = useState(null);
+  const [reply, setReply] = useState(false);
+
+  const { user } = useSelector((state) => state.user);
 
   const like = () => {
     setLikes(1);
@@ -24,6 +30,19 @@ function ListComments({ review }) {
     setLikes(0);
     setDislikes(1);
     setAction("disliked");
+  };
+
+  const handleReplyReview = () => {
+    setReply(true);
+  };
+
+  const handleHideReplyReview = () => {
+    setReply(false);
+  };
+
+  const handleOnSubmit = async (values) => {
+    const { message } = values;
+    console.log(message)
   };
 
   const actions = [
@@ -41,8 +60,26 @@ function ListComments({ review }) {
         <span className="comment-action">{dislikes}</span>
       </span>
     </Tooltip>,
-    <span key="comment-basic-reply-to">Reply to</span>,
+    <span key="comment-basic-reply-to" onClick={handleReplyReview}>
+      Reply to
+    </span>,
+    <span key="comment-basic-reply-to" onClick={handleHideReplyReview}>
+      Hide replies
+    </span>,
   ];
+
+  const Editor = () => (
+    <Form onFinish={handleOnSubmit}>
+      <Form.Item name="message" initialValue={`@${review.userName}: `}>
+        <Input.TextArea rows={4} />
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType="submit" type="primary">
+          Reply this review
+        </Button>
+      </Form.Item>
+    </Form>
+  );
 
   return (
     <Comment
@@ -57,9 +94,9 @@ function ListComments({ review }) {
       content={
         <>
           {/* <h3><Rate disabled defaultValue={review.rating} style={{color: "red"}} /> {review.title}</h3> */}
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             {review.rating !== 0 && <Rating rate={review} />}{" "}
-            <h3 style={{fontSize: 20}}>{review.title}</h3>
+            <h3 style={{ fontSize: 20 }}>{review.title}</h3>
           </div>
           <span>{review.message}</span>
         </>
@@ -69,7 +106,48 @@ function ListComments({ review }) {
           <span>{moment(review.createdAt).fromNow()}</span>
         </Tooltip>
       }
-    />
+    >
+      {/* <div className="reply-review">
+        {review.reply?.map((rep) => (
+          <Comment
+            // actions={actions}
+            author={rep.userName}
+            avatar={
+              <Avatar
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrc-3zHHM18E7n_TuFEs26rqEKbR5n3dp0lA&usqp=CAU"
+                alt={rep.userName}
+              />
+            }
+            content={
+              <>
+                <span>{rep.message}</span>
+              </>
+            }
+            datetime={
+              <Tooltip
+                title={moment(rep.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+              >
+                <span>{moment(review.createdAt).fromNow()}</span>
+              </Tooltip>
+            }
+          />
+        ))}
+      </div> */}
+      {reply && (
+        <>
+          {/* {comments.length > 0 && <CommentList comments={comments} />} */}
+          <Comment
+            avatar={
+              <Avatar
+                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                alt={user.userName}
+              />
+            }
+            content={<Editor />}
+          />
+        </>
+      )}
+    </Comment>
   );
 }
 

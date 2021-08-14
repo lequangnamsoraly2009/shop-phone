@@ -91,6 +91,22 @@ function Reviews({ detailProduct, socket }) {
     }
   }, [socket, reviews]);
 
+  // Reply Reviews
+  useEffect(() => {
+    if (socket) {
+      socket.on("sendReplyReviewToClient", (msg) => {
+        const newArr = [...reviews];
+        newArr.forEach((review) => {
+          if (review._id === msg._id) {
+            review.reply = msg.reply;
+          }
+        });
+        setReviews(newArr);
+      });
+      return () => socket.off("sendReviewToClient");
+    }
+  }, [socket, reviews]);
+
   const showModal = () => {
     setVisible(true);
   };
@@ -218,7 +234,7 @@ function Reviews({ detailProduct, socket }) {
         </div>
         <div className="reviews_bot-list">
           {reviews.map((review) => (
-            <ListComments key={review._id} review={review} />
+            <ListComments key={review._id} socket={socket} review={review} />
           ))}
         </div>
         <div className="reviews-pagination">
