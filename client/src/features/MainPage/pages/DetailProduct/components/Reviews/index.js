@@ -13,6 +13,43 @@ function Reviews({ detailProduct, socket }) {
   const [reviews, setReviews] = useState([]);
   const [allReviews, setAllReviews] = useState([]);
   const [loadingReview, setLoadingReview] = useState(false);
+  const [five, setFive] = useState(0);
+  const [four, setFour] = useState(0);
+  const [three, setThree] = useState(0);
+  const [two, setTwo] = useState(0);
+  const [one, setOne] = useState(0);
+  const [totalRating, setTotalRating] = useState(0);
+
+  useEffect(() => {
+    const arrRate = {
+      five: 0,
+      one: 0,
+      two: 0,
+      three: 0,
+      four: 0,
+    };
+    allReviews.forEach((review) => {
+      if (review.rating === 5) {
+        arrRate.five += 1;
+      } else if (review.rating === 4) {
+        arrRate.four += 1;
+      } else if (review.rating === 3) {
+        arrRate.three += 1;
+      } else if (review.rating === 2) {
+        arrRate.two += 1;
+      } else if (review.rating === 1) {
+        arrRate.one += 1;
+      }
+    });
+    setFive(arrRate.five);
+    setFour(arrRate.four);
+    setThree(arrRate.three);
+    setTwo(arrRate.two);
+    setOne(arrRate.one);
+    setTotalRating(
+      arrRate.five + arrRate.four + arrRate.three + arrRate.two + arrRate.one
+    );
+  }, [allReviews]);
 
   const onFinish = async (values) => {
     const { message, rating, title } = values;
@@ -95,7 +132,7 @@ function Reviews({ detailProduct, socket }) {
   useEffect(() => {
     if (socket) {
       socket.on("sendReplyReviewToClient", (msg) => {
-        console.log(msg)
+        console.log(msg);
         const newArr = [...reviews];
         newArr.forEach((review) => {
           if (review._id === msg._id) {
@@ -144,10 +181,10 @@ function Reviews({ detailProduct, socket }) {
               <StarFilled style={{ color: "red" }} />
             </div>
             <div className="reviews_top-progress-star-2">
-              <Progress percent={40} showInfo={false} />
+              <Progress percent={(five * 100) / totalRating} showInfo={false} />
             </div>
             <div className="reviews_top-progress-star-3">
-              <span>8 rating</span>
+              <span>{five} rating</span>
             </div>
           </div>
           <div className="reviews_top-progress-star">
@@ -156,10 +193,10 @@ function Reviews({ detailProduct, socket }) {
               <StarFilled style={{ color: "red" }} />
             </div>
             <div className="reviews_top-progress-star-2">
-              <Progress percent={10} showInfo={false} />
+              <Progress percent={(four * 100) / totalRating} showInfo={false} />
             </div>
             <div className="reviews_top-progress-star-3">
-              <span>2 rating</span>
+              <span>{four} rating</span>
             </div>
           </div>
           <div className="reviews_top-progress-star">
@@ -168,10 +205,13 @@ function Reviews({ detailProduct, socket }) {
               <StarFilled style={{ color: "red" }} />
             </div>
             <div className="reviews_top-progress-star-2">
-              <Progress percent={15} showInfo={false} />
+              <Progress
+                percent={(three * 100) / totalRating}
+                showInfo={false}
+              />
             </div>
             <div className="reviews_top-progress-star-3">
-              <span>3 rating</span>
+              <span>{three} rating</span>
             </div>
           </div>
           <div className="reviews_top-progress-star">
@@ -180,10 +220,10 @@ function Reviews({ detailProduct, socket }) {
               <StarFilled style={{ color: "red" }} />
             </div>
             <div className="reviews_top-progress-star-2">
-              <Progress percent={25} showInfo={false} />
+              <Progress percent={(two * 100) / totalRating} showInfo={false} />
             </div>
             <div className="reviews_top-progress-star-3">
-              <span>5 rating</span>
+              <span>{two} rating</span>
             </div>
           </div>
           <div className="reviews_top-progress-star">
@@ -192,10 +232,10 @@ function Reviews({ detailProduct, socket }) {
               <StarFilled style={{ color: "red" }} />
             </div>
             <div className="reviews_top-progress-star-2">
-              <Progress percent={10} showInfo={false} />
+              <Progress percent={(one * 100) / totalRating} showInfo={false} />
             </div>
             <div className="reviews_top-progress-star-3">
-              <span>2 rating</span>
+              <span>{one} rating</span>
             </div>
           </div>
         </div>
