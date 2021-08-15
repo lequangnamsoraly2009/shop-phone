@@ -182,7 +182,6 @@ const productController = {
   updatePatchProduct: async (req, res) => {
     try {
       const { rating } = req.body;
-      
       if(rating && rating !== 0){
         const product = await Products.findById(req.params.id)
         if(!product) return res.status(400).json({msg: 'Product does not exist.'})
@@ -193,7 +192,6 @@ const productController = {
         await Products.findOneAndUpdate({_id: req.params.id}, {
             rating: rate + rating, numberReviews: num + 1
         })
-
         res.json({msg: 'Update success'})
     }
     } catch (error) {

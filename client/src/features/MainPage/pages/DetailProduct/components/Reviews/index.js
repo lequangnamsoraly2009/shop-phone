@@ -54,7 +54,6 @@ function Reviews({ detailProduct, socket }) {
   const onFinish = async (values) => {
     const { message, rating, title } = values;
     setVisible(false);
-
     const createdAt = new Date().toISOString();
 
     socket.emit("createCommentReview", {
@@ -67,7 +66,7 @@ function Reviews({ detailProduct, socket }) {
     });
 
     if (rating && rating !== 0) {
-      await API.patch(`/api/products/${detailProduct._id}}`, {
+      await API.patch(`/api/products/${detailProduct._id}`, {
         rating,
       });
     }
