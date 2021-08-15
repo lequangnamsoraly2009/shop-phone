@@ -25,6 +25,11 @@ function ListComments({ review, socket }) {
   const [hideReplyComment, setHideReplyComment] = useState(false);
   const [next, setNext] = useState(3);
 
+  // Sort reply comment review - Simple and clear
+  const replyCommentReviewSort = replyCommentReview.sort((a, b) => {
+    return moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf();
+  });
+
   const { user } = useSelector((state) => state.user);
 
   // Slice Comment replies
@@ -70,7 +75,7 @@ function ListComments({ review, socket }) {
     setUserReplyChild(values);
   };
 
-  // Hide khung comment khi reply thằng review 
+  // Hide khung comment khi reply thằng review
   const handleHideReplyReview = () => {
     setReply(false);
   };
@@ -87,13 +92,13 @@ function ListComments({ review, socket }) {
     setNext(next + perPage);
   };
 
-  // Đóng show tin nhắn replies lại 
+  // Đóng show tin nhắn replies lại
   const handleShowLessReplies = () => {
     loopWithSlice(0);
     setNext(3);
   };
 
-  // Socket gửi comment reply với send là replyReview -> Thằng này là comment reply 
+  // Socket gửi comment reply với send là replyReview -> Thằng này là comment reply
   const handleOnSubmit = async (values) => {
     const { message } = values;
 
@@ -162,7 +167,7 @@ function ListComments({ review, socket }) {
     </Form>
   );
 
-  // Nơi nhập tin nhắn trả lời lại tin nhắn của thằng comment con 
+  // Nơi nhập tin nhắn trả lời lại tin nhắn của thằng comment con
   const EditorReplyChild = () => (
     <Form onFinish={handleOnSubmit}>
       <Form.Item name="message" initialValue={`@${userReplyChild}: `}>
@@ -230,7 +235,7 @@ function ListComments({ review, socket }) {
       )}
       {/* List comment review con của thằng review cha  - Tree 1*/}
       <div className="reply-review">
-        {replyCommentReview.map((rep) => (
+        {replyCommentReviewSort.map((rep) => (
           <Comment
             actions={[
               <Tooltip key="comment-basic-like" title="Like">
