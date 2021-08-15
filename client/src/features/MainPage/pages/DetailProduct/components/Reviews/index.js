@@ -21,7 +21,7 @@ function Reviews({ detailProduct, socket }) {
   const [totalRating, setTotalRating] = useState(0);
 
   useEffect(() => {
-    const arrRate = {
+    const objectRate = {
       five: 0,
       one: 0,
       two: 0,
@@ -30,24 +30,24 @@ function Reviews({ detailProduct, socket }) {
     };
     allReviews.forEach((review) => {
       if (review.rating === 5) {
-        arrRate.five += 1;
+        objectRate.five += 1;
       } else if (review.rating === 4) {
-        arrRate.four += 1;
+        objectRate.four += 1;
       } else if (review.rating === 3) {
-        arrRate.three += 1;
+        objectRate.three += 1;
       } else if (review.rating === 2) {
-        arrRate.two += 1;
+        objectRate.two += 1;
       } else if (review.rating === 1) {
-        arrRate.one += 1;
+        objectRate.one += 1;
       }
     });
-    setFiveStar(arrRate.five);
-    setFourStar(arrRate.four);
-    setThreeStar(arrRate.three);
-    setTwoStar(arrRate.two);
-    setOneStar(arrRate.one);
+    setFiveStar(objectRate.five);
+    setFourStar(objectRate.four);
+    setThreeStar(objectRate.three);
+    setTwoStar(objectRate.two);
+    setOneStar(objectRate.one);
     setTotalRating(
-      arrRate.five + arrRate.four + arrRate.three + arrRate.two + arrRate.one
+      objectRate.five + objectRate.four + objectRate.three + objectRate.two + objectRate.one
     );
   }, [allReviews]);
 
