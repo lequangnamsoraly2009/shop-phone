@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Progress, Pagination } from "antd";
+import { Progress, Pagination, Skeleton } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import "./reviews.css";
 import ListComments from "./listComment";
@@ -47,7 +47,11 @@ function Reviews({ detailProduct, socket }) {
     setTwoStar(objectRate.two);
     setOneStar(objectRate.one);
     setTotalRating(
-      objectRate.five + objectRate.four + objectRate.three + objectRate.two + objectRate.one
+      objectRate.five +
+        objectRate.four +
+        objectRate.three +
+        objectRate.two +
+        objectRate.one
     );
   }, [allReviews]);
 
@@ -180,7 +184,10 @@ function Reviews({ detailProduct, socket }) {
               <StarFilled style={{ color: "red" }} />
             </div>
             <div className="reviews_top-progress-star-2">
-              <Progress percent={(fiveStar * 100) / totalRating} showInfo={false} />
+              <Progress
+                percent={(fiveStar * 100) / totalRating}
+                showInfo={false}
+              />
             </div>
             <div className="reviews_top-progress-star-3">
               <span>{fiveStar} rating</span>
@@ -192,7 +199,10 @@ function Reviews({ detailProduct, socket }) {
               <StarFilled style={{ color: "red" }} />
             </div>
             <div className="reviews_top-progress-star-2">
-              <Progress percent={(fourStar * 100) / totalRating} showInfo={false} />
+              <Progress
+                percent={(fourStar * 100) / totalRating}
+                showInfo={false}
+              />
             </div>
             <div className="reviews_top-progress-star-3">
               <span>{fourStar} rating</span>
@@ -219,7 +229,10 @@ function Reviews({ detailProduct, socket }) {
               <StarFilled style={{ color: "red" }} />
             </div>
             <div className="reviews_top-progress-star-2">
-              <Progress percent={(twoStar * 100) / totalRating} showInfo={false} />
+              <Progress
+                percent={(twoStar * 100) / totalRating}
+                showInfo={false}
+              />
             </div>
             <div className="reviews_top-progress-star-3">
               <span>{twoStar} rating</span>
@@ -231,7 +244,10 @@ function Reviews({ detailProduct, socket }) {
               <StarFilled style={{ color: "red" }} />
             </div>
             <div className="reviews_top-progress-star-2">
-              <Progress percent={(oneStar* 100) / totalRating} showInfo={false} />
+              <Progress
+                percent={(oneStar * 100) / totalRating}
+                showInfo={false}
+              />
             </div>
             <div className="reviews_top-progress-star-3">
               <span>{oneStar} rating</span>
@@ -273,9 +289,11 @@ function Reviews({ detailProduct, socket }) {
           <span>Customer Reviews ({allReviews.length} reviews)</span>
         </div>
         <div className="reviews_bot-list">
-          {reviews.map((review) => (
-            <ListComments key={review._id} socket={socket} review={review} />
-          ))}
+          <Skeleton loading={loadingReview} active avatar>
+            {reviews.map((review) => (
+              <ListComments key={review._id} socket={socket} review={review} />
+            ))}
+          </Skeleton>
         </div>
         <div className="reviews-pagination">
           {allReviews.length <= 3 ? (
