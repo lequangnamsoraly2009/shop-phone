@@ -1,8 +1,19 @@
 import { Button } from "antd";
-import React from "react";
+import React, { useState } from "react";
+import ModalAsk from "./modelAsk";
 import "./question.css";
 
 function QuestionAndAnswers() {
+  const [visible, setVisible] = useState(false);
+
+  const showModalAsk = () => {
+    setVisible(true);
+  };
+
+  const onFinish = (values) => {
+    console.log(values);
+  };
+
   return (
     <div className="question">
       <div className="question-left">
@@ -19,7 +30,7 @@ function QuestionAndAnswers() {
             color: "#fff",
             letterSpacing: "1px",
           }}
-          //   onClick={addCartItem}
+          onClick={showModalAsk}
         >
           <span></span>
           <span></span>
@@ -38,7 +49,7 @@ function QuestionAndAnswers() {
             color: "#fff",
             letterSpacing: "1px",
           }}
-          //   onClick={addCartItem}
+          // onClick={showModalAsk}
         >
           <span></span>
           <span></span>
@@ -46,11 +57,17 @@ function QuestionAndAnswers() {
           <span></span>
           See All Questions
         </div>
+        <ModalAsk
+          visible={visible}
+          onFinish={onFinish}
+          onCancel={() => {
+            setVisible(false);
+          }}
+        />
       </div>
 
       <div className="question-right">
-        
-      <div className="question-right-question">
+        <div className="question-right-question">
           <div className="question-right-Q">
             <p>Q: Is the Verizon model factory unlocked?</p>
             <span>Asked 9 months ago by Anthony.</span>

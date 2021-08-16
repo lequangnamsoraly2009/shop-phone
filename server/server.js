@@ -8,7 +8,6 @@ const cookieParser = require("cookie-parser");
 
 const db = require("./database/config.db");
 // Passport
-
 // require("./helper/passport")(passport);
 
 const app = express();
@@ -65,7 +64,7 @@ io.on("connection", (socket) => {
     const user = { userId: socket.id, room: id };
     // Kiểm tra trong danh sách các users có user nào không trùng với socket vừa kết nối ko
     const check = users.every((user) => user.userId !== socket.id);
-    // Nếu có -> Thì thêm socket vừa kết nối vào list users của socket
+    // Nếu có trungf -> Thì thêm socket vừa kết nối vào list users của socket
     if (check) {
       users.push(user);
       socket.join(user.room);
