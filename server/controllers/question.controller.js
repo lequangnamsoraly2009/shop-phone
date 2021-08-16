@@ -44,7 +44,13 @@ const questionProductController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  getQuestionsForProduct: async (req, res) => {},
+  createPendingQuestion: async (req, res) => {
+    try {
+      const { userName, product_id, question } = req.body;
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
 };
 
 module.exports = QuestionProductController;

@@ -1,8 +1,15 @@
 const router = require("express").Router();
+const questionProductController = require("../controllers/question.controller");
 
+router.get(
+  "/questions/:id",
+  questionProductController.getAllQuestionsForProduct
+);
 
-router.get("/questions/:id")
-router.post("/active_question")
-
+router.post(
+    "/questions",
+    questionProductController.getAllQuestionsForProduct
+  );
+router.post("/active_question");
 
 module.exports = router;
