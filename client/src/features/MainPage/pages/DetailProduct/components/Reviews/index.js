@@ -5,6 +5,7 @@ import "./reviews.css";
 import ListComments from "./listComment";
 import ModalReview from "./modelReview";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import API from "../../../../../../api/axiosClient";
 
 function Reviews({ detailProduct, socket }) {
@@ -19,6 +20,7 @@ function Reviews({ detailProduct, socket }) {
   const [twoStar, setTwoStar] = useState(0);
   const [oneStar, setOneStar] = useState(0);
   const [totalRating, setTotalRating] = useState(0);
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   useEffect(() => {
     const objectRate = {
@@ -56,24 +58,38 @@ function Reviews({ detailProduct, socket }) {
   }, [allReviews]);
 
   const onFinish = async (values) => {
-    const { message, rating, title } = values;
-    setVisible(false);
-    const createdAt = new Date().toISOString();
-
-    socket.emit("createCommentReview", {
-      userName: user.userName,
-      message,
-      rating,
-      title,
-      product_id: detailProduct._id,
-      createdAt,
-    });
-
-    if (rating && rating !== 0) {
-      await API.patch(`/api/products/${detailProduct._id}`, {
-        rating,
-      });
-    }
+    try {
+      if(isLoggedIn){
+        const { message, rating, title } = values;
+        setVisible(false);
+        const createdAt = new Date().toISOString();
+  
+        socket.emit("createCommentReview", {
+          userName: user.userName,
+          message,
+          rating,
+          title,
+          product_id: detailProduct._id,
+          createdAt,
+        });
+  
+        if (rating && rating !== 0) {
+          await API.patch(`/api/products/${detailProduct._id}`, {
+            rating,
+          });
+        }
+      }
+      else{
+        setVisible(false);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Please Login to Review. Thank You",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+    } catch (error) {}
   };
 
   useEffect(() => {
