@@ -8,12 +8,29 @@ import {
   Space,
   Popconfirm,
 } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { DeleteOutlined, EyeOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllPendingQuestionProducts } from "../../../../../app/pendingQuestionProductSlice";
 
 function MainQuestionProduct() {
+  const { token } = useSelector((state) => state.token);
+  const { pendingQuestionProducts } = useSelector(
+    (state) => state.pendingQuestionProducts
+  );
 
+  const dispatch = useDispatch();
+
+  console.log(pendingQuestionProducts);
+
+  useEffect(() => {
+    try {
+      dispatch(getAllPendingQuestionProducts());
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, [dispatch]);
 
   const columns = [
     {

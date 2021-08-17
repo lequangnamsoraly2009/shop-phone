@@ -2,7 +2,7 @@ import API from "./axiosClient";
 
 const PendingQuestionProductAPI = {
   getAllPendingQuestionProducts: ({ token }) => {
-    return API.get(`/api/pending_questions`, {
+    return API.get("/api/pending_questions", {
       headers: { Authorization: token },
     });
   },

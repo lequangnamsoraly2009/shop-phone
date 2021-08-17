@@ -5,7 +5,7 @@ export const getAllPendingQuestionProducts = createAsyncThunk(
   "/questionProducts/getAllPendingQuestionProducts",
   async ({token}) => {
     const response =
-      await PendingQuestionProductAPI.getAllPendingQuestionProducts(token);
+      await PendingQuestionProductAPI.getAllPendingQuestionProducts({token});
     return response.data.pendingQuestions;
   }
 );

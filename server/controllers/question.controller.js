@@ -47,23 +47,17 @@ const questionProductController = {
   },
   getAllPendingQuestionsForAdmin: async (req, res) => {
     try {
-      const features = new APIfeatures(
-        PendingQuestionProducts.find(),
-        req.query
-      )
-        .sorting()
-        .paginating();
-
-      const pendingQuestions = await features.query;
-
-      if (!pendingQuestions) {
-        return res
-          .status(400)
-          .json({ status: false, message: "This product haven't question" });
-      }
+      // const features = new APIfeatures(
+      //   PendingQuestionProducts.find(),
+      //   req.query
+      // )
+      //   .sorting()
+      //   .paginating();
+      console.log("Alo")
+      const pendingQuestions = await PendingQuestionProducts.find();
       res.json({
         status: "success",
-        result: questions.length,
+        result: pendingQuestions.length,
         pendingQuestions: pendingQuestions,
       });
     } catch (error) {

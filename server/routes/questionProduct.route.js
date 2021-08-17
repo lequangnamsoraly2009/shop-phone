@@ -8,12 +8,13 @@ router.get(
   questionProductController.getAllQuestionsForProduct
 );
 
-router.get(
-  "/pending_questions",
-  auth,
-  authAdmin,
-  questionProductController.getAllPendingQuestionsForAdmin
-);
+router
+  .route("/pending_questions")
+  .get(
+    auth,
+    // authAdmin,
+    questionProductController.getAllPendingQuestionsForAdmin
+  );
 
 router
   .route("/questions")
