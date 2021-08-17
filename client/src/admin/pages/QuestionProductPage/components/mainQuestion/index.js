@@ -39,7 +39,7 @@ function MainQuestionProduct() {
       key: "stt",
       render: (text, record, index) => (
         <span>
-          {/* {paginationFilter.findIndex((x) => x._id === record._id) + 1} */}
+          {pendingQuestionProducts.findIndex((x) => x._id === record._id) + 1}
         </span>
       ),
     },
@@ -56,6 +56,7 @@ function MainQuestionProduct() {
       title: "Question",
       dataIndex: "question",
       key: "question",
+      width: "50%",
       render: (text, record, index) => (
         <span style={{ textTransform: "capitalize" }}>{record.question}</span>
       ),
