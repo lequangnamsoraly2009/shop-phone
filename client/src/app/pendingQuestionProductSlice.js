@@ -3,8 +3,9 @@ import PendingQuestionProductAPI from "../api/pendingQuestionProductAPI";
 
 export const getAllPendingQuestionProducts = createAsyncThunk(
   "/questionProducts/getAllPendingQuestionProducts",
-  async () => {
-    const response = await PendingQuestionProductAPI.getAllPendingQuestionProducts();
+  async ({token}) => {
+    const response =
+      await PendingQuestionProductAPI.getAllPendingQuestionProducts(token);
     return response.data.pendingQuestions;
   }
 );

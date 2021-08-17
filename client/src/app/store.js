@@ -19,7 +19,7 @@ import categoryReducer from "./categorySlice";
 import usersAdminReducer from "./userSlice.admin";
 import paymentReducer from "./paymentSlice";
 import dashboardReducer from "./dashBoardSlice";
-// import socketReducer from "./socketSlice";
+import pendingQuestionProductReducer from "./pendingQuestionProductSlice";
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -32,13 +32,14 @@ const rootReducer = combineReducers({
   payments: paymentReducer,
   dashboards: dashboardReducer,
   // socket: socketReducer,
+  pendingQuestionProducts: pendingQuestionProductReducer,
 });
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["histories","socket"],
+  blacklist: ["histories"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

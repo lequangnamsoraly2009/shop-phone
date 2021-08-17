@@ -10,6 +10,8 @@ router.get(
 
 router.get(
   "/pending_questions",
+  auth,
+  authAdmin,
   questionProductController.getAllPendingQuestionsForAdmin
 );
 
