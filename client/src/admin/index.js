@@ -7,11 +7,11 @@ import UserPage from "./pages/userPage";
 import InformationPage from "./pages/informationPage";
 import NotificationPage from "./pages/notificationPage";
 import SettingPage from "./pages/settingPage";
-import DiscountPage from "./pages/discountPage";
 import ContactPage from "./pages/contactPage";
 import AboutPape from "./pages/aboutPage";
 import HelpPage from "./pages/helpPage";
 import ProductPage from "./pages/productPage";
+import QuestionProductPage from "./pages/QuestionProductPage";
 
 function Admin() {
   const match = useRouteMatch();
@@ -25,7 +25,7 @@ function Admin() {
         <Route path={`${match.url}/information`} exact component={InformationPage} />
         <Route path={`${match.url}/notification`} exact component={NotificationPage} />
         <Route path={`${match.url}/setting`} exact component={SettingPage} />
-        <Route path={`${match.url}/discount`} exact component={DiscountPage} />
+        <Route path={`${match.url}/question-product`} component={QuestionProductPage} />
         <Route path={`${match.url}/contact`} exact component={ContactPage} />
         <Route path={`${match.url}/about`} exact component={AboutPape} />
         <Route path={`${match.url}/help`} exact component={HelpPage} />

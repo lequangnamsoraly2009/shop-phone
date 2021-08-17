@@ -12,7 +12,7 @@ class APIfeatures {
   }
   paginating() {
     const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 3;
+    const limit = this.queryString.limit * 1 || 5;
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
     return this;
@@ -45,7 +45,31 @@ const questionProductController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  getAllPendingQuestionsForAdmin: async (req, res) => {},
+  getAllPendingQuestionsForAdmin: async (req, res) => {
+    try {
+      const features = new APIfeatures(
+        PendingQuestionProducts.find(),
+        req.query
+      )
+        .sorting()
+        .paginating();
+
+      const pendingQuestions = await features.query;
+
+      if (!pendingQuestions) {
+        return res
+          .status(400)
+          .json({ status: false, message: "This product haven't question" });
+      }
+      res.json({
+        status: "success",
+        result: questions.length,
+        pendingQuestions: pendingQuestions,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
   createPendingQuestion: async (req, res) => {
     try {
       const { userName, product_id, question } = req.body;
