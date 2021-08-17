@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Form, Input, Rate } from "antd";
+import { Modal, Form, Input } from "antd";
 
 function ModalAsk({ visible, onCancel, onFinish }) {
   const [form] = Form.useForm();

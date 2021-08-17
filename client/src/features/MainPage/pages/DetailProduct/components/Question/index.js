@@ -1,17 +1,36 @@
 import { Button } from "antd";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import ModalAsk from "./modelAsk";
 import "./question.css";
+import API from "../../../../../../api/axiosClient";
 
-function QuestionAndAnswers() {
+function QuestionAndAnswers({ detailProduct }) {
   const [visible, setVisible] = useState(false);
 
+  const { user } = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.token);
   const showModalAsk = () => {
     setVisible(true);
   };
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    try {
+      const { question } = values;
+      await API.post(
+        "/api/questions",
+        {
+          question,
+          userName: user.userName,
+          product_id: detailProduct._id,
+        },
+        {
+          headers: { Authorization: token },
+        }
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (

@@ -1,4 +1,5 @@
 const QuestionProducts = require("../models/questionProduct.model");
+const PendingQuestionProducts = require("../models/pendingQuestionProduct.model");
 
 class APIfeatures {
   constructor(query, queryString) {
@@ -44,9 +45,17 @@ const questionProductController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  getAllPendingQuestionsForAdmin: async (req, res) => {},
   createPendingQuestion: async (req, res) => {
     try {
       const { userName, product_id, question } = req.body;
+      const newPendingQuestion = new PendingQuestionProducts({
+        userName,
+        product_id,
+        question,
+      });
+      await newPendingQuestion.save();
+      res.json({ message: "Created a question successfully !!" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

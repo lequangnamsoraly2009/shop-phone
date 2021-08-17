@@ -396,7 +396,7 @@ function DetailProduct() {
             <Reviews detailProduct={detailProduct} socket={socket}/>
           </TabPane>
           <TabPane tab="Questions And Answers" key="QandA">
-            <QuestionAndAnswers />
+            <QuestionAndAnswers detailProduct={detailProduct}/>
           </TabPane>
         </Tabs>
       </div>
