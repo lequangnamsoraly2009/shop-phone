@@ -61,22 +61,35 @@ const questionProductController = {
     }
   },
   confirmPendingQuestion: async (req, res) => {
-    const { question_id } = req.body;
+    try {
+      const { question_id } = req.body;
 
-    const questionPending = await PendingQuestionProducts.findById({
-      _id: question_id,
-    });
+      const questionPending = await PendingQuestionProducts.findById({
+        _id: question_id,
+      });
 
-    const {userName, product_id, status, question } = questionPending;
+      const { userName, product_id, status, question } = questionPending;
 
-    if(!questionPending) {
-      return res.status(404).json({ status: false, message: "Question is not exist !"})
+      if (!questionPending) {
+        return res
+          .status(404)
+          .json({ status: false, message: "Question is not exist !" });
+      }
+
+      const newQuestionRoot = new QuestionProducts({
+        userName,
+        product_id,
+        status,
+        question,
+      });
+
+      await newQuestionRoot.save();
+      await questionPending.remove();
+
+      res.json({ status: true, message: "Question has been confirmed !" });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
     }
-
-    const newQuestionRoot = new QuestionProducts({
-      
-    })
-
   },
 };
 

@@ -175,16 +175,6 @@ const userController = {
       await newUser.save();
       await user.remove();
 
-      // Create room chat for user when registering
-      //   Tạo room cho user ngay sau khi đăng kí bằng account local hoặc đăng kí bằng google account
-
-      const roomUser = new Rooms({
-        nameRoom: newUser.email,
-        userId: newUser._id,
-      });
-
-      await roomUser.save();
-
       res.json({ message: `User ${user.userName} has been activated` });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
@@ -407,16 +397,6 @@ const userController = {
 
         await newUser.save();
         // Login successful, create access token and refresh token
-
-        // Create room chat for user when registering
-        //   Tạo room cho user ngay sau khi đăng kí bằng account local hoặc đăng kí bằng google account
-
-        const roomUser = new Rooms({
-          nameRoom: newUser.email,
-          userId: newUser._id,
-        });
-
-        await roomUser.save();
 
         const accessToken = createAccessToken({ id: newUser._id });
         const refreshToken = createRefreshToken({ id: newUser._id });
