@@ -12,7 +12,7 @@ router
   .route("/pending_questions")
   .get(
     auth,
-    // authAdmin,
+    authAdmin,
     questionProductController.getAllPendingQuestionsForAdmin
   );
 

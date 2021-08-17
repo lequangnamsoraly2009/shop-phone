@@ -26,11 +26,11 @@ function MainQuestionProduct() {
 
   useEffect(() => {
     try {
-      dispatch(getAllPendingQuestionProducts());
+      dispatch(getAllPendingQuestionProducts({ token }));
     } catch (error) {
       console.log(error.message);
     }
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   const columns = [
     {

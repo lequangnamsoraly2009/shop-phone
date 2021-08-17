@@ -12,7 +12,7 @@ class APIfeatures {
   }
   paginating() {
     const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 5;
+    const limit = this.queryString.limit * 1;
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
     return this;
@@ -47,14 +47,13 @@ const questionProductController = {
   },
   getAllPendingQuestionsForAdmin: async (req, res) => {
     try {
-      // const features = new APIfeatures(
-      //   PendingQuestionProducts.find(),
-      //   req.query
-      // )
-      //   .sorting()
-      //   .paginating();
-      console.log("Alo")
-      const pendingQuestions = await PendingQuestionProducts.find();
+      const features = new APIfeatures(
+        PendingQuestionProducts.find(),
+        req.query
+      )
+        .sorting()
+        .paginating();
+      const pendingQuestions = await features.query;
       res.json({
         status: "success",
         result: pendingQuestions.length,
