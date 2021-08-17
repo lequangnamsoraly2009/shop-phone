@@ -22,7 +22,6 @@ function MainQuestionProduct() {
 
   const dispatch = useDispatch();
 
-  console.log(pendingQuestionProducts);
 
   useEffect(() => {
     try {
@@ -67,7 +66,7 @@ function MainQuestionProduct() {
       dataIndex: "createdAt",
       key: "createdAt",
       render: (text, record, index) => (
-        <span style={{ textTransform: "capitalize" }}>{record.createdAt}</span>
+        <span style={{ textTransform: "capitalize" }}>{new Date(record.createdAt).toLocaleString("en-GB")}</span>
       ),
       align: "center",
     },
@@ -77,7 +76,7 @@ function MainQuestionProduct() {
       key: "status",
       render: (text, record, index) => (
         <>
-          <Tag color="green">{record.status}</Tag>
+          <Tag color="green" style={{ textTransform: "capitalize" }}>{record.status}</Tag>
         </>
       ),
       align: "center",
@@ -112,14 +111,6 @@ function MainQuestionProduct() {
     },
   ];
 
-  const dataFake = [
-    {
-      userName: "Nma",
-      createdAt: "1",
-      question: "fake",
-      status: "success",
-    },
-  ];
 
   return (
     <div className="container-admin">
@@ -154,7 +145,7 @@ function MainQuestionProduct() {
           <Table
             pagination={{ position: ["none", "none"] }}
             columns={columns}
-            dataSource={dataFake}
+            dataSource={pendingQuestionProducts}
             bordered={true}
             style={{ border: "1px solid #000" }}
           />
