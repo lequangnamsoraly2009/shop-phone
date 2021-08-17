@@ -6,6 +6,10 @@ const pendingQuestionProductSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    product_id: {
+      type: String,
+      required: true,
+    },
     question: {
       type: String,
       required: true,
@@ -20,4 +24,7 @@ const pendingQuestionProductSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("PendingQuestionProducts", pendingQuestionProductSchema);
+module.exports = mongoose.model(
+  "PendingQuestionProducts",
+  pendingQuestionProductSchema
+);

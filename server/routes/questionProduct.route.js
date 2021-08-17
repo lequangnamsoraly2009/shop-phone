@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const questionProductController = require("../controllers/question.controller");
-const { auth } = require("../middleware/auth");
+const auth = require("../middleware/auth");
+const authAdmin = require("../middleware/authAdmin");
 
 router.get(
   "/questions/:id",
@@ -12,11 +13,14 @@ router.get(
   questionProductController.getAllPendingQuestionsForAdmin
 );
 
+router
+  .route("/questions")
+  .post(auth, questionProductController.createPendingQuestion);
 router.post(
-  "/questions",
+  "/confirm_question",
   auth,
-  questionProductController.createPendingQuestion
+  authAdmin,
+  questionProductController.confirmPendingQuestion
 );
-router.post("/active_question");
 
 module.exports = router;

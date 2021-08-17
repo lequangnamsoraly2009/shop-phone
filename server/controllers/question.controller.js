@@ -1,5 +1,5 @@
 const QuestionProducts = require("../models/questionProduct.model");
-const PendingQuestionProducts = require("../models/pendingQuestionProduct.model");
+const PendingQuestionProducts = require("../models/pendingQuestion.model");
 
 class APIfeatures {
   constructor(query, queryString) {
@@ -60,6 +60,24 @@ const questionProductController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  confirmPendingQuestion: async (req, res) => {
+    const { question_id } = req.body;
+
+    const questionPending = await PendingQuestionProducts.findById({
+      _id: question_id,
+    });
+
+    const {userName, product_id, status, question } = questionPending;
+
+    if(!questionPending) {
+      return res.status(404).json({ status: false, message: "Question is not exist !"})
+    }
+
+    const newQuestionRoot = new QuestionProducts({
+      
+    })
+
+  },
 };
 
-module.exports = QuestionProductController;
+module.exports = questionProductController;
