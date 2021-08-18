@@ -7,6 +7,8 @@ import {
 import { Button, Col, Drawer, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import PendingQuestionProductAPI from "../../../../../api/pendingQuestionProductAPI";
+import Swal from "sweetalert2";
 import "./drawerQuestion.css";
 
 const DescriptionItem = ({ title, content }) => (
@@ -19,6 +21,7 @@ const DescriptionItem = ({ title, content }) => (
 function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
   const { products } = useSelector((state) => state.productsFilter);
   const [productQuestion, setProductQuestion] = useState({});
+  const { token } = useSelector((state) => state.token);
 
   useEffect(() => {
     let pQuestion = {};
@@ -32,6 +35,31 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
 
   const onCloseDrawer = () => {
     setVisibleDrawer(false);
+  };
+
+  const handleRejectPendingQuestion = async (_id) => {
+    try {
+      await PendingQuestionProductAPI.deletePendingQuestionProduct({
+        _id,
+        token,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Delete Pending Question Success !",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      window.location.reload();
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong !",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   };
 
   return (
@@ -130,7 +158,12 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
             </Button>
           </Col>
           <Col style={{ display: "flex" }} span={12}>
-            <Button style={{ margin: "0 auto" }} type="primary" danger>
+            <Button
+              style={{ margin: "0 auto" }}
+              type="primary"
+              danger
+              onClick={() => handleRejectPendingQuestion(record._id)}
+            >
               Reject
             </Button>
           </Col>
