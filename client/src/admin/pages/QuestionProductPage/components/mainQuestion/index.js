@@ -8,6 +8,7 @@ import {
   Space,
   Popconfirm,
 } from "antd";
+import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
 import { DeleteOutlined, EyeOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -16,44 +17,58 @@ import {
   getAllPendingQuestionProducts,
   setPaginationPendingQuestionProducts,
 } from "../../../../../app/pendingQuestionProductSlice";
-import API from "../../../../../api/axiosClient";
+import PendingQuestionProductAPI from "../../../../../api/pendingQuestionProductAPI";
 
 function MainQuestionProduct() {
   const { token } = useSelector((state) => state.token);
   const { pendingQuestionProducts, paginationPendingQuestionProducts } =
     useSelector((state) => state.pendingQuestionProducts);
 
-  const [isLoading,setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       dispatch(getAllPendingQuestionProducts({ token }));
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
-      console.log(error.message);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
   }, [dispatch, token]);
 
   // Change Page
   const handleChangePage = async (page, pageSize) => {
     try {
-      setIsLoading(true)
-      const response = await API.get(
-        `/api/pending_questions?limit=${pageSize * page}`,
-        {
-          headers: { Authorization: token },
-        }
-      );
+      setIsLoading(true);
+      const response =
+        await PendingQuestionProductAPI.getPendingQuestionProductsByPage({
+          page,
+          pageSize,
+          token,
+        });
       const dataPage = response.data.pendingQuestions.slice(
         (page - 1) * pageSize,
         pageSize * page
       );
       dispatch(setPaginationPendingQuestionProducts(dataPage));
-      setIsLoading(false)
-    } catch (error) {}
+      setIsLoading(false);
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something wrongs. Please try it again !",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   };
 
   const columns = [
@@ -160,26 +175,22 @@ function MainQuestionProduct() {
         <div className="product_data-header">
           <h3> Total Questions About Product</h3>
         </div>
-        <div className="product_data-wrapper">
-          <div className="product_data-create">
-            <Button type="primary">Reload Page</Button>
-          </div>
-        </div>
+        
         <div className="product_data-table">
           <Skeleton
-              active
-              loading={isLoading}
-              paragraph={{ rows: 10 }}
-              title={{ width: "100%" }}
-            >
-          <Table
-            pagination={{ position: ["none", "none"] }}
-            columns={columns}
-            rowKey="_id"
-            dataSource={paginationPendingQuestionProducts}
-            bordered="true"
-            style={{ border: "1px solid #000" }}
-          />
+            active
+            loading={isLoading}
+            paragraph={{ rows: 10 }}
+            title={{ width: "100%" }}
+          >
+            <Table
+              pagination={{ position: ["none", "none"] }}
+              columns={columns}
+              rowKey="_id"
+              dataSource={paginationPendingQuestionProducts}
+              bordered="true"
+              style={{ border: "1px solid #000" }}
+            />
           </Skeleton>
         </div>
         <div className="product_data-pagination">

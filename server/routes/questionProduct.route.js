@@ -19,6 +19,9 @@ router
 router
   .route("/questions")
   .post(auth, questionProductController.createPendingQuestion);
+router
+  .route("/questions")
+  .delete(auth,authAdmin, questionProductController.deletePendingQuestion);
 router.post(
   "/confirm_question",
   auth,
