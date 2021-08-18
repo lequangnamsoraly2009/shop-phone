@@ -1,5 +1,10 @@
-import { BookOutlined, CarOutlined } from "@ant-design/icons";
-import { Col, Drawer, Row } from "antd";
+import {
+  BookOutlined,
+  CarOutlined,
+  IdcardOutlined,
+  SendOutlined,
+} from "@ant-design/icons";
+import { Button, Col, Drawer, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./drawerQuestion.css";
@@ -40,7 +45,7 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
         visible={visibleDrawer}
       >
         <p className="drawer_question-header">
-          <BookOutlined style={{ marginRight: 10 }} />
+          <IdcardOutlined style={{ marginRight: 10 }} />
           Information User
         </p>
         <Row>
@@ -101,7 +106,7 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
           </Col>
         </Row>
         <p className="drawer_question-header">
-          <CarOutlined style={{ marginRight: 10 }} />
+          <BookOutlined style={{ marginRight: 10 }} />
           Question For Product
         </p>
         <Row>
@@ -112,6 +117,22 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
             >
               {record.question}
             </div>
+          </Col>
+        </Row>
+        <p className="drawer_question-header">
+          <SendOutlined style={{ marginRight: 10 }} />
+          Action
+        </p>
+        <Row>
+          <Col style={{ display: "flex" }} span={12}>
+            <Button style={{ margin: "0 auto" }} type="primary">
+              Confirm And Reply
+            </Button>
+          </Col>
+          <Col style={{ display: "flex" }} span={12}>
+            <Button style={{ margin: "0 auto" }} type="primary" danger>
+              Reject
+            </Button>
           </Col>
         </Row>
       </Drawer>
