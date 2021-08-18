@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "antd";
 import moment from "moment";
 
-
 function QuestionItem({question}) {
   return (
     <div className="question-right-question">

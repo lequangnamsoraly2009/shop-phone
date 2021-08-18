@@ -5,21 +5,54 @@ import "./question.css";
 import Swal from "sweetalert2";
 import PendingQuestionProductAPI from "../../../../../../api/pendingQuestionProductAPI";
 import QuestionItem from "./questionItem";
-import { getAllQuestionForProduct } from "../../../../../../app/questionProductSlice";
+import {
+  getAllQuestionForPagination,
+  getAllQuestionForProduct,
+  setPaginationQuestionProducts,
+} from "../../../../../../app/questionProductSlice";
+import { Pagination, Skeleton } from "antd";
+import QuestionProductAPI from "../../../../../../api/questionProductAPI";
+
+const pageSize = 3;
 
 function QuestionAndAnswers({ detailProduct }) {
   const [visible, setVisible] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(false);
 
   const { user } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
-  const { questionProducts } = useSelector((state) => state.questionProducts);
+  const { questionProducts, paginationQuestionProducts } = useSelector((state) => state.questionProducts);
 
   const dispatch = useDispatch();
 
   // Get data from API to redux when we select product
   useEffect(() => {
     dispatch(getAllQuestionForProduct({ product_id: detailProduct._id }));
+    dispatch(
+      getAllQuestionForPagination({
+        product_id: detailProduct._id,
+        page: 1,
+        pageSize: pageSize,
+      })
+    );
   }, [dispatch, detailProduct._id]);
+
+  const handleChangePageReviews = async (page, pageSize) => {
+    try {
+      setIsLoadingData(true);
+      const response = await QuestionProductAPI.getQuestionForProductPage({
+        product_id: detailProduct._id,
+        page,
+        pageSize,
+      });
+      dispatch(
+        setPaginationQuestionProducts(
+          response.data.questions.slice((page - 1) * pageSize, page * pageSize)
+        )
+      );
+      setIsLoadingData(false);
+    } catch (error) {}
+  };
 
   const showModalAsk = () => {
     setVisible(true);
@@ -67,7 +100,7 @@ function QuestionAndAnswers({ detailProduct }) {
     <div className="question">
       <div className="question-left">
         <div className="question_left-header">
-          <span>There are a total of 100 questions</span>
+          <span>There are a total of {questionProducts.length} questions</span>
         </div>
         <div
           className="btn"
@@ -116,9 +149,26 @@ function QuestionAndAnswers({ detailProduct }) {
       </div>
 
       <div className="question-right">
-        {questionProducts.map((question) => (
-          <QuestionItem key={question._id} question={question} />
-        ))}
+        <Skeleton loading={isLoadingData} active avatar>
+          {paginationQuestionProducts.map((question) => (
+            <QuestionItem key={question._id} question={question} />
+          ))}
+        </Skeleton>
+        <div className="reviews-pagination">
+          {questionProducts.length <= 3 ? (
+            ""
+          ) : (
+            <Pagination
+              defaultCurrent={1}
+              total={questionProducts.length}
+              showSizeChanger={false}
+              pageSize={pageSize}
+              onChange={(page, pageSize) =>
+                handleChangePageReviews(page, pageSize)
+              }
+            />
+          )}
+        </div>
       </div>
     </div>
   );

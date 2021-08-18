@@ -10,24 +10,44 @@ export const getAllQuestionForProduct = createAsyncThunk(
     return response.data.questions;
   }
 );
+// Get Data the first page
+export const getAllQuestionForPagination = createAsyncThunk(
+  "/questionProducts/getAllQuestionForPagination",
+  async ({ product_id, page, pageSize }) => {
+    const response = await QuestionProductAPI.getQuestionForProductPage({
+      product_id,
+      page,
+      pageSize,
+    });
+    return response.data.questions;
+  }
+);
 
 const initialState = {
   questionProducts: [],
+  paginationQuestionProducts: [],
 };
 
 const categoryPendingQuestionProduct = createSlice({
   name: "questionProduct",
   initialState,
-  reducers: {},
+  reducers: {
+    setPaginationQuestionProducts: (state, action) => {
+      state.paginationQuestionProducts = action.payload;
+    },
+  },
   extraReducers: {
     [getAllQuestionForProduct.fulfilled]: (state, action) => {
       state.questionProducts = action.payload;
     },
+    [getAllQuestionForPagination.fulfilled]: (state, action) => {
+      state.paginationQuestionProducts = action.payload;
+    },
   },
 });
 
-const { reducer } = categoryPendingQuestionProduct;
+const { actions, reducer } = categoryPendingQuestionProduct;
 
-// export const { setPaginationPendingQuestionProducts } = actions;
+export const { setPaginationQuestionProducts } = actions;
 
 export default reducer;

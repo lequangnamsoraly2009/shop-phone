@@ -41,7 +41,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["histories"],
+  blacklist: ["histories","questionProducts","pendingQuestionProducts","dashboards","payments","usersAdmin",],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
