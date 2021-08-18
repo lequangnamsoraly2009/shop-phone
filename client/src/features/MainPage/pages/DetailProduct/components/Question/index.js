@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ModalAsk from "./modelAsk";
 import "./question.css";
-import API from "../../../../../../api/axiosClient";
 import Swal from "sweetalert2";
 import PendingQuestionProductAPI from "../../../../../../api/pendingQuestionProductAPI";
 
@@ -14,6 +13,15 @@ function QuestionAndAnswers({ detailProduct }) {
   const { token } = useSelector((state) => state.token);
   const showModalAsk = () => {
     setVisible(true);
+  };
+
+  const showAllQuestions = () => {
+    Swal.fire({
+      position: "center",
+      icon: "warning",
+      title: "Sorry! The service is being upgraded!",
+      confirmButtonText: "Cool",
+    });
   };
 
   const onFinish = async (values) => {
@@ -80,7 +88,7 @@ function QuestionAndAnswers({ detailProduct }) {
             color: "#fff",
             letterSpacing: "1px",
           }}
-          // onClick={showModalAsk}
+          onClick={() => showAllQuestions()}
         >
           <span></span>
           <span></span>
