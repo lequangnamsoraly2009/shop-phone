@@ -71,6 +71,47 @@ function MainQuestionProduct() {
     }
   };
 
+  // Cancel Delete Pending Question Products
+  const handleCancelDeletePendingQuestion = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Cancel Delete !",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  };
+
+  // Onsubmit Delete Pending Questions
+
+  const handleDeletePendingQuestion = async (_id) => {
+    try {
+      setIsLoading(true);
+      await PendingQuestionProductAPI.deletePendingQuestionProduct({
+        _id,
+        token,
+      });
+      setIsLoading(false);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Delete Pending Question Success !",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      window.location.reload();
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
+
   const columns = [
     {
       title: "STT",
@@ -141,10 +182,8 @@ function MainQuestionProduct() {
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <Popconfirm
               title="Are you sure delete it?"
-              //   onConfirm={() =>
-              //     handleDeleteProduct(record._id, record.images.public_id)
-              //   }
-              //   onCancel={handleCancelDeleteProduct}
+              onConfirm={() => handleDeletePendingQuestion(record._id)}
+              onCancel={handleCancelDeletePendingQuestion}
               okText="Xóa mẹ nó đi"
               cancelText="Thôi đừng"
             >
@@ -175,7 +214,7 @@ function MainQuestionProduct() {
         <div className="product_data-header">
           <h3> Total Questions About Product</h3>
         </div>
-        
+
         <div className="product_data-table">
           <Skeleton
             active

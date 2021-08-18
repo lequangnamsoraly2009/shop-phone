@@ -11,6 +11,14 @@ const PendingQuestionProductAPI = {
       headers: { Authorization: token },
     });
   },
+  deletePendingQuestionProduct: ({ _id, token }) => {
+    return API.delete(
+      `/api/pending_questions/${_id}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
 };
 
 export default PendingQuestionProductAPI;

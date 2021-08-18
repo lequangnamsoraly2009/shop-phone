@@ -15,13 +15,13 @@ router
     authAdmin,
     questionProductController.getAllPendingQuestionsForAdmin
   );
+router
+  .route("/pending_questions/:id")
+  .delete(auth, authAdmin, questionProductController.deletePendingQuestion);
 
 router
   .route("/questions")
   .post(auth, questionProductController.createPendingQuestion);
-router
-  .route("/questions")
-  .delete(auth,authAdmin, questionProductController.deletePendingQuestion);
 router.post(
   "/confirm_question",
   auth,

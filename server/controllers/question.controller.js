@@ -79,14 +79,9 @@ const questionProductController = {
   },
   deletePendingQuestion: async (req, res) => {
     try {
-      const { _id } = req.body;
-
-      const pendingQuestion = await PendingQuestionProducts.findByIdAndDelete({
-        _id,
-      });
+      await PendingQuestionProducts.findByIdAndDelete(req.params.id);
 
       res.json({ message: "Deleted a pending question successfully !!" });
-
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
