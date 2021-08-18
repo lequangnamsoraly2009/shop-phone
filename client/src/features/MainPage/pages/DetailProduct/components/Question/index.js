@@ -16,8 +16,6 @@ function QuestionAndAnswers({ detailProduct }) {
 
   const dispatch = useDispatch();
 
-  console.log(questionProducts)
-
   // Get data from API to redux when we select product
   useEffect(() => {
     dispatch(getAllQuestionForProduct({ product_id: detailProduct._id }));
@@ -118,7 +116,9 @@ function QuestionAndAnswers({ detailProduct }) {
       </div>
 
       <div className="question-right">
-        <QuestionItem />
+        {questionProducts.map((question) => (
+          <QuestionItem key={question._id} question={question} />
+        ))}
       </div>
     </div>
   );
