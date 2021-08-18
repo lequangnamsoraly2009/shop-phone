@@ -12,8 +12,18 @@ const PendingQuestionProductAPI = {
     });
   },
   deletePendingQuestionProduct: ({ _id, token }) => {
-    return API.delete(
-      `/api/pending_questions/${_id}`,
+    return API.delete(`/api/pending_questions/${_id}`, {
+      headers: { Authorization: token },
+    });
+  },
+  confirmPendingQuestionProduct: ({ question_id, replyQuestion, questionCreatedAt, token }) => {
+    return API.post(
+      "/api/confirm_question",
+      {
+        question_id,
+        replyQuestion,
+        questionCreatedAt
+      },
       {
         headers: { Authorization: token },
       }

@@ -47,7 +47,40 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
   };
 
   const onConfirmPendingQuestion = async (values) => {
-      console.log(values)
+    try {
+      const { replyQuestion } = values;
+
+      const objectReplyQuestion = {
+        message: replyQuestion,
+        userReply: "Admin",
+      };
+
+      await PendingQuestionProductAPI.confirmPendingQuestionProduct({
+        question_id: record._id,
+        replyQuestion: objectReplyQuestion,
+        questionCreatedAt: record.createdAt,
+        token,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Confirm And Reply Question Success!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      setVisibleDrawerChild(false);
+      setVisibleDrawer(false);
+
+      window.location.reload();
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: error.message,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   };
 
   const handleRejectPendingQuestion = async (_id) => {
@@ -63,6 +96,9 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
         showConfirmButton: false,
         timer: 2000,
       });
+      setVisibleDrawerChild(false);
+      setVisibleDrawer(false);
+
       window.location.reload();
     } catch (error) {
       Swal.fire({
@@ -188,12 +224,15 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
               onClose={handleOnCloseDrawerChild}
               visible={visibleDrawerChild}
             >
-              <Form onFinish={onConfirmPendingQuestion} style={{ display: "flex" , flexDirection: "column"}}>
+              <Form
+                onFinish={onConfirmPendingQuestion}
+                style={{ display: "flex", flexDirection: "column" }}
+              >
                 <Form.Item name="replyQuestion" label="Reply">
-                  <Input.TextArea autoSize={{minRows: 4, maxRows: 10 }} />
+                  <Input.TextArea autoSize={{ minRows: 4, maxRows: 10 }} />
                 </Form.Item>
-                <Form.Item style={{ margin: "0 auto"}}>
-                  <Button  type="primary" htmlType="submit">
+                <Form.Item style={{ margin: "0 auto" }}>
+                  <Button type="primary" htmlType="submit">
                     Confirm And Save
                   </Button>
                 </Form.Item>

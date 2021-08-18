@@ -28,6 +28,9 @@ const questionProductSchema = new mongoose.Schema(
     },
     reply: {
       type: Array,
+    },
+    questionCreatedAt: {
+      type: String,
     }
   },
   {
