@@ -16,7 +16,7 @@ const initialState = {
 };
 
 const categoryPendingQuestionProduct = createSlice({
-  name: "questionProduct",
+  name: "pendingQuestionProduct",
   initialState,
   reducers: {
     setPaginationPendingQuestionProducts: (state, action) => {

@@ -20,6 +20,7 @@ import usersAdminReducer from "./userSlice.admin";
 import paymentReducer from "./paymentSlice";
 import dashboardReducer from "./dashBoardSlice";
 import pendingQuestionProductReducer from "./pendingQuestionProductSlice";
+import questionProductReducer from "./questionProductSlice"
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   dashboards: dashboardReducer,
   // socket: socketReducer,
   pendingQuestionProducts: pendingQuestionProductReducer,
+  questionProducts: questionProductReducer,
 });
 
 const persistConfig = {

@@ -1,10 +1,10 @@
-import { Button } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ModalAsk from "./modelAsk";
 import "./question.css";
 import Swal from "sweetalert2";
 import PendingQuestionProductAPI from "../../../../../../api/pendingQuestionProductAPI";
+import QuestionItem from "./questionItem";
 
 function QuestionAndAnswers({ detailProduct }) {
   const [visible, setVisible] = useState(false);
@@ -106,66 +106,7 @@ function QuestionAndAnswers({ detailProduct }) {
       </div>
 
       <div className="question-right">
-        <div className="question-right-question">
-          <div className="question-right-Q">
-            <p>Q: Is the Verizon model factory unlocked?</p>
-            <span>Asked 9 months ago by Anthony.</span>
-          </div>
-          <div className="question-right-A">
-            <p>
-              A:Answer Verizon phones are automatically unlocked after 60 days.
-            </p>
-            <span>Answered 9 months ago by ToreyC</span>
-          </div>
-          <div className="question-right-wrapper">
-            <Button type="primary" size="middle">
-              Helpful(16)
-            </Button>
-            <Button type="primary" danger size="middle">
-              Unhelpful(2)
-            </Button>
-          </div>
-        </div>
-        <div className="question-right-question">
-          <div className="question-right-Q">
-            <p>Q: Is the Verizon model factory unlocked?</p>
-            <span>Asked 9 months ago by Anthony.</span>
-          </div>
-          <div className="question-right-A">
-            <p>
-              A:Answer Verizon phones are automatically unlocked after 60 days.
-            </p>
-            <span>Answered 9 months ago by ToreyC</span>
-          </div>
-          <div className="question-right-wrapper">
-            <Button type="primary" size="middle">
-              Helpful(16)
-            </Button>
-            <Button type="primary" danger size="middle">
-              Unhelpful(2)
-            </Button>
-          </div>
-        </div>
-        <div className="question-right-question">
-          <div className="question-right-Q">
-            <p>Q: Is the Verizon model factory unlocked?</p>
-            <span>Asked 9 months ago by Anthony.</span>
-          </div>
-          <div className="question-right-A">
-            <p>
-              A:Answer Verizon phones are automatically unlocked after 60 days.
-            </p>
-            <span>Answered 9 months ago by ToreyC</span>
-          </div>
-          <div className="question-right-wrapper">
-            <Button type="primary" size="middle">
-              Helpful(16)
-            </Button>
-            <Button type="primary" danger size="middle">
-              Unhelpful(2)
-            </Button>
-          </div>
-        </div>
+        <QuestionItem />
       </div>
     </div>
   );
