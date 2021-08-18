@@ -101,16 +101,9 @@ const questionProductController = {
           .json({ status: false, message: "Question is not exist !" });
       }
 
-      const newStatus = "";
-
-      if (status === "uncomfirmed") {
-        newStatus = "confirmed";
-      }
-
       const newQuestionRoot = new QuestionProducts({
         userName,
         product_id,
-        status: newStatus,
         question,
         reply: replyQuestion,
         questionCreatedAt,
