@@ -18,9 +18,8 @@ const PendingQuestionProductAPI = {
   },
   confirmPendingQuestionProduct: ({ question_id, replyQuestion, questionCreatedAt, token }) => {
     return API.post(
-      "/api/confirm_question",
+      `/api/confirm_question/${question_id}`,
       {
-        question_id,
         replyQuestion,
         questionCreatedAt
       },

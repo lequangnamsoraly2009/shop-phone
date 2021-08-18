@@ -26,6 +26,7 @@ function MainQuestionProduct() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
+  const [idQuestion, setIsQuestion] = useState("");
 
   const dispatch = useDispatch();
 
@@ -113,8 +114,9 @@ function MainQuestionProduct() {
     }
   };
 
-  const handleOpenDrawerQuestion = () => {
+  const handleOpenDrawerQuestion = ({ record_id }) => {
     setVisibleDrawer(true);
+    setIsQuestion(record_id);
   };
 
   const columns = [
@@ -180,7 +182,9 @@ function MainQuestionProduct() {
         <>
           <Space size="large">
             <div
-              onClick={() => handleOpenDrawerQuestion()}
+              onClick={() =>
+                handleOpenDrawerQuestion({ record_id: record._id })
+              }
               style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
             >
               <EyeOutlined />
@@ -197,13 +201,6 @@ function MainQuestionProduct() {
               </Popconfirm>
             </div>
           </Space>
-          <div className="question_product-drawer">
-            <DrawerQuestion
-              record={record}
-              visibleDrawer={visibleDrawer}
-              setVisibleDrawer={setVisibleDrawer}
-            />
-          </div>
         </>
       ),
       align: "center",
@@ -258,6 +255,14 @@ function MainQuestionProduct() {
               onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
           )}
+        </div>
+        <div className="question_product-drawer">
+          <DrawerQuestion
+            record_id={idQuestion}
+            visibleDrawer={visibleDrawer}
+            setVisibleDrawer={setVisibleDrawer}
+            pendingQuestionProducts={pendingQuestionProducts}
+          />
         </div>
       </div>
     </div>

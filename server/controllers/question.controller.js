@@ -88,17 +88,16 @@ const questionProductController = {
   },
   confirmPendingQuestion: async (req, res) => {
     try {
-      const { question_id, replyQuestion, questionCreatedAt } = req.body;
-
-      const questionPending = await PendingQuestionProducts.findById({
-        _id: question_id,
-      });
+      const questionPending = await PendingQuestionProducts.findById(
+        req.params.id
+      );
+      const { replyQuestion, questionCreatedAt } = req.body;
 
       const { userName, product_id, status, question } = questionPending;
 
       if (!questionPending) {
         return res
-          .status(404)
+          .status(400)
           .json({ status: false, message: "Question is not exist !" });
       }
 
@@ -114,7 +113,7 @@ const questionProductController = {
         status: newStatus,
         question,
         reply: replyQuestion,
-        questionCreatedAt
+        questionCreatedAt,
       });
 
       await newQuestionRoot.save();

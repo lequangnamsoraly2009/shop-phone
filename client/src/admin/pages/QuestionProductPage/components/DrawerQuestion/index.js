@@ -18,21 +18,37 @@ const DescriptionItem = ({ title, content }) => (
   </div>
 );
 
-function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
+function DrawerQuestion({
+  visibleDrawer,
+  setVisibleDrawer,
+  record_id,
+  pendingQuestionProducts,
+}) {
   const { products } = useSelector((state) => state.productsFilter);
   const [productQuestion, setProductQuestion] = useState({});
+  const [questionOfProduct, setQuestionOfProduct] = useState({});
   const { token } = useSelector((state) => state.token);
   const [visibleDrawerChild, setVisibleDrawerChild] = useState(false);
 
   useEffect(() => {
+    let record = {};
+    pendingQuestionProducts.forEach((question) => {
+      if (question._id === record_id) {
+        record = question;
+      }
+    });
+    setQuestionOfProduct(record);
+  }, [pendingQuestionProducts, record_id]);
+
+  useEffect(() => {
     let pQuestion = {};
     products.forEach((product) => {
-      if (product._id === record.product_id) {
+      if (product._id === questionOfProduct.product_id) {
         pQuestion = product;
       }
     });
     setProductQuestion(pQuestion);
-  }, [products, record.product_id]);
+  }, [products, questionOfProduct.product_id]);
 
   const onCloseDrawer = () => {
     setVisibleDrawer(false);
@@ -56,9 +72,9 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
       };
 
       await PendingQuestionProductAPI.confirmPendingQuestionProduct({
-        question_id: record._id,
+        question_id: questionOfProduct._id,
         replyQuestion: objectReplyQuestion,
-        questionCreatedAt: record.createdAt,
+        questionCreatedAt: questionOfProduct.createdAt,
         token,
       });
       Swal.fire({
@@ -127,7 +143,10 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
         </p>
         <Row>
           <Col span={12}>
-            <DescriptionItem title="User Name" content={record.userName} />
+            <DescriptionItem
+              title="User Name"
+              content={questionOfProduct.userName}
+            />
           </Col>
           <Col span={12}>
             <DescriptionItem
@@ -190,7 +209,9 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
           <Col span={24}>
             <DescriptionItem
               title="Create At"
-              content={new Date(record.createdAt).toLocaleString("en-GB")}
+              content={new Date(questionOfProduct.createdAt).toLocaleString(
+                "en-GB"
+              )}
             />
           </Col>
         </Row>
@@ -200,7 +221,8 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
               className="drawer_question-des"
               style={{ textTransform: "capitalize" }}
             >
-              {record.question}
+              <span className="drawer_question-des-label">Question:</span>
+              {questionOfProduct.question}
             </div>
           </Col>
         </Row>
@@ -244,7 +266,7 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
               style={{ margin: "0 auto" }}
               type="primary"
               danger
-              onClick={() => handleRejectPendingQuestion(record._id)}
+              onClick={() => handleRejectPendingQuestion(questionOfProduct._id)}
             >
               Reject
             </Button>

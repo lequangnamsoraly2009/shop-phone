@@ -22,11 +22,8 @@ router
 router
   .route("/questions")
   .post(auth, questionProductController.createPendingQuestion);
-router.post(
-  "/confirm_question",
-  auth,
-  authAdmin,
-  questionProductController.confirmPendingQuestion
-);
+router
+  .route("/confirm_question/:id")
+  .post(auth, authAdmin, questionProductController.confirmPendingQuestion);
 
 module.exports = router;
