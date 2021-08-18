@@ -26,6 +26,9 @@ const questionProductSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    reply: {
+      type: Array,
+    }
   },
   {
     timestamps: true,
