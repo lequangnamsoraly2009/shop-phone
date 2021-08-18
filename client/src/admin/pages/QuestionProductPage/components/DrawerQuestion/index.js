@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ShowQuestionProduct() {
+function DrawerQuestion() {
     return (
         <div>
             
@@ -8,4 +8,4 @@ function ShowQuestionProduct() {
     )
 }
 
-export default ShowQuestionProduct
+export default DrawerQuestion

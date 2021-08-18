@@ -1,7 +1,6 @@
 import {
   Breadcrumb,
   Table,
-  Button,
   Pagination,
   Skeleton,
   Tag,
@@ -11,13 +10,14 @@ import {
 import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
 import { DeleteOutlined, EyeOutlined, HomeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllPendingQuestionProducts,
   setPaginationPendingQuestionProducts,
 } from "../../../../../app/pendingQuestionProductSlice";
 import PendingQuestionProductAPI from "../../../../../api/pendingQuestionProductAPI";
+import "./question.css"
+import DrawerQuestion from "../DrawerQuestion";
 
 function MainQuestionProduct() {
   const { token } = useSelector((state) => state.token);
@@ -25,6 +25,7 @@ function MainQuestionProduct() {
     useSelector((state) => state.pendingQuestionProducts);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [visibleDrawer,setVisibleDrawer] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -173,12 +174,9 @@ function MainQuestionProduct() {
       key: "action",
       render: (text, record, index) => (
         <Space size="large">
-          <Link
-            to={`/admin/question-product/show/${record._id}`}
-            style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
-          >
+          <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <EyeOutlined />
-          </Link>
+          </div>
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <Popconfirm
               title="Are you sure delete it?"
@@ -244,6 +242,9 @@ function MainQuestionProduct() {
               onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
           )}
+        </div>
+        <div className="question_product-drawer">
+            <DrawerQuestion visibleDrawer={visibleDrawer} setVisibleDrawer={setVisibleDrawer}/>
         </div>
       </div>
     </div>
