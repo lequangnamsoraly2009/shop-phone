@@ -8,34 +8,59 @@ import {
   Space,
   Popconfirm,
 } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DeleteOutlined, EyeOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPendingQuestionProducts } from "../../../../../app/pendingQuestionProductSlice";
+import {
+  getAllPendingQuestionProducts,
+  setPaginationPendingQuestionProducts,
+} from "../../../../../app/pendingQuestionProductSlice";
+import API from "../../../../../api/axiosClient";
 
 function MainQuestionProduct() {
   const { token } = useSelector((state) => state.token);
-  const { pendingQuestionProducts } = useSelector(
-    (state) => state.pendingQuestionProducts
-  );
+  const { pendingQuestionProducts, paginationPendingQuestionProducts } =
+    useSelector((state) => state.pendingQuestionProducts);
+
+  const [isLoading,setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     try {
+      setIsLoading(true)
       dispatch(getAllPendingQuestionProducts({ token }));
+      setIsLoading(false)
     } catch (error) {
       console.log(error.message);
     }
   }, [dispatch, token]);
 
+  // Change Page
+  const handleChangePage = async (page, pageSize) => {
+    try {
+      setIsLoading(true)
+      const response = await API.get(
+        `/api/pending_questions?limit=${pageSize * page}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      const dataPage = response.data.pendingQuestions.slice(
+        (page - 1) * pageSize,
+        pageSize * page
+      );
+      dispatch(setPaginationPendingQuestionProducts(dataPage));
+      setIsLoading(false)
+    } catch (error) {}
+  };
+
   const columns = [
     {
       title: "STT",
       dataIndex: "stt",
-      width: 40,
+      width: 60,
       key: "stt",
       render: (text, record, index) => (
         <span>
@@ -56,7 +81,8 @@ function MainQuestionProduct() {
       title: "Question",
       dataIndex: "question",
       key: "question",
-      width: "50%",
+      width: "45%",
+      ellipsis: true,
       render: (text, record, index) => (
         <span style={{ textTransform: "capitalize" }}>{record.question}</span>
       ),
@@ -67,7 +93,9 @@ function MainQuestionProduct() {
       dataIndex: "createdAt",
       key: "createdAt",
       render: (text, record, index) => (
-        <span style={{ textTransform: "capitalize" }}>{new Date(record.createdAt).toLocaleString("en-GB")}</span>
+        <span style={{ textTransform: "capitalize" }}>
+          {new Date(record.createdAt).toLocaleString("en-GB")}
+        </span>
       ),
       align: "center",
     },
@@ -77,7 +105,9 @@ function MainQuestionProduct() {
       key: "status",
       render: (text, record, index) => (
         <>
-          <Tag color="green" style={{ textTransform: "capitalize" }}>{record.status}</Tag>
+          <Tag color="green" style={{ textTransform: "capitalize" }}>
+            {record.status}
+          </Tag>
         </>
       ),
       align: "center",
@@ -112,7 +142,6 @@ function MainQuestionProduct() {
     },
   ];
 
-
   return (
     <div className="container-admin">
       <div className="header_page">
@@ -137,34 +166,35 @@ function MainQuestionProduct() {
           </div>
         </div>
         <div className="product_data-table">
-          {/* <Skeleton
+          <Skeleton
               active
-              // loading={isLoading}
+              loading={isLoading}
               paragraph={{ rows: 10 }}
               title={{ width: "100%" }}
-            > */}
+            >
           <Table
             pagination={{ position: ["none", "none"] }}
             columns={columns}
-            dataSource={pendingQuestionProducts}
-            bordered={true}
+            rowKey="_id"
+            dataSource={paginationPendingQuestionProducts}
+            bordered="true"
             style={{ border: "1px solid #000" }}
           />
-          {/* </Skeleton> */}
+          </Skeleton>
         </div>
-        {/* <div className="product_data-pagination">
-            {paginationFilter.length <= 10 ? (
-              ""
-            ) : (
-              <Pagination
-                defaultCurrent={1}
-                total={paginationFilter.length}
-                showSizeChanger={false}
-                pageSize={10}
-                onChange={(page, pageSize) => handleChangePage(page, pageSize)}
-              />
-            )}
-          </div> */}
+        <div className="product_data-pagination">
+          {pendingQuestionProducts.length <= 10 ? (
+            ""
+          ) : (
+            <Pagination
+              defaultCurrent={1}
+              total={pendingQuestionProducts.length}
+              showSizeChanger={false}
+              pageSize={10}
+              onChange={(page, pageSize) => handleChangePage(page, pageSize)}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
