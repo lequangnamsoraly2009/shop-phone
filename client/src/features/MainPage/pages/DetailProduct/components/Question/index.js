@@ -5,6 +5,7 @@ import ModalAsk from "./modelAsk";
 import "./question.css";
 import API from "../../../../../../api/axiosClient";
 import Swal from "sweetalert2";
+import PendingQuestionProductAPI from "../../../../../../api/pendingQuestionProductAPI";
 
 function QuestionAndAnswers({ detailProduct }) {
   const [visible, setVisible] = useState(false);
@@ -18,17 +19,12 @@ function QuestionAndAnswers({ detailProduct }) {
   const onFinish = async (values) => {
     try {
       const { question } = values;
-      await API.post(
-        "/api/questions",
-        {
-          question,
-          userName: user.userName,
-          product_id: detailProduct._id,
-        },
-        {
-          headers: { Authorization: token },
-        }
-      );
+      await PendingQuestionProductAPI.createPendingQuestionProduct({
+        question,
+        userName: user.userName,
+        product_id: detailProduct._id,
+        token,
+      });
       setVisible(false);
       Swal.fire({
         position: "center",

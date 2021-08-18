@@ -11,17 +11,35 @@ const PendingQuestionProductAPI = {
       headers: { Authorization: token },
     });
   },
+  createPendingQuestionProduct: ({ question, userName, product_id, token }) => {
+    return API.post(
+      "/api/questions",
+      {
+        question,
+        userName,
+        product_id,
+      },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
   deletePendingQuestionProduct: ({ _id, token }) => {
     return API.delete(`/api/pending_questions/${_id}`, {
       headers: { Authorization: token },
     });
   },
-  confirmPendingQuestionProduct: ({ question_id, replyQuestion, questionCreatedAt, token }) => {
+  confirmPendingQuestionProduct: ({
+    question_id,
+    replyQuestion,
+    questionCreatedAt,
+    token,
+  }) => {
     return API.post(
       `/api/confirm_question/${question_id}`,
       {
         replyQuestion,
-        questionCreatedAt
+        questionCreatedAt,
       },
       {
         headers: { Authorization: token },
