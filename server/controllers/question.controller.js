@@ -88,7 +88,7 @@ const questionProductController = {
   },
   confirmPendingQuestion: async (req, res) => {
     try {
-      const { question_id } = req.body;
+      const { question_id, replyQuestion } = req.body;
 
       const questionPending = await PendingQuestionProducts.findById({
         _id: question_id,
@@ -113,6 +113,7 @@ const questionProductController = {
         product_id,
         status: newStatus,
         question,
+        reply: replyQuestion,
       });
 
       await newQuestionRoot.save();
