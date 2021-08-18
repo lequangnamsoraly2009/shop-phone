@@ -1,16 +1,28 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ModalAsk from "./modelAsk";
 import "./question.css";
 import Swal from "sweetalert2";
 import PendingQuestionProductAPI from "../../../../../../api/pendingQuestionProductAPI";
 import QuestionItem from "./questionItem";
+import { getAllQuestionForProduct } from "../../../../../../app/questionProductSlice";
 
 function QuestionAndAnswers({ detailProduct }) {
   const [visible, setVisible] = useState(false);
 
   const { user } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
+  const { questionProducts } = useSelector((state) => state.questionProducts);
+
+  const dispatch = useDispatch();
+
+  console.log(questionProducts)
+
+  // Get data from API to redux when we select product
+  useEffect(() => {
+    dispatch(getAllQuestionForProduct({ product_id: detailProduct._id }));
+  }, [dispatch, detailProduct._id]);
+
   const showModalAsk = () => {
     setVisible(true);
   };

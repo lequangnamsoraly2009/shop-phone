@@ -3,10 +3,9 @@ import QuestionProductAPI from "../api/questionProductAPI";
 
 export const getAllQuestionForProduct = createAsyncThunk(
   "/questionProducts/getAllQuestionForProducts",
-  async ({ product_id, token }) => {
+  async ({ product_id }) => {
     const response = await QuestionProductAPI.getAllQuestionForProduct({
       product_id,
-      token,
     });
     return response.data.questions;
   }
@@ -27,7 +26,7 @@ const categoryPendingQuestionProduct = createSlice({
   },
 });
 
-const {  reducer } = categoryPendingQuestionProduct;
+const { reducer } = categoryPendingQuestionProduct;
 
 // export const { setPaginationPendingQuestionProducts } = actions;
 

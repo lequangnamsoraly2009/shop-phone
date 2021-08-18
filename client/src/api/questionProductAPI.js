@@ -1,8 +1,8 @@
 import API from "./axiosClient";
 
 const QuestionProductAPI = {
-  getAllQuestionForProduct: ({ product_id, token }) => {
-    return API.get(`/api/questions${product_id}`);
+  getAllQuestionForProduct: ({ product_id }) => {
+    return API.get(`/api/questions/${product_id}`);
   },
 };
 

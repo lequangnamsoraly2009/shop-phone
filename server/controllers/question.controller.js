@@ -40,7 +40,7 @@ const questionProductController = {
       res.json({
         status: "success",
         result: questions.length,
-        question: questions,
+        questions: questions,
       });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
