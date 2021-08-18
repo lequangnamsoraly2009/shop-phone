@@ -20,6 +20,7 @@ class APIfeatures {
 }
 
 const questionProductController = {
+  // Get data question for one product
   getAllQuestionsForProduct: async (req, res) => {
     try {
       const features = new APIfeatures(

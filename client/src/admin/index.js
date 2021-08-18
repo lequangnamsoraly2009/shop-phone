@@ -25,7 +25,7 @@ function Admin() {
         <Route path={`${match.url}/information`} exact component={InformationPage} />
         <Route path={`${match.url}/notification`} exact component={NotificationPage} />
         <Route path={`${match.url}/setting`} exact component={SettingPage} />
-        <Route path={`${match.url}/question-product`} component={QuestionProductPage} />
+        <Route path={`${match.url}/pending-question`} component={QuestionProductPage} />
         <Route path={`${match.url}/contact`} exact component={ContactPage} />
         <Route path={`${match.url}/about`} exact component={AboutPape} />
         <Route path={`${match.url}/help`} exact component={HelpPage} />

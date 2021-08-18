@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import ModalAsk from "./modelAsk";
 import "./question.css";
 import API from "../../../../../../api/axiosClient";
+import Swal from "sweetalert2";
 
 function QuestionAndAnswers({ detailProduct }) {
   const [visible, setVisible] = useState(false);
@@ -28,8 +29,23 @@ function QuestionAndAnswers({ detailProduct }) {
           headers: { Authorization: token },
         }
       );
+      setVisible(false);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title:
+          "Create Question Success ! Please Waiting For The Mod To Confirm",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } catch (error) {
-      console.log(error.message);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: error.message,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
   };
 

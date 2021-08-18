@@ -88,7 +88,7 @@ function SideBar() {
             <Link to="/admin/setting">Setting</Link>
           </Menu.Item>
           <Menu.Item icon={<TransactionOutlined />} key="9">
-            <Link to="/admin/question-product">Question Product</Link>
+            <Link to="/admin/pending-question">Pending Question</Link>
           </Menu.Item>
           <Menu.Item icon={<WhatsAppOutlined />} key="10">
             <Link to="/admin/contact">Contact</Link>
