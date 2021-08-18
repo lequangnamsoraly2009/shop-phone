@@ -16,7 +16,7 @@ import {
   setPaginationPendingQuestionProducts,
 } from "../../../../../app/pendingQuestionProductSlice";
 import PendingQuestionProductAPI from "../../../../../api/pendingQuestionProductAPI";
-import "./question.css"
+import "./question.css";
 import DrawerQuestion from "../DrawerQuestion";
 
 function MainQuestionProduct() {
@@ -25,7 +25,7 @@ function MainQuestionProduct() {
     useSelector((state) => state.pendingQuestionProducts);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [visibleDrawer,setVisibleDrawer] = useState(false);
+  const [visibleDrawer, setVisibleDrawer] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -113,6 +113,10 @@ function MainQuestionProduct() {
     }
   };
 
+  const handleOpenDrawerQuestion = () => {
+    setVisibleDrawer(true);
+  };
+
   const columns = [
     {
       title: "STT",
@@ -173,22 +177,34 @@ function MainQuestionProduct() {
       title: "Action",
       key: "action",
       render: (text, record, index) => (
-        <Space size="large">
-          <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
-            <EyeOutlined />
-          </div>
-          <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
-            <Popconfirm
-              title="Are you sure delete it?"
-              onConfirm={() => handleDeletePendingQuestion(record._id)}
-              onCancel={handleCancelDeletePendingQuestion}
-              okText="Xóa mẹ nó đi"
-              cancelText="Thôi đừng"
+        <>
+          <Space size="large">
+            <div
+              onClick={() => handleOpenDrawerQuestion()}
+              style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
             >
-              <DeleteOutlined />
-            </Popconfirm>
+              <EyeOutlined />
+            </div>
+            <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
+              <Popconfirm
+                title="Are you sure delete it?"
+                onConfirm={() => handleDeletePendingQuestion(record._id)}
+                onCancel={handleCancelDeletePendingQuestion}
+                okText="Xóa mẹ nó đi"
+                cancelText="Thôi đừng"
+              >
+                <DeleteOutlined />
+              </Popconfirm>
+            </div>
+          </Space>
+          <div className="question_product-drawer">
+            <DrawerQuestion
+              record={record}
+              visibleDrawer={visibleDrawer}
+              setVisibleDrawer={setVisibleDrawer}
+            />
           </div>
-        </Space>
+        </>
       ),
       align: "center",
     },
@@ -242,9 +258,6 @@ function MainQuestionProduct() {
               onChange={(page, pageSize) => handleChangePage(page, pageSize)}
             />
           )}
-        </div>
-        <div className="question_product-drawer">
-            <DrawerQuestion visibleDrawer={visibleDrawer} setVisibleDrawer={setVisibleDrawer}/>
         </div>
       </div>
     </div>
