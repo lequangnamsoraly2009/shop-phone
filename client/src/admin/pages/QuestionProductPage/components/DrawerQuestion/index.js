@@ -4,7 +4,7 @@ import {
   IdcardOutlined,
   SendOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Drawer, Row } from "antd";
+import { Button, Col, Drawer, Row, Form, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import PendingQuestionProductAPI from "../../../../../api/pendingQuestionProductAPI";
@@ -22,6 +22,7 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
   const { products } = useSelector((state) => state.productsFilter);
   const [productQuestion, setProductQuestion] = useState({});
   const { token } = useSelector((state) => state.token);
+  const [visibleDrawerChild, setVisibleDrawerChild] = useState(false);
 
   useEffect(() => {
     let pQuestion = {};
@@ -35,6 +36,18 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
 
   const onCloseDrawer = () => {
     setVisibleDrawer(false);
+  };
+
+  const showDrawerChild = () => {
+    setVisibleDrawerChild(true);
+  };
+
+  const handleOnCloseDrawerChild = () => {
+    setVisibleDrawerChild(false);
+  };
+
+  const onConfirmPendingQuestion = async (values) => {
+      console.log(values)
   };
 
   const handleRejectPendingQuestion = async (_id) => {
@@ -100,7 +113,7 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
           <Col style={{ display: "flex" }} span={24}>
             <img
               style={{ height: 150, margin: "0 auto" }}
-              src={productQuestion.images.url}
+              src={productQuestion.images?.url}
               alt="Product Question"
             />
           </Col>
@@ -139,6 +152,14 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
         </p>
         <Row>
           <Col span={24}>
+            <DescriptionItem
+              title="Create At"
+              content={new Date(record.createdAt).toLocaleString("en-GB")}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
             <div
               className="drawer_question-des"
               style={{ textTransform: "capitalize" }}
@@ -153,9 +174,31 @@ function DrawerQuestion({ visibleDrawer, setVisibleDrawer, record }) {
         </p>
         <Row>
           <Col style={{ display: "flex" }} span={12}>
-            <Button style={{ margin: "0 auto" }} type="primary">
+            <Button
+              style={{ margin: "0 auto" }}
+              type="primary"
+              onClick={showDrawerChild}
+            >
               Confirm And Reply
             </Button>
+            <Drawer
+              title="Answer User Questions"
+              width={600}
+              closable={false}
+              onClose={handleOnCloseDrawerChild}
+              visible={visibleDrawerChild}
+            >
+              <Form onFinish={onConfirmPendingQuestion} style={{ display: "flex" , flexDirection: "column"}}>
+                <Form.Item name="replyQuestion" label="Reply">
+                  <Input.TextArea autoSize={{minRows: 4, maxRows: 10 }} />
+                </Form.Item>
+                <Form.Item style={{ margin: "0 auto"}}>
+                  <Button  type="primary" htmlType="submit">
+                    Confirm And Save
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Drawer>
           </Col>
           <Col style={{ display: "flex" }} span={12}>
             <Button
