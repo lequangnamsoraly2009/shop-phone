@@ -15,7 +15,7 @@ function QuestionItem({ question }) {
       setDisableButtonDisLike(!disableButtonDisLike);
       await API.patch(
         `/api/questions/like/${question._id}`,
-        { userId: user._id },
+        { userUID: user._id },
         {
           headers: { Authorization: token },
         }

@@ -56,45 +56,50 @@ const questionProductController = {
           .json({ status: false, message: "This question is not exist!" });
       }
 
-      const { like, isLike } = question;
+      const { like, userLike } = question;
 
-      const { userId } = req.body;
+      const { userUID } = req.body;
 
-      let userHasLike;
+      // Check user has like ?
+      const isUserHasLike = userLike.every((user) => user.userId !== userUID);
+      // if isUserHasLike=false => has like -> opposite -> hasn't like
       let handleLike;
-
-      question.userLike.forEach((user) => {
-        if (user.userID === userId) {
-          userHasLike = user;
-        }
-      });
-
-      if (userHasLike) {
+      if (isUserHasLike === false) {
+        let userHasLike = question.userLike.find(
+          (user) => user.userId === userUID
+        );
         if (userHasLike.isLike === true) {
           userHasLike = {
-            userId,
+            userId: userUID,
             isLike: false,
           };
           handleLike = like - 1;
+          await QuestionProducts.findOneAndUpdate(
+            { _id: req.params.id },
+            { like: handleLike, userLike: userHasLike }
+          );
         } else {
           userHasLike = {
-            userId,
+            userId: userUID,
             isLike: true,
           };
           handleLike = like + 1;
+          await QuestionProducts.findOneAndUpdate(
+            { _id: req.params.id },
+            { like: handleLike, userLike: userHasLike }
+          );
         }
       } else {
-        userHasLike = {
+        let userHasLike = {
           userId,
           isLike: true,
         };
         handleLike = like + 1;
+        await QuestionProducts.findOneAndUpdate(
+          { _id: req.params.id },
+          { like: handleLike, userLike: userHasLike }
+        );
       }
-
-      await QuestionProducts.findOneAndUpdate(
-        { _id: req.params.id },
-        { like: handleLike, userLike: userHasLike }
-      );
       res.json({ status: "success", message: "Update like successfully!" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
