@@ -18,10 +18,13 @@ const pageSize = 3;
 function QuestionAndAnswers({ detailProduct }) {
   const [visible, setVisible] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isLike, setIsLike] = useState(false);
 
   const { user } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
-  const { questionProducts, paginationQuestionProducts } = useSelector((state) => state.questionProducts);
+  const { questionProducts, paginationQuestionProducts } = useSelector(
+    (state) => state.questionProducts
+  );
 
   const dispatch = useDispatch();
 
@@ -36,6 +39,19 @@ function QuestionAndAnswers({ detailProduct }) {
       })
     );
   }, [dispatch, detailProduct._id]);
+
+  useEffect(() => {
+    if (isLike === true) {
+      dispatch(
+        getAllQuestionForPagination({
+          product_id: detailProduct._id,
+          page: 1,
+          pageSize: pageSize,
+        })
+      );
+      setIsLike(!isLike);
+    }
+  }, [dispatch, detailProduct._id, isLike]);
 
   const handleChangePageReviews = async (page, pageSize) => {
     try {
@@ -151,7 +167,11 @@ function QuestionAndAnswers({ detailProduct }) {
       <div className="question-right">
         <Skeleton loading={isLoadingData} active avatar>
           {paginationQuestionProducts.map((question) => (
-            <QuestionItem key={question._id} question={question} />
+            <QuestionItem
+              key={question._id}
+              setIsLike={setIsLike}
+              question={question}
+            />
           ))}
         </Skeleton>
         <div className="reviews-pagination">

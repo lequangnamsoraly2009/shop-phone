@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "antd";
 import moment from "moment";
 import API from "../../../../../../api/axiosClient";
 import { useSelector } from "react-redux";
 
-function QuestionItem({ question }) {
-  const [disableButtonLike, setDisableButtonLike] = useState(false);
-  const [disableButtonDisLike, setDisableButtonDisLike] = useState(false);
+function QuestionItem({ question, setIsLike }) {
   const { user } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
 
   const handleOnClickLike = async () => {
     try {
-      setDisableButtonDisLike(!disableButtonDisLike);
       await API.patch(
         `/api/questions/like/${question._id}`,
         { userUID: user._id },
@@ -20,11 +17,8 @@ function QuestionItem({ question }) {
           headers: { Authorization: token },
         }
       );
+      setIsLike(true)
     } catch (error) {}
-  };
-
-  const handleOnClickDisLike = () => {
-    setDisableButtonLike(!disableButtonLike);
   };
 
   return (
@@ -44,22 +38,8 @@ function QuestionItem({ question }) {
         </span>
       </div>
       <div className="question-right-wrapper">
-        <Button
-          type="primary"
-          size="middle"
-          disabled={disableButtonLike}
-          onClick={handleOnClickLike}
-        >
+        <Button type="primary" size="middle" onClick={handleOnClickLike}>
           Helpful({question.like})
-        </Button>
-        <Button
-          type="primary"
-          danger
-          size="middle"
-          disabled={disableButtonDisLike}
-          onClick={handleOnClickDisLike}
-        >
-          Unhelpful({question.dislike})
         </Button>
       </div>
     </div>
