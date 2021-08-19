@@ -46,6 +46,38 @@ const questionProductController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  //Count Like and count dislike
+  handleLikeQuestion: async (req, res) => {
+    try {
+      const question = await QuestionProducts.findById({ _id: req.params.id });
+      if (!question) {
+        return res
+          .status(400)
+          .json({ status: false, message: "This question is not exist!" });
+      }
+
+      // Check if user like or double like
+      const { isCheckDouble } = req.body;
+      const { like } = question;
+      // If isCheckDouble is true => -1 like , opposite +1 like
+      let handleLike;
+      if (isCheckDouble) {
+        handleLike = like - 1;
+      } else {
+        handleLike = like + 1;
+      }
+
+      await QuestionProducts.findOneAndUpdate(
+        { _id: req.params.id },
+        { like: handleLike }
+      );
+      res.json({status: "success", message:"Update like successfully!"});
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  handleDisLikeQuestion: async (req, res) => {},
+
   getAllPendingQuestionsForAdmin: async (req, res) => {
     try {
       const features = new APIfeatures(
