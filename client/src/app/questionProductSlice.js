@@ -26,8 +26,7 @@ export const getAllQuestionForPagination = createAsyncThunk(
 const initialState = {
   questionProducts: [],
   paginationQuestionProducts: [],
-  isLike: false,
-  isDisLike: false
+
 };
 
 const categoryPendingQuestionProduct = createSlice({
@@ -36,13 +35,7 @@ const categoryPendingQuestionProduct = createSlice({
   reducers: {
     setPaginationQuestionProducts: (state, action) => {
       state.paginationQuestionProducts = action.payload;
-    },
-    setIsLike: (state, action) => {
-      state.isLike = action.payload;
-    },
-    setIsDisLike: (state, action) => {
-      state.isLike = action.payload;
-    },
+    }
   },
   extraReducers: {
     [getAllQuestionForProduct.fulfilled]: (state, action) => {
@@ -56,6 +49,6 @@ const categoryPendingQuestionProduct = createSlice({
 
 const { actions, reducer } = categoryPendingQuestionProduct;
 
-export const { setPaginationQuestionProducts,setIsLike,setIsDisLike } = actions;
+export const { setPaginationQuestionProducts } = actions;
 
 export default reducer;

@@ -4,7 +4,7 @@ import moment from "moment";
 import API from "../../../../../../api/axiosClient";
 import { useSelector } from "react-redux";
 
-function QuestionItem({ question, setIsLike }) {
+function QuestionItem({ question, setIsLike}) {
   const { user } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
 
@@ -17,7 +17,7 @@ function QuestionItem({ question, setIsLike }) {
           headers: { Authorization: token },
         }
       );
-      setIsLike(true)
+      setIsLike(true);
     } catch (error) {}
   };
 
