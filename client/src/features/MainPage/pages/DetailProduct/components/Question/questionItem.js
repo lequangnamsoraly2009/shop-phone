@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "antd";
 import moment from "moment";
 
 function QuestionItem({question}) {
+  const [disableButtonLike,setDisableButtonLike] = useState(false);
+  const [disableButtonDisLike,setDisableButtonDisLike] = useState(false);
+
+  const handleOnClickLike = () =>{
+    setDisableButtonDisLike(!disableButtonDisLike)
+  }
+
+  const handleOnClickDisLike = () =>{
+    setDisableButtonLike(!disableButtonLike)
+  }
+
   return (
     <div className="question-right-question">
       <div className="question-right-Q">
@@ -14,10 +25,10 @@ function QuestionItem({question}) {
         <span>Answered {moment(question.createdAt).fromNow()} by {question.reply[0].userReply}</span>
       </div>
       <div className="question-right-wrapper">
-        <Button type="primary" size="middle">
+        <Button type="primary" size="middle" disabled={disableButtonLike} onClick={handleOnClickLike}>
           Helpful({question.like})
         </Button>
-        <Button type="primary" danger size="middle">
+        <Button type="primary" danger size="middle" disabled={disableButtonDisLike} onClick={handleOnClickDisLike}>
           Unhelpful({question.dislike})
         </Button>
       </div>
