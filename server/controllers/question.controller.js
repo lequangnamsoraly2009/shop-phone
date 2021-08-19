@@ -56,24 +56,46 @@ const questionProductController = {
           .json({ status: false, message: "This question is not exist!" });
       }
 
-      // Check if user like or double like
-      const { like , isLike } = question;
-      // If isCheckDouble is true => -1 like , opposite +1 like
+      const { like, isLike } = question;
+
+      const { userId } = req.body;
+
+      let userHasLike;
       let handleLike;
-      let isCheckLike;
-      if (isLike === true) {
-        handleLike = like - 1;
-        isCheckLike = false;
+
+      question.userLike.forEach((user) => {
+        if (user.userID === userId) {
+          userHasLike = user;
+        }
+      });
+
+      if (userHasLike) {
+        if (userHasLike.isLike === true) {
+          userHasLike = {
+            userId,
+            isLike: false,
+          };
+          handleLike = like - 1;
+        } else {
+          userHasLike = {
+            userId,
+            isLike: true,
+          };
+          handleLike = like + 1;
+        }
       } else {
+        userHasLike = {
+          userId,
+          isLike: true,
+        };
         handleLike = like + 1;
-        isCheckLike = true;
       }
 
       await QuestionProducts.findOneAndUpdate(
         { _id: req.params.id },
-        { like: handleLike, isLike: isCheckLike }
+        { like: handleLike, userLike: userHasLike }
       );
-      res.json({status: "success", message:"Update like successfully!"});
+      res.json({ status: "success", message: "Update like successfully!" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

@@ -7,15 +7,19 @@ import { useSelector } from "react-redux";
 function QuestionItem({ question }) {
   const [disableButtonLike, setDisableButtonLike] = useState(false);
   const [disableButtonDisLike, setDisableButtonDisLike] = useState(false);
-
+  const { user } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
 
   const handleOnClickLike = async () => {
     try {
       setDisableButtonDisLike(!disableButtonDisLike);
-      await API.patch(`/api/questions/like/${question._id}`, {
-        headers: { Authorization: token },
-      });
+      await API.patch(
+        `/api/questions/like/${question._id}`,
+        { userId: user._id },
+        {
+          headers: { Authorization: token },
+        }
+      );
     } catch (error) {}
   };
 
