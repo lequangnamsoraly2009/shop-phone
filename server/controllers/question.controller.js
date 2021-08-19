@@ -57,19 +57,21 @@ const questionProductController = {
       }
 
       // Check if user like or double like
-      const { isCheckDouble } = req.body;
-      const { like } = question;
+      const { like , isLike } = question;
       // If isCheckDouble is true => -1 like , opposite +1 like
       let handleLike;
-      if (isCheckDouble) {
+      let isCheckLike;
+      if (isLike === true) {
         handleLike = like - 1;
+        isCheckLike = false;
       } else {
         handleLike = like + 1;
+        isCheckLike = true;
       }
 
       await QuestionProducts.findOneAndUpdate(
         { _id: req.params.id },
-        { like: handleLike }
+        { like: handleLike, isLike: isCheckLike }
       );
       res.json({status: "success", message:"Update like successfully!"});
     } catch (error) {

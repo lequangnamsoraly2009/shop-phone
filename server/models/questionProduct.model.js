@@ -31,7 +31,10 @@ const questionProductSchema = new mongoose.Schema(
     },
     questionCreatedAt: {
       type: String,
-    }
+    },
+    userLike: {
+      type: Array,
+    },
   },
   {
     timestamps: true,
