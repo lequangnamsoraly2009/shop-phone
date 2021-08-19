@@ -79,6 +79,21 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    specifications:{
+      type: Object,
+      default: {
+        screenSize: 10,
+        chipSet: "Apple A14 Bionic 6 cores",
+        ram: 16,
+        internalMemory: 128,
+        pin: "2815 mAh",
+        weight: 1.23,
+        chargingPort: "Lightning",
+        rearCamera: "Full HD",
+        frontCamera: "Full HD",
+        operatingSystem: "iOS 14"
+      }
+    }
   },
   {
     timestamps: true,

@@ -31,12 +31,10 @@ const userSchema = new mongoose.Schema(
     phone: {
       type: String,
       default: ""
-      // required: true,
     },
     prefix: {
       type: String,
       default: ""
-      // required: true,
     },
     role: {
       type: Number,
@@ -65,7 +63,8 @@ const userSchema = new mongoose.Schema(
     methodLogin:{
       type: Number,
       default: 1
-    }
+    },
+    
   },
   {
     timestamps: true,
