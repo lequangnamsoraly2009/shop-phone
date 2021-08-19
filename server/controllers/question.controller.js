@@ -91,7 +91,7 @@ const questionProductController = {
         }
       } else {
         let userHasLike = {
-          userId,
+          userId: userUID,
           isLike: true,
         };
         handleLike = like + 1;
