@@ -186,6 +186,9 @@ function CreateProduct() {
               status: "Stocking",
             }}
           >
+            <h3 style={{ color: "rgb(25,144,255)" }}>
+            Main:
+            </h3>
             <Form.Item
               label="Product Name"
               name="title"
@@ -875,27 +878,9 @@ function CreateProduct() {
             >
               <Input placeholder="Monolithic" />
             </Form.Item>
-            {/* <Form.Item
-              label="Memory"
-              name="memory"
-              hasFeedback
-              rules={[
-                {
-                  required: true,
-                  message: "Please select memory for product!",
-                },
-              ]}
-            >
-              <Select placeholder="Please select memory for product">
-                <Option value="16">16</Option>
-                <Option value="32">32</Option>
-                <Option value="64">64</Option>
-                <Option value="128">128</Option>
-                <Option value="256">256</Option>
-                <Option value="512">512</Option>
-                <Option value="1024">1024</Option>
-              </Select>
-            </Form.Item> */}
+            <h3 style={{ color: "rgb(25,144,255)" }}>
+            Additional:
+            </h3>
             <Form.Item
               label="Price"
               name="price"
