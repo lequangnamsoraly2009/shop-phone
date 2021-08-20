@@ -755,35 +755,12 @@ function CreateProduct() {
                 <Option value="Max 64 GB">Max 64 GB</Option>
                 <Option value="Max 128 GB">Max 128 GB</Option>
                 <Option value="Max 256 GB">Max 256 GB</Option>
-                <Option value="Max 512 GB">512 GB</Option>
-                <Option value="1024 GB">1024 GB</Option>
+                <Option value="Max 512 GB">Max 512 GB</Option>
+                <Option value="Max 1024 GB">Max 1024 GB</Option>
               </Select>
             </Form.Item>
             <h3 style={{ color: "rgb(25,144,255)" }}>Connect:</h3>
-            <Form.Item
-              label="Bluetooth"
-              name="bluetooth"
-              hasFeedback
-              rules={[
-                {
-                  required: true,
-                  message: "Please select bluetooth for product!",
-                },
-              ]}
-            >
-              <Select
-                showSearch
-                placeholder="Search or select bluetooth for product"
-              >
-                <Option value="v1.2">v1.2</Option>
-                <Option value="v2.1">v2.1</Option>
-                <Option value="v3.0">v3.0</Option>
-                <Option value="v4.0">v4.0</Option>
-                <Option value="v4.1">v4.1</Option>
-                <Option value="v4.2">v4.2</Option>
-                <Option value="v5.0">v5.0</Option>
-              </Select>
-            </Form.Item>
+            
             <Form.Item
               label="Bluetooth"
               name="bluetooth"
@@ -846,6 +823,7 @@ function CreateProduct() {
               >
                 <Option value="3.5mm">3.5mm</Option>
                 <Option value="2.5mm">2.5mm</Option>
+                <Option value="Lightning">Lightning</Option>
               </Select>
             </Form.Item>
             <h3 style={{ color: "rgb(25,144,255)" }}>Batteries:</h3>

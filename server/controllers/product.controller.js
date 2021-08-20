@@ -163,7 +163,14 @@ const productController = {
         category,
         storage,
         sale,
-        
+        display,
+        rearCamera,
+        frontCamera,
+        cpu,
+        memoryAndStorage,
+        connect,
+        batteries,
+        general,
       } = req.body;
 
       if (!images)
@@ -188,6 +195,14 @@ const productController = {
           category,
           storage,
           sale,
+          display,
+          rearCamera,
+          frontCamera,
+          cpu,
+          memoryAndStorage,
+          connect,
+          batteries,
+          general,
         }
       );
 
@@ -199,18 +214,23 @@ const productController = {
   updatePatchProduct: async (req, res) => {
     try {
       const { rating } = req.body;
-      if(rating && rating !== 0){
-        const product = await Products.findById(req.params.id)
-        if(!product) return res.status(400).json({msg: 'Product does not exist.'})
+      if (rating && rating !== 0) {
+        const product = await Products.findById(req.params.id);
+        if (!product)
+          return res.status(400).json({ msg: "Product does not exist." });
 
         let num = product.numberReviews;
         let rate = product.rating;
 
-        await Products.findOneAndUpdate({_id: req.params.id}, {
-            rating: rate + rating, numberReviews: num + 1
-        })
-        res.json({msg: 'Update success'})
-    }
+        await Products.findOneAndUpdate(
+          { _id: req.params.id },
+          {
+            rating: rate + rating,
+            numberReviews: num + 1,
+          }
+        );
+        res.json({ msg: "Update success" });
+      }
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
