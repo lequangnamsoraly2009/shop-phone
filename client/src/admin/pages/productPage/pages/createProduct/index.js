@@ -3,10 +3,11 @@ import { Breadcrumb, Input, Form, Select, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import UploadImage from "../uploadImage";
 import "./createProduct.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useHistory, useParams } from "react-router-dom";
 import ProductFilterAPI from "../../../../../api/productAPI";
+import { getAllCategories } from "../../../../../app/categorySlice";
 
 const { Option } = Select;
 
@@ -32,11 +33,16 @@ function CreateProduct() {
 
   const history = useHistory();
   const param = useParams();
+  const dispatch = useDispatch();
 
   const backPreviousPage = (e) => {
     e.preventDefault();
     history.goBack();
   };
+
+  useEffect(() => {
+   dispatch(getAllCategories(""));
+  },[dispatch])
 
   const onFinishForm = async (values) => {
     try {
