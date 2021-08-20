@@ -22,7 +22,10 @@ const layout = {
 
 function CreateProduct() {
   const [image, setImage] = useState({});
-  const [image1, setImage1] = useState({});
+  const [imageThumbnail1, setImageThumbnail1] = useState({});
+  const [imageThumbnail2, setImageThumbnail2] = useState({});
+  const [imageThumbnail3, setImageThumbnail3] = useState({});
+  const [imageThumbnail4, setImageThumbnail4] = useState({});
   const [loading, setLoading] = useState(false);
   // Check form edit or form create
   const [onEdit, setOnEdit] = useState(false);
@@ -138,6 +141,10 @@ function CreateProduct() {
           token,
         });
         setImage({});
+        setImageThumbnail1({});
+        setImageThumbnail2({});
+        setImageThumbnail3({});
+        setImageThumbnail4({});
         history.push("/admin/products");
         Swal.fire({
           position: "center",
@@ -211,6 +218,13 @@ function CreateProduct() {
           design,
         };
         let images = { ...image?.response };
+        let subImages = [
+          ...imageThumbnail1?.response,
+          ...imageThumbnail2?.response,
+          ...imageThumbnail3?.response,
+          ...imageThumbnail4?.response,
+        ];
+
         const product = {
           ...values,
           display,
@@ -223,9 +237,14 @@ function CreateProduct() {
           general,
           nameCategory: nameCate,
           images: images,
+          subImages: subImages,
         };
         await ProductFilterAPI.createProduct({ product, token });
         setImage({});
+        setImageThumbnail1({});
+        setImageThumbnail2({});
+        setImageThumbnail3({});
+        setImageThumbnail4({});
         history.push("/admin/products");
         Swal.fire({
           position: "center",
@@ -250,7 +269,16 @@ function CreateProduct() {
     setImage(childData);
   };
   const callbackFunction1 = (childData) => {
-    setImage1(childData);
+    setImageThumbnail1(childData);
+  };
+  const callbackFunction2 = (childData) => {
+    setImageThumbnail2(childData);
+  };
+  const callbackFunction3 = (childData) => {
+    setImageThumbnail3(childData);
+  };
+  const callbackFunction4 = (childData) => {
+    setImageThumbnail4(childData);
   };
   // Area Update Product
   useEffect(() => {
@@ -305,7 +333,14 @@ function CreateProduct() {
     <>
       {loading === true ? (
         <div className="loading_product">
-          <Spin style={{margin: "300px auto", opacity: "1", background: "rgba(256,256,256,0.1)"}} size="large" />
+          <Spin
+            style={{
+              margin: "300px auto",
+              opacity: "1",
+              background: "rgba(256,256,256,0.1)",
+            }}
+            size="large"
+          />
         </div>
       ) : (
         <div className="container-admin">
@@ -354,26 +389,44 @@ function CreateProduct() {
               </div>
               <div className="create_upload-img-up">
                 <UploadImage
-                  images={image1}
+                  images={imageThumbnail1}
                   param={param}
                   parentCallback={callbackFunction1}
                   onEdit={onEdit}
                   setLoading={setLoading}
                 />
-                <span>Image 1</span>
+                <span>Thumbnail 1</span>
               </div>
-              {/* <div className="create_upload-img-up">
-            <UploadImage />
-            <span>Image 2</span>
-          </div>
-          <div className="create_upload-img-up">
-            <UploadImage />
-            <span>Image 3</span>
-          </div>
-          <div className="create_upload-img-up">
-            <UploadImage />
-            <span>Image 4</span>
-          </div> */}
+              <div className="create_upload-img-up">
+                <UploadImage
+                  images={imageThumbnail2}
+                  param={param}
+                  parentCallback={callbackFunction2}
+                  onEdit={onEdit}
+                  setLoading={setLoading}
+                />
+                <span>Thumbnail 2</span>
+              </div>
+              <div className="create_upload-img-up">
+                <UploadImage
+                  images={imageThumbnail3}
+                  param={param}
+                  parentCallback={callbackFunction3}
+                  onEdit={onEdit}
+                  setLoading={setLoading}
+                />
+                <span>Thumbnail 3</span>
+              </div>
+              <div className="create_upload-img-up">
+                <UploadImage
+                  images={imageThumbnail4}
+                  param={param}
+                  parentCallback={callbackFunction4}
+                  onEdit={onEdit}
+                  setLoading={setLoading}
+                />
+                <span>Thumbnail 4</span>
+              </div>
             </div>
             <div className="create_upload-info">
               <Form

@@ -96,12 +96,13 @@ const productController = {
         connect,
         batteries,
         general,
+        subImages
       } = req.body;
 
-      if (!images)
+      if (!images && !subImages)
         return res
           .status(400)
-          .json({ status: false, message: "No image upload ! Add images" });
+          .json({ status: false, message: "Not enough images upload ! Add images" });
 
       const product = await Products.findOne({ product_id });
       if (product)
@@ -135,6 +136,7 @@ const productController = {
         connect,
         batteries,
         general,
+        subImages
       });
 
       await newProduct.save();

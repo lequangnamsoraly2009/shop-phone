@@ -143,6 +143,7 @@ const productSchema = new mongoose.Schema(
     },
     subImages: {
       type: Array,
+      default: [],
     },
   },
   {
