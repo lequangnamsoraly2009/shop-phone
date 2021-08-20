@@ -678,6 +678,7 @@ function CreateProduct() {
                 <Option value="4MP">4MP</Option>
                 <Option value="5MP">5MP</Option>
                 <Option value="8MP">8MP</Option>
+                <Option value="8MP">10MP</Option>
                 <Option value="12MP">12MP</Option>
                 <Option value="16MP">16MP</Option>
                 <Option value="24MP">24MP</Option>
@@ -793,6 +794,7 @@ function CreateProduct() {
                 <Option value="2 GB">2 GB</Option>
                 <Option value="4 GB">4 GB</Option>
                 <Option value="8 GB">8 GB</Option>
+                <Option value="8 GB">12 GB</Option>
                 <Option value="16 GB">16 GB</Option>
                 <Option value="32 GB">32 GB</Option>
                 <Option value="64 GB">64 GB</Option>
@@ -880,6 +882,7 @@ function CreateProduct() {
                 <Option value="v4.1">v4.1</Option>
                 <Option value="v4.2">v4.2</Option>
                 <Option value="v5.0">v5.0</Option>
+                <Option value="v5.0">v5.2</Option>
               </Select>
             </Form.Item>
             <Form.Item
@@ -921,6 +924,7 @@ function CreateProduct() {
                 <Option value="3.5mm">3.5mm</Option>
                 <Option value="2.5mm">2.5mm</Option>
                 <Option value="Lightning">Lightning</Option>
+                <Option value="No Jack">No Jack</Option>
               </Select>
             </Form.Item>
             <h3 style={{ color: "rgb(25,144,255)" }}>Batteries:</h3>
@@ -935,25 +939,7 @@ function CreateProduct() {
                 },
               ]}
             >
-              <Select
-                showSearch
-                placeholder="Search or select Battery Capacity for product"
-              >
-                <Option value="1000 mAh">1000 mAh</Option>
-                <Option value="2000 mAh">2000 mAh</Option>
-                <Option value="3000 mAh">3000 mAh</Option>
-                <Option value="4000 mAh">4000 mAh</Option>
-                <Option value="5000 mAh">5000 mAh</Option>
-                <Option value="6000 mAh">6000 mAh</Option>
-                <Option value="7000 mAh">7000 mAh</Option>
-                <Option value="8000 mAh">8000 mAh</Option>
-                <Option value="9000 mAh">9000 mAh</Option>
-                <Option value="10000 mAh">10000 mAh</Option>
-                <Option value="11000 mAh">11000 mAh</Option>
-                <Option value="12000 mAh">12000 mAh</Option>
-                <Option value="13000 mAh">13000 mAh</Option>
-                <Option value="14000 mAh">14000 mAh</Option>
-              </Select>
+              <Input placeholder="2400 mAh" />           
             </Form.Item>
             <Form.Item
               label="Battery Type"
