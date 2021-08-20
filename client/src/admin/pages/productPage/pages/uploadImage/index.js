@@ -83,6 +83,7 @@ function UploadImage(props) {
   const onRemove = async (file) => {
     try {
       // Nếu edit thì nhảy vào cái này => nó cũng là xóa
+      props.setLoading(true);
       if (props.onEdit === true) {
         await ProductFilterAPI.deleteImageClound(
           props.images?.public_id,
@@ -94,6 +95,7 @@ function UploadImage(props) {
           token
         );
       }
+      props.setLoading(false);
       Swal.fire({
         position: "center",
         icon: "success",
