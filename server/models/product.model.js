@@ -84,7 +84,7 @@ const productSchema = new mongoose.Schema(
       default: {
         screenTechnology: "IPS LCD",
         resolution: "HD+ (720 x 1560 Pixels)",
-        wideScreen: "6.39 - Tần số quét 60 Hz",
+        FPS: "60 Hz",
         maximumBrightness: "400 nits",
       },
     },

@@ -253,7 +253,7 @@ function CreateProduct() {
                 { required: true, message: "Please select color for product!" },
               ]}
             >
-              <Select showSearch placeholder="Please select color for product">
+              <Select showSearch placeholder="Search or select color for product">
                 <Option value="yellow">Yellow</Option>
                 <Option value="gold">Gold</Option>
                 <Option value="red">Red</Option>
@@ -277,7 +277,7 @@ function CreateProduct() {
                 },
               ]}
             >
-              <Select showSearch placeholder="Please select Screen Technology for product">
+              <Select showSearch placeholder="Search or select Screen Technology for product">
                 <Option value="LCD">LCD</Option>
                 <Option value="TFT - LCD">TFT - LCD</Option>
                 <Option value="Super LCD">Super LCD</Option>
@@ -310,7 +310,7 @@ function CreateProduct() {
                 },
               ]}
             >
-              <Select showSearch placeholder="Please select resolution for product">
+              <Select showSearch placeholder="Search or select resolution for product">
                 <Option value="QQVGA (120 x 160 pixels)">QQVGA (120 x 160 pixels)</Option>
                 <Option value="QVGA (320 x 240 pixels)">QVGA (320 x 240 pixels)</Option>
                 <Option value="WQVGA (428 x 240 pixels)">WQVGA (428 x 240 pixels)</Option>
@@ -334,7 +334,82 @@ function CreateProduct() {
 
               </Select>
             </Form.Item>
-
+            <Form.Item
+              label="FPS"
+              name="FPS"
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "Please select frame per second for product!",
+                },
+              ]}
+            >
+              <Select showSearch placeholder="Search or select frame per second for product">
+                <Option value="60Hz">60Hz</Option>
+                <Option value="70Hz">70Hz</Option>
+                <Option value="90Hz">90Hz</Option>
+                <Option value="120Hz">120Hz</Option>
+                <Option value="144Hz">144Hz</Option>
+                <Option value="240Hz">240Hz</Option>
+                <Option value="256Hz">256Hz</Option>
+                <Option value="360Hz">360Hz</Option>              
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Maximum Brightness"
+              name="maximumBrightness"
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "Please select Maximum Brightness for product!",
+                },
+              ]}
+            >
+              <Select showSearch placeholder="Search or select maximum brightness for product">
+                <Option value="200nits">200nits</Option>
+                <Option value="300nits">300nits</Option>
+                <Option value="400nits">400nits</Option>
+                <Option value="500nits">500nits</Option>
+                <Option value="600nits">600nits</Option>
+                <Option value="700nits">700nits</Option>
+                <Option value="800nits">800nits</Option>
+                <Option value="900nits">900nits</Option>
+                <Option value="1000nits">1000nits</Option>
+                <Option value="1100nits">1100nits</Option>
+                <Option value="1200nits">1200nits</Option>
+                <Option value="1300nits">1300nits</Option>
+              </Select>
+            </Form.Item>
+            <h3 style={{color: "rgb(25,144,255)"}}>Rare Camera:</h3>
+            <Form.Item
+              label="Eear Camera"
+              name="rearCamera"
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "Please select rear camera for product!",
+                },
+              ]}
+            >
+              <Select showSearch placeholder="Search or select rear camera for product">
+                <Option value="1MP">1MP</Option>
+                <Option value="2MP">2MP</Option>
+                <Option value="3MP">3MP</Option>
+                <Option value="4MP">4MP</Option>
+                <Option value="5MP">5MP</Option>
+                <Option value="8MP">8MP</Option>
+                <Option value="12MP">12MP</Option>
+                <Option value="16MP">16MP</Option>
+                <Option value="24MP">24MP</Option>
+                <Option value="36MP">36MP</Option>
+                <Option value="48MP">48MP</Option>
+                <Option value="64MP">64MP</Option>
+                <Option value="128MP">128MP</Option>
+              </Select>
+            </Form.Item>
             {/* <Form.Item
               label="Memory"
               name="memory"
