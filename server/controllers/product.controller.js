@@ -88,6 +88,14 @@ const productController = {
         sale,
         nameCategory,
         memory,
+        display,
+        rearCamera,
+        frontCamera,
+        cpu,
+        memoryAndStorage,
+        connect,
+        batteries,
+        general,
       } = req.body;
 
       if (!images)
@@ -119,6 +127,14 @@ const productController = {
         sale,
         nameCategory,
         memory,
+        display,
+        rearCamera,
+        frontCamera,
+        cpu,
+        memoryAndStorage,
+        connect,
+        batteries,
+        general,
       });
 
       await newProduct.save();
@@ -147,6 +163,7 @@ const productController = {
         category,
         storage,
         sale,
+        
       } = req.body;
 
       if (!images)

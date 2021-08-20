@@ -61,8 +61,83 @@ function CreateProduct() {
           token,
         });
       } else {
+        const {
+          screenTechnology,
+          resolutionScreen,
+          FPS,
+          maximumBrightness,
+          resolutionRear,
+          flash,
+          resolutionFront,
+          os,
+          chip,
+          cpuSpeed,
+          gpu,
+          ram,
+          internalMemory,
+          memoryStick,
+          bluetooth,
+          chargingInterface,
+          headphoneJack,
+          batteryCapacity,
+          batteryType,
+          weight,
+          releaseTime,
+          design,
+        } = values;
+
+        const display = {
+          screenTechnology,
+          resolutionScreen,
+          FPS,
+          maximumBrightness,
+        };
+        const rearCamera = {
+          resolutionRear,
+          flash,
+        };
+        const frontCamera = {
+          resolutionFront,
+        };
+        const cpu = {
+          os,
+          chip,
+          cpuSpeed,
+          gpu,
+        };
+        const memoryAndStorage = {
+          ram,
+          internalMemory,
+          memoryStick,
+        };
+        const connect = {
+          bluetooth,
+          chargingInterface,
+          headphoneJack,
+        };
+        const batteries = {
+          batteryCapacity,
+          batteryType,
+        };
+        const general = {
+          weight,
+          releaseTime,
+          design,
+        };
         let images = { ...image?.response };
-        const product = { ...values, nameCategory: nameCate, images: images };
+        const product = {
+          ...values,
+          display,
+          rearCamera,
+          frontCamera,
+          cpu,
+          memoryAndStorage,
+          connect,
+          batteries,
+          general,
+          nameCategory: nameCate,
+          images: images,
+        };
         await ProductFilterAPI.createProduct({ product, token });
       }
       setImage({});
@@ -186,9 +261,7 @@ function CreateProduct() {
               status: "Stocking",
             }}
           >
-            <h3 style={{ color: "rgb(25,144,255)" }}>
-            Main:
-            </h3>
+            <h3 style={{ color: "rgb(25,144,255)" }}>Main:</h3>
             <Form.Item
               label="Product Name"
               name="title"
@@ -605,9 +678,7 @@ function CreateProduct() {
             >
               <Input placeholder="Adreno 610" />
             </Form.Item>
-            <h3 style={{ color: "rgb(25,144,255)" }}>
-            Memory And Storage:
-            </h3>
+            <h3 style={{ color: "rgb(25,144,255)" }}>Memory And Storage:</h3>
             <Form.Item
               label="RAM"
               name="ram"
@@ -619,10 +690,7 @@ function CreateProduct() {
                 },
               ]}
             >
-              <Select
-                showSearch
-                placeholder="Search or select RAM for product"
-              >
+              <Select showSearch placeholder="Search or select RAM for product">
                 <Option value="512 MB">512 MB</Option>
                 <Option value="1 GB">1 GB</Option>
                 <Option value="2 GB">2 GB</Option>
@@ -691,9 +759,7 @@ function CreateProduct() {
                 <Option value="1024 GB">1024 GB</Option>
               </Select>
             </Form.Item>
-            <h3 style={{ color: "rgb(25,144,255)" }}>
-            Connect:
-            </h3>
+            <h3 style={{ color: "rgb(25,144,255)" }}>Connect:</h3>
             <Form.Item
               label="Bluetooth"
               name="bluetooth"
@@ -782,9 +848,7 @@ function CreateProduct() {
                 <Option value="2.5mm">2.5mm</Option>
               </Select>
             </Form.Item>
-            <h3 style={{ color: "rgb(25,144,255)" }}>
-            Batteries:
-            </h3>
+            <h3 style={{ color: "rgb(25,144,255)" }}>Batteries:</h3>
             <Form.Item
               label="Battery Capacity"
               name="batteryCapacity"
@@ -836,9 +900,7 @@ function CreateProduct() {
                 <Option value="Cell pin">Cell pin</Option>
               </Select>
             </Form.Item>
-            <h3 style={{ color: "rgb(25,144,255)" }}>
-            General:
-            </h3>
+            <h3 style={{ color: "rgb(25,144,255)" }}>General:</h3>
             <Form.Item
               label="Weight"
               name="weight"
@@ -878,9 +940,7 @@ function CreateProduct() {
             >
               <Input placeholder="Monolithic" />
             </Form.Item>
-            <h3 style={{ color: "rgb(25,144,255)" }}>
-            Additional:
-            </h3>
+            <h3 style={{ color: "rgb(25,144,255)" }}>Additional:</h3>
             <Form.Item
               label="Price"
               name="price"
