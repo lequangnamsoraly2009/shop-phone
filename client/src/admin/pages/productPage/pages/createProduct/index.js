@@ -53,8 +53,83 @@ function CreateProduct() {
         }
       });
       if (onEdit) {
+        const {
+          screenTechnology,
+          resolutionScreen,
+          FPS,
+          maximumBrightness,
+          resolutionRear,
+          flash,
+          resolutionFront,
+          os,
+          chip,
+          cpuSpeed,
+          gpu,
+          ram,
+          internalMemory,
+          memoryStick,
+          bluetooth,
+          chargingInterface,
+          headphoneJack,
+          batteryCapacity,
+          batteryType,
+          weight,
+          releaseTime,
+          design,
+        } = values;
+
+        const display = {
+          screenTechnology,
+          resolutionScreen,
+          FPS,
+          maximumBrightness,
+        };
+        const rearCamera = {
+          resolutionRear,
+          flash,
+        };
+        const frontCamera = {
+          resolutionFront,
+        };
+        const cpu = {
+          os,
+          chip,
+          cpuSpeed,
+          gpu,
+        };
+        const memoryAndStorage = {
+          ram,
+          internalMemory,
+          memoryStick,
+        };
+        const connect = {
+          bluetooth,
+          chargingInterface,
+          headphoneJack,
+        };
+        const batteries = {
+          batteryCapacity,
+          batteryType,
+        };
+        const general = {
+          weight,
+          releaseTime,
+          design,
+        };
         let images = { ...image };
-        const product = { ...values, nameCategory: nameCate, images: images };
+        const product = {
+          ...values,
+          display,
+          rearCamera,
+          frontCamera,
+          cpu,
+          memoryAndStorage,
+          connect,
+          batteries,
+          general,
+          nameCategory: nameCate,
+          images: images,
+        };
         await ProductFilterAPI.editProduct({
           paramID: param.id,
           product,
@@ -181,6 +256,28 @@ function CreateProduct() {
             storage: product.storage,
             title: product.title,
             _id: product._id,
+            screenTechnology: product.display.screenTechnology,
+            resolutionScreen: product.display.resolutionScreen,
+            FPS: product.display.FPS,
+            maximumBrightness: product.display.maximumBrightness,
+            resolutionRear: product.rearCamera.resolutionRear,
+            flash: product.rearCamera.flash,
+            resolutionFront: product.frontCamera.resolutionFront,
+            os: product.cpu.os,
+            chip: product.cpu.chip,
+            cpuSpeed: product.cpu.cpuSpeed,
+            gpu: product.cpu.gpu,
+            ram: product.memoryAndStorage.ram,
+            internalMemory: product.memoryAndStorage.internalMemory,
+            memoryStick: product.memoryAndStorage.memoryStick,
+            bluetooth: product.connect.bluetooth,
+            chargingInterface: product.connect.chargingInterface,
+            headphoneJack: product.connect.headphoneJack,
+            batteryCapacity: product.batteries.batteryCapacity,
+            batteryType: product.batteries.batteryType,
+            weight: product.general.weight,
+            releaseTime: product.general.releaseTime,
+            design: product.general.design,
           });
           setImage(product.images);
         }
@@ -760,7 +857,7 @@ function CreateProduct() {
               </Select>
             </Form.Item>
             <h3 style={{ color: "rgb(25,144,255)" }}>Connect:</h3>
-            
+
             <Form.Item
               label="Bluetooth"
               name="bluetooth"
