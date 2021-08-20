@@ -135,6 +135,15 @@ function CreateProduct() {
           product,
           token,
         });
+        setImage({});
+        history.push("/admin/products");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Update product successfully! Check it ",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       } else {
         const {
           screenTechnology,
@@ -214,16 +223,16 @@ function CreateProduct() {
           images: images,
         };
         await ProductFilterAPI.createProduct({ product, token });
+        setImage({});
+        history.push("/admin/products");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Create product successfully! Check it ",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       }
-      setImage({});
-      history.push("/admin/products");
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Create product successfully! Check it ",
-        showConfirmButton: false,
-        timer: 2000,
-      });
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -939,7 +948,7 @@ function CreateProduct() {
                 },
               ]}
             >
-              <Input placeholder="2400 mAh" />           
+              <Input placeholder="2400 mAh" />
             </Form.Item>
             <Form.Item
               label="Battery Type"
