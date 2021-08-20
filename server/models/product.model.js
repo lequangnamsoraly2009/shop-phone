@@ -83,22 +83,22 @@ const productSchema = new mongoose.Schema(
       type: Object,
       default: {
         screenTechnology: "IPS LCD",
-        resolution: "HD+ (720 x 1560 Pixels)",
+        resolutionScreen: "HD+ (720 x 1560 Pixels)",
         FPS: "60 Hz",
         maximumBrightness: "400 nits",
       },
     },
-    rareCamera: {
+    rearCamera: {
       type: Object,
       default: {
-        resolution: "64 MP",
+        resolutionRear: "64 MP",
         flash: "Yes",
       },
     },
     frontCamera: {
       type: Object,
       default: {
-        resolution: "16 MP",
+        resolutionFront: "16 MP",
       },
     },
     cpu: {
