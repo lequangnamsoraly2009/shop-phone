@@ -22,10 +22,13 @@ const layout = {
 
 function CreateProduct() {
   const [image, setImage] = useState({});
+  const [image1,setImage1] = useState({});
   // Check form edit or form create
   const [onEdit, setOnEdit] = useState(false);
   // Vcl that chu' . initialValues không được xét bằng useState. Muốn thay đổi initialValues bằng dynamic thì dùng form.setFieldsValue() -> Mất 2 tiếng ngu
   const [form] = Form.useForm();
+
+  console.log(image1);
 
   const { categories } = useSelector((state) => state.categories);
   const { productsFilter } = useSelector((state) => state.productsFilter);
@@ -247,6 +250,9 @@ function CreateProduct() {
   const callbackFunction = (childData) => {
     setImage(childData);
   };
+  const callbackFunction1= (childData) => {
+    setImage1(childData);
+  };
   // Area Update Product
   useEffect(() => {
     if (param.id) {
@@ -340,11 +346,16 @@ function CreateProduct() {
             />
             <span>Thumbnail</span>
           </div>
-          {/* <div className="create_upload-img-up">
-            <UploadImage />
+          <div className="create_upload-img-up">
+            <UploadImage 
+            images={image1}
+            param={param}
+            parentCallback={callbackFunction1}
+            onEdit={onEdit}
+            />
             <span>Image 1</span>
           </div>
-          <div className="create_upload-img-up">
+          {/* <div className="create_upload-img-up">
             <UploadImage />
             <span>Image 2</span>
           </div>
