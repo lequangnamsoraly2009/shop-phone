@@ -1,6 +1,6 @@
 .system {
   border: 1px solid rgba(228, 227, 227, 0.514);
-  border-radius: 5px;
+  border-radius: 5px; 
 }
 .system-wrapper {
   display: flex;
@@ -18,6 +18,7 @@
 
 .system-title span {
   margin: auto;
+  font-weight: 700;
 }
 
 .system-value {
@@ -28,4 +29,18 @@
 
 .system-value span {
   margin: auto 0;
+  font-weight: 600;
+}
+
+.system-header{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  background-color:rgba(152, 214, 216, 0.3);
+}
+.system-header span{
+  font-weight: 800;
+  font-size: 16px;
+  margin: auto;
+
 }
