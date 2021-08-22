@@ -107,14 +107,24 @@ function MainProduct() {
     window.location.reload();
   };
 
-  const handleDeleteProduct = async (_id) => {
+  const handleDeleteProduct = async (
+    _id,
+    images,
+    thumbnail1,
+    thumbnail2,
+    thumbnail3,
+    thumbnail4
+  ) => {
     try {
       setIsLoading(true);
-      const imagesProduct = API.post(
-        "/api/admin/delete-all-image",
-        { productId: _id }
-      );
-      const deleteProduct = API.delete(`/api/admin/products/${_id}`,{
+      const imagesProduct = API.post("/api/admin/delete-all-image", {
+        images,
+        thumbnail1,
+        thumbnail2,
+        thumbnail3,
+        thumbnail4,
+      });
+      const deleteProduct = API.delete(`/api/admin/products/${_id}`, {
         headers: { Authorization: token },
       });
       await imagesProduct;
@@ -127,7 +137,6 @@ function MainProduct() {
         showConfirmButton: false,
         timer: 4000,
       });
-      window.location.reload();
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -264,6 +273,11 @@ function MainProduct() {
               onConfirm={() =>
                 handleDeleteProduct(
                   record._id,
+                  record.images.public_id,
+                  record.thumbnail1.public_id,
+                  record.thumbnail2.public_id,
+                  record.thumbnail3.public_id,
+                  record.thumbnail4.public_id
                 )
               }
               onCancel={handleCancelDeleteProduct}
