@@ -19,6 +19,11 @@ router.post("/upload-image", uploadImageController.uploadImage);
 
 // Delete image
 
-router.post('/delete-image',  uploadImageController.deleteImage);
+router.post("/delete-image", uploadImageController.deleteImage);
+
+router.post(
+  "/delete-all-image",
+  uploadImageController.deleteAllImagesOfProduct
+);
 
 module.exports = router;

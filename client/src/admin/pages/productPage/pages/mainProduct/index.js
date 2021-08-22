@@ -44,8 +44,8 @@ function MainProduct() {
   useEffect(() => {
     dispatch(
       getAllProductsFilter({
-        categoryFilter:"",
-        sortFilter:"",
+        categoryFilter: "",
+        sortFilter: "",
         searchFilter: "",
         pageFilter,
       })
@@ -107,17 +107,14 @@ function MainProduct() {
     window.location.reload();
   };
 
-  const handleDeleteProduct = async (_id, public_id) => {
+  const handleDeleteProduct = async (_id) => {
     try {
       setIsLoading(true);
       const imagesProduct = API.post(
-        "/api/admin/delete-image",
-        { public_id: public_id },
-        {
-          headers: { Authorization: token },
-        }
+        "/api/admin/delete-all-image",
+        { productId: _id }
       );
-      const deleteProduct = API.delete(`/api/admin/products/${_id}`, {
+      const deleteProduct = API.delete(`/api/admin/products/${_id}`,{
         headers: { Authorization: token },
       });
       await imagesProduct;
@@ -265,7 +262,9 @@ function MainProduct() {
             <Popconfirm
               title="Are you sure delete it?"
               onConfirm={() =>
-                handleDeleteProduct(record._id, record.images.public_id)
+                handleDeleteProduct(
+                  record._id,
+                )
               }
               onCancel={handleCancelDeleteProduct}
               okText="Xóa mẹ nó đi"
