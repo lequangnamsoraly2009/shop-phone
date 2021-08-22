@@ -13,7 +13,7 @@ import Evalution from "./components/Evalution";
 import QuestionAndAnswers from "./components/Question";
 import Reviews from "./components/Reviews";
 import Rating from "../../../../components/Rating";
-import io from "socket.io-client"
+import io from "socket.io-client";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -22,7 +22,7 @@ function DetailProduct() {
   const [detailProduct, setDetailProduct] = useState([]);
   const [categoryDetail, setCategoryDetail] = useState("");
   const [image, setImage] = useState("");
-  const [socket,setSocket] = useState(null);
+  const [socket, setSocket] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -36,11 +36,11 @@ function DetailProduct() {
 
   // Socket Config
 
-  useEffect(()=>{
+  useEffect(() => {
     const socket = io();
-    setSocket(socket)
+    setSocket(socket);
     return () => socket.close();
-  },[])
+  }, []);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -163,13 +163,10 @@ function DetailProduct() {
                   <img
                     style={{ objectFit: "cover" }}
                     onClick={(e) =>
-                      onClickShowImage(
-                        e,
-                        "https://cdn.tgdd.vn/Files/2020/08/18/1281164/kham-pha-ngay-top-11-dien-thoai-5g-dang-mua-nhat-2-6.jpg"
-                      )
+                      onClickShowImage(e, detailProduct?.thumbnail1?.url)
                     }
-                    src="https://cdn.tgdd.vn/Files/2020/08/18/1281164/kham-pha-ngay-top-11-dien-thoai-5g-dang-mua-nhat-2-6.jpg"
-                    alt="iPhone 11"
+                    src={detailProduct?.thumbnail1?.url}
+                    alt={detailProduct?.thumbnail1?.public_id}
                   />
                 </button>
               </li>
@@ -177,13 +174,10 @@ function DetailProduct() {
                 <button>
                   <img
                     onClick={(e) =>
-                      onClickShowImage(
-                        e,
-                        "http://dienmay.vatbau.com/Products/Images/42/232668/samsung-galaxy-z-fold-2-vang-600x600-600x600.jpg"
-                      )
+                      onClickShowImage(e, detailProduct?.thumbnail2?.url)
                     }
-                    src="http://dienmay.vatbau.com/Products/Images/42/232668/samsung-galaxy-z-fold-2-vang-600x600-600x600.jpg"
-                    alt="iPhone 11"
+                    src={detailProduct?.thumbnail2?.url}
+                    alt={detailProduct?.thumbnail2?.public_id}
                   />
                 </button>
               </li>
@@ -191,13 +185,10 @@ function DetailProduct() {
                 <button>
                   <img
                     onClick={(e) =>
-                      onClickShowImage(
-                        e,
-                        "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746cv12d.jpg;maxHeight=640;maxWidth=550"
-                      )
+                      onClickShowImage(e, detailProduct?.thumbnail3?.url)
                     }
-                    src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746cv12d.jpg;maxHeight=640;maxWidth=550"
-                    alt="iPhone 11"
+                    src={detailProduct?.thumbnail3?.url}
+                    alt={detailProduct?.thumbnail3?.public_id}
                   />
                 </button>
               </li>
@@ -205,13 +196,10 @@ function DetailProduct() {
                 <button>
                   <img
                     onClick={(e) =>
-                      onClickShowImage(
-                        e,
-                        "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746cv14d.jpg;maxHeight=640;maxWidth=550"
-                      )
+                      onClickShowImage(e, detailProduct?.thumbnail4?.url)
                     }
-                    src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6009/6009746cv14d.jpg;maxHeight=640;maxWidth=550"
-                    alt="iPhone 11"
+                    src={detailProduct?.thumbnail4?.url}
+                    alt={detailProduct?.thumbnail4?.public_id}
                   />
                 </button>
               </li>
@@ -275,9 +263,15 @@ function DetailProduct() {
                 <Option value="ip12pm" style={{ textTransform: "capitalize" }}>
                   {detailProduct.title}
                 </Option>
-                <Option value="ip12p">Apple iPhone 12 Pro</Option>
-                <Option value="ip12">Apple iPhone 12</Option>
-                <Option value="ip12mn">Apple iPhone 12 Mini</Option>
+                <Option disabled value="ip12p">
+                  Apple iPhone 12 Pro
+                </Option>
+                <Option disabled value="ip12">
+                  Apple iPhone 12
+                </Option>
+                <Option disabled value="ip12mn">
+                  Apple iPhone 12 Mini
+                </Option>
               </Select>
             </div>
             <div className="product-memory">
@@ -290,9 +284,15 @@ function DetailProduct() {
                 // onChange={handleChange}
               >
                 <Option value="64">{detailProduct.memory} GB</Option>
-                <Option value="128gb">128 GB</Option>
-                <Option value="256gb">256 GB</Option>
-                <Option value="512gb">512 GB</Option>
+                <Option disabled value="128gb">
+                  128 GB
+                </Option>
+                <Option disabled value="256gb">
+                  256 GB
+                </Option>
+                <Option disabled value="512gb">
+                  512 GB
+                </Option>
               </Select>
             </div>
             <div className="product-color">
@@ -308,9 +308,15 @@ function DetailProduct() {
                 <Option style={{ textTransform: "capitalize" }} value={1}>
                   {detailProduct.color}
                 </Option>
-                <Option value={2}>Gold</Option>
-                <Option value={3}>Graphit</Option>
-                <Option value={4}>Silver</Option>
+                <Option disabled value={2}>
+                  Gold
+                </Option>
+                <Option disabled value={3}>
+                  Graphit
+                </Option>
+                <Option disabled value={4}>
+                  Silver
+                </Option>
               </Select>
             </div>
             <div style={{ display: "flex", flexDirection: "row" }}>
@@ -393,10 +399,10 @@ function DetailProduct() {
             <Evalution />
           </TabPane>
           <TabPane tab="Product Reviews" key="reviews">
-            <Reviews detailProduct={detailProduct} socket={socket}/>
+            <Reviews detailProduct={detailProduct} socket={socket} />
           </TabPane>
           <TabPane tab="Questions And Answers" key="QandA">
-            <QuestionAndAnswers detailProduct={detailProduct}/>
+            <QuestionAndAnswers detailProduct={detailProduct} />
           </TabPane>
         </Tabs>
       </div>
