@@ -219,12 +219,12 @@ function CreateProduct() {
         };
         let images = { ...image?.response };
         let subImages = [
-          ...imageThumbnail1?.response,
-          ...imageThumbnail2?.response,
-          ...imageThumbnail3?.response,
-          ...imageThumbnail4?.response,
+          { ...imageThumbnail1?.response },
+          { ...imageThumbnail2?.response },
+          { ...imageThumbnail3?.response },
+          { ...imageThumbnail4?.response },
         ];
-
+        console.log(subImages)
         const product = {
           ...values,
           display,
@@ -694,6 +694,7 @@ function CreateProduct() {
                     <Option value="1100nits">1100nits</Option>
                     <Option value="1200nits">1200nits</Option>
                     <Option value="1300nits">1300nits</Option>
+                    <Option value="1400nits">1400nits</Option>
                   </Select>
                 </Form.Item>
                 <h3 style={{ color: "rgb(25,144,255)" }}>Rare Camera:</h3>
@@ -765,7 +766,7 @@ function CreateProduct() {
                     <Option value="4MP">4MP</Option>
                     <Option value="5MP">5MP</Option>
                     <Option value="8MP">8MP</Option>
-                    <Option value="8MP">10MP</Option>
+                    <Option value="10MP">10MP</Option>
                     <Option value="12MP">12MP</Option>
                     <Option value="16MP">16MP</Option>
                     <Option value="24MP">24MP</Option>
@@ -886,7 +887,7 @@ function CreateProduct() {
                     <Option value="2 GB">2 GB</Option>
                     <Option value="4 GB">4 GB</Option>
                     <Option value="8 GB">8 GB</Option>
-                    <Option value="8 GB">12 GB</Option>
+                    <Option value="12 GB">12 GB</Option>
                     <Option value="16 GB">16 GB</Option>
                     <Option value="32 GB">32 GB</Option>
                     <Option value="64 GB">64 GB</Option>
@@ -974,7 +975,7 @@ function CreateProduct() {
                     <Option value="v4.1">v4.1</Option>
                     <Option value="v4.2">v4.2</Option>
                     <Option value="v5.0">v5.0</Option>
-                    <Option value="v5.0">v5.2</Option>
+                    <Option value="v5.2">v5.2</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item
@@ -1017,6 +1018,7 @@ function CreateProduct() {
                     <Option value="2.5mm">2.5mm</Option>
                     <Option value="Lightning">Lightning</Option>
                     <Option value="No Jack">No Jack</Option>
+                    <Option value="USB-Type C ">USB-Type C </Option>
                   </Select>
                 </Form.Item>
                 <h3 style={{ color: "rgb(25,144,255)" }}>Batteries:</h3>
