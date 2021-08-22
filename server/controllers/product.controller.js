@@ -96,13 +96,17 @@ const productController = {
         connect,
         batteries,
         general,
-        subImages
+        thumbnail1,
+        thumbnail2,
+        thumbnail3,
+        thumbnail4,
       } = req.body;
 
       if (!images && !subImages)
-        return res
-          .status(400)
-          .json({ status: false, message: "Not enough images upload ! Add images" });
+        return res.status(400).json({
+          status: false,
+          message: "Not enough images upload ! Add images",
+        });
 
       const product = await Products.findOne({ product_id });
       if (product)
@@ -136,7 +140,10 @@ const productController = {
         connect,
         batteries,
         general,
-        subImages
+        thumbnail1,
+        thumbnail2,
+        thumbnail3,
+        thumbnail4,
       });
 
       await newProduct.save();
@@ -163,6 +170,7 @@ const productController = {
         color,
         images,
         category,
+        namecategory,
         storage,
         sale,
         display,
@@ -173,6 +181,10 @@ const productController = {
         connect,
         batteries,
         general,
+        thumbnail1,
+        thumbnail2,
+        thumbnail3,
+        thumbnail4,
       } = req.body;
 
       if (!images)
@@ -190,11 +202,12 @@ const productController = {
         {
           title: title.toLowerCase(),
           price,
-          description,
           status,
+          description,
           color,
           images,
           category,
+          namecategory,
           storage,
           sale,
           display,
@@ -205,6 +218,10 @@ const productController = {
           connect,
           batteries,
           general,
+          thumbnail1,
+          thumbnail2,
+          thumbnail3,
+          thumbnail4,
         }
       );
 

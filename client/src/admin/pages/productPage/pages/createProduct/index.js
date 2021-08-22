@@ -226,11 +226,11 @@ function CreateProduct() {
           releaseTime,
           design,
         };
-        let images = { ...image?.response };
-        let thumbnail1 = { ...imageThumbnail1?.response };
-        let thumbnail2 = { ...imageThumbnail2?.response };
-        let thumbnail3 = { ...imageThumbnail3?.response };
-        let thumbnail4 = { ...imageThumbnail4?.response };
+        let images = { ...image };
+        let thumbnail1 = { ...imageThumbnail1};
+        let thumbnail2 = { ...imageThumbnail2};
+        let thumbnail3 = { ...imageThumbnail3};
+        let thumbnail4 = { ...imageThumbnail4};
         const product = {
           ...values,
           display,

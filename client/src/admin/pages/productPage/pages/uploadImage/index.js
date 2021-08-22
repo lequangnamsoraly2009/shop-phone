@@ -50,7 +50,7 @@ function UploadImage(props) {
         setFile(newFileList);
         const status = newFileList[0]?.status;
         if (status === "done") {
-          props.parentCallback(newFileList[0]);
+          props.parentCallback(newFileList[0].response);
           if (props.onEdit) {
             Swal.fire({
               position: "center",
@@ -68,7 +68,7 @@ function UploadImage(props) {
       setFile(newFileList);
       const status = newFileList[0]?.status;
       if (status === "done") {
-        props.parentCallback(newFileList[0]);
+        props.parentCallback(newFileList[0].response);
         Swal.fire({
           position: "center",
           icon: "success",
