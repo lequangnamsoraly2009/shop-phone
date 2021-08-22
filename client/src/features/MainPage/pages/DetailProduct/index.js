@@ -211,8 +211,7 @@ function DetailProduct() {
             <div className="product-title">
               <div className="product-name">
                 <h3 style={{ textTransform: "capitalize" }}>
-                  {detailProduct.title} - {detailProduct.memory}GB -{" "}
-                  {detailProduct.color}
+                  {detailProduct.title} - {detailProduct.color}
                 </h3>
               </div>
               <div className="product-title-data">
