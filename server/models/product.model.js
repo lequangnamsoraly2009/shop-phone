@@ -23,10 +23,6 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    memory: {
-      type: String,
-      default: 64,
-    },
     status: {
       type: String,
       enum: ["Stocking", "OutStocking", "Importing"],
