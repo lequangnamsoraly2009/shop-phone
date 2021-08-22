@@ -122,6 +122,12 @@ function CreateProduct() {
           design,
         };
         let images = { ...image };
+        let subImages = [
+          { ...imageThumbnail1 },
+          { ...imageThumbnail2 },
+          { ...imageThumbnail3 },
+          { ...imageThumbnail4 },
+        ];
         const product = {
           ...values,
           display,
@@ -134,6 +140,7 @@ function CreateProduct() {
           general,
           nameCategory: nameCate,
           images: images,
+          subImages
         };
         await ProductFilterAPI.editProduct({
           paramID: param.id,
@@ -224,7 +231,6 @@ function CreateProduct() {
           { ...imageThumbnail3?.response },
           { ...imageThumbnail4?.response },
         ];
-        console.log(subImages)
         const product = {
           ...values,
           display,
@@ -322,6 +328,10 @@ function CreateProduct() {
             design: product.general.design,
           });
           setImage(product.images);
+          setImageThumbnail1(product.subImages[0]);
+          setImageThumbnail2(product.subImages[1]);
+          setImageThumbnail3(product.subImages[2]);
+          setImageThumbnail4(product.subImages[3]);
         }
       });
     } else {

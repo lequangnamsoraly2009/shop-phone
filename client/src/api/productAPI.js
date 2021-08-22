@@ -16,10 +16,10 @@ const ProductFilterAPI = {
   getAllProducts: () => {
     return API.get(`/api/products`);
   },
-  deleteImageClound: (public_id, token) => {
+  deleteImageClound: (public_id, token, productId) => {
     return API.post(
       "/api/admin/delete-image",
-      { public_id: public_id },
+      { public_id: public_id, productId: productId},
       {
         headers: { Authorization: token },
       }

@@ -26,8 +26,8 @@ function UploadImage(props) {
   // Load image when edit image and dont set new Image here
   useEffect(() => {
     if (props.param.id) {
-      if (props.images.url === undefined) {
-        console.log("Edit success image");
+      if (props.images?.url === undefined) {
+        setFile([]);
       } else {
         setFile([
           {
@@ -87,13 +87,18 @@ function UploadImage(props) {
       if (props.onEdit === true) {
         await ProductFilterAPI.deleteImageClound(
           props.images?.public_id,
-          token
+          token,
+          props.param.id
         );
+        setFile([]);
+        props.parentCallback({});
       } else {
         await ProductFilterAPI.deleteImageClound(
           file.response.public_id,
           token
         );
+        setFile([]);
+        props.parentCallback({});
       }
       props.setLoading(false);
       Swal.fire({

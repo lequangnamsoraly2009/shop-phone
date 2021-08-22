@@ -1,6 +1,6 @@
 const cloudinary = require("cloudinary");
+const Products = require("../models/product.model");
 const fs = require("fs");
-
 
 const uploadImageController = {
   uploadImage: (req, res) => {
@@ -46,21 +46,29 @@ const uploadImageController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  deleteImage: (req, res) => {
-      try {
-        const {public_id} = req.body;
-        if(!public_id) {
-            return res.status(400).json({ status:false, message:"No image have selected !"})
-        }
-        cloudinary.v2.uploader.destroy(public_id,async(err,result) => {
-            if(err) throw err;
-
-            res.json({message: "Deleted Image Success"})
-        })
-      } catch (error) {
-          return res.status(500).json({ status: false, message: error.message });
+  deleteImage: async(req, res) => {
+    try {
+      const { public_id, productId } = req.body;
+      if (!public_id) {
+        return res
+          .status(400)
+          .json({ status: false, message: "No image have selected !" });
       }
-  }
+      const product = await Products.findById({ _id: productId });
+      const {images } = product;
+      
+      await Products.findByIdAndUpdate({_id: productId}, {
+        images: {}
+      })
+      cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
+        if (err) throw err;
+
+        res.json({ message: "Deleted Image Success" });
+      });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
 };
 
 const removeTmp = (path) => {
