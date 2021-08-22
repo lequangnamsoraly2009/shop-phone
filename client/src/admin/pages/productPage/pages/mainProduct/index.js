@@ -137,6 +137,9 @@ function MainProduct() {
         showConfirmButton: false,
         timer: 4000,
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
     } catch (error) {
       Swal.fire({
         position: "center",
