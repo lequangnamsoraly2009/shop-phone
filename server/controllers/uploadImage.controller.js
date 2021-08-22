@@ -46,7 +46,7 @@ const uploadImageController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  deleteImage: async(req, res) => {
+  deleteImage: async (req, res) => {
     try {
       const { public_id, productId } = req.body;
       if (!public_id) {
@@ -55,11 +55,44 @@ const uploadImageController = {
           .json({ status: false, message: "No image have selected !" });
       }
       const product = await Products.findById({ _id: productId });
-      const {images } = product;
-      
-      await Products.findByIdAndUpdate({_id: productId}, {
-        images: {}
-      })
+      const { images, thumbnail1, thumbnail2, thumbnail3, thumbnail4 } =
+        product;
+      if (images.public_id === public_id) {
+        await Products.findByIdAndUpdate(
+          { _id: productId },
+          {
+            images: {},
+          }
+        );
+      } else if (thumbnail1.public_id === public_id) {
+        await Products.findByIdAndUpdate(
+          { _id: productId },
+          {
+            thumbnail1: {},
+          }
+        );
+      } else if (thumbnail2.public_id === public_id) {
+        await Products.findByIdAndUpdate(
+          { _id: productId },
+          {
+            thumbnail2: {},
+          }
+        );
+      } else if (thumbnail3.public_id === public_id) {
+        await Products.findByIdAndUpdate(
+          { _id: productId },
+          {
+            thumbnail3: {},
+          }
+        );
+      } else if (thumbnail4.public_id === public_id) {
+        await Products.findByIdAndUpdate(
+          { _id: productId },
+          {
+            thumbnail4: {},
+          }
+        );
+      }
       cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
         if (err) throw err;
 

@@ -122,12 +122,11 @@ function CreateProduct() {
           design,
         };
         let images = { ...image };
-        let subImages = [
-          { ...imageThumbnail1 },
-          { ...imageThumbnail2 },
-          { ...imageThumbnail3 },
-          { ...imageThumbnail4 },
-        ];
+        let thumbnail1 = { ...imageThumbnail1 };
+        let thumbnail2 = { ...imageThumbnail2 };
+        let thumbnail3 = { ...imageThumbnail3 };
+        let thumbnail4 = { ...imageThumbnail4 };
+
         const product = {
           ...values,
           display,
@@ -140,7 +139,10 @@ function CreateProduct() {
           general,
           nameCategory: nameCate,
           images: images,
-          subImages
+          thumbnail1,
+          thumbnail2,
+          thumbnail3,
+          thumbnail4,
         };
         await ProductFilterAPI.editProduct({
           paramID: param.id,
@@ -225,12 +227,10 @@ function CreateProduct() {
           design,
         };
         let images = { ...image?.response };
-        let subImages = [
-          { ...imageThumbnail1?.response },
-          { ...imageThumbnail2?.response },
-          { ...imageThumbnail3?.response },
-          { ...imageThumbnail4?.response },
-        ];
+        let thumbnail1 = { ...imageThumbnail1?.response };
+        let thumbnail2 = { ...imageThumbnail2?.response };
+        let thumbnail3 = { ...imageThumbnail3?.response };
+        let thumbnail4 = { ...imageThumbnail4?.response };
         const product = {
           ...values,
           display,
@@ -243,7 +243,10 @@ function CreateProduct() {
           general,
           nameCategory: nameCate,
           images: images,
-          subImages: subImages,
+          thumbnail1: thumbnail1,
+          thumbnail2: thumbnail2,
+          thumbnail3: thumbnail3,
+          thumbnail4: thumbnail4,
         };
         await ProductFilterAPI.createProduct({ product, token });
         setImage({});
@@ -328,10 +331,10 @@ function CreateProduct() {
             design: product.general.design,
           });
           setImage(product.images);
-          setImageThumbnail1(product.subImages[0]);
-          setImageThumbnail2(product.subImages[1]);
-          setImageThumbnail3(product.subImages[2]);
-          setImageThumbnail4(product.subImages[3]);
+          setImageThumbnail1(product.thumbnail1);
+          setImageThumbnail2(product.thumbnail2);
+          setImageThumbnail3(product.thumbnail3);
+          setImageThumbnail4(product.thumbnail4);
         }
       });
     } else {

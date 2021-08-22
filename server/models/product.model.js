@@ -36,10 +36,6 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    images: {
-      type: Object,
-      required: true,
-    },
     category: {
       type: String,
       required: true,
@@ -141,9 +137,25 @@ const productSchema = new mongoose.Schema(
         design: "Monolithic",
       },
     },
-    subImages: {
-      type: Array,
-      default: [],
+    images: {
+      type: Object,
+      required: true,
+    },
+    thumbnail1: {
+      type: Object,
+      required: true,
+    },
+    thumbnail2: {
+      type: Object,
+      required: true,
+    },
+    thumbnail3: {
+      type: Object,
+      required: true,
+    },
+    thumbnail4: {
+      type: Object,
+      required: true,
     },
   },
   {
