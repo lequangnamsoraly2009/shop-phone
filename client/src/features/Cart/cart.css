@@ -74,6 +74,14 @@
   margin: 20px 0;
 }
 
+.cart-checkout-address-button{
+  display: flex;
+}
+
+.cart-checkout-address-button .ant-btn{
+  margin: 20px auto;
+}
+
 .cart-checkout-address-select{
   display: flex;
   justify-content: space-evenly;

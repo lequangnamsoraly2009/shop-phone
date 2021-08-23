@@ -45,14 +45,11 @@ function Cart() {
   const [dataDistrict, setDataDistrict] = useState([]);
   const [dataWard, setDataWard] = useState([]);
 
-
   const dispatch = useDispatch();
   // Data get when select option
   const [provinceSelect, setProvinceSelect] = useState(0);
   const [districtSelect, setDistrictSelect] = useState(0);
   const [wardSelect, setWardSelect] = useState(0);
-
-  console.log(productCheckOut)
 
   useEffect(() => {
     const updateCartToServer = async () => {
@@ -108,6 +105,20 @@ function Cart() {
     };
     getDataAPIWard();
   }, [districtSelect]);
+
+  // Calcualator Fee Ship
+  const handleCalFeeShip = () => {
+    if(provinceSelect===0 || districtSelect===0 || wardSelect===0){
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          "Please select all fields address!",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+  }
 
   const increment = (idProduct) => {
     //   console.log(idProduct)
@@ -401,15 +412,15 @@ function Cart() {
                     onChange={handleOnSelectWard}
                   >
                     {dataWard.map((ward) => (
-                      <Option
-                        key={ward.WardCode}
-                        value={ward.WardCode}
-                      >
+                      <Option key={ward.WardCode} value={ward.WardCode}>
                         {ward.WardName}
                       </Option>
                     ))}
                   </Select>
                 </div>
+              </div>
+              <div className="cart-checkout-address-button">
+                <Button type="primary" onClick={handleCalFeeShip}>Choose Fee Ship</Button>
               </div>
             </div>
             <div className="cart-checkout-information">
