@@ -51,6 +51,10 @@ function Cart() {
   const [districtSelect, setDistrictSelect] = useState(0);
   const [wardSelect, setWardSelect] = useState(0);
 
+  // Change Data get GHN
+  const [isChangeProvince, setIsChangeProvince] = useState(false);
+  const [isChangeDistrict, setIsChangeDistrict] = useState(false);
+
   // console.log(districtSelect)
 
   useEffect(() => {
@@ -202,14 +206,19 @@ function Cart() {
   };
 
   const handleOnSelectProvince = (value) => {
+    setIsChangeProvince(true);
     setProvinceSelect(value);
+   
   };
 
   const handleOnSelectDistrict = (value) => {
+    setIsChangeProvince(false);
+    setIsChangeDistrict(true);
     setDistrictSelect(value);
   };
 
   const handleOnSelectWard = (value) => {
+    setIsChangeDistrict(false);
     setWardSelect(value);
   };
 
@@ -432,7 +441,7 @@ function Cart() {
                     <span>Province/City</span>
                   </div>
                   <Select
-                    // defaultValue={dataProvince[0]?.ProvinceName}
+                    defaultValue={dataProvince[0]?.ProvinceName}
                     style={{ width: 300 }}
                     onChange={handleOnSelectProvince}
                   >
@@ -451,7 +460,7 @@ function Cart() {
                     <span>District</span>
                   </div>
                   <Select
-                    // defaultValue={dataDistrict[0]?.DistrictName}
+                    defaultValue={dataDistrict[0]?.DistrictName}
                     style={{ width: 300 }}
                     onChange={handleOnSelectDistrict}
                   >
