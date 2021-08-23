@@ -45,13 +45,14 @@ function Cart() {
   const [dataDistrict, setDataDistrict] = useState([]);
   const [dataWard, setDataWard] = useState([]);
 
+
   const dispatch = useDispatch();
   // Data get when select option
-  const [provinceSelect, setProvinceSelect] = useState(241);
+  const [provinceSelect, setProvinceSelect] = useState(0);
   const [districtSelect, setDistrictSelect] = useState(0);
   const [wardSelect, setWardSelect] = useState(0);
 
-  // console.log(dataProvince)
+  console.log(productCheckOut)
 
   useEffect(() => {
     const updateCartToServer = async () => {
@@ -90,6 +91,23 @@ function Cart() {
     };
     getDataAPIDistrict();
   }, [provinceSelect]);
+  // Get data ward when select data district
+
+  useEffect(() => {
+    const getDataAPIWard = async () => {
+      const data = await axios.post(
+        `${APIGHN}/ward?${districtSelect}`,
+        {
+          district_id: districtSelect,
+        },
+        {
+          headers: { token: tokenGHN },
+        }
+      );
+      setDataWard(data.data.data);
+    };
+    getDataAPIWard();
+  }, [districtSelect]);
 
   const increment = (idProduct) => {
     //   console.log(idProduct)
@@ -115,6 +133,42 @@ function Cart() {
 
   const removeCartItem = (idProduct) => {
     dispatch(removeOneCart(idProduct));
+  };
+
+  const onFinishInformation = (values) => {
+    console.log(values);
+  };
+
+  const handleOnSelectProvince = (value) => {
+    setProvinceSelect(value);
+  };
+
+  const handleOnSelectDistrict = (value) => {
+    setDistrictSelect(value);
+  };
+
+  const handleOnSelectWard = (value) => {
+    setWardSelect(value);
+  };
+
+  const sendPayMentCart = () => {
+    if (isLoggedIn === false) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please Login or Register to Payment",
+      });
+    } else if (productChoice === 0) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          "You have not selected any products to pay! Please check again !",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+    dispatch(addCartPayMentTemp(productCheckOut));
   };
 
   if (isLoadingCart === true) {
@@ -227,36 +281,6 @@ function Cart() {
     },
   };
 
-  const onFinishInformation = (values) => {
-    console.log(values);
-  };
-
-  const handleOnSelectProvince = (value) => {
-    setProvinceSelect(value);
-  };
-
-  const handleOnSelectDistrict = (value) => {};
-
-  const sendPayMentCart = () => {
-    if (isLoggedIn === false) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please Login or Register to Payment",
-      });
-    } else if (productChoice === 0) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title:
-          "You have not selected any products to pay! Please check again !",
-        showConfirmButton: false,
-        timer: 3000,
-      });
-    }
-    dispatch(addCartPayMentTemp(productCheckOut));
-  };
-
   return (
     <div className="container-fluid">
       <div className="cart-full-wrapper">
@@ -331,10 +355,10 @@ function Cart() {
               <div className="cart-checkout-address-select">
                 <div className="cart-checkout-address-province">
                   <div>
-                    <span>Province</span>
+                    <span>Province/City</span>
                   </div>
                   <Select
-                    defaultValue="Lào Cai"
+                    // defaultValue={dataProvince[0]?.ProvinceName}
                     style={{ width: 300 }}
                     onChange={handleOnSelectProvince}
                   >
@@ -353,7 +377,7 @@ function Cart() {
                     <span>District</span>
                   </div>
                   <Select
-                    defaultValue=""
+                    // defaultValue={dataDistrict[0]?.DistrictName}
                     style={{ width: 300 }}
                     onChange={handleOnSelectDistrict}
                   >
@@ -369,19 +393,19 @@ function Cart() {
                 </div>
                 <div className="cart-checkout-address-province">
                   <div>
-                    <span>Ward</span>
+                    <span>Ward/Commune</span>
                   </div>
                   <Select
-                    defaultValue=""
+                    // defaultValue=""
                     style={{ width: 300 }}
-                    onChange={handleOnSelectProvince}
+                    onChange={handleOnSelectWard}
                   >
-                    {dataProvince.map((province) => (
+                    {dataWard.map((ward) => (
                       <Option
-                        key={province.ProvinceID}
-                        value={province.ProvinceID}
+                        key={ward.WardCode}
+                        value={ward.WardCode}
                       >
-                        {province.ProvinceName}
+                        {ward.WardName}
                       </Option>
                     ))}
                   </Select>

@@ -70,6 +70,10 @@
   width: 80%;
 }
 
+.cart-checkout-information{
+  margin: 20px 0;
+}
+
 .cart-checkout-address-select{
   display: flex;
   justify-content: space-evenly;
