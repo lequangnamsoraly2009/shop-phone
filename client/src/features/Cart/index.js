@@ -9,11 +9,11 @@ import {
   Form,
   InputNumber,
   Button,
+  Select
 } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
-import { Link } from "react-router-dom";
 import {
   addCartPayMentTemp,
   removeOneCart,
@@ -23,6 +23,7 @@ import API from "../../api/axiosClient";
 import Swal from "sweetalert2";
 
 const { Search } = Input;
+const { Option } = Select;
 
 const layout = {
   labelCol: { span: 8 },
@@ -277,6 +278,23 @@ function Cart() {
                   size="large"
                   // onSearch={onSearch}
                 />
+              </div>
+            </div>
+            <div className="cart-checkout-address">
+              <div className="cart-checkout-coupon-header">
+                <span>Address Receiver</span>
+              </div>
+              <div className="cart-checkout-address-select">
+                <div className="cart-checkout-address-province">
+                <Select defaultValue="lucy" style={{ width: 120 }}>
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+      <Option value="Yiminghe">yiminghe</Option>
+    </Select>
+                </div>
               </div>
             </div>
             <div className="cart-checkout-information">
