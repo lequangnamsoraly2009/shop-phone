@@ -17,6 +17,7 @@ const { SubMenu } = Menu;
 function Category() {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
+  const { search } = useSelector((state) => state.search);
   const { pageFilter, categoryFilter, sortFilter, searchFilter } = useSelector(
     (state) => state.productsFilter
   );
@@ -120,6 +121,17 @@ function Category() {
           </div>
         </Col>
         <Col className="gutter-row" span={20}>
+          {search.length > 0 ? (
+            <div>
+              <span
+                style={{ margin: "10px 50px", fontSize: 20, fontWeight: 700 }}
+              >
+                Search results : {search}
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
           <div>
             <ListItem />
           </div>
