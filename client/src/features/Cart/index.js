@@ -9,7 +9,7 @@ import {
   Form,
   InputNumber,
   Button,
-  Select
+  Select,
 } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
@@ -21,10 +21,13 @@ import {
 } from "../../app/cartSlice";
 import API from "../../api/axiosClient";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const { Search } = Input;
 const { Option } = Select;
+const tokenGHN = "25baf0a4-0418-11ec-b255-166e45bc1992";
 
+const APIGHN = "https://online-gateway.ghn.vn/shiip/public-api/master-data";
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -37,7 +40,10 @@ function Cart() {
   const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
   const [productCheckOut, setProductCheckOut] = useState([]);
+  const [dataProvince, setDataProvince] = useState([]);
   const dispatch = useDispatch();
+
+  // console.log(dataProvince)
 
   useEffect(() => {
     const updateCartToServer = async () => {
@@ -49,7 +55,15 @@ function Cart() {
         }
       );
     };
+    const getDataAPIProvince = async () => {
+      const data = await axios.get(`${APIGHN}/province`, {
+        headers: { token: tokenGHN },
+      });
+      setDataProvince(data.data.data);
+    };
+
     updateCartToServer();
+    getDataAPIProvince();
     // getTotal();
   }, [carts, token]);
 
@@ -193,6 +207,10 @@ function Cart() {
     console.log(values);
   };
 
+  const handleOnSelectProvince = (value) => {
+    console.log(value)
+  } 
+
   const sendPayMentCart = () => {
     if (isLoggedIn === false) {
       Swal.fire({
@@ -286,14 +304,16 @@ function Cart() {
               </div>
               <div className="cart-checkout-address-select">
                 <div className="cart-checkout-address-province">
-                <Select defaultValue="lucy" style={{ width: 120 }}>
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
-        Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
-    </Select>
+                  <Select style={{ width: 300 }} onChange={handleOnSelectProvince}>
+                    {dataProvince.map((province) => (
+                      <Option
+                        key={province.ProvinceID}
+                        value={province.ProvinceID}
+                      >
+                        {province.ProvinceName}
+                      </Option>
+                    ))}
+                  </Select>
                 </div>
               </div>
             </div>
