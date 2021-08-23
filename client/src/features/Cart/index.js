@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Tag, Space, Breadcrumb } from "antd";
+import { Table, Tag, Space, Breadcrumb, Input } from "antd";
 import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
@@ -13,6 +13,8 @@ import {
 import API from "../../api/axiosClient";
 import Swal from "sweetalert2";
 
+const {Search} = Input;
+
 function Cart() {
   const { carts, isLoadingCart } = useSelector((state) => state.carts);
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -22,9 +24,7 @@ function Cart() {
   const [productCheckOut, setProductCheckOut] = useState([]);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
-
     const updateCartToServer = async () => {
       await API.patch(
         "/users/addcart",
@@ -61,9 +61,7 @@ function Cart() {
   };
 
   const removeCartItem = (idProduct) => {
-   
-      dispatch(removeOneCart(idProduct));
-   
+    dispatch(removeOneCart(idProduct));
   };
 
   if (isLoadingCart === true) {
@@ -82,8 +80,11 @@ function Cart() {
       render: (text, record, index) => (
         <>
           <div className="cart-product-infor">
-            <img src={record.images.url}  alt="hi" />
-            <a style={{ textTransform: "capitalize" }} href={`/detail/${record._id}`}>
+            <img src={record.images.url} alt="hi" />
+            <a
+              style={{ textTransform: "capitalize" }}
+              href={`/detail/${record._id}`}
+            >
               {record.title}
             </a>
           </div>
@@ -224,6 +225,27 @@ function Cart() {
                 //   };
                 // }}
               />
+            </div>
+          </div>
+          <div className="cart-checkout">
+            <div className="cart-checkout-coupon">
+              <div className="cart-checkout-coupon-header">
+                <span>Voucher Counpon</span>
+              </div>
+              <div className="cart-checkout-coupon-form">
+                <Search
+                  placeholder="Input Your Voucher"
+                  allowClear
+                  enterButton="Check It"
+                  size="large"
+                  // onSearch={onSearch}
+                />
+              </div>
+            </div>
+            <div className="cart-checkout-information">
+            <div className="cart-checkout-coupon-header">
+                <span>Receiver's Information</span>
+              </div>
             </div>
           </div>
           <div className="cart-total-wrapper">

@@ -35,6 +35,37 @@
   user-select: none;
 }
 
+/* Cart Check out */
+.cart-checkout{
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-checkout-coupon{
+
+}
+
+.cart-checkout-coupon-header{
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.cart-checkout-coupon-header span{
+  margin: 0 auto;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.cart-checkout-coupon-form{
+  display: flex;
+  margin: 5px 0 30px 0;
+}
+
+.ant-input-group-wrapper{
+  width: 40%;
+  margin: 0 auto;
+}
+
 /* Total Price */
 
 .cart-total-wrapper {
