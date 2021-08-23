@@ -13,32 +13,7 @@ import {
 } from "../../../../app/cartSlice";
 import "./checkout.css";
 
-const { Step } = Steps;
-
-const steps = [
-  {
-    title: "LOGIN",
-  },
-  {
-    title: "ADDRESS",
-    content: (
-      <>
-        <AddressShipping />
-      </>
-    ),
-  },
-  {
-    title: "CHECKOUT",
-    content: (
-      <>
-        <CheckoutInfor />
-      </>
-    ),
-  },
-];
-
 function CheckOut() {
-  const [current, setCurrent] = useState(1);
   const { carts, addressTemp, cartPayMentTemp } = useSelector(
     (state) => state.carts
   );
@@ -52,20 +27,13 @@ function CheckOut() {
     return item1 + item2.price * item2.quantity;
   }, 0);
 
-  const nextStep = () => {
-    setCurrent(current + 1);
-  };
-
-  const prevStep = () => {
-    setCurrent(current - 1);
-  };
 
   const tranSuccess = async (payment) => {
     const { paymentID, address } = payment;
     const { notes, phone } = addressTemp;
     await API.post(
       "/api/payment",
-      { cart: cartPayMentTemp, paymentID, address, phone, notes},
+      { cart: cartPayMentTemp, paymentID, address, phone, notes },
       {
         headers: { Authorization: token },
       }
@@ -108,30 +76,8 @@ function CheckOut() {
         </Breadcrumb>
       </div>
       <div className="checkout-steps">
-        <Steps current={current} className="steps-line">
-          {steps.map((item) => (
-            <Step
-              style={{ fontSize: 16 }}
-              key={item.title}
-              title={item.title}
-            />
-          ))}
-        </Steps>
-        <div className="steps-content">{steps[current].content}</div>
         <div className="steps-action">
-          {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => nextStep()}>
-              Next
-            </Button>
-          )}
-          {current === steps.length - 1 && (
-            <PaypalButton total={totalPrice + 10} tranSuccess={tranSuccess} />
-          )}
-          {current > 1 && (
-            <Button style={{ margin: "0 8px" }} onClick={() => prevStep()}>
-              Previous
-            </Button>
-          )}
+          <PaypalButton total={totalPrice + 10} tranSuccess={tranSuccess} />
         </div>
       </div>
     </div>
