@@ -33,6 +33,7 @@ import {
   setSortFilter,
 } from "../../app/productSlice";
 import { GoogleLogout } from "react-google-login";
+import { setSearch } from "../../app/searchSlice";
 
 const { Search } = Input;
 
@@ -117,6 +118,7 @@ function HeaderNav() {
 
   const onSearch = (value) => {
     history.push("/category");
+    dispatch(setSearch(value.toLowerCase()))
     dispatch(setSearchFilter(value.toLowerCase()));
     dispatch(setCategoryFilter(""));
     dispatch(setPageFilter(1));
