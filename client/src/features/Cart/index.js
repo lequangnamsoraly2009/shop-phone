@@ -51,6 +51,8 @@ function Cart() {
   const [districtSelect, setDistrictSelect] = useState(0);
   const [wardSelect, setWardSelect] = useState(0);
 
+  // console.log(districtSelect)
+
   useEffect(() => {
     const updateCartToServer = async () => {
       await API.patch(
@@ -61,17 +63,21 @@ function Cart() {
         }
       );
     };
+
+    updateCartToServer();
+    // getTotal();
+  }, [carts, token]);
+
+  useEffect(() => {
     const getDataAPIProvince = async () => {
       const data = await axios.get(`${APIGHN}/province`, {
         headers: { token: tokenGHN },
       });
       setDataProvince(data.data.data);
     };
-
-    updateCartToServer();
     getDataAPIProvince();
-    // getTotal();
-  }, [carts, token]);
+  }, []);
+
   // Get data district when select data province
   useEffect(() => {
     const getDataAPIDistrict = async () => {
@@ -93,7 +99,7 @@ function Cart() {
   useEffect(() => {
     const getDataAPIWard = async () => {
       const data = await axios.post(
-        `${APIGHN}/ward?${districtSelect}`,
+        `${APIGHN}/ward`,
         {
           district_id: districtSelect,
         },
@@ -107,7 +113,7 @@ function Cart() {
   }, [districtSelect]);
 
   // Calcualator Fee Ship
-  const handleCalFeeShip = async() => {
+  const handleCalFeeShip = async () => {
     try {
       if (provinceSelect === 0 || districtSelect === 0 || wardSelect === 0) {
         Swal.fire({
@@ -118,17 +124,47 @@ function Cart() {
           timer: 2000,
         });
       }
-      const dataFee1 = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`,{
-        service_type_id: 1,
-        // insurance_value: 
-      },{
-        headers: { token: tokenGHN, ShopId: 1965562 },
-      })
+      const weight = productCheckOut.reduce((item1, item2) => {
+        return item1 + item2.general.weight * item2.quantity;
+      }, 0);
+
+      const numberProduct = productCheckOut.reduce((item1, item2) => {
+        return item1 + item2.quantity;
+      }, 0);
+      // Check bao hiem gia tri san pham tren 10tr
+      let insurance = total * 22795;
+      if (insurance > 10000000) {
+        insurance = 9999999;
+      }
+
+      const dataFee1 = await axios.post(
+        "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+        {
+          service_type_id: 1,
+          insurance_value: insurance,
+          to_ward_code: wardSelect,
+          to_district_id: districtSelect,
+          from_district_id: 3695,
+          coupon: null,
+          weight: weight,
+          length: 30,
+          width: 15,
+          height: 10 * numberProduct,
+        },
+        {
+          headers: {
+            token: tokenGHN,
+            shop_id: "1965562",
+          },
+        }
+      );
+      console.log(dataFee1);
     } catch (error) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something went wrong!",
+        title:
+          "Due to the epidemic problem, it is not possible to deliver to this address!",
         showConfirmButton: false,
         timer: 2000,
       });
@@ -228,7 +264,11 @@ function Cart() {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      render: (text,record, index) => <span>{Math.floor(record.price - record.price * (record.sale / 100))}$</span>,
+      render: (text, record, index) => (
+        <span>
+          {Math.floor(record.price - record.price * (record.sale / 100))}$
+        </span>
+      ),
     },
     {
       title: "Amount",
@@ -277,7 +317,11 @@ function Cart() {
       dataIndex: ["price", "quantity"],
       key: "totalPrice",
       render: (text, record, index) => (
-        <span>{Math.floor(record.price - record.price * (record.sale / 100)) * record.quantity} $</span>
+        <span>
+          {Math.floor(record.price - record.price * (record.sale / 100)) *
+            record.quantity}{" "}
+          $
+        </span>
       ),
     },
     {
@@ -299,7 +343,11 @@ function Cart() {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       const totalPrice = selectedRows.reduce((item1, item2) => {
-        return item1 + Math.floor(item2.price - item2.price * (item2.sale / 100)) * item2.quantity;
+        return (
+          item1 +
+          Math.floor(item2.price - item2.price * (item2.sale / 100)) *
+            item2.quantity
+        );
       }, 0);
       setTotal(totalPrice);
       setProductChoice(selectedRows.length);
