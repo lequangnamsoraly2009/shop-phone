@@ -107,18 +107,33 @@ function Cart() {
   }, [districtSelect]);
 
   // Calcualator Fee Ship
-  const handleCalFeeShip = () => {
-    if(provinceSelect===0 || districtSelect===0 || wardSelect===0){
+  const handleCalFeeShip = async() => {
+    try {
+      if (provinceSelect === 0 || districtSelect === 0 || wardSelect === 0) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Please select all fields address!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+      const dataFee1 = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`,{
+        service_type_id: 1,
+        // insurance_value: 
+      },{
+        headers: { token: tokenGHN, ShopId: 1965562 },
+      })
+    } catch (error) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title:
-          "Please select all fields address!",
+        title: "Something went wrong!",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
       });
     }
-  }
+  };
 
   const increment = (idProduct) => {
     //   console.log(idProduct)
@@ -213,7 +228,7 @@ function Cart() {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      render: (text) => <span>{text} $</span>,
+      render: (text,record, index) => <span>{Math.floor(record.price - record.price * (record.sale / 100))}$</span>,
     },
     {
       title: "Amount",
@@ -262,7 +277,7 @@ function Cart() {
       dataIndex: ["price", "quantity"],
       key: "totalPrice",
       render: (text, record, index) => (
-        <span>{record.price * record.quantity} $</span>
+        <span>{Math.floor(record.price - record.price * (record.sale / 100)) * record.quantity} $</span>
       ),
     },
     {
@@ -284,7 +299,7 @@ function Cart() {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       const totalPrice = selectedRows.reduce((item1, item2) => {
-        return item1 + item2.price * item2.quantity;
+        return item1 + Math.floor(item2.price - item2.price * (item2.sale / 100)) * item2.quantity;
       }, 0);
       setTotal(totalPrice);
       setProductChoice(selectedRows.length);
@@ -420,7 +435,9 @@ function Cart() {
                 </div>
               </div>
               <div className="cart-checkout-address-button">
-                <Button type="primary" onClick={handleCalFeeShip}>Choose Fee Ship</Button>
+                <Button type="primary" onClick={handleCalFeeShip}>
+                  Choose Fee Ship
+                </Button>
               </div>
             </div>
             <div className="cart-checkout-information">
