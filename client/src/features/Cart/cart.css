@@ -70,6 +70,15 @@
   width: 80%;
 }
 
+.cart-checkout-address-select{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* .cart-checkout-address-province{
+  margin: 0 20px;
+} */
+
 /* Total Price */
 
 .cart-total-wrapper {

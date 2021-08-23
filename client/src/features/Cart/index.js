@@ -40,8 +40,16 @@ function Cart() {
   const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
   const [productCheckOut, setProductCheckOut] = useState([]);
+  // Data get GHN
   const [dataProvince, setDataProvince] = useState([]);
+  const [dataDistrict, setDataDistrict] = useState([]);
+  const [dataWard, setDataWard] = useState([]);
+
   const dispatch = useDispatch();
+  // Data get when select option
+  const [provinceSelect, setProvinceSelect] = useState(241);
+  const [districtSelect, setDistrictSelect] = useState(0);
+  const [wardSelect, setWardSelect] = useState(0);
 
   // console.log(dataProvince)
 
@@ -66,6 +74,22 @@ function Cart() {
     getDataAPIProvince();
     // getTotal();
   }, [carts, token]);
+  // Get data district when select data province
+  useEffect(() => {
+    const getDataAPIDistrict = async () => {
+      const data = await axios.post(
+        `${APIGHN}/district`,
+        {
+          province_id: provinceSelect,
+        },
+        {
+          headers: { token: tokenGHN },
+        }
+      );
+      setDataDistrict(data.data.data);
+    };
+    getDataAPIDistrict();
+  }, [provinceSelect]);
 
   const increment = (idProduct) => {
     //   console.log(idProduct)
@@ -208,8 +232,10 @@ function Cart() {
   };
 
   const handleOnSelectProvince = (value) => {
-    console.log(value)
-  } 
+    setProvinceSelect(value);
+  };
+
+  const handleOnSelectDistrict = (value) => {};
 
   const sendPayMentCart = () => {
     if (isLoggedIn === false) {
@@ -304,7 +330,52 @@ function Cart() {
               </div>
               <div className="cart-checkout-address-select">
                 <div className="cart-checkout-address-province">
-                  <Select style={{ width: 300 }} onChange={handleOnSelectProvince}>
+                  <div>
+                    <span>Province</span>
+                  </div>
+                  <Select
+                    defaultValue="Lào Cai"
+                    style={{ width: 300 }}
+                    onChange={handleOnSelectProvince}
+                  >
+                    {dataProvince.map((province) => (
+                      <Option
+                        key={province.ProvinceID}
+                        value={province.ProvinceID}
+                      >
+                        {province.ProvinceName}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
+                <div className="cart-checkout-address-province">
+                  <div>
+                    <span>District</span>
+                  </div>
+                  <Select
+                    defaultValue=""
+                    style={{ width: 300 }}
+                    onChange={handleOnSelectDistrict}
+                  >
+                    {dataDistrict.map((district) => (
+                      <Option
+                        key={district.DistrictID}
+                        value={district.DistrictID}
+                      >
+                        {district.DistrictName}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
+                <div className="cart-checkout-address-province">
+                  <div>
+                    <span>Ward</span>
+                  </div>
+                  <Select
+                    defaultValue=""
+                    style={{ width: 300 }}
+                    onChange={handleOnSelectProvince}
+                  >
                     {dataProvince.map((province) => (
                       <Option
                         key={province.ProvinceID}
