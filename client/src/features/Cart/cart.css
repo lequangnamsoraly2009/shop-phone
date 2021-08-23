@@ -66,6 +66,10 @@
   margin: 0 auto;
 }
 
+.cart-checkout-information-form{
+  width: 80%;
+}
+
 /* Total Price */
 
 .cart-total-wrapper {
