@@ -1,11 +1,17 @@
-import { Card, Rate } from "antd";
+import { Card } from "antd";
 import { Meta } from "antd/lib/list/Item";
 import React from "react";
 import "./carditemcate.css";
 import { useHistory } from "react-router-dom";
+import Rating from "../../../../components/Rating";
 
 function CardItemCate({ product }) {
   const history = useHistory();
+
+  const rate = {
+    rating : product.rating,
+    numberReviews: product.numberReviews,
+  }
 
   const onClickDetails = () => {
     window.scroll({
@@ -43,7 +49,7 @@ function CardItemCate({ product }) {
       </div>
       <Meta title={product?.title} className="card-item-title" />
       <div className="card-item-rate">
-        <Rate disabled allowHalf defaultValue={4.5} />
+        <Rating rate={rate} />
         <div className="card-item-sold">
           <span>Sold: </span>
           <span>{product?.numberSold}</span>
