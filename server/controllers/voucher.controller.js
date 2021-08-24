@@ -70,8 +70,43 @@ const voucherController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  updateVoucher: async (req, res) => {},
-  deleteVoucher: async (req, res) => {},
+  updateVoucher: async (req, res) => {
+    try {
+      const voucher = await Voucher.findById(req.params.id);
+
+      if (!voucher) {
+        return res
+          .status(400)
+          .json({ status: false, message: "The voucher was not found" });
+      }
+
+      const { voucherName, valueCode, expiryDate, numberCode } = req.body;
+
+      await Vouchers.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          voucherName,
+          valueCode,
+          expiryDate,
+          numberCode,
+          numberCodeRemain: numberCode,
+        }
+      );
+
+      res.json({ message: "Update voucher successfully" });
+
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  deleteVoucher: async (req, res) => {
+    try {
+      await Vouchers.findByIdAndDelete(req.params.id);
+      res.json({ message: "Delete voucher successfully" });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
 };
 
 module.exports = voucherController;
