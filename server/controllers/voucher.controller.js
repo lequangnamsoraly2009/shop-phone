@@ -43,7 +43,22 @@ class APIfeatures {
 }
 
 const voucherController = {
-  getAllVoucher: async (req, res) => {},
+  getAllVoucher: async (req, res) => {
+    try {
+      const features = new APIfeatures(Vouchers.find(), req.query)
+        .filtering()
+        .sorting()
+        .pagination();
+      const vouchers = await features.query;
+      res.json({
+        status: "success",
+        result: vouchers.length,
+        vouchers: vouchers,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
   //   getVoucher: async (req, res) => {},
   createVoucher: async (req, res) => {
     try {
@@ -92,9 +107,7 @@ const voucherController = {
           numberCodeRemain: numberCode,
         }
       );
-
       res.json({ message: "Update voucher successfully" });
-
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
