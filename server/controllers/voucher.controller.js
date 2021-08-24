@@ -44,8 +44,32 @@ class APIfeatures {
 
 const voucherController = {
   getAllVoucher: async (req, res) => {},
-  getVoucher: async (req, res) => {},
-  createVoucher: async (req, res) => {},
+  //   getVoucher: async (req, res) => {},
+  createVoucher: async (req, res) => {
+    try {
+      const { voucherName, valueCode, expiryDate, numberCode } = req.body;
+      const voucher = await Vouchers.findOne({ voucherName });
+      //   Check voucher exist
+      if (voucher) {
+        return res
+          .status(400)
+          .json({ status: false, message: "This voucher already exists !" });
+      }
+
+      //   create New Voucher
+      const newVoucher = new Vouchers({
+        voucherName: voucherName.toUpperCase(),
+        valueCode,
+        expiryDate,
+        numberCode,
+        numberCodeRemain: numberCode,
+      });
+      await newVoucher.save();
+      res.json("Create success a voucher");
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
   updateVoucher: async (req, res) => {},
   deleteVoucher: async (req, res) => {},
 };
