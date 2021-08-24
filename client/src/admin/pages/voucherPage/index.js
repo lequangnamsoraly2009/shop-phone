@@ -11,7 +11,7 @@ import {
   Select,
   DatePicker,
 } from "antd";
-// import moment from "moment";
+import moment from "moment";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -47,6 +47,8 @@ function VoucherPage() {
 
   const onFinishCreateVoucher = (values) => {
     console.log(values);
+    console.log(moment(values.expiryDateCreate._d).format())
+    // console.log(moment("2021-08-18T22:11:08.554+00:00").format())
   };
 
   // Columns Table Voucher -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
