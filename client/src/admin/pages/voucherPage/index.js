@@ -9,7 +9,9 @@ import {
   InputNumber,
   Form,
   Select,
+  DatePicker,
 } from "antd";
+// import moment from "moment";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -24,6 +26,8 @@ const layout = {
     span: 24,
   },
 };
+
+const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 
 function VoucherPage() {
   const [visibleCreateVoucher, setVisibleCreateVoucher] = useState(false);
@@ -186,8 +190,6 @@ function VoucherPage() {
                 {...layout}
                 name="formCreateVoucher"
                 onFinish={onFinishCreateVoucher}
-
-                // validateMessages={validateMessages}
               >
                 <Form.Item
                   name="voucherName"
@@ -208,19 +210,22 @@ function VoucherPage() {
                   hasFeedback
                   rules={[
                     {
-                        type: "number",
-                        min: 1,
-                        max: 20,
-                        required: true,
-                        message:
-                          "Min 1$ and Max 20$ are required! Djt m3 voucher mà phung phí tiền à! 20$ là 450k vnđ đấy!",
-                      },
+                      type: "number",
+                      min: 1,
+                      max: 20,
+                      required: true,
+                      message:
+                        "Min 1$ and Max 20$ are required! Djt m3 voucher mà phung phí tiền à! 20$ là 450k vnđ đấy!",
+                    },
                   ]}
                 >
                   <InputNumber style={{ width: "100%" }} />
                 </Form.Item>
-                <Form.Item name="expiryDate" label="Expiry Date">
-
+                <Form.Item name="expiryDateCreate" label="Expiry Date">
+                  <DatePicker
+                    // initialValues={moment("25/08/2021", dateFormatList[0])}
+                    format={dateFormatList}
+                  />
                 </Form.Item>
                 <Form.Item
                   name="numberCode"
@@ -231,7 +236,7 @@ function VoucherPage() {
                       type: "number",
                       min: 1,
                       required: true,
-                      message:"This field is required ! Min: 1 unit"
+                      message: "This field is required ! Min: 1 unit",
                     },
                   ]}
                 >
