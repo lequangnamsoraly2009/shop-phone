@@ -21,7 +21,6 @@ import {
 } from "../../app/cartSlice";
 import API from "../../api/axiosClient";
 import Swal from "sweetalert2";
-import axios from "axios";
 import {
   getDataDistrict,
   getDataProvince,
@@ -30,12 +29,11 @@ import {
   setProvince,
   setWard,
 } from "../../app/addressSlice";
+import AddressAPI from "../../api/addressAPI";
 
 const { Search } = Input;
 const { Option } = Select;
-const tokenGHN = "25baf0a4-0418-11ec-b255-166e45bc1992";
 
-const APIGHN = "https://online-gateway.ghn.vn/shiip/public-api/master-data";
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -120,28 +118,25 @@ function Cart() {
         insurance = 9999999;
       }
 
-      const dataFee1 = await axios.post(
-        "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
-        {
-          service_type_id: 1,
-          insurance_value: insurance,
-          to_ward_code: wardSelect,
-          to_district_id: districtSelect,
-          from_district_id: 3695,
-          coupon: null,
-          weight: weight,
-          length: 30,
-          width: 15,
-          height: 10 * numberProduct,
-        },
-        {
-          headers: {
-            token: tokenGHN,
-            shop_id: "1965562",
-          },
-        }
-      );
+      const dataFee1 = await AddressAPI.getDataFee({
+        service_type: 1,
+        insurance,
+        wardSelect,
+        districtSelect,
+        weight,
+        numberProduct,
+      });
+      const dataFee2 = await AddressAPI.getDataFee({
+        service_type: 2,
+        insurance,
+        wardSelect,
+        districtSelect,
+        weight,
+        numberProduct,
+      });
       console.log(dataFee1);
+      console.log(dataFee2);
+
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -467,7 +462,7 @@ function Cart() {
               </div>
               <div className="cart-checkout-address-button">
                 <Button type="primary" onClick={handleCalFeeShip}>
-                  Choose Fee Ship
+                  Check Shipping Fee
                 </Button>
               </div>
             </div>
