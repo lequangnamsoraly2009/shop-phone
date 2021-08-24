@@ -11,12 +11,13 @@ import {
   Select,
   DatePicker,
 } from "antd";
-import moment from "moment";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+// import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import VoucherAPI from "../../../api/voucherAPI";
+import { getAllVoucher } from "../../../app/voucherSlice";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -35,8 +36,16 @@ const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function VoucherPage() {
   const [visibleCreateVoucher, setVisibleCreateVoucher] = useState(false);
 
+  const { token } = useSelector((state) => state.token);
+  const { vouchers } = useSelector((state) => state.vouchers);
 
-  const {token} = useSelector((state) => state.token);
+  const dispatch = useDispatch();
+
+  //   console.log(vouchers);
+
+  useEffect(() => {
+    dispatch(getAllVoucher({ token }));
+  }, [dispatch, token]);
 
   const handleOnclickReload = () => {
     // dispatch(setSearchPayments(""));
@@ -70,11 +79,14 @@ function VoucherPage() {
         showConfirmButton: false,
         timer: 2000,
       });
+      setVisibleCreateVoucher(false);
+      dispatch(getAllVoucher({ token }));
     } catch (error) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something wrong. Please try create product again ! ",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
@@ -312,10 +324,10 @@ function VoucherPage() {
           > */}
           <Table
             style={{ border: "1px solid #000" }}
-            rowKey="_id"
+            rowKey={(record) => record._id}
             pagination={{ position: ["none", "none"] }}
             columns={columns}
-            //   dataSource={payments}
+            dataSource={vouchers}
           />
           {/* </Skeleton> */}
         </div>

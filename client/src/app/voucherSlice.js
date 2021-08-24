@@ -1,4 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import VoucherAPI from "../api/voucherAPI";
+
+export const getAllVoucher = createAsyncThunk(
+  "/voucher/getAllVoucher",
+  async ({token}) => {
+    const response = await VoucherAPI.getAllVoucher({token});
+    return response.data.vouchers;
+  }
+);
 
 const initialState = {
   vouchers: [],
@@ -8,15 +17,19 @@ const voucherSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    getVouchers: (state, action) => {
+    // getVouchers: (state, action) => {
+    //   state.vouchers = action.payload;
+    // },
+  },
+  extraReducers: {
+    [getAllVoucher.fulfilled]: (state, action) => {
       state.vouchers = action.payload;
     },
   },
-  extraReducers: {},
 });
 
-const { actions, reducer } = voucherSlice;
+const { reducer } = voucherSlice;
 
-export const {setSearch} = actions;
+// export const {} = actions;
 
 export default reducer;

@@ -17,6 +17,11 @@ const VoucherAPI = {
       }
     );
   },
+  getAllVoucher: ({ token }) => {
+    return API.get(`/api/voucher`, {
+      headers: { Authorization: token },
+    });
+  },
 };
 
 export default VoucherAPI;

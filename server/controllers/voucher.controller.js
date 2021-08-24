@@ -64,7 +64,6 @@ const voucherController = {
     try {
       const { voucherName, valueCode, expiryDate, numberCode, status } =
         req.body;
-        console.log(voucherName)
       const voucher = await Vouchers.findOne({ voucherName: voucherName });
       //   Check voucher exist
       if (voucher) {
