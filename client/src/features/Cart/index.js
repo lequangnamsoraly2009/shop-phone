@@ -22,6 +22,14 @@ import {
 import API from "../../api/axiosClient";
 import Swal from "sweetalert2";
 import axios from "axios";
+import {
+  getDataDistrict,
+  getDataProvince,
+  getDataWard,
+  setDistrict,
+  setProvince,
+  setWard,
+} from "../../app/addressSlice";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -37,23 +45,24 @@ function Cart() {
   const { carts, isLoadingCart } = useSelector((state) => state.carts);
   const { isLoggedIn } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
+  const {
+    dataProvince,
+    dataDistrict,
+    dataWard,
+    provinceSelect,
+    districtSelect,
+    wardSelect,
+  } = useSelector((state) => state.address);
+
   const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
   const [productCheckOut, setProductCheckOut] = useState([]);
-  // Data get GHN
-  const [dataProvince, setDataProvince] = useState([]);
-  const [dataDistrict, setDataDistrict] = useState([]);
-  const [dataWard, setDataWard] = useState([]);
 
   const dispatch = useDispatch();
-  // Data get when select option
-  const [provinceSelect, setProvinceSelect] = useState(0);
-  const [districtSelect, setDistrictSelect] = useState(0);
-  const [wardSelect, setWardSelect] = useState(0);
-
-  // Change Data get GHN
-  const [isChangeProvince, setIsChangeProvince] = useState(false);
-  const [isChangeDistrict, setIsChangeDistrict] = useState(false);
+  // // Data get when select option
+  // const [provinceSelect, setProvinceSelect] = useState(0);
+  // const [districtSelect, setDistrictSelect] = useState(0);
+  // const [wardSelect, setWardSelect] = useState(0);
 
   // console.log(districtSelect)
 
@@ -72,49 +81,19 @@ function Cart() {
     // getTotal();
   }, [carts, token]);
 
+  // Get data province
   useEffect(() => {
-    const getDataAPIProvince = async () => {
-      const data = await axios.get(`${APIGHN}/province`, {
-        headers: { token: tokenGHN },
-      });
-      setDataProvince(data.data.data);
-    };
-    getDataAPIProvince();
-  }, []);
+    dispatch(getDataProvince());
+  }, [dispatch]);
 
   // Get data district when select data province
   useEffect(() => {
-    const getDataAPIDistrict = async () => {
-      const data = await axios.post(
-        `${APIGHN}/district`,
-        {
-          province_id: provinceSelect,
-        },
-        {
-          headers: { token: tokenGHN },
-        }
-      );
-      setDataDistrict(data.data.data);
-    };
-    getDataAPIDistrict();
-  }, [provinceSelect]);
+    dispatch(getDataDistrict({ provinceSelect }));
+  }, [dispatch, provinceSelect]);
   // Get data ward when select data district
-
   useEffect(() => {
-    const getDataAPIWard = async () => {
-      const data = await axios.post(
-        `${APIGHN}/ward`,
-        {
-          district_id: districtSelect,
-        },
-        {
-          headers: { token: tokenGHN },
-        }
-      );
-      setDataWard(data.data.data);
-    };
-    getDataAPIWard();
-  }, [districtSelect]);
+    dispatch(getDataWard({ districtSelect }));
+  }, [districtSelect, dispatch]);
 
   // Calcualator Fee Ship
   const handleCalFeeShip = async () => {
@@ -206,20 +185,15 @@ function Cart() {
   };
 
   const handleOnSelectProvince = (value) => {
-    setIsChangeProvince(true);
-    setProvinceSelect(value);
-   
+    dispatch(setProvince(value));
   };
 
   const handleOnSelectDistrict = (value) => {
-    setIsChangeProvince(false);
-    setIsChangeDistrict(true);
-    setDistrictSelect(value);
+    dispatch(setDistrict(value));
   };
 
   const handleOnSelectWard = (value) => {
-    setIsChangeDistrict(false);
-    setWardSelect(value);
+    dispatch(setWard(value));
   };
 
   const sendPayMentCart = () => {

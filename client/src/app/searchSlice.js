@@ -4,7 +4,7 @@ const initialState = {
   search: "",
 };
 
-const cartSlice = createSlice({
+const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
@@ -15,7 +15,7 @@ const cartSlice = createSlice({
   extraReducers: {},
 });
 
-const { actions, reducer } = cartSlice;
+const { actions, reducer } = searchSlice;
 
 export const {setSearch} = actions;
 
