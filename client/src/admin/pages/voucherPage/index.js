@@ -1,17 +1,49 @@
 import { EyeOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Table, Input, Space } from "antd";
-import React from "react";
+import {
+  Breadcrumb,
+  Button,
+  Table,
+  Input,
+  Space,
+  Drawer,
+  InputNumber,
+  Form,
+  Select,
+} from "antd";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const { Search } = Input;
+const { Option } = Select;
+
+const layout = {
+  labelCol: {
+    span: 4,
+  },
+  wrapperCol: {
+    span: 24,
+  },
+};
 
 function VoucherPage() {
+  const [visibleCreateVoucher, setVisibleCreateVoucher] = useState(false);
+
   const handleOnclickReload = () => {
     // dispatch(setSearchPayments(""));
     window.location.reload();
   };
 
-  const handleOnclickCreateVoucher = () => {};
+  const handleOnclickCreateVoucher = () => {
+    setVisibleCreateVoucher(true);
+  };
+
+  const onCloseCreateVoucher = () => {
+    setVisibleCreateVoucher(false);
+  };
+
+  const onFinishCreateVoucher = (values) => {
+    console.log(values);
+  };
 
   // Columns Table Voucher -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
   const columns = [
@@ -142,6 +174,93 @@ function VoucherPage() {
             <Button onClick={handleOnclickCreateVoucher} type="primary">
               Create Voucher
             </Button>
+            <Drawer
+              title="Create Voucher"
+              placement="right"
+              closable={false}
+              width="1000px"
+              onClose={onCloseCreateVoucher}
+              visible={visibleCreateVoucher}
+            >
+              <Form
+                {...layout}
+                name="formCreateVoucher"
+                onFinish={onFinishCreateVoucher}
+
+                // validateMessages={validateMessages}
+              >
+                <Form.Item
+                  name="voucherName"
+                  label="Voucher Name"
+                  hasFeedback
+                  rules={[
+                    {
+                      required: true,
+                      message: "This field is required",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="valueCode"
+                  label="Value Code"
+                  hasFeedback
+                  rules={[
+                    {
+                        type: "number",
+                        min: 1,
+                        max: 20,
+                        required: true,
+                        message:
+                          "Min 1$ and Max 20$ are required! Djt m3 voucher mà phung phí tiền à! 20$ là 450k vnđ đấy!",
+                      },
+                  ]}
+                >
+                  <InputNumber style={{ width: "100%" }} />
+                </Form.Item>
+                <Form.Item name="expiryDate" label="Expiry Date">
+
+                </Form.Item>
+                <Form.Item
+                  name="numberCode"
+                  label="Number Code"
+                  hasFeedback
+                  rules={[
+                    {
+                      type: "number",
+                      min: 1,
+                      required: true,
+                      message:"This field is required ! Min: 1 unit"
+                    },
+                  ]}
+                >
+                  <InputNumber style={{ width: "100%" }} />
+                </Form.Item>
+                <Form.Item
+                  label="Status Voucher"
+                  name="status"
+                  hasFeedback
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select status voucher!",
+                    },
+                  ]}
+                >
+                  <Select showSearch placeholder="Search or select">
+                    <Option value="Public">Public</Option>
+                    <Option value="Private">Private</Option>
+                    <Option value="Disable">Disable</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                  <Button type="primary" htmlType="submit">
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Drawer>
           </div>
         </div>
         <div className="product_data-table">
