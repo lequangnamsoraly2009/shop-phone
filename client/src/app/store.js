@@ -23,6 +23,7 @@ import pendingQuestionProductReducer from "./pendingQuestionProductSlice";
 import questionProductReducer from "./questionProductSlice";
 import searchReducer from "./searchSlice";
 import addressReducer from "./addressSlice";
+import vouchersReducer from "./voucherSlice"
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
   questionProducts: questionProductReducer,
   search: searchReducer,
   address: addressReducer,
+  vouchers: vouchersReducer,
 });
 
 const persistConfig = {
