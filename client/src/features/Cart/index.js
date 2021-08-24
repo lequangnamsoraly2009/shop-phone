@@ -15,7 +15,7 @@ import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
 import {
-  addCartPayMentTemp,
+  // addCartPayMentTemp,
   removeOneCart,
   updateCart,
 } from "../../app/cartSlice";
@@ -42,7 +42,7 @@ const layout = {
 
 function Cart() {
   const { carts, isLoadingCart } = useSelector((state) => state.carts);
-  const { isLoggedIn } = useSelector((state) => state.user);
+  // const { isLoggedIn } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
   const {
     dataProvince,
@@ -231,25 +231,25 @@ function Cart() {
     setIsFee(false);
   };
 
-  const sendPayMentCart = () => {
-    if (isLoggedIn === false) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please Login or Register to Payment",
-      });
-    } else if (productChoice === 0) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title:
-          "You have not selected any products to pay! Please check again !",
-        // showConfirmButton: true,
-        timer: 5000,
-      });
-    }
-    dispatch(addCartPayMentTemp(productCheckOut));
-  };
+  // const sendPayMentCart = () => {
+  //   if (isLoggedIn === false) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Oops...",
+  //       text: "Please Login or Register to Payment",
+  //     });
+  //   } else if (productChoice === 0) {
+  //     Swal.fire({
+  //       position: "center",
+  //       icon: "error",
+  //       title:
+  //         "You have not selected any products to pay! Please check again !",
+  //       // showConfirmButton: true,
+  //       timer: 5000,
+  //     });
+  //   }
+  //   dispatch(addCartPayMentTemp(productCheckOut));
+  // };
 
   if (isLoadingCart === true) {
     return <div>Loading</div>;

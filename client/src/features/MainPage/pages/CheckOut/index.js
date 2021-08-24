@@ -1,8 +1,8 @@
-import { Breadcrumb, Steps, Button } from "antd";
-import React, { useEffect, useState } from "react";
+import { Breadcrumb} from "antd";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AddressShipping from "./components/addressShip";
-import CheckoutInfor from "./components/inforCheckout";
+// import AddressShipping from "./components/addressShip";
+// import CheckoutInfor from "./components/inforCheckout";
 import PaypalButton from "./PaypalButton";
 import API from "../../../../api/axiosClient";
 import { useHistory } from "react-router-dom";

@@ -27,6 +27,11 @@ const voucherSchema = new mongoose.Schema(
       required: true,
       default: 1000,
     },
+    status: {
+      type: String,
+      required: true,
+      default: "Public"
+    },
     userUsed: {
       type: Array,
       required: true,

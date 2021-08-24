@@ -25,11 +25,13 @@
     flex-direction: row;
     justify-content: flex-end;
     margin-bottom: 20px;
+    width: 100%;
     /* margin: 10px 0; */
 }
 
 .product_data-search{
     margin: 0 10px;
+    /* width: 40%; */
 }
 
 .product_data-pagination{
