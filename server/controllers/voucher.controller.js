@@ -62,8 +62,10 @@ const voucherController = {
   //   getVoucher: async (req, res) => {},
   createVoucher: async (req, res) => {
     try {
-      const { voucherName, valueCode, expiryDate, numberCode } = req.body;
-      const voucher = await Vouchers.findOne({ voucherName });
+      const { voucherName, valueCode, expiryDate, numberCode, status } =
+        req.body;
+        console.log(voucherName)
+      const voucher = await Vouchers.findOne({ voucherName: voucherName });
       //   Check voucher exist
       if (voucher) {
         return res
@@ -78,6 +80,7 @@ const voucherController = {
         expiryDate,
         numberCode,
         numberCodeRemain: numberCode,
+        status,
       });
       await newVoucher.save();
       res.json("Create success a voucher");
@@ -95,7 +98,8 @@ const voucherController = {
           .json({ status: false, message: "The voucher was not found" });
       }
 
-      const { voucherName, valueCode, expiryDate, numberCode } = req.body;
+      const { voucherName, valueCode, expiryDate, numberCode, status } =
+        req.body;
 
       await Vouchers.findByIdAndUpdate(
         { _id: req.params.id },
@@ -105,6 +109,7 @@ const voucherController = {
           expiryDate,
           numberCode,
           numberCodeRemain: numberCode,
+          status,
         }
       );
       res.json({ message: "Update voucher successfully" });

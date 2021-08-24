@@ -13,7 +13,10 @@ import {
 } from "antd";
 import moment from "moment";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import VoucherAPI from "../../../api/voucherAPI";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -32,6 +35,9 @@ const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function VoucherPage() {
   const [visibleCreateVoucher, setVisibleCreateVoucher] = useState(false);
 
+
+  const {token} = useSelector((state) => state.token);
+
   const handleOnclickReload = () => {
     // dispatch(setSearchPayments(""));
     window.location.reload();
@@ -45,10 +51,37 @@ function VoucherPage() {
     setVisibleCreateVoucher(false);
   };
 
-  const onFinishCreateVoucher = (values) => {
-    console.log(values);
-    console.log(moment(values.expiryDateCreate._d).format())
-    // console.log(moment("2021-08-18T22:11:08.554+00:00").format())
+  const onFinishCreateVoucher = async (values) => {
+    try {
+      const { expiryDateCreate, numberCode, status, valueCode, voucherName } =
+        values;
+      await VoucherAPI.createVoucher({
+        token,
+        expiryDate: expiryDateCreate._d,
+        numberCode,
+        status,
+        valueCode,
+        voucherName,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Create Voucher Success! ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something wrong. Please try create product again ! ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+    // console.log(values);
+    // console.log(moment(values.expiryDateCreate._d).format());
+    // // console.log(moment("2021-08-18T22:11:08.554+00:00").format())
   };
 
   // Columns Table Voucher -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
@@ -214,10 +247,10 @@ function VoucherPage() {
                     {
                       type: "number",
                       min: 1,
-                      max: 20,
+                      max: 200,
                       required: true,
                       message:
-                        "Min 1$ and Max 20$ are required! Djt m3 voucher mà phung phí tiền à! 20$ là 450k vnđ đấy!",
+                        "Min 1$ and Max 200$ are required! Djt m3 voucher mà phung phí tiền à!!",
                     },
                   ]}
                 >
