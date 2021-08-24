@@ -478,7 +478,7 @@ function Cart() {
               </div>
               <div className="cart-total ">
                 <span>Total:</span>
-                <span style={{ color: "rgb(247,69,46)" }}>{total} $</span>
+                <span style={{ color: "rgb(247,69,46)" }}>{total+Number(fee)} $</span>
               </div>
             </div>
           </div>
