@@ -96,47 +96,72 @@ function Cart() {
   // Calcualator Fee Ship
   const handleCalFeeShip = async () => {
     try {
-      if (provinceSelect === 0 || districtSelect === 0 || wardSelect === 0) {
+      if (provinceSelect === null) {
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Please select all fields address!",
+          title: "Please select province field!",
           showConfirmButton: false,
           timer: 2000,
         });
+      } else if (districtSelect === null) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Please select district field!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } else if (wardSelect === "") {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Please select ward field!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } else {
+        if (productChoice === 0) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Please select the item you want to buy!",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        } else {
+          const weight = productCheckOut.reduce((item1, item2) => {
+            return item1 + item2.general.weight * item2.quantity;
+          }, 0);
+
+          const numberProduct = productCheckOut.reduce((item1, item2) => {
+            return item1 + item2.quantity;
+          }, 0);
+          // Check bao hiem gia tri san pham tren 10tr
+          let insurance = total * 22795;
+          if (insurance > 10000000) {
+            insurance = 9999999;
+          }
+          const dataFee1 = await AddressAPI.getDataFee({
+            service_type: 1,
+            insurance,
+            wardSelect,
+            districtSelect,
+            weight,
+            numberProduct,
+          });
+          const dataFee2 = await AddressAPI.getDataFee({
+            service_type: 2,
+            insurance,
+            wardSelect,
+            districtSelect,
+            weight,
+            numberProduct,
+          });
+          console.log(dataFee1);
+          console.log(dataFee2);
+        }
       }
-      const weight = productCheckOut.reduce((item1, item2) => {
-        return item1 + item2.general.weight * item2.quantity;
-      }, 0);
-
-      const numberProduct = productCheckOut.reduce((item1, item2) => {
-        return item1 + item2.quantity;
-      }, 0);
-      // Check bao hiem gia tri san pham tren 10tr
-      let insurance = total * 22795;
-      if (insurance > 10000000) {
-        insurance = 9999999;
-      }
-
-      const dataFee1 = await AddressAPI.getDataFee({
-        service_type: 1,
-        insurance,
-        wardSelect,
-        districtSelect,
-        weight,
-        numberProduct,
-      });
-      const dataFee2 = await AddressAPI.getDataFee({
-        service_type: 2,
-        insurance,
-        wardSelect,
-        districtSelect,
-        weight,
-        numberProduct,
-      });
-      console.log(dataFee1);
-      console.log(dataFee2);
-
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -144,7 +169,7 @@ function Cart() {
         title:
           "Due to the epidemic problem, it is not possible to deliver to this address!",
         showConfirmButton: false,
-        timer: 2000,
+        timer: 3000,
       });
     }
   };
@@ -181,10 +206,13 @@ function Cart() {
 
   const handleOnSelectProvince = (value) => {
     dispatch(setProvince(value));
+    dispatch(setDistrict(null));
+    dispatch(setWard(""));
   };
 
   const handleOnSelectDistrict = (value) => {
     dispatch(setDistrict(value));
+    dispatch(setWard(""));
   };
 
   const handleOnSelectWard = (value) => {
@@ -204,8 +232,8 @@ function Cart() {
         icon: "error",
         title:
           "You have not selected any products to pay! Please check again !",
-        showConfirmButton: false,
-        timer: 3000,
+        // showConfirmButton: true,
+        timer: 5000,
       });
     }
     dispatch(addCartPayMentTemp(productCheckOut));
@@ -414,7 +442,7 @@ function Cart() {
                     style={{ width: 300 }}
                     onChange={handleOnSelectProvince}
                   >
-                    {dataProvince.map((province) => (
+                    {dataProvince?.map((province) => (
                       <Option
                         key={province.ProvinceID}
                         value={province.ProvinceID}
@@ -433,7 +461,7 @@ function Cart() {
                     style={{ width: 300 }}
                     onChange={handleOnSelectDistrict}
                   >
-                    {dataDistrict.map((district) => (
+                    {dataDistrict?.map((district) => (
                       <Option
                         key={district.DistrictID}
                         value={district.DistrictID}
@@ -452,7 +480,7 @@ function Cart() {
                     style={{ width: 300 }}
                     onChange={handleOnSelectWard}
                   >
-                    {dataWard.map((ward) => (
+                    {dataWard?.map((ward) => (
                       <Option key={ward.WardCode} value={ward.WardCode}>
                         {ward.WardName}
                       </Option>
