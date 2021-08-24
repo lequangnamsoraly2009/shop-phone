@@ -25,6 +25,7 @@ import {
   getDataDistrict,
   getDataProvince,
   getDataWard,
+  setDataFee,
   setDistrict,
   setProvince,
   setWard,
@@ -50,19 +51,16 @@ function Cart() {
     provinceSelect,
     districtSelect,
     wardSelect,
+    dataFee,
   } = useSelector((state) => state.address);
 
   const [total, setTotal] = useState(0);
   const [productChoice, setProductChoice] = useState(0);
   const [productCheckOut, setProductCheckOut] = useState([]);
+  const [fee, setFee] = useState(0);
+  const [isFee, setIsFee] = useState(false);
 
   const dispatch = useDispatch();
-  // // Data get when select option
-  // const [provinceSelect, setProvinceSelect] = useState(0);
-  // const [districtSelect, setDistrictSelect] = useState(0);
-  // const [wardSelect, setWardSelect] = useState(0);
-
-  // console.log(districtSelect)
 
   useEffect(() => {
     const updateCartToServer = async () => {
@@ -158,8 +156,14 @@ function Cart() {
             weight,
             numberProduct,
           });
-          console.log(dataFee1);
-          console.log(dataFee2);
+
+          const dataFeeExpress = { ...dataFee1.data.data, name: "Express" };
+          const dataFeeStandard = { ...dataFee2.data.data, name: "Standard" };
+
+          const dataFee = [dataFeeExpress, dataFeeStandard];
+
+          dispatch(setDataFee(dataFee));
+          setIsFee(true);
         }
       }
     } catch (error) {
@@ -172,6 +176,11 @@ function Cart() {
         timer: 3000,
       });
     }
+  };
+
+  // Handle on click Shipping Fee
+  const handleOnSelectFee = (totalFee) => {
+    setFee(totalFee);
   };
 
   const increment = (idProduct) => {
@@ -206,6 +215,7 @@ function Cart() {
 
   const handleOnSelectProvince = (value) => {
     dispatch(setProvince(value));
+    setIsFee(false);
     dispatch(setDistrict(null));
     dispatch(setWard(""));
   };
@@ -213,10 +223,12 @@ function Cart() {
   const handleOnSelectDistrict = (value) => {
     dispatch(setDistrict(value));
     dispatch(setWard(""));
+    setIsFee(false);
   };
 
   const handleOnSelectWard = (value) => {
     dispatch(setWard(value));
+    setIsFee(false);
   };
 
   const sendPayMentCart = () => {
@@ -361,6 +373,71 @@ function Cart() {
     },
   };
 
+  const culumnsAddressFee = [
+    {
+      title: "Service Type",
+      dataIndex: "name",
+      render: (text, record, index) => <span>{record.name}</span>,
+      align: "center",
+    },
+    {
+      title: "Service Fee",
+      dataIndex: "service_fee",
+      render: (text, record, index) => (
+        <span>
+          {(Math.round((record.service_fee / 22795) * 100) / 100).toFixed(2)} $
+        </span>
+      ),
+      align: "center",
+    },
+    {
+      title: "Insurance Fee",
+      dataIndex: "insurance_fee",
+      render: (text, record, index) => (
+        <span>
+          {(Math.round((record.insurance_fee / 22795) * 100) / 100).toFixed(2)}{" "}
+          $
+        </span>
+      ),
+      align: "center",
+    },
+    {
+      title: "Coupon Value",
+      dataIndex: "coupon_value",
+      render: (text, record, index) => <span>{record.coupon_value} $</span>,
+      align: "center",
+    },
+    {
+      title: "Total Fee",
+      dataIndex: "total",
+      render: (text, record, index) => (
+        <span>
+          {(Math.round((record.total / 22795) * 100) / 100).toFixed(2)} $
+        </span>
+      ),
+      align: "center",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record, index) => (
+        <Space size="large">
+          <Button
+            type="primary"
+            onClick={() =>
+              handleOnSelectFee(
+                (Math.round((record.total / 22795) * 100) / 100).toFixed(2)
+              )
+            }
+          >
+            Choose
+          </Button>
+        </Space>
+      ),
+      align: "center",
+    },
+  ];
+
   return (
     <div className="container-fluid">
       <div className="cart-full-wrapper">
@@ -383,14 +460,6 @@ function Cart() {
                 }}
                 columns={columns}
                 dataSource={carts}
-                // rowKey={record => record.}
-                // onRow={(record, rowIndex) => {
-                //   return {
-                //     onClick: event => {
-                //       return record.price * record.quantity;
-                //     }
-                //   };
-                // }}
               />
             </div>
           </div>
@@ -405,7 +474,7 @@ function Cart() {
               </div>
               <div className="cart-total ">
                 <span>Shipping:</span>
-                <span>0 $</span>
+                <span>{fee} $</span>
               </div>
               <div className="cart-total ">
                 <span>Total:</span>
@@ -493,6 +562,17 @@ function Cart() {
                   Check Shipping Fee
                 </Button>
               </div>
+              {isFee ? (
+                <div className="cart-checkout-address-fee">
+                  <Table
+                    dataSource={dataFee}
+                    rowKey={(record) => record.name}
+                    columns={culumnsAddressFee}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             <div className="cart-checkout-information">
               <div className="cart-checkout-coupon-header">

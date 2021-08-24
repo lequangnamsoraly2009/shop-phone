@@ -31,6 +31,7 @@ const initialState = {
   provinceSelect: null,
   districtSelect: null,
   wardSelect: "",
+  dataFee: [],
 };
 
 const addressSlice = createSlice({
@@ -45,6 +46,9 @@ const addressSlice = createSlice({
     },
     setWard: (state, action) => {
       state.wardSelect = action.payload;
+    },
+    setDataFee: (state, action) => {
+      state.dataFee = action.payload;
     },
   },
   extraReducers: {
@@ -62,6 +66,6 @@ const addressSlice = createSlice({
 
 const { actions, reducer } = addressSlice;
 
-export const { setProvince, setDistrict, setWard } = actions;
+export const { setProvince, setDistrict, setWard, setDataFee } = actions;
 
 export default reducer;
