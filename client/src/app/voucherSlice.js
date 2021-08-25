@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import VoucherAPI from "../api/voucherAPI";
 
-export const getAllVoucher = createAsyncThunk(
-  "/voucher/getAllVoucher",
+export const getVoucher = createAsyncThunk(
+  "/voucher/getVoucher",
   async ({token}) => {
-    const response = await VoucherAPI.getAllVoucher({token});
+    const response = await VoucherAPI.getVoucher({token});
     return response.data.vouchers;
   }
 );
@@ -22,7 +22,7 @@ const voucherSlice = createSlice({
     // },
   },
   extraReducers: {
-    [getAllVoucher.fulfilled]: (state, action) => {
+    [getVoucher.fulfilled]: (state, action) => {
       state.vouchers = action.payload;
     },
   },

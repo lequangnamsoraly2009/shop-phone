@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import VoucherAPI from "../../../api/voucherAPI";
-import { getAllVoucher } from "../../../app/voucherSlice";
+import { getVoucher } from "../../../app/voucherSlice";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -44,8 +44,20 @@ function VoucherPage() {
   //   console.log(vouchers);
 
   useEffect(() => {
-    dispatch(getAllVoucher({ token }));
+    dispatch(getVoucher({ token }));
   }, [dispatch, token]);
+
+  // useEffect(() => {
+  //   const getDataAllVoucher = async() => {
+  //     try {
+  //       const result = await VoucherAPI.getVoucher({token});
+  //       console.log(result.data.vouchers)
+  //     } catch (error) {
+        
+  //     }
+  //   }
+  //   getDataAllVoucher();
+  // }, [token]);
 
   const handleOnclickReload = () => {
     // dispatch(setSearchPayments(""));
@@ -80,7 +92,7 @@ function VoucherPage() {
         timer: 2000,
       });
       setVisibleCreateVoucher(false);
-      dispatch(getAllVoucher({ token }));
+      dispatch(getVoucher({ token }));
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -105,7 +117,7 @@ function VoucherPage() {
       key: "stt",
       render: (text, record, index) => (
         <span>
-          {/* {paginationPayments.findIndex((x) => x._id === record._id) + 1} */}
+          {vouchers.findIndex((x) => x._id === record._id) + 1}
         </span>
       ),
     },
@@ -325,7 +337,7 @@ function VoucherPage() {
           <Table
             style={{ border: "1px solid #000" }}
             rowKey={(record) => record._id}
-            pagination={{ position: ["none", "none"] }}
+            // pagination={{ position: ["none", "none"] }}
             columns={columns}
             dataSource={vouchers}
           />

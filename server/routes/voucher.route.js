@@ -3,7 +3,7 @@ const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 const voucherController = require("../controllers/voucher.controller");
 
-router.route("/voucher").get(auth, voucherController.getAllVoucher);
+router.route("/voucher").get(auth, voucherController.getVoucher);
 router.route("/voucher").post(auth, voucherController.createVoucher);
 // router.route("/voucher/:id").get(auth, voucherController.getVoucher);
 router.route("/voucher/:id").put(auth, voucherController.updateVoucher);
