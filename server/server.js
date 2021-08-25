@@ -35,6 +35,7 @@ app.use(
 // app.use(passport.session());
 
 //Routes
+
 app.use("/users", require("./routes/user.route"));
 app.use("/api", require("./routes/category.route"));
 app.use("/api", require("./routes/payment.route"));
@@ -111,7 +112,7 @@ io.on("connection", (socket) => {
         review.replies.push({ _id, userName, message, createdAt});
 
         await review.save();
-        io.to(review.product_id).emit("sendReplyReviewToClient", review);
+        io.to(review.product_id).emit("sendReplyReviewToClient", review); 
       }
     } else {
       await newReview.save();

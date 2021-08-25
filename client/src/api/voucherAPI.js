@@ -22,6 +22,14 @@ const VoucherAPI = {
       headers: { Authorization: token },
     });
   },
+  deleteVoucher: ({_id,token}) => {
+    return API.delete(
+      `/api/voucher/${_id}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+  }
 
 };
 
