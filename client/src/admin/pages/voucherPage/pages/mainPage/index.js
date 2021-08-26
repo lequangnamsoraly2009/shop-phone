@@ -42,6 +42,7 @@ const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function VoucherMainPage() {
   const [visibleCreateVoucher, setVisibleCreateVoucher] = useState(false);
   const [isOnEdit, setIsOnEdit] = useState(false);
+  const [idVoucherUpdate, setIdVoucherUpdate] = useState("");
 
   const { token } = useSelector((state) => state.token);
   const { vouchers } = useSelector((state) => state.vouchers);
@@ -50,7 +51,7 @@ function VoucherMainPage() {
 
   const dispatch = useDispatch();
 
-  //   console.log(vouchers);
+    console.log(isOnEdit);
 
   useEffect(() => {
     dispatch(getVoucher({ token }));
@@ -96,6 +97,7 @@ function VoucherMainPage() {
   const handleOpenDrawerUpdate = (_id) => {
     setVisibleCreateVoucher(true);
     setIsOnEdit(true);
+    setIdVoucherUpdate(_id);
     vouchers.forEach((voucher) => {
       if (voucher._id === _id) {
         form.setFieldsValue({
@@ -106,6 +108,7 @@ function VoucherMainPage() {
         });
       } else {
         setIsOnEdit(false);
+        setIdVoucherUpdate("");
       }
     });
   };
@@ -192,6 +195,42 @@ function VoucherMainPage() {
     // console.log(values);
     // console.log(moment(values.expiryDateCreate._d).format());
     // // console.log(moment("2021-08-18T22:11:08.554+00:00").format())
+  };
+
+  const onFinishUpdateVoucher = async (values) => {
+    try {
+      const { expiryDateCreate, numberCode, status, valueCode, voucherName } =
+        values;
+      await VoucherAPI.updateVoucher({
+        idVoucherUpdate,
+        token,
+        expiryDate: expiryDateCreate._d,
+        numberCode,
+        status,
+        valueCode,
+        voucherName,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Update Voucher Success! ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      setVisibleCreateVoucher(false);
+      setIsOnEdit(false);
+      setIdVoucherUpdate("");
+      dispatch(getVoucher({ token }));
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   };
 
   // Columns Table Voucher -> Có thể tách ra 1 file riêng nhưng viết chung luôn cho dễ quản lý
@@ -346,7 +385,9 @@ function VoucherMainPage() {
                 form={form}
                 {...layout}
                 name="formCreateVoucher"
-                onFinish={onFinishCreateVoucher}
+                onFinish={
+                  isOnEdit ? onFinishUpdateVoucher : onFinishCreateVoucher
+                }
               >
                 <Form.Item
                   name="voucherName"

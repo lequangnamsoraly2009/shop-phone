@@ -36,7 +36,7 @@ const VoucherAPI = {
     numberCode,
     status,
   }) => {
-    return API.delete(
+    return API.put(
       `/api/voucher/${_id}`,
       {
         voucherName,
