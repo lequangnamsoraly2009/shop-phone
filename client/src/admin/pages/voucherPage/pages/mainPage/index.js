@@ -1,4 +1,9 @@
-import { DeleteOutlined, EyeOutlined, HomeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
 import {
   Breadcrumb,
   Button,
@@ -36,9 +41,12 @@ const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 
 function VoucherMainPage() {
   const [visibleCreateVoucher, setVisibleCreateVoucher] = useState(false);
+  const [isOnEdit, setIsOnEdit] = useState(false);
 
   const { token } = useSelector((state) => state.token);
   const { vouchers } = useSelector((state) => state.vouchers);
+
+  const [form] = Form.useForm();
 
   const dispatch = useDispatch();
 
@@ -85,6 +93,28 @@ function VoucherMainPage() {
     });
   };
 
+  const handleOpenDrawerUpdate = (_id) => {
+    setVisibleCreateVoucher(true);
+    setIsOnEdit(true);
+    vouchers.forEach((voucher) => {
+      if (voucher._id === _id) {
+        form.setFieldsValue({
+          voucherName: voucher.voucherName,
+          numberCode: voucher.numberCode,
+          status: voucher.status,
+          valueCode: voucher.valueCode,
+        });
+      } else {
+        setIsOnEdit(false);
+      }
+    });
+  };
+
+  // Area Update Product
+  // useEffect(() => {
+
+  // }, [vouchers, form]);
+
   // Handle Search Voucher By Name
   const onSearchVoucher = () => {};
 
@@ -112,6 +142,21 @@ function VoucherMainPage() {
       });
     }
   };
+
+  // const handleUpdateVoucher = async() =>{
+  //   try {
+
+  //   } catch (error) {
+  //     Swal.fire({
+  //       position: "center",
+  //       icon: "success",
+  //       title: "Something went wrong!",
+  //       text: `${error.response.data.message}`,
+  //       showConfirmButton: false,
+  //       timer: 2000,
+  //     });
+  //   }
+  // }
 
   const onFinishCreateVoucher = async (values) => {
     try {
@@ -234,6 +279,9 @@ function VoucherMainPage() {
             <EyeOutlined />
           </Link>
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
+            <EditOutlined onClick={() => handleOpenDrawerUpdate(record._id)} />
+          </div>
+          <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <Popconfirm
               title="Are you sure delete it?"
               onConfirm={() => handleDeleteVoucher(record._id)}
@@ -287,7 +335,7 @@ function VoucherMainPage() {
               Create Voucher
             </Button>
             <Drawer
-              title="Create Voucher"
+              title={isOnEdit ? "Update Voucher" : "Create Voucher"}
               placement="right"
               closable={false}
               width="1000px"
@@ -295,6 +343,7 @@ function VoucherMainPage() {
               visible={visibleCreateVoucher}
             >
               <Form
+                form={form}
                 {...layout}
                 name="formCreateVoucher"
                 onFinish={onFinishCreateVoucher}
