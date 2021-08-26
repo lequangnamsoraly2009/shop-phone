@@ -22,15 +22,34 @@ const VoucherAPI = {
       headers: { Authorization: token },
     });
   },
-  deleteVoucher: ({_id,token}) => {
+  deleteVoucher: ({ _id, token }) => {
+    return API.delete(`/api/voucher/${_id}`, {
+      headers: { Authorization: token },
+    });
+  },
+  updateVoucher: ({
+    _id,
+    token,
+    voucherName,
+    valueCode,
+    expiryDate,
+    numberCode,
+    status,
+  }) => {
     return API.delete(
       `/api/voucher/${_id}`,
+      {
+        voucherName,
+        valueCode,
+        expiryDate,
+        numberCode,
+        status,
+      },
       {
         headers: { Authorization: token },
       }
     );
-  }
-
+  },
 };
 
 export default VoucherAPI;
