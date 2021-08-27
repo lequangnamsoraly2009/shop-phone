@@ -38,7 +38,7 @@ const voucherController = {
   },
   updateVoucher: async (req, res) => {
     try {
-      const voucher = await Voucher.findById(req.params.id);
+      const voucher = await Vouchers.findById(req.params.id);
 
       if (!voucher) {
         return res

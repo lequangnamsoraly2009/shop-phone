@@ -41,8 +41,8 @@ const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 
 function VoucherMainPage() {
   const [visibleVoucher, setVisibleVoucher] = useState(false);
-  const [isOnEdit, setIsOnEdit] = useState(false);
   const [idVoucherUpdate, setIdVoucherUpdate] = useState("");
+  const [checkEdit, setCheckEdit] = useState(false);
 
   const { token } = useSelector((state) => state.token);
   const { vouchers } = useSelector((state) => state.vouchers);
@@ -51,6 +51,7 @@ function VoucherMainPage() {
 
   const dispatch = useDispatch();
 
+  console.log(idVoucherUpdate);
 
   useEffect(() => {
     dispatch(getVoucher({ token }));
@@ -94,9 +95,7 @@ function VoucherMainPage() {
 
   const handleOpenDrawerUpdate = (_id) => {
     setVisibleVoucher(true);
-    setIsOnEdit(true);
-    console.log(isOnEdit)
-    console.log("Here")
+    setCheckEdit(true);
     setIdVoucherUpdate(_id);
     vouchers.forEach((voucher) => {
       if (voucher._id === _id) {
@@ -106,9 +105,6 @@ function VoucherMainPage() {
           status: voucher.status,
           valueCode: voucher.valueCode,
         });
-      } else {
-        setIsOnEdit(false);
-        setIdVoucherUpdate("");
       }
     });
   };
@@ -202,7 +198,7 @@ function VoucherMainPage() {
       const { expiryDateCreate, numberCode, status, valueCode, voucherName } =
         values;
       await VoucherAPI.updateVoucher({
-        idVoucherUpdate,
+        _id: idVoucherUpdate,
         token,
         expiryDate: expiryDateCreate._d,
         numberCode,
@@ -218,7 +214,7 @@ function VoucherMainPage() {
         timer: 2000,
       });
       setVisibleVoucher(false);
-      setIsOnEdit(false);
+      setCheckEdit(false);
       setIdVoucherUpdate("");
       dispatch(getVoucher({ token }));
     } catch (error) {
@@ -374,7 +370,7 @@ function VoucherMainPage() {
               Create Voucher
             </Button>
             <Drawer
-              title={isOnEdit ? "Update Voucher" : "Create Voucher"}
+              title={checkEdit === true ? "Update Voucher" : "Create Voucher"}
               placement="right"
               closable={false}
               width="1000px"
@@ -386,7 +382,7 @@ function VoucherMainPage() {
                 {...layout}
                 name="formCreateVoucher"
                 onFinish={
-                  isOnEdit === true
+                  checkEdit === true
                     ? onFinishUpdateVoucher
                     : onFinishCreateVoucher
                 }
@@ -461,7 +457,7 @@ function VoucherMainPage() {
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                   <Button type="primary" htmlType="submit">
-                    Submit
+                    {checkEdit === true ? "Update" : "Submit"}
                   </Button>
                 </Form.Item>
               </Form>
