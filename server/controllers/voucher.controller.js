@@ -46,7 +46,7 @@ const voucherController = {
           .status(400)
           .json({ status: false, message: "The voucher was not found" });
       }
-      if(expiryDate === undefined){
+      if(expiryDate === undefined || expiryDate === null){
         return res
           .status(400)
           .json({ status: false, message: "Missing expiration date" });

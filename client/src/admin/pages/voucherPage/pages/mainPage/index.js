@@ -16,6 +16,7 @@ import {
   Select,
   DatePicker,
   Popconfirm,
+  Skeleton,
 } from "antd";
 import moment from "moment";
 // import moment from "moment";
@@ -47,6 +48,7 @@ function VoucherMainPage() {
   const [visibleVoucher, setVisibleVoucher] = useState(false);
   const [idVoucherUpdate, setIdVoucherUpdate] = useState("");
   const [checkEdit, setCheckEdit] = useState(false);
+  const [isLoading,setIsLoading] = useState(false);
 
   const { token } = useSelector((state) => state.token);
   const { vouchers, timeVoucherTemp } = useSelector((state) => state.vouchers);
@@ -58,7 +60,9 @@ function VoucherMainPage() {
   console.log(idVoucherUpdate);
 
   useEffect(() => {
+    setIsLoading(true)
     dispatch(getVoucher({ token }));
+    setIsLoading(false)
   }, [dispatch, token]);
 
   const handleOnclickReload = () => {
@@ -401,7 +405,16 @@ function VoucherMainPage() {
                 >
                   <InputNumber style={{ width: "100%" }} />
                 </Form.Item>
-                <Form.Item name="expiryDateCreate" label="Expiry Date">
+                <Form.Item
+                  name="expiryDateCreate"
+                  label="Expiry Date"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select status voucher!",
+                    },
+                  ]}
+                >
                   {checkEdit === true ? (
                     <DatePicker
                       defaultValue={moment(timeVoucherTemp, dateFormatList[0])}
@@ -456,12 +469,12 @@ function VoucherMainPage() {
           </div>
         </div>
         <div className="product_data-table">
-          {/* <Skeleton
+          <Skeleton
             active
             loading={isLoading}
             paragraph={{ rows: 10 }}
             title={{ width: "100%" }}
-          > */}
+          >
           <Table
             style={{ border: "1px solid #000" }}
             rowKey={(record) => record._id}
@@ -469,21 +482,9 @@ function VoucherMainPage() {
             columns={columns}
             dataSource={vouchers}
           />
-          {/* </Skeleton> */}
+          </Skeleton>
         </div>
-        {/* <div className="product_data-pagination">
-          {paginationPayments.length <= 10 ? (
-            ""
-          ) : (
-            <Pagination
-              defaultCurrent={1}
-              total={paginationPayments.length}
-              showSizeChanger={false}
-              pageSize={10}
-              onChange={(page, pageSize) => handleChangePage(page, pageSize)}
-            />
-          )}
-        </div> */}
+        
       </div>
     </div>
   );
