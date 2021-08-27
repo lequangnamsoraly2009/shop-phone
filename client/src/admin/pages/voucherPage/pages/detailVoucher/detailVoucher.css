@@ -1,0 +1,23 @@
+.voucher_detail-main {
+  display: flex;
+  width: 100%;
+  height: 500px;
+}
+
+.voucher_detail-left {
+  width: 60%;
+  border-right: 1px solid rgba(80, 79, 79, 0.473);
+  display: flex;
+  flex-direction: column;
+
+}
+
+.voucher_detail-right {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+
+.voucher_detail-left-header .voucher_detail-right-header{
+    margin: 0 auto;
+}
