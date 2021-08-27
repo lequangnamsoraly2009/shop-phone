@@ -28,4 +28,12 @@
     border-bottom: 1px solid rgba(128, 127, 127, 0.534);
 }
 
+.voucher_detail-right-table{
+    margin-left: 20px;
+}
+
+.voucher_detail-right-table .ant-btn{
+    margin: 10px 0;
+}
+
 

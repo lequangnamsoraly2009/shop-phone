@@ -1,5 +1,9 @@
-import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Table } from "antd";
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
+import { Breadcrumb, Button, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -11,9 +15,14 @@ function DetailVoucher() {
 
   const { token } = useSelector((state) => state.token);
 
-  const [listUsers,setListUsers] = useState([]);
+  const [listUsers, setListUsers] = useState([]);
+  const [onAction, setOnAction] = useState(false);
+  const [idAction, setIdAction] = useState("");
 
-  console.log(listUsers)
+  const handOnClickAction = (_id) => {
+    setOnAction(true);
+    setIdAction(_id);
+  };
 
   useEffect(() => {
     const getDataListUsers = async () => {
@@ -24,7 +33,7 @@ function DetailVoucher() {
         const responseListUsersFilter = listUsers.data.users.filter(
           (user) => user.role !== 1
         );
-        setListUsers(responseListUsersFilter)
+        setListUsers(responseListUsersFilter);
       } catch (error) {}
     };
     getDataListUsers();
@@ -49,18 +58,14 @@ function DetailVoucher() {
       title: "User Name",
       dataIndex: "userName",
       key: "userName",
-      render: (text, record, index) => (
-        <span>{record.userName}</span>
-      ),
+      render: (text, record, index) => <span>{record.userName}</span>,
       align: "center",
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: (text, record, index) => (
-        <span>{record.email}</span>
-      ),
+      render: (text, record, index) => <span>{record.email}</span>,
       align: "center",
     },
     {
@@ -83,6 +88,18 @@ function DetailVoucher() {
             </span>
           )}
         </>
+      ),
+      align: "center",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record, index) => (
+        <Space size="large">
+          <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
+            <ArrowRightOutlined onClick={() => handOnClickAction(record._id)} />
+          </div>
+        </Space>
       ),
       align: "center",
     },
@@ -122,7 +139,7 @@ function DetailVoucher() {
           <div className="voucher_detail-left-table">
             <Table
               dataSource={listUsers}
-              rowKey={record => record._id}
+              rowKey={(record) => record._id}
               columns={columnListUsers}
               bordered={true}
             />
@@ -131,6 +148,15 @@ function DetailVoucher() {
         <div className="voucher_detail-right">
           <div className="voucher_detail-right-header">
             <span>Actions</span>
+          </div>
+          <div className="voucher_detail-right-table">
+            <Button type="primary" block>
+              Send Voucher
+            </Button>
+            <Button type="primary" block>Default</Button>
+            <Button block>
+              Dashed
+            </Button>
           </div>
         </div>
       </div>

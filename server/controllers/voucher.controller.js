@@ -39,15 +39,18 @@ const voucherController = {
   updateVoucher: async (req, res) => {
     try {
       const voucher = await Vouchers.findById(req.params.id);
-
+      const { voucherName, valueCode, expiryDate, numberCode, status } =
+        req.body;
       if (!voucher) {
         return res
           .status(400)
           .json({ status: false, message: "The voucher was not found" });
       }
-
-      const { voucherName, valueCode, expiryDate, numberCode, status } =
-        req.body;
+      if(expiryDate === undefined){
+        return res
+          .status(400)
+          .json({ status: false, message: "Missing expiration date" });
+      }
 
       await Vouchers.findByIdAndUpdate(
         { _id: req.params.id },

@@ -17,13 +17,17 @@ import {
   DatePicker,
   Popconfirm,
 } from "antd";
+import moment from "moment";
 // import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import VoucherAPI from "../../../../../api/voucherAPI";
-import { getVoucher } from "../../../../../app/voucherSlice";
+import {
+  getVoucher,
+  setTimeVoucherTemp,
+} from "../../../../../app/voucherSlice";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -45,7 +49,7 @@ function VoucherMainPage() {
   const [checkEdit, setCheckEdit] = useState(false);
 
   const { token } = useSelector((state) => state.token);
-  const { vouchers } = useSelector((state) => state.vouchers);
+  const { vouchers, timeVoucherTemp } = useSelector((state) => state.vouchers);
 
   const [form] = Form.useForm();
 
@@ -57,18 +61,6 @@ function VoucherMainPage() {
     dispatch(getVoucher({ token }));
   }, [dispatch, token]);
 
-  // useEffect(() => {
-  //   const getDataAllVoucher = async() => {
-  //     try {
-  //       const result = await VoucherAPI.getVoucher({token});
-  //       console.log(result.data.vouchers)
-  //     } catch (error) {
-
-  //     }
-  //   }
-  //   getDataAllVoucher();
-  // }, [token]);
-
   const handleOnclickReload = () => {
     window.location.reload();
   };
@@ -79,6 +71,8 @@ function VoucherMainPage() {
 
   const onCloseCreateVoucher = () => {
     setVisibleVoucher(false);
+    dispatch(setTimeVoucherTemp(""));
+    window.location.reload();
   };
 
   // Cancel Delete Voucher Here
@@ -104,15 +98,15 @@ function VoucherMainPage() {
           numberCode: voucher.numberCode,
           status: voucher.status,
           valueCode: voucher.valueCode,
+          // expiryDateCreate: moment(voucher.expiryDate).format("DD/MM/YYYY")
         });
+        dispatch(
+          setTimeVoucherTemp(moment(voucher.expiryDate).format("DD/MM/YYYY"))
+        );
+        // console.log(moment(voucher.expiryDate).format("DD/MM/YYYY"))
       }
     });
   };
-
-  // Area Update Product
-  // useEffect(() => {
-
-  // }, [vouchers, form]);
 
   // Handle Search Voucher By Name
   const onSearchVoucher = () => {};
@@ -141,21 +135,6 @@ function VoucherMainPage() {
       });
     }
   };
-
-  // const handleUpdateVoucher = async() =>{
-  //   try {
-
-  //   } catch (error) {
-  //     Swal.fire({
-  //       position: "center",
-  //       icon: "success",
-  //       title: "Something went wrong!",
-  //       text: `${error.response.data.message}`,
-  //       showConfirmButton: false,
-  //       timer: 2000,
-  //     });
-  //   }
-  // }
 
   const onFinishCreateVoucher = async (values) => {
     try {
@@ -216,13 +195,14 @@ function VoucherMainPage() {
       setVisibleVoucher(false);
       setCheckEdit(false);
       setIdVoucherUpdate("");
+      dispatch(setTimeVoucherTemp(""));
       dispatch(getVoucher({ token }));
     } catch (error) {
       Swal.fire({
         position: "center",
         icon: "error",
         title: "Something went wrong!",
-        text: `${error.response.data.message}`,
+        text: `${error.response?.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
@@ -307,12 +287,16 @@ function VoucherMainPage() {
       key: "action",
       render: (text, record, index) => (
         <Space size="large">
-          <Link
-            to={`/admin/voucher/detail/${record._id}`}
-            style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
-          >
-            <EyeOutlined />
-          </Link>
+          {record.status === "Private" ? (
+            <Link
+              to={`/admin/voucher/detail/${record._id}`}
+              style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
+            >
+              <EyeOutlined />
+            </Link>
+          ) : (
+            ""
+          )}
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <EditOutlined onClick={() => handleOpenDrawerUpdate(record._id)} />
           </div>
@@ -372,7 +356,7 @@ function VoucherMainPage() {
             <Drawer
               title={checkEdit === true ? "Update Voucher" : "Create Voucher"}
               placement="right"
-              closable={false}
+              closable={true}
               width="1000px"
               onClose={onCloseCreateVoucher}
               visible={visibleVoucher}
@@ -418,10 +402,17 @@ function VoucherMainPage() {
                   <InputNumber style={{ width: "100%" }} />
                 </Form.Item>
                 <Form.Item name="expiryDateCreate" label="Expiry Date">
-                  <DatePicker
-                    // initialValues={moment("25/08/2021", dateFormatList[0])}
-                    format={dateFormatList}
-                  />
+                  {checkEdit === true ? (
+                    <DatePicker
+                      defaultValue={moment(timeVoucherTemp, dateFormatList[0])}
+                      format={dateFormatList}
+                    />
+                  ) : (
+                    <DatePicker
+                      // initialValues={moment("25/08/2021", dateFormatList[0])}
+                      format={dateFormatList}
+                    />
+                  )}
                 </Form.Item>
                 <Form.Item
                   name="numberCode"

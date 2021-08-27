@@ -11,15 +11,16 @@ export const getVoucher = createAsyncThunk(
 
 const initialState = {
   vouchers: [],
+  timeVoucherTemp: "",
 };
 
 const voucherSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    // getVouchers: (state, action) => {
-    //   state.vouchers = action.payload;
-    // },
+    setTimeVoucherTemp: (state, action) => {
+      state.timeVoucherTemp = action.payload;
+    },
   },
   extraReducers: {
     [getVoucher.fulfilled]: (state, action) => {
@@ -28,8 +29,8 @@ const voucherSlice = createSlice({
   },
 });
 
-const { reducer } = voucherSlice;
+const {actions, reducer } = voucherSlice;
 
-// export const {} = actions;
+export const {setTimeVoucherTemp} = actions;
 
 export default reducer;
