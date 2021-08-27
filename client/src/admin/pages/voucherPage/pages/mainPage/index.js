@@ -40,7 +40,7 @@ const layout = {
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 
 function VoucherMainPage() {
-  const [visibleCreateVoucher, setVisibleCreateVoucher] = useState(false);
+  const [visibleVoucher, setVisibleVoucher] = useState(false);
   const [isOnEdit, setIsOnEdit] = useState(false);
   const [idVoucherUpdate, setIdVoucherUpdate] = useState("");
 
@@ -51,7 +51,6 @@ function VoucherMainPage() {
 
   const dispatch = useDispatch();
 
-    console.log(isOnEdit);
 
   useEffect(() => {
     dispatch(getVoucher({ token }));
@@ -70,16 +69,15 @@ function VoucherMainPage() {
   // }, [token]);
 
   const handleOnclickReload = () => {
-    // dispatch(setSearchPayments(""));
     window.location.reload();
   };
 
   const handleOnclickCreateVoucher = () => {
-    setVisibleCreateVoucher(true);
+    setVisibleVoucher(true);
   };
 
   const onCloseCreateVoucher = () => {
-    setVisibleCreateVoucher(false);
+    setVisibleVoucher(false);
   };
 
   // Cancel Delete Voucher Here
@@ -95,8 +93,10 @@ function VoucherMainPage() {
   };
 
   const handleOpenDrawerUpdate = (_id) => {
-    setVisibleCreateVoucher(true);
+    setVisibleVoucher(true);
     setIsOnEdit(true);
+    console.log(isOnEdit)
+    console.log("Here")
     setIdVoucherUpdate(_id);
     vouchers.forEach((voucher) => {
       if (voucher._id === _id) {
@@ -180,7 +180,7 @@ function VoucherMainPage() {
         showConfirmButton: false,
         timer: 2000,
       });
-      setVisibleCreateVoucher(false);
+      setVisibleVoucher(false);
       dispatch(getVoucher({ token }));
     } catch (error) {
       Swal.fire({
@@ -217,7 +217,7 @@ function VoucherMainPage() {
         showConfirmButton: false,
         timer: 2000,
       });
-      setVisibleCreateVoucher(false);
+      setVisibleVoucher(false);
       setIsOnEdit(false);
       setIdVoucherUpdate("");
       dispatch(getVoucher({ token }));
@@ -379,14 +379,16 @@ function VoucherMainPage() {
               closable={false}
               width="1000px"
               onClose={onCloseCreateVoucher}
-              visible={visibleCreateVoucher}
+              visible={visibleVoucher}
             >
               <Form
                 form={form}
                 {...layout}
                 name="formCreateVoucher"
                 onFinish={
-                  isOnEdit ? onFinishUpdateVoucher : onFinishCreateVoucher
+                  isOnEdit === true
+                    ? onFinishUpdateVoucher
+                    : onFinishCreateVoucher
                 }
               >
                 <Form.Item
