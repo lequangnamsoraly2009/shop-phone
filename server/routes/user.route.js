@@ -20,6 +20,8 @@ router.patch("/infor", auth, userController.updateInforUser);
 router.patch("/addcart", auth, userController.addCart);
 router.get("/history", auth, userController.historyOrder);
 router.get("/all_users", auth, authAdmin, userController.getAllUsers);
+// All users not limit
+router.get("/all_users_1", auth, authAdmin, userController.getAllUsers1);
 router.get(
   "/detect_device",
   auth,

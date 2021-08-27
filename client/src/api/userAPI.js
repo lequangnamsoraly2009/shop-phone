@@ -11,6 +11,11 @@ const UserAPI = {
       headers: { Authorization: token },
     });
   },
+  getAllUsers: ({token,searchUsers}) => {
+    return API.get(`/users/all_users_1?email[regex]=${searchUsers}`, {
+      headers: { Authorization: token },
+    });
+  },
   getUsersPagination: ({ searchUsers, page, token }) => {
     return API.get(
       `/users/all_users?limit=${page * 11}&&&email[regex]=${searchUsers}`,

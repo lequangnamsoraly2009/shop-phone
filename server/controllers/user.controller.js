@@ -71,6 +71,21 @@ const userController = {
       res.status(500).json({ status: false, message: error.message });
     }
   },
+  getAllUsers1: async (req, res) => {
+    try {
+      const features = new APIfeatures(Users.find(), req.query)
+        .filtering()
+        .sorting()
+      const users = await features.query;
+      res.json({
+        status: "success",
+        result: users.length,
+        users: users,
+      });
+    } catch (error) {
+      res.status(500).json({ status: false, message: error.message });
+    }
+  },
   // User Used
   register: async (req, res) => {
     try {

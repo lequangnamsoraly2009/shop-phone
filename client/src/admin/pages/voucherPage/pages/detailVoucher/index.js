@@ -1,16 +1,92 @@
 import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button } from "antd";
-import React from "react";
+import { Breadcrumb, Button, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import UserAPI from "../../../../../api/userAPI";
 import "./detailVoucher.css";
 
 function DetailVoucher() {
   const history = useHistory();
 
+  const { token } = useSelector((state) => state.token);
+
+  const [listUsers,setListUsers] = useState([]);
+
+  console.log(listUsers)
+
+  useEffect(() => {
+    const getDataListUsers = async () => {
+      try {
+        const searchUsers = "";
+        const listUsers = await UserAPI.getAllUsers({ token, searchUsers });
+
+        const responseListUsersFilter = listUsers.data.users.filter(
+          (user) => user.role !== 1
+        );
+        setListUsers(responseListUsersFilter)
+      } catch (error) {}
+    };
+    getDataListUsers();
+  }, [token]);
+
   const backPreviousPage = (e) => {
     e.preventDefault();
     history.goBack();
   };
+
+  const columnListUsers = [
+    {
+      title: "STT",
+      dataIndex: "stt",
+      width: 40,
+      key: "stt",
+      render: (text, record, index) => (
+        <span>{listUsers.findIndex((x) => x._id === record._id) + 1}</span>
+      ),
+    },
+    {
+      title: "User Name",
+      dataIndex: "userName",
+      key: "userName",
+      render: (text, record, index) => (
+        <span>{record.userName}</span>
+      ),
+      align: "center",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: (text, record, index) => (
+        <span>{record.email}</span>
+      ),
+      align: "center",
+    },
+    {
+      title: "Type User",
+      dataIndex: "typeUser",
+      key: "typeUser",
+      render: (text, record, index) => (
+        <>
+          {record.typeUser === "Unconfimred" ? (
+            <span style={{ textTransform: "capitalize", color: "red" }}>
+              {record.typeUser}
+            </span>
+          ) : record.typeUser === "Block" ? (
+            <span style={{ textTransform: "capitalize", color: "gray" }}>
+              {record.typeUser}
+            </span>
+          ) : (
+            <span style={{ textTransform: "capitalize", color: "green" }}>
+              {record.typeUser}
+            </span>
+          )}
+        </>
+      ),
+      align: "center",
+    },
+  ];
 
   return (
     <div className="container-admin">
@@ -44,7 +120,12 @@ function DetailVoucher() {
             <span>List Users</span>
           </div>
           <div className="voucher_detail-left-table">
-            hi
+            <Table
+              dataSource={listUsers}
+              rowKey={record => record._id}
+              columns={columnListUsers}
+              bordered={true}
+            />
           </div>
         </div>
         <div className="voucher_detail-right">
