@@ -11,6 +11,7 @@ import DetailProductMain from "../../features/MainPage/pages";
 import CategoryPage from "../../features/Category";
 import AuthPage from "../../features/Auth";
 import Customer from "../../features/Customer";
+import VoucherPageCustomer from "../../features/Voucher";
 
 
 function PublicRouter() {
@@ -24,6 +25,7 @@ function PublicRouter() {
           <Route path="/home" component={MainPage} />
           <Route path="/detail" component={DetailProductMain} />
           <Route path="/category" component={CategoryPage} />
+          <Route path="/voucher" component={VoucherPageCustomer} />
           <Route
             path="/buyer"
             component={!isLoggedIn ? AuthPage : PageNotFound}

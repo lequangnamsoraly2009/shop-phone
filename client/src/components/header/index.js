@@ -440,6 +440,9 @@ function HeaderNav() {
               </Dropdown>
             </li>
             <li className="nav-item">
+              <a href="/voucher">VOUCHER</a>
+            </li>
+            <li className="nav-item">
               <a href="/">CONTACT</a>
             </li>
             <li className="nav-item">
