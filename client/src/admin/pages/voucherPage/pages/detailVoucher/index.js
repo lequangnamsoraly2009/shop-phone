@@ -21,31 +21,12 @@ function DetailVoucher() {
   const { vouchers } = useSelector((state) => state.vouchers);
 
   const [listUsers, setListUsers] = useState([]);
-  // const [onAction, setOnAction] = useState(false);
-  // const [idAction, setIdAction] = useState("");
+  const [onAction, setOnAction] = useState(false);
+  const [idAction, setIdAction] = useState("");
 
   const handOnClickAction = async (_id) => {
-    // setOnAction(true);
-    // setIdAction(_id);
-    try {
-      const userNeed = listUsers.filter((user) => user._id === _id);
-      const voucherSend = vouchers.filter(
-        (voucher) => voucher._id === params.id
-      );
-      await VoucherAPI.sendVoucher({
-        token,
-        user: userNeed[0],
-        voucher: voucherSend[0],
-      });
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Nice Send!",
-        // text: `${response.data.message}`,
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } catch (error) {}
+    setOnAction(true);
+    setIdAction(_id);
   };
 
   useEffect(() => {
@@ -68,7 +49,26 @@ function DetailVoucher() {
     history.goBack();
   };
 
-  const handleOnClickSendVoucher = () => {};
+  const handleOnClickSendVoucher = async(_id) => {
+    try {
+      const userNeed = listUsers.filter((user) => user._id === _id);
+      const voucherSend = vouchers.filter(
+        (voucher) => voucher._id === params.id
+      );
+      await VoucherAPI.sendVoucher({
+        token,
+        user: userNeed[0],
+        voucher: voucherSend[0],
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Email has been sent successfully!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {}
+  };
 
   const columnListUsers = [
     {
@@ -186,7 +186,7 @@ function DetailVoucher() {
             <Button type="primary" block>
               Cleaning Up
             </Button>
-            <Button block>Cleaning Up</Button>
+            <Button block>Send All Users</Button>
           </div>
         </div>
       </div>
