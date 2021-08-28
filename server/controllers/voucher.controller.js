@@ -1,4 +1,7 @@
 const Vouchers = require("../models/voucher.model");
+const {
+  sendGiftVouchersEMail
+} = require("../helper/mailer.helper");
 
 const voucherController = {
   getVoucher: async (req, res) => {
@@ -46,7 +49,7 @@ const voucherController = {
           .status(400)
           .json({ status: false, message: "The voucher was not found" });
       }
-      if(expiryDate === undefined || expiryDate === null){
+      if (expiryDate === undefined || expiryDate === null) {
         return res
           .status(400)
           .json({ status: false, message: "Missing expiration date" });
@@ -72,6 +75,16 @@ const voucherController = {
     try {
       await Vouchers.findByIdAndDelete(req.params.id);
       res.json({ message: "Delete voucher successfully" });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  sendEmailGiftVoucher: async (req, res) => {
+    try {
+      const { user, voucher } = req.body;
+      console.log(user, voucher);
+      await sendGiftVouchersEMail({ toUser: user, voucher: voucher });
+      res.json({status: true, message: "Send voucher successfully" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

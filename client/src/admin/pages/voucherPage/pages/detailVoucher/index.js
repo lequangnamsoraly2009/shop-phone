@@ -6,22 +6,46 @@ import {
 import { Breadcrumb, Button, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import UserAPI from "../../../../../api/userAPI";
+import VoucherAPI from "../../../../../api/voucherAPI";
+import Swal from "sweetalert2";
 import "./detailVoucher.css";
 
 function DetailVoucher() {
   const history = useHistory();
 
+  const params = useParams();
+
   const { token } = useSelector((state) => state.token);
+  const { vouchers } = useSelector((state) => state.vouchers);
 
   const [listUsers, setListUsers] = useState([]);
-  const [onAction, setOnAction] = useState(false);
-  const [idAction, setIdAction] = useState("");
+  // const [onAction, setOnAction] = useState(false);
+  // const [idAction, setIdAction] = useState("");
 
-  const handOnClickAction = (_id) => {
-    setOnAction(true);
-    setIdAction(_id);
+  const handOnClickAction = async (_id) => {
+    // setOnAction(true);
+    // setIdAction(_id);
+    try {
+      const userNeed = listUsers.filter((user) => user._id === _id);
+      const voucherSend = vouchers.filter(
+        (voucher) => voucher._id === params.id
+      );
+      await VoucherAPI.sendVoucher({
+        token,
+        user: userNeed[0],
+        voucher: voucherSend[0],
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Nice Send!",
+        // text: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -43,6 +67,8 @@ function DetailVoucher() {
     e.preventDefault();
     history.goBack();
   };
+
+  const handleOnClickSendVoucher = () => {};
 
   const columnListUsers = [
     {
@@ -150,13 +176,17 @@ function DetailVoucher() {
             <span>Actions</span>
           </div>
           <div className="voucher_detail-right-table">
-            <Button type="primary" block>
+            <Button
+              type="primary"
+              block
+              onClick={() => handleOnClickSendVoucher()}
+            >
               Send Voucher
             </Button>
-            <Button type="primary" block>Default</Button>
-            <Button block>
-              Dashed
+            <Button type="primary" block>
+              Cleaning Up
             </Button>
+            <Button block>Cleaning Up</Button>
           </div>
         </div>
       </div>

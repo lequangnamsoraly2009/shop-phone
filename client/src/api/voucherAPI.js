@@ -50,6 +50,18 @@ const VoucherAPI = {
       }
     );
   },
+  sendVoucher: ({ token, user, voucher }) => {
+    return API.post(
+      `/api/voucher/sendvoucher`,
+      {
+        user,
+        voucher,
+      },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
 };
 
 export default VoucherAPI;

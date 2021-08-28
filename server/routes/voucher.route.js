@@ -5,7 +5,7 @@ const voucherController = require("../controllers/voucher.controller");
 
 router.route("/voucher").get(auth, voucherController.getVoucher);
 router.route("/voucher").post(auth, voucherController.createVoucher);
-// router.route("/voucher/:id").get(auth, voucherController.getVoucher);
+router.route("/voucher/sendvoucher").post(auth, voucherController.sendEmailGiftVoucher);
 router.route("/voucher/:id").put(auth, voucherController.updateVoucher);
 router.route("/voucher/:id").delete(auth, voucherController.deleteVoucher);
 
