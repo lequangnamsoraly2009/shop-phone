@@ -3,7 +3,7 @@ import {
   ArrowRightOutlined,
   HomeOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Button, Space, Table } from "antd";
+import { Breadcrumb, Button, Space, Spin, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
@@ -23,6 +23,7 @@ function DetailVoucher() {
   const [listUsers, setListUsers] = useState([]);
   const [onAction, setOnAction] = useState(false);
   const [idAction, setIdAction] = useState("");
+  const [isLoadingSendVoucher, setIsLoadingSendVoucher] = useState(false);
 
   const handOnClickAction = async (_id) => {
     setOnAction(true);
@@ -55,6 +56,7 @@ function DetailVoucher() {
 
   const handleOnClickSendVoucher = async () => {
     try {
+      setIsLoadingSendVoucher(true);
       const userNeed = listUsers.filter((user) => user._id === idAction);
       const voucherSend = vouchers.filter(
         (voucher) => voucher._id === params.id
@@ -64,10 +66,35 @@ function DetailVoucher() {
         user: userNeed[0],
         voucher: voucherSend[0],
       });
+      setIsLoadingSendVoucher(false);
       Swal.fire({
         position: "center",
         icon: "success",
         title: "Email has been sent successfully!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {}
+  };
+
+  const handleOnClickSendVoucherForAll = async () => {
+    try {
+      setIsLoadingSendVoucher(true);
+      const voucherSend = vouchers.filter(
+        (voucher) => voucher._id === params.id
+      );
+      for (let i = 0; i < listUsers.length; i++) {
+        await VoucherAPI.sendVoucher({
+          token,
+          user: listUsers[i],
+          voucher: voucherSend[0],
+        });
+      }
+      setIsLoadingSendVoucher(false);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Email has been sent successfully for all users!",
         showConfirmButton: false,
         timer: 2000,
       });
@@ -136,76 +163,88 @@ function DetailVoucher() {
   ];
 
   return (
-    <div className="container-admin">
-      <div className="header_page">
-        <h3>
-          <Button
-            style={{ marginRight: 10 }}
-            type="dashed"
-            icon={<ArrowLeftOutlined />}
-            onClick={backPreviousPage}
-          />
-          Detail Voucher
-        </h3>
-      </div>
-      <div className="product_breadcrumb">
-        <Breadcrumb>
-          <Breadcrumb.Item href="">
-            <HomeOutlined />
-          </Breadcrumb.Item>
-          <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
-          <Breadcrumb.Item href="/admin/products">Voucher</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            {/* {!onEdit ? "Create" : "Update"} Product */}
-            Detail Voucher
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
-      <div className="voucher_detail-main">
-        <div className="voucher_detail-left">
-          <div className="voucher_detail-left-header">
-            <span>List Users</span>
+    <>
+      {isLoadingSendVoucher === false ? (
+        <div className="container-admin">
+          <div className="header_page">
+            <h3>
+              <Button
+                style={{ marginRight: 10 }}
+                type="dashed"
+                icon={<ArrowLeftOutlined />}
+                onClick={backPreviousPage}
+              />
+              Detail Voucher
+            </h3>
           </div>
-          <div className="voucher_detail-left-table">
-            <Table
-              dataSource={listUsers}
-              rowKey={(record) => record._id}
-              columns={columnListUsers}
-              bordered={true}
-            />
+          <div className="product_breadcrumb">
+            <Breadcrumb>
+              <Breadcrumb.Item href="">
+                <HomeOutlined />
+              </Breadcrumb.Item>
+              <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
+              <Breadcrumb.Item href="/admin/products">Voucher</Breadcrumb.Item>
+              <Breadcrumb.Item>
+                {/* {!onEdit ? "Create" : "Update"} Product */}
+                Detail Voucher
+              </Breadcrumb.Item>
+            </Breadcrumb>
+          </div>
+          <div className="voucher_detail-main">
+            <div className="voucher_detail-left">
+              <div className="voucher_detail-left-header">
+                <span>List Users</span>
+              </div>
+              <div className="voucher_detail-left-table">
+                <Table
+                  dataSource={listUsers}
+                  rowKey={(record) => record._id}
+                  columns={columnListUsers}
+                  bordered={true}
+                />
+              </div>
+            </div>
+            <div className="voucher_detail-right">
+              <div className="voucher_detail-right-header">
+                <span>Actions</span>
+              </div>
+              <div className="voucher_detail-right-table">
+                {onAction === true ? (
+                  <>
+                    <Button
+                      type="primary"
+                      block
+                      onClick={() => handleOnClickSendVoucher()}
+                    >
+                      Send Voucher
+                    </Button>
+                    <Button
+                      type="primary"
+                      block
+                      onClick={() => handleOnClickReturn()}
+                    >
+                      Return
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    type="primary"
+                    block
+                    onClick={() => handleOnClickSendVoucherForAll()}
+                  >
+                    Send All Users
+                  </Button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-        <div className="voucher_detail-right">
-          <div className="voucher_detail-right-header">
-            <span>Actions</span>
-          </div>
-          <div className="voucher_detail-right-table">
-            {onAction === true ? (
-              <>
-                <Button
-                  type="primary"
-                  block
-                  onClick={() => handleOnClickSendVoucher()}
-                >
-                  Send Voucher
-                </Button>
-                <Button
-                  type="primary"
-                  block
-                  onClick={() => handleOnClickReturn()}
-                >
-                  Return
-                </Button>
-              </>
-            ) : (
-              <Button type="primary" block>
-                Send All Users
-              </Button>
-            )}
-          </div>
+      ) : (
+        <div className="spin-loading-page">
+          <Spin size="large" />
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

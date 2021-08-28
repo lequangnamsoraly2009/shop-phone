@@ -2,3 +2,11 @@
     margin: 10px 0;
     border-bottom: 1px solid rgba(156, 156, 156, 0.726);
 }
+
+.spin-loading-page{
+    display: flex;
+}
+
+.spin-loading-page .ant-spin{
+    margin: 300px auto;
+}
