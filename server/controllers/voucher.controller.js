@@ -82,7 +82,6 @@ const voucherController = {
   sendEmailGiftVoucher: async (req, res) => {
     try {
       const { user, voucher } = req.body;
-      console.log(user, voucher);
       await sendGiftVouchersEMail({ toUser: user, voucher: voucher });
       res.json({status: true, message: "Send voucher successfully" });
     } catch (error) {
