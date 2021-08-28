@@ -29,6 +29,10 @@ function DetailVoucher() {
     setIdAction(_id);
   };
 
+  const handleOnClickReturn = () => {
+    setOnAction(false);
+  };
+
   useEffect(() => {
     const getDataListUsers = async () => {
       try {
@@ -49,9 +53,9 @@ function DetailVoucher() {
     history.goBack();
   };
 
-  const handleOnClickSendVoucher = async(_id) => {
+  const handleOnClickSendVoucher = async () => {
     try {
-      const userNeed = listUsers.filter((user) => user._id === _id);
+      const userNeed = listUsers.filter((user) => user._id === idAction);
       const voucherSend = vouchers.filter(
         (voucher) => voucher._id === params.id
       );
@@ -176,17 +180,28 @@ function DetailVoucher() {
             <span>Actions</span>
           </div>
           <div className="voucher_detail-right-table">
-            <Button
-              type="primary"
-              block
-              onClick={() => handleOnClickSendVoucher()}
-            >
-              Send Voucher
-            </Button>
-            <Button type="primary" block>
-              Cleaning Up
-            </Button>
-            <Button block>Send All Users</Button>
+            {onAction === true ? (
+              <>
+                <Button
+                  type="primary"
+                  block
+                  onClick={() => handleOnClickSendVoucher()}
+                >
+                  Send Voucher
+                </Button>
+                <Button
+                  type="primary"
+                  block
+                  onClick={() => handleOnClickReturn()}
+                >
+                  Return
+                </Button>
+              </>
+            ) : (
+              <Button type="primary" block>
+                Send All Users
+              </Button>
+            )}
           </div>
         </div>
       </div>

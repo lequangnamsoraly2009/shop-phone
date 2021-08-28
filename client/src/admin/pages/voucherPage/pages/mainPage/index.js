@@ -57,8 +57,6 @@ function VoucherMainPage() {
 
   const dispatch = useDispatch();
 
-  console.log(idVoucherUpdate);
-
   useEffect(() => {
     setIsLoading(true)
     dispatch(getVoucher({ token }));
