@@ -64,7 +64,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 1
     },
-    
+    vouchersSave:{
+      type: Array,
+      default: []
+    },
   },
   {
     timestamps: true,
