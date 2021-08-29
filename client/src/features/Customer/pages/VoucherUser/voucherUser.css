@@ -1,0 +1,12 @@
+.voucher-user-header{
+    margin: 20px 0;
+    display: flex;
+}
+
+.voucher-user-header span{
+    margin: 0 auto;
+    font-size: 24px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(129, 129, 129, 0.76);
+}

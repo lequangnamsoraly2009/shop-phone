@@ -288,6 +288,7 @@ function HeaderNav() {
                   <div className="user_dropdown">
                     <div className="user-dropdown-title">
                       <a href="/customer/infor">Your Information</a>
+                      <a href="/customer/voucher">Your Voucher</a>
                       <a href="/customer/history">History Order</a>
                       <a href="/customer/device">Current Device</a>
                       {user.methodLogin === 1 ? (
