@@ -1,8 +1,42 @@
 .voucher-coupon-1{
+    
+}
 
+.voucher-coupon-1 .ant-card{
+    border: 1px solid rgba(114, 112, 112, 0.541);
+    border-radius: 5px;
+}
+
+.voucher-coupon-1 .ant-card-head-title{
+    font-size: 25px;
+    color: rgba(255, 5, 5, 0.829);
 }
 
 .voucher-coupon-1-header{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+}
+
+.voucher-coupon-1-header .voucher-coupon-1-header_giam{
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.voucher-coupon-1-button{
+    display: flex;
+}
+
+.voucher-coupon-1-button button{
+    margin: 10px auto;
+    width: 100px;
+    height: 50px;
+}
+
+.voucher-coupon-1-expirate{
+    float: right;
+}
+
+.voucher-coupon-1-expirate span{
+    font-weight: 400;
+    color: rgba(58, 57, 57, 0.829);
 }
