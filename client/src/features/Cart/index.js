@@ -151,7 +151,7 @@ function Cart() {
         position: "center",
         icon: "error",
         title: "Error!",
-        text: `${error.response.data.message}`,
+        text: `${error.response?.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });

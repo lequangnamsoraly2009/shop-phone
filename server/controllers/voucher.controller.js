@@ -94,15 +94,23 @@ const voucherController = {
 
       const { numberCodeRemain, userUsed } = voucher;
 
+      userUsed.push(user._id);
+
       const newNumberCodeRemain = numberCodeRemain - 1;
 
-      const checkUserUsed = userUsed.every(x => x._id === user._id)
+      const checkUserUsed = userUsed.every((x) => x._id === user._id);
+
+      if (checkUserUsed === true) {
+        return res
+          .status(400)
+          .json({ status: false, message: "You already used this voucher " });
+      }
 
       await Vouchers.findByIdAndUpdate(
         { _id: req.params.id },
         {
           numberCodeRemain: newNumberCodeRemain,
-          userUsed: userUsed.push(user._id),
+          userUsed: userUsed,
         }
       );
 
