@@ -7,6 +7,7 @@ router.route("/voucher").get(auth, voucherController.getVoucher);
 router.route("/voucher").post(auth, voucherController.createVoucher);
 router.route("/voucher/sendvoucher").post(auth, voucherController.sendEmailGiftVoucher);
 router.route("/voucher/:id").put(auth, voucherController.updateVoucher);
+router.route("/voucher/:id").patch(auth, voucherController.updateRemainVoucher);
 router.route("/voucher/:id").delete(auth, voucherController.deleteVoucher);
 
 

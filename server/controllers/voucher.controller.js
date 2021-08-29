@@ -88,6 +88,9 @@ const voucherController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  updateRemainVoucher: async (req, res) => {
+    
+  }
 };
 
 module.exports = voucherController;

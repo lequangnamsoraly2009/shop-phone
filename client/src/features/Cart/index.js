@@ -44,6 +44,7 @@ function Cart() {
   const { carts, isLoadingCart } = useSelector((state) => state.carts);
   // const { isLoggedIn } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
+  const { vouchers } = useSelector((state) => state.vouchers);
   const {
     dataProvince,
     dataDistrict,
@@ -59,6 +60,7 @@ function Cart() {
   const [productCheckOut, setProductCheckOut] = useState([]);
   const [fee, setFee] = useState(0);
   const [isFee, setIsFee] = useState(false);
+  const [voucherCoupon,setVoucherCoupon] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -90,6 +92,18 @@ function Cart() {
   useEffect(() => {
     dispatch(getDataWard({ districtSelect }));
   }, [districtSelect, dispatch]);
+
+  const onClickCheckVoucher = async (values) => {
+    try {
+      // Check voucher exist
+      const voucherUsed = vouchers.filter(
+        (voucher) => voucher.voucherName === values.toUpperCase()
+      );
+      // Check 
+      setVoucherCoupon(voucherUsed[0].valueCode)
+
+    } catch (error) {}
+  };
 
   // Calcualator Fee Ship
   const handleCalFeeShip = async () => {
@@ -474,7 +488,7 @@ function Cart() {
               </div>
               <div className="cart-total ">
                 <span>Voucher Coupon:</span>
-                <span>{0} $</span>
+                <span>{voucherCoupon} $</span>
               </div>
               <div className="cart-total ">
                 <span>Shipping:</span>
@@ -483,7 +497,7 @@ function Cart() {
               <div className="cart-total ">
                 <span>Total:</span>
                 <span style={{ color: "rgb(247,69,46)" }}>
-                  {total + Number(fee)} $
+                  {total + Number(fee) + voucherCoupon} $
                 </span>
               </div>
             </div>
@@ -499,7 +513,7 @@ function Cart() {
                   allowClear
                   enterButton="Check It"
                   size="large"
-                  // onSearch={onSearch}
+                  onSearch={onClickCheckVoucher}
                 />
               </div>
             </div>
