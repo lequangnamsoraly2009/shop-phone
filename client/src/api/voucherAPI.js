@@ -66,7 +66,7 @@ const VoucherAPI = {
     return API.patch(
       `/api/voucher/${_id}`,
       {
-        user
+        user,
       },
       {
         headers: { Authorization: token },

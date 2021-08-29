@@ -90,11 +90,19 @@ const voucherController = {
     try {
       const { user } = req.body;
 
-      const voucher = await Vouchers.findByIdAndUpdate(
+      const voucher = await Vouchers.findById(req.params.id);
+
+      const { numberCodeRemain, userUsed } = voucher;
+
+      const newNumberCodeRemain = numberCodeRemain - 1;
+
+      const checkUserUsed = userUsed.every(x => x._id === user._id)
+
+      await Vouchers.findByIdAndUpdate(
         { _id: req.params.id },
         {
-          numberCodeRemain: numberCodeRemain - 1,
-          userUsed: userUsed.push(user._id)
+          numberCodeRemain: newNumberCodeRemain,
+          userUsed: userUsed.push(user._id),
         }
       );
 

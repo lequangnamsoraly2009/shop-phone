@@ -47,7 +47,7 @@ function Cart() {
   // const { isLoggedIn } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
   const { vouchers } = useSelector((state) => state.vouchers);
-  const {user} = useSelector((state) => state.user)
+  const { user } = useSelector((state) => state.user);
   const {
     dataProvince,
     dataDistrict,
@@ -133,22 +133,24 @@ function Cart() {
           timer: 2000,
         });
       }
-      await VoucherAPI.updateVoucherRemain({ token, _id: voucherUsed[0]._id, user });
+      await VoucherAPI.updateVoucherRemain({
+        token,
+        _id: voucherUsed[0]._id,
+        user,
+      });
       setVoucherCoupon(voucherUsed[0].valueCode);
-      if (voucherUsed[0].numberCodeRemain <= 0) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Use voucher successfully!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      } 
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Use voucher successfully!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } catch (error) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Voucher is sold out!",
+        title: "Error!",
         text: `${error.response.data.message}`,
         showConfirmButton: false,
         timer: 2000,
