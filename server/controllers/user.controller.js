@@ -75,7 +75,7 @@ const userController = {
     try {
       const features = new APIfeatures(Users.find(), req.query)
         .filtering()
-        .sorting()
+        .sorting();
       const users = await features.query;
       res.json({
         status: "success",
@@ -423,6 +423,29 @@ const userController = {
 
         res.json({ accessToken });
       }
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  saveVoucher: async (req, res) => {
+    try {
+      const { voucher } = req.body;
+      const user = await Users.findById(req.user.id);
+      if (!user)
+        return res
+          .status(400)
+          .json({ status: false, message: "User does not exist" });
+
+      const { vouchersSave } = user;
+      vouchersSave.push(voucher);
+
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        {
+          vouchersSave: vouchersSave,
+        }
+      );
+      return res.json({ message: "Added to cart" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

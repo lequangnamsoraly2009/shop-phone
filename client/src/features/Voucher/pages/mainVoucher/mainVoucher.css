@@ -1,10 +1,11 @@
 .voucher-coupon-1{
-    
+    margin-bottom: 50px;
 }
 
 .voucher-coupon-1 .ant-card{
     border: 1px solid rgba(114, 112, 112, 0.541);
     border-radius: 5px;
+    background-color: rgb(222, 235, 247);
 }
 
 .voucher-coupon-1 .ant-card-head-title{
