@@ -62,6 +62,17 @@ const VoucherAPI = {
       }
     );
   },
+  updateVoucherRemain: ({ token, _id, user}) => {
+    return API.patch(
+      `/api/voucher/${_id}`,
+      {
+        user
+      },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  }
 };
 
 export default VoucherAPI;

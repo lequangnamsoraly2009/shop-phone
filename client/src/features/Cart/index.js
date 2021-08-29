@@ -31,6 +31,8 @@ import {
   setWard,
 } from "../../app/addressSlice";
 import AddressAPI from "../../api/addressAPI";
+import moment from "moment";
+import VoucherAPI from "../../api/voucherAPI";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -45,6 +47,7 @@ function Cart() {
   // const { isLoggedIn } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
   const { vouchers } = useSelector((state) => state.vouchers);
+  const {user} = useSelector((state) => state.user)
   const {
     dataProvince,
     dataDistrict,
@@ -60,7 +63,7 @@ function Cart() {
   const [productCheckOut, setProductCheckOut] = useState([]);
   const [fee, setFee] = useState(0);
   const [isFee, setIsFee] = useState(false);
-  const [voucherCoupon,setVoucherCoupon] = useState(0);
+  const [voucherCoupon, setVoucherCoupon] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -99,10 +102,58 @@ function Cart() {
       const voucherUsed = vouchers.filter(
         (voucher) => voucher.voucherName === values.toUpperCase()
       );
-      // Check 
-      setVoucherCoupon(voucherUsed[0].valueCode)
-
-    } catch (error) {}
+      if (!voucherUsed) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Voucher is not exist!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+      // Check expire date
+      if (
+        moment(voucherUsed[0].expiryDate).valueOf() - moment().valueOf() <
+        0
+      ) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Voucher is not exist!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+      if (voucherUsed[0].numberCodeRemain <= 0) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Voucher is sold out!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+      await VoucherAPI.updateVoucherRemain({ token, _id: voucherUsed[0]._id, user });
+      setVoucherCoupon(voucherUsed[0].valueCode);
+      if (voucherUsed[0].numberCodeRemain <= 0) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Use voucher successfully!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } 
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Voucher is sold out!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   };
 
   // Calcualator Fee Ship

@@ -1,7 +1,5 @@
 const Vouchers = require("../models/voucher.model");
-const {
-  sendGiftVouchersEMail
-} = require("../helper/mailer.helper");
+const { sendGiftVouchersEMail } = require("../helper/mailer.helper");
 
 const voucherController = {
   getVoucher: async (req, res) => {
@@ -83,14 +81,28 @@ const voucherController = {
     try {
       const { user, voucher } = req.body;
       await sendGiftVouchersEMail({ toUser: user, voucher: voucher });
-      res.json({status: true, message: "Send voucher successfully" });
+      res.json({ status: true, message: "Send voucher successfully" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
   updateRemainVoucher: async (req, res) => {
-    
-  }
+    try {
+      const { user } = req.body;
+
+      const voucher = await Vouchers.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          numberCodeRemain: numberCodeRemain - 1,
+          userUsed: userUsed.push(user._id)
+        }
+      );
+
+      res.json({ message: "Update voucher successfully" });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
 };
 
 module.exports = voucherController;
