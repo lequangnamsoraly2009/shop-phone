@@ -445,7 +445,7 @@ const userController = {
           vouchersSave: vouchersSave,
         }
       );
-      return res.json({ message: "Added to cart" });
+      return res.json({ message: "Save voucher successfully" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

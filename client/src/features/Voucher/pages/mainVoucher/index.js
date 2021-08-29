@@ -1,10 +1,14 @@
 import { Button, Card, Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import UserAPI from "../../../../api/userAPI";
+import Swal from "sweetalert2";
+
 import "./mainVoucher.css";
 
 function MainVoucher() {
   const { vouchers } = useSelector((state) => state.vouchers);
+  const { token } = useSelector((state) => state.token);
 
   const [voucherPublic, setVoucherPublic] = useState([]);
 
@@ -14,6 +18,30 @@ function MainVoucher() {
     );
     setVoucherPublic(voucherPub);
   }, [vouchers]);
+
+  const handleSaveVoucher = async (_id) => {
+    try {
+      const voucherSave = vouchers.filter((voucher) => voucher._id === _id);
+      const response = await UserAPI.saveVoucher({ token, voucher: voucherSave[0] });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Saved!",
+        text: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
 
   return (
     <div className="container-fluid">
@@ -42,10 +70,18 @@ function MainVoucher() {
                     </div>
                   </div>
                   <div className="voucher-coupon-1-button">
-                    <Button type="primary">Save</Button>
+                    <Button
+                      type="primary"
+                      onClick={() => handleSaveVoucher(voucher._id)}
+                    >
+                      Save
+                    </Button>
                   </div>
                   <div className="voucher-coupon-1-expirate">
-                    <span>Expiration date: {new Date(voucher.expiryDate).toLocaleString("en-GB")}</span>
+                    <span>
+                      Expiration date:{" "}
+                      {new Date(voucher.expiryDate).toLocaleString("en-GB")}
+                    </span>
                   </div>
                 </Card>
               </Col>

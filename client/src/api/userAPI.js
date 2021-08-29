@@ -11,7 +11,7 @@ const UserAPI = {
       headers: { Authorization: token },
     });
   },
-  getAllUsers: ({token,searchUsers}) => {
+  getAllUsers: ({ token, searchUsers }) => {
     return API.get(`/users/all_users_1?email[regex]=${searchUsers}`, {
       headers: { Authorization: token },
     });
@@ -19,6 +19,17 @@ const UserAPI = {
   getUsersPagination: ({ searchUsers, page, token }) => {
     return API.get(
       `/users/all_users?limit=${page * 11}&&&email[regex]=${searchUsers}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
+  saveVoucher: ({ token, voucher }) => {
+    return API.patch(
+      `/users/save_voucher`,
+      {
+        voucher,
+      },
       {
         headers: { Authorization: token },
       }
