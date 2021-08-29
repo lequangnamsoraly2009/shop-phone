@@ -437,6 +437,13 @@ const userController = {
           .json({ status: false, message: "User does not exist" });
 
       const { vouchersSave } = user;
+
+
+      const checkVoucher = vouchersSave.filter(x => x._id === voucher._id )
+
+      if(checkVoucher.length>0){
+        return res.status(400).json({status: false, message: "This voucher is already saved ! "})
+      }
       vouchersSave.push(voucher);
 
       await Users.findOneAndUpdate(

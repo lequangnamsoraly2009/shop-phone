@@ -57,7 +57,7 @@ function MainVoucher() {
           />
         </div>
         <div className="voucher-coupon-1">
-          <Row gutter={16}>
+          <Row gutter={[16,16]}>
             {voucherPublic.map((voucher) => (
               <Col key={voucher._id} span={8}>
                 <Card title={voucher.voucherName} bordered>
