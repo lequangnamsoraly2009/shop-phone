@@ -112,7 +112,7 @@ function Cart() {
         });
       }
       // Check expire date
-      if (
+      else if (
         moment(voucherUsed[0].expiryDate).valueOf() - moment().valueOf() <
         0
       ) {
@@ -123,8 +123,7 @@ function Cart() {
           showConfirmButton: false,
           timer: 2000,
         });
-      }
-      if (voucherUsed[0].numberCodeRemain <= 0) {
+      } else if (voucherUsed[0].numberCodeRemain <= 0) {
         Swal.fire({
           position: "center",
           icon: "error",
@@ -132,20 +131,21 @@ function Cart() {
           showConfirmButton: false,
           timer: 2000,
         });
+      } else {
+        await VoucherAPI.updateVoucherRemain({
+          token,
+          _id: voucherUsed[0]._id,
+          user,
+        });
+        setVoucherCoupon(voucherUsed[0].valueCode);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Use voucher successfully!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       }
-      await VoucherAPI.updateVoucherRemain({
-        token,
-        _id: voucherUsed[0]._id,
-        user,
-      });
-      setVoucherCoupon(voucherUsed[0].valueCode);
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Use voucher successfully!",
-        showConfirmButton: false,
-        timer: 2000,
-      });
     } catch (error) {
       Swal.fire({
         position: "center",
