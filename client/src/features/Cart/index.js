@@ -119,7 +119,7 @@ function Cart() {
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Voucher is not exist!",
+          title: "Voucher is expire date!",
           showConfirmButton: false,
           timer: 2000,
         });
@@ -563,7 +563,6 @@ function Cart() {
               <div className="cart-checkout-coupon-form">
                 <Search
                   placeholder="Input Your Voucher"
-                  allowClear
                   enterButton="Check It"
                   size="large"
                   onSearch={onClickCheckVoucher}

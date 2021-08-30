@@ -89,19 +89,20 @@ const voucherController = {
   updateRemainVoucher: async (req, res) => {
     try {
       const { user } = req.body;
-
+      // Find voucher
       const voucher = await Vouchers.findById(req.params.id);
 
+      // Get data from voucher
       const { numberCodeRemain, userUsed } = voucher;
 
       const newNumberCodeRemain = numberCodeRemain - 1;
 
-      const checkUserUsed = userUsed.every((x) => x === user._id);
-      if (checkUserUsed === true) {
+      if (userUsed.indexOf(user._id) === 1) {
         return res
           .status(400)
           .json({ status: false, message: "You already used this voucher " });
-      } else {
+      }
+      else{
         userUsed.push(user._id);
         await Vouchers.findByIdAndUpdate(
           { _id: req.params.id },
@@ -110,7 +111,6 @@ const voucherController = {
             userUsed: userUsed,
           }
         );
-
         res.json({ message: "Update voucher successfully" });
       }
     } catch (error) {
