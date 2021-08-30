@@ -94,27 +94,25 @@ const voucherController = {
 
       const { numberCodeRemain, userUsed } = voucher;
 
-      userUsed.push(user._id);
-
       const newNumberCodeRemain = numberCodeRemain - 1;
 
-      const checkUserUsed = userUsed.every((x) => x._id === user._id);
-
+      const checkUserUsed = userUsed.every((x) => x === user._id);
       if (checkUserUsed === true) {
         return res
           .status(400)
           .json({ status: false, message: "You already used this voucher " });
+      } else {
+        userUsed.push(user._id);
+        await Vouchers.findByIdAndUpdate(
+          { _id: req.params.id },
+          {
+            numberCodeRemain: newNumberCodeRemain,
+            userUsed: userUsed,
+          }
+        );
+
+        res.json({ message: "Update voucher successfully" });
       }
-
-      await Vouchers.findByIdAndUpdate(
-        { _id: req.params.id },
-        {
-          numberCodeRemain: newNumberCodeRemain,
-          userUsed: userUsed,
-        }
-      );
-
-      res.json({ message: "Update voucher successfully" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
