@@ -9,6 +9,8 @@ router.route("/voucher/sendvoucher").post(auth, voucherController.sendEmailGiftV
 router.route("/voucher/:id").put(auth, voucherController.updateVoucher);
 router.route("/voucher/:id").patch(auth, voucherController.updateRemainVoucher);
 router.route("/voucher/:id").delete(auth, voucherController.deleteVoucher);
+router.route("/voucher/check_voucher").post(auth, voucherController.checkVoucherUsed);
+
 
 
 module.exports = router;

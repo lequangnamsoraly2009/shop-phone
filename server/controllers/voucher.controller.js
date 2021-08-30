@@ -116,6 +116,25 @@ const voucherController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  checkVoucherUsed: async (req, res) => {
+    try {
+      const { user, voucherId } = req.body;
+
+      const voucher = await Vouchers.findById({ _id: voucherId });
+
+      const { userUsed } = voucher;
+
+      if (userUsed.indexOf(user._id) === -1) {
+        res.json({ status: true, message: "This voucher is ready use" });
+      } else {
+        return res
+          .status(400)
+          .json({ status: false, message: "You already used this voucher " });
+      }
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
 };
 
 module.exports = voucherController;

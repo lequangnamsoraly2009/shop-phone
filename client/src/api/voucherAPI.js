@@ -62,7 +62,7 @@ const VoucherAPI = {
       }
     );
   },
-  updateVoucherRemain: ({ token, _id, user}) => {
+  updateVoucherRemain: ({ token, _id, user }) => {
     return API.patch(
       `/api/voucher/${_id}`,
       {
@@ -72,7 +72,19 @@ const VoucherAPI = {
         headers: { Authorization: token },
       }
     );
-  }
+  },
+  checkVoucherUsed: ({ token, voucherId, user }) => {
+    return API.post(
+      `/api/voucher/check_voucher`,
+      {
+        user, 
+        voucherId: voucherId
+      },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
 };
 
 export default VoucherAPI;

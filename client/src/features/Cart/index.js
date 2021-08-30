@@ -132,16 +132,22 @@ function Cart() {
           timer: 2000,
         });
       } else {
-        await VoucherAPI.updateVoucherRemain({
+        // await VoucherAPI.updateVoucherRemain({
+        //   token,
+        //   _id: voucherUsed[0]._id,
+        //   user,
+        // });
+        const response = await VoucherAPI.checkVoucherUsed({
           token,
-          _id: voucherUsed[0]._id,
+          voucherId: voucherUsed[0]._id,
           user,
         });
         setVoucherCoupon(voucherUsed[0].valueCode);
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Use voucher successfully!",
+          title: "Check it successful!",
+          text: `${response.data.message}`,
           showConfirmButton: false,
           timer: 2000,
         });
