@@ -15,7 +15,7 @@ import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
 import {
-  // addCartPayMentTemp,
+  addCartPayMentTemp,
   removeOneCart,
   updateCart,
 } from "../../app/cartSlice";
@@ -44,7 +44,7 @@ const layout = {
 
 function Cart() {
   const { carts, isLoadingCart } = useSelector((state) => state.carts);
-  // const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.token);
   const { vouchers } = useSelector((state) => state.vouchers);
   const { user } = useSelector((state) => state.user);
@@ -96,6 +96,7 @@ function Cart() {
     dispatch(getDataWard({ districtSelect }));
   }, [districtSelect, dispatch]);
 
+  // Check Voucher available for user. If available -> success <-> failure
   const onClickCheckVoucher = async (values) => {
     try {
       // Check voucher exist
@@ -124,6 +125,7 @@ function Cart() {
           timer: 2000,
         });
       } else if (voucherUsed[0].numberCodeRemain <= 0) {
+        // Check number code remaining
         Swal.fire({
           position: "center",
           icon: "error",
@@ -132,16 +134,13 @@ function Cart() {
           timer: 2000,
         });
       } else {
-        // await VoucherAPI.updateVoucherRemain({
-        //   token,
-        //   _id: voucherUsed[0]._id,
-        //   user,
-        // });
+        // Pass validate FE -> check user used voucher in the BE
         const response = await VoucherAPI.checkVoucherUsed({
           token,
           voucherId: voucherUsed[0]._id,
           user,
         });
+        // Pass all validate -> update state
         setVoucherCoupon(voucherUsed[0].valueCode);
         Swal.fire({
           position: "center",
@@ -283,7 +282,29 @@ function Cart() {
   };
 
   const onFinishInformation = (values) => {
-    console.log(values);
+    if (isLoggedIn === false) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please Login or Register to Payment",
+      });
+    } else if (productChoice === 0) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          "You have not selected any products to pay! Please check again !",
+        // showConfirmButton: true,
+        timer: 5000,
+      });
+    }
+    if(values.methodPayment === "cod"){
+      console.log(productCheckOut);
+    }
+    else{
+      console.log("cc")
+    }
+    // dispatch(addCartPayMentTemp(productCheckOut));
   };
 
   const handleOnSelectProvince = (value) => {
@@ -705,6 +726,19 @@ function Cart() {
 
                   <Form.Item name="note" label="Note">
                     <Input.TextArea autoSize={{ minRows: 7, maxRows: 7 }} />
+                  </Form.Item>
+                  <Form.Item name="methodPayment" label="Method Payment">
+                    <Select>
+                      <Select.Option value="cod">
+                        Cash On Delivery
+                      </Select.Option>
+                      <Select.Option value="paypal">
+                        Payment With Paypal
+                      </Select.Option>
+                      <Select.Option value="vnpay">
+                        Payment With VN Pay
+                      </Select.Option>
+                    </Select>
                   </Form.Item>
                   <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 15 }}>
                     <Button type="primary" htmlType="submit">
