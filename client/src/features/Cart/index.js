@@ -307,7 +307,7 @@ function Cart() {
         district: district[0].DistrictName,
         ward: ward[0].WardName
       }
-      console.log(addressDelivery)
+      
     } else {
       console.log("cc");
     }

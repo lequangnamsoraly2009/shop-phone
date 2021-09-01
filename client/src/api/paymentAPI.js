@@ -17,6 +17,32 @@ const PaymentAPI = {
       }
     );
   },
+  createPayment: ({
+    token,
+    cart,
+    paymentID,
+    address,
+    phone,
+    notes,
+    fullNameReceiver,
+    emailReceiver,
+  }) => {
+    return API.post(
+      `/api/payment`,
+      {
+        cart,
+        paymentID,
+        address,
+        phone,
+        notes,
+        fullNameReceiver,
+        emailReceiver,
+      },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
 };
 
 export default PaymentAPI;

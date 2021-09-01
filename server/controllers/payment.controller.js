@@ -102,8 +102,8 @@ const paymentController = {
           .status(400)
           .json({ status: false, message: "User does not exist !" });
 
-      const { cart, paymentID, address, phone, notes } = req.body;
-      const { _id, name, email } = user;
+      const {  cart, paymentID, address, phone, notes, fullNameReceiver, emailReceiver } = req.body;
+      const { _id } = user;
 
       cart.filter((item) => {
         return countSoldAndStorage(
@@ -116,8 +116,8 @@ const paymentController = {
 
       const newPayment = new Payments({
         user_id: _id,
-        name: address.recipient_name,
-        email,
+        name: fullNameReceiver,
+        email: emailReceiver,
         paymentID,
         cart,
         phone,
