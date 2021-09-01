@@ -298,11 +298,18 @@ function Cart() {
         timer: 5000,
       });
     }
-    if(values.methodPayment === "cod"){
-      console.log(productCheckOut);
-    }
-    else{
-      console.log("cc")
+    if (values.methodPayment === "cod") {
+      const province = dataProvince.filter((province) => province.ProvinceID === provinceSelect);
+      const district = dataDistrict.filter((district) => district.DistrictID === districtSelect);
+      const ward = dataWard.filter((ward) => ward.WardCode === wardSelect);
+      const addressDelivery = {
+        province: province[0].ProvinceName,
+        district: district[0].DistrictName,
+        ward: ward[0].WardName
+      }
+      console.log(addressDelivery)
+    } else {
+      console.log("cc");
     }
     // dispatch(addCartPayMentTemp(productCheckOut));
   };
