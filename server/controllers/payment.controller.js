@@ -102,8 +102,24 @@ const paymentController = {
           .status(400)
           .json({ status: false, message: "User does not exist !" });
 
-      const {  cart, methodPayment, address, phone, notes, fullNameReceiver, emailReceiver } = req.body;
+      const {
+        cart,
+        methodPayment,
+        address,
+        phone,
+        notes,
+        fullNameReceiver,
+        emailReceiver,
+        voucherValue,
+        feeShipValue,
+      } = req.body;
       const { _id } = user;
+
+      if(feeShipValue === 0){
+        return res
+          .status(400)
+          .json({ status: false, message: "Please select method delivery!" });
+      }
 
       cart.filter((item) => {
         return countSoldAndStorage(
@@ -123,6 +139,8 @@ const paymentController = {
         phone,
         address,
         notes,
+        voucherValue,
+        feeShipValue,
         key: _id,
       });
       // console.log(newPayment);
@@ -144,6 +162,5 @@ const countSoldAndStorage = async (id, quantity, oldSold, oldStorage) => {
     }
   );
 };
-
 
 module.exports = paymentController;

@@ -25,7 +25,9 @@ const PaymentAPI = {
     notes,
     fullNameReceiver,
     emailReceiver,
-    methodPayment
+    methodPayment,
+    voucherValue,
+    feeShipValue
   }) => {
     return API.post(
       `/api/payment`,
@@ -37,6 +39,8 @@ const PaymentAPI = {
         fullNameReceiver,
         methodPayment,
         emailReceiver,
+        voucherValue,
+        feeShipValue
       },
       {
         headers: { Authorization: token },

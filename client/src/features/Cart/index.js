@@ -330,7 +330,7 @@ function Cart() {
           };
           const { email, methodPayment, nameReceiver, note, numberPhone } =
             values;
-          await PaymentAPI.createPayment({
+          const response = await PaymentAPI.createPayment({
             cart: productCheckOut,
             address: addressDelivery,
             phone: numberPhone,
@@ -338,6 +338,8 @@ function Cart() {
             fullNameReceiver: nameReceiver,
             emailReceiver: email,
             methodPayment,
+            voucherValue: voucherCoupon,
+            feeShipValue: fee,
             token,
           });
           dispatch(removeManyCart(productCheckOut));
@@ -359,7 +361,16 @@ function Cart() {
       } else {
         console.log("cc");
       }
-    } catch (error) {}
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
 
     // dispatch(addCartPayMentTemp(productCheckOut));
   };
@@ -784,7 +795,16 @@ function Cart() {
                   <Form.Item name="note" label="Note">
                     <Input.TextArea autoSize={{ minRows: 7, maxRows: 7 }} />
                   </Form.Item>
-                  <Form.Item name="methodPayment" label="Method Payment">
+                  <Form.Item
+                    name="methodPayment"
+                    label="Method Payment"
+                    rules={[
+                      {
+                        message: "Please select a method payment",
+                        required: true,
+                      },
+                    ]}
+                  >
                     <Select>
                       <Select.Option value="cod">
                         Cash On Delivery

@@ -42,6 +42,15 @@ const paymentSchema = new mongoose.Schema(
     methodPayment:{
       type: String,
       required: true,
+    },
+    voucherValue:{
+      type: Number,
+      default: 0,
+    },
+    feeShipValue:{
+      type: Number,
+      required: true,
+      default: 0,
     }
   },
   { timestamps: true }
