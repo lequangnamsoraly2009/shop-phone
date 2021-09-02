@@ -457,6 +457,13 @@ const userController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  deleteVoucherUsed: async (req, res) => {
+    try {
+      
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  }
 };
 
 const createAccessToken = (user) => {

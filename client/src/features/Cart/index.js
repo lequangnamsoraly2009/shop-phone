@@ -346,7 +346,6 @@ function Cart() {
           dispatch(setProvince(null));
           dispatch(setDistrict(null));
           dispatch(setWard(""));
-
           Swal.fire({
             position: "center",
             icon: "success",

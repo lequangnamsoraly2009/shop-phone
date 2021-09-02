@@ -30,5 +30,6 @@ router.get(
 );
 // Save Voucher For User Here
 router.patch("/save_voucher", auth, userController.saveVoucher);
+router.patch("/delete_voucher", auth, userController.deleteVoucherUsed);
 
 module.exports = router;
