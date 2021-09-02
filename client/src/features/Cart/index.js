@@ -302,43 +302,60 @@ function Cart() {
           // showConfirmButton: true,
           timer: 5000,
         });
-      }
-      if (values.methodPayment === "cod") {
-        const province = dataProvince.filter(
-          (province) => province.ProvinceID === provinceSelect
-        );
-        const district = dataDistrict.filter(
-          (district) => district.DistrictID === districtSelect
-        );
-        const ward = dataWard.filter((ward) => ward.WardCode === wardSelect);
-        const addressDelivery = {
-          province: province[0].ProvinceName,
-          district: district[0].DistrictName,
-          ward: ward[0].WardName,
-        };
-        const { email, methodPayment, nameReceiver, note, numberPhone } =
-          values;
-        await PaymentAPI.createPayment({
-          cart: productCheckOut,
-          address: addressDelivery,
-          phone: numberPhone,
-          notes: note,
-          fullNameReceiver: nameReceiver,
-          emailReceiver: email,
-          methodPayment,
-          token,
-        });
-        dispatch(removeManyCart(productCheckOut));
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "You have successfully placed an order !",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        setTimeout(() => {
-          history.push("/home/cart");
-        }, 3000);
+      } else if (values.methodPayment === "cod") {
+        if (
+          provinceSelect === null ||
+          districtSelect === null ||
+          wardSelect === ""
+        ) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Select full address please !",
+            // showConfirmButton: true,
+            timer: 2000,
+          });
+        } else {
+          const province = dataProvince.filter(
+            (province) => province.ProvinceID === provinceSelect
+          );
+          const district = dataDistrict.filter(
+            (district) => district.DistrictID === districtSelect
+          );
+          const ward = dataWard.filter((ward) => ward.WardCode === wardSelect);
+          const addressDelivery = {
+            province: province[0].ProvinceName,
+            district: district[0].DistrictName,
+            ward: ward[0].WardName,
+          };
+          const { email, methodPayment, nameReceiver, note, numberPhone } =
+            values;
+          await PaymentAPI.createPayment({
+            cart: productCheckOut,
+            address: addressDelivery,
+            phone: numberPhone,
+            notes: note,
+            fullNameReceiver: nameReceiver,
+            emailReceiver: email,
+            methodPayment,
+            token,
+          });
+          dispatch(removeManyCart(productCheckOut));
+          dispatch(setProvince(null));
+          dispatch(setDistrict(null));
+          dispatch(setWard(""));
+
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "You have successfully placed an order !",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          setTimeout(() => {
+            history.push("/home/cart");
+          }, 3000);
+        }
       } else {
         console.log("cc");
       }
