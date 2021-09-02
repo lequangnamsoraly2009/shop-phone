@@ -330,7 +330,7 @@ function Cart() {
           };
           const { email, methodPayment, nameReceiver, note, numberPhone } =
             values;
-          const response = await PaymentAPI.createPayment({
+          await PaymentAPI.createPayment({
             cart: productCheckOut,
             address: addressDelivery,
             phone: numberPhone,
