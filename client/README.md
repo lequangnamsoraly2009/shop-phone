@@ -16,4 +16,9 @@
     - Notification For User (0%)
     - IMPORTANT: DashBoard Load Data Render Two Times (0%)
     - Like - Dislike Of Product Reviews (14-08) (20%)
+    - Voucher Code Has 3 Cases: + Voucher Sale Off With Cash (100%)
+                                + Voucher Sale Off With Percent Of Total Products (0%)
+                                + Voucher Sale Off With Free Ship or Percent (0%)
+    - Change ID Payment in Admin DashBoard (0%)
+    - Accept Pending Payment and Send Mail Receipt For Customer (0%)
     - 
