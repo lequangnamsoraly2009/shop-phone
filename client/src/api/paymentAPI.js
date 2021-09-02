@@ -20,22 +20,22 @@ const PaymentAPI = {
   createPayment: ({
     token,
     cart,
-    paymentID,
     address,
     phone,
     notes,
     fullNameReceiver,
     emailReceiver,
+    methodPayment
   }) => {
     return API.post(
       `/api/payment`,
       {
         cart,
-        paymentID,
         address,
         phone,
         notes,
         fullNameReceiver,
+        methodPayment,
         emailReceiver,
       },
       {

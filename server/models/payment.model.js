@@ -16,7 +16,6 @@ const paymentSchema = new mongoose.Schema(
     },
     paymentID: {
       type: String,
-      required: true,
     },
     phone: {
       type: Number,
@@ -39,6 +38,10 @@ const paymentSchema = new mongoose.Schema(
     },
     key:{
       type: String,
+    },
+    methodPayment:{
+      type: String,
+      required: true,
     }
   },
   { timestamps: true }

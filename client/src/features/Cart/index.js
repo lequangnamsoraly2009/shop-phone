@@ -16,6 +16,7 @@ import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
 import {
   addCartPayMentTemp,
+  removeManyCart,
   removeOneCart,
   updateCart,
 } from "../../app/cartSlice";
@@ -33,6 +34,8 @@ import {
 import AddressAPI from "../../api/addressAPI";
 import moment from "moment";
 import VoucherAPI from "../../api/voucherAPI";
+import PaymentAPI from "../../api/paymentAPI";
+import { useHistory } from "react-router-dom";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -66,6 +69,7 @@ function Cart() {
   const [voucherCoupon, setVoucherCoupon] = useState(0);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     const updateCartToServer = async () => {
@@ -281,36 +285,65 @@ function Cart() {
     dispatch(removeOneCart(idProduct));
   };
 
-  const onFinishInformation = (values) => {
-    if (isLoggedIn === false) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please Login or Register to Payment",
-      });
-    } else if (productChoice === 0) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title:
-          "You have not selected any products to pay! Please check again !",
-        // showConfirmButton: true,
-        timer: 5000,
-      });
-    }
-    if (values.methodPayment === "cod") {
-      const province = dataProvince.filter((province) => province.ProvinceID === provinceSelect);
-      const district = dataDistrict.filter((district) => district.DistrictID === districtSelect);
-      const ward = dataWard.filter((ward) => ward.WardCode === wardSelect);
-      const addressDelivery = {
-        province: province[0].ProvinceName,
-        district: district[0].DistrictName,
-        ward: ward[0].WardName
+  const onFinishInformation = async (values) => {
+    try {
+      if (isLoggedIn === false) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Please Login or Register to Payment",
+        });
+      } else if (productChoice === 0) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title:
+            "You have not selected any products to pay! Please check again !",
+          // showConfirmButton: true,
+          timer: 5000,
+        });
       }
-      
-    } else {
-      console.log("cc");
-    }
+      if (values.methodPayment === "cod") {
+        const province = dataProvince.filter(
+          (province) => province.ProvinceID === provinceSelect
+        );
+        const district = dataDistrict.filter(
+          (district) => district.DistrictID === districtSelect
+        );
+        const ward = dataWard.filter((ward) => ward.WardCode === wardSelect);
+        const addressDelivery = {
+          province: province[0].ProvinceName,
+          district: district[0].DistrictName,
+          ward: ward[0].WardName,
+        };
+        const { email, methodPayment, nameReceiver, note, numberPhone } =
+          values;
+        await PaymentAPI.createPayment({
+          cart: productCheckOut,
+          address: addressDelivery,
+          phone: numberPhone,
+          notes: note,
+          fullNameReceiver: nameReceiver,
+          emailReceiver: email,
+          methodPayment,
+          token,
+        });
+        dispatch(removeManyCart(productCheckOut));
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "You have successfully placed an order !",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        setTimeout(() => {
+          history.push("/home/cart");
+        }, 3000);
+      } else {
+        console.log("cc");
+      }
+    } catch (error) {}
+
     // dispatch(addCartPayMentTemp(productCheckOut));
   };
 
