@@ -8,7 +8,7 @@ import API from "../../../../api/axiosClient";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
-  removeCartPayMentTemp,
+  // removeCartPayMentTemp,
   removeManyCart,
 } from "../../../../app/cartSlice";
 import "./checkout.css";
@@ -39,7 +39,7 @@ function CheckOut() {
       }
     );
     dispatch(removeManyCart(cartPayMentTemp));
-    dispatch(removeCartPayMentTemp());
+    // dispatch(removeCartPayMentTemp());
     Swal.fire({
       position: "center",
       icon: "success",

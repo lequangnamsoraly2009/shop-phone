@@ -9,7 +9,7 @@ export const getCartUser = createAsyncThunk("/carts/getCartUser", async(token)=>
 const initialState = {
   carts: [],
   isLoadingCart: false,
-  cartPayMentTemp: [],
+  // cartPayMentTemp: [],
   addressTemp: {},
 };
 
@@ -50,12 +50,12 @@ const cartSlice = createSlice({
     removeCart: (state, action) => {
       state.carts = [];
     },
-    addCartPayMentTemp: (state, action) => {
-      state.cartPayMentTemp = action.payload;
-    },
-    removeCartPayMentTemp: (state, action) => {
-      state.cartPayMentTemp = [];
-    },
+    // addCartPayMentTemp: (state, action) => {
+    //   state.cartPayMentTemp = action.payload;
+    // },
+    // removeCartPayMentTemp: (state, action) => {
+    //   state.cartPayMentTemp = [];
+    // },
     addAddressTemp: (state, action) => {
       state.addressTemp = action.payload;
     },
@@ -80,8 +80,8 @@ export const {
   updateCart,
   removeOneCart,
   removeManyCart,
-  addCartPayMentTemp,
-  removeCartPayMentTemp,
+  // addCartPayMentTemp,
+  // removeCartPayMentTemp,
   addAddressTemp,
   removeAddressTemp,
 

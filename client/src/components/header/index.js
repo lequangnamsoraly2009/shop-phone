@@ -22,7 +22,7 @@ import {
   getCartUser,
   removeAddressTemp,
   removeCart,
-  removeCartPayMentTemp,
+  // removeCartPayMentTemp,
 } from "../../app/cartSlice";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -72,7 +72,7 @@ function HeaderNav() {
       dispatch(getLogout());
       dispatch(removeToken());
       dispatch(removeCart());
-      dispatch(removeCartPayMentTemp());
+      // dispatch(removeCartPayMentTemp());
       dispatch(removeAddressTemp());
     } catch (error) {
       alert(error.message);
@@ -92,7 +92,7 @@ function HeaderNav() {
       dispatch(getLogout());
       dispatch(removeToken());
       dispatch(removeCart());
-      dispatch(removeCartPayMentTemp());
+      // dispatch(removeCartPayMentTemp());
       dispatch(removeAddressTemp());
       Swal.fire({
         position: "center",

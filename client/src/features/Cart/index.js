@@ -15,7 +15,7 @@ import CartBanner from "./components/CartBanner";
 import CartEmpty from "./components/CartEmpty";
 import "./cart.css";
 import {
-  addCartPayMentTemp,
+  // addCartPayMentTemp,
   removeManyCart,
   removeOneCart,
   updateCart,
