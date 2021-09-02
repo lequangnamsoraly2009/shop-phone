@@ -21,4 +21,4 @@
                                 + Voucher Sale Off With Free Ship or Percent (0%)
     - Change ID Payment in Admin DashBoard (0%)
     - Accept Pending Payment and Send Mail Receipt For Customer (0%)
-    - 
+    - Rebuild Constructor Folder and Function Controller (0%)
