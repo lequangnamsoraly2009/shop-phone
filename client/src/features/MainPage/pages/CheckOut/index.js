@@ -13,37 +13,35 @@ import {
 } from "../../../../app/cartSlice";
 import "./checkout.css";
 import CheckoutInfor from "./inforCheckout";
+import PaymentAPI from "../../../../api/paymentAPI";
 
 function CheckOut() {
   const {informationPaymentPaypal } = useSelector((state) => state.payments)
   // console.log(informationPaymentPaypal)
   const {address,cart,feeShipValue,inforUser,voucherValue} = informationPaymentPaypal
-  console.log(address,cart,feeShipValue,inforUser,voucherValue)
-  const { carts, addressTemp, cartPayMentTemp } = useSelector(
-    (state) => state.carts
-  );
+  const {email,methodPayment,nameReceiver,note,numberPhone} = inforUser;
   const { token } = useSelector((state) => state.token);
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const totalPrice = cartPayMentTemp.reduce((item1, item2) => {
-    return item1 + item2.price * item2.quantity;
-  }, 0);
-
   const tranSuccess = async (payment) => {
-    const { paymentID, address } = payment;
-    const { notes, phone } = addressTemp;
-    await API.post(
-      "/api/payment",
-      { cart: cartPayMentTemp, paymentID, address, phone, notes },
-      {
-        headers: { Authorization: token },
-      }
-    );
-    dispatch(removeManyCart(cartPayMentTemp));
-    // dispatch(removeCartPayMentTemp());
+    const { paymentID} = payment;
+
+    await PaymentAPI.createPayment({
+      cart: cart,
+      address: address,
+      phone: numberPhone,
+      notes: note,
+      fullNameReceiver: nameReceiver,
+      emailReceiver: email,
+      methodPayment,
+      voucherValue: voucherValue,
+      feeShipValue: feeShipValue,
+      token,
+    });
+    dispatch(removeManyCart(cart));
     Swal.fire({
       position: "center",
       icon: "success",
@@ -83,11 +81,11 @@ function CheckOut() {
         </Breadcrumb>
       </div>
       <div>
-        <CheckoutInfor />
+        <CheckoutInfor cart={cart} />
       </div>
       <div className="checkout-steps">
         <div className="steps-action">
-          <PaypalButton total={totalPrice + 10} tranSuccess={tranSuccess} />
+          <PaypalButton total={1+ 10} tranSuccess={tranSuccess} />
         </div>
       </div>
     </div>

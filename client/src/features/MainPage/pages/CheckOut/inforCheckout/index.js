@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import "./inforCheckout.css";
 
-function CheckoutInfor() {
+function CheckoutInfor({cart}) {
   const { cartPayMentTemp } = useSelector((state) => state.carts);
   // const shipCode = Math.floor(Math.random() * 20);
 //   console.log(cartPayMentTemp);
