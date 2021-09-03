@@ -581,8 +581,9 @@ function Cart() {
       key: "totalPrice",
       render: (text, record, index) => (
         <span>
-          {Math.floor(record.price - record.price * (record.sale / 100)) *
-            record.quantity}{" "}
+          {Math.round(
+            record.price - record.price * (record.sale / 100)
+          ).toFixed(2) * record.quantity}{" "}
           $
         </span>
       ),
@@ -608,7 +609,9 @@ function Cart() {
       const totalPrice = selectedRows.reduce((item1, item2) => {
         return (
           item1 +
-          Math.floor(item2.price - item2.price * (item2.sale / 100)) *
+          Math.round(item2.price - item2.price * (item2.sale / 100)).toFixed(
+            2
+          ) *
             item2.quantity
         );
       }, 0);

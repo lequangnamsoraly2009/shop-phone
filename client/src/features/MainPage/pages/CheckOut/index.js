@@ -28,9 +28,17 @@ function CheckOut() {
 
   const dispatch = useDispatch();
 
-  console.log(informationPaymentPaypal);
-
   const history = useHistory();
+
+  const totalPrice = cart.reduce((item1, item2) => {
+    return (
+      item1 +
+      Math.round(
+        item2.price * item2.quantity -
+          (item2.price * item2.quantity * item2.sale) / 100
+      ).toFixed(2)
+    );
+  }, 0);
 
   const tranSuccess = async (payment) => {
     await PaymentAPI.createPayment({
@@ -100,11 +108,14 @@ function CheckOut() {
         </Breadcrumb>
       </div>
       <div>
-        <CheckoutInfor cart={cart} />
+        <CheckoutInfor informationPaymentPaypal={informationPaymentPaypal} />
       </div>
       <div className="checkout-steps">
         <div className="steps-action">
-          <PaypalButton total={1 + 10} tranSuccess={tranSuccess} />
+          <PaypalButton
+            total={Number(totalPrice) + Number(feeShipValue) + voucherValue}
+            tranSuccess={tranSuccess}
+          />
         </div>
       </div>
     </div>

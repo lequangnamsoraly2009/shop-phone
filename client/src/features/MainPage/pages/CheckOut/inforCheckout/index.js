@@ -1,15 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import "./inforCheckout.css";
 
-function CheckoutInfor({cart}) {
-  const { cartPayMentTemp } = useSelector((state) => state.carts);
-  // const shipCode = Math.floor(Math.random() * 20);
-//   console.log(cartPayMentTemp);
-// console.log(addressTemp.address.length )
+function CheckoutInfor({ informationPaymentPaypal }) {
+  const { cart, feeShipValue, voucherValue } = informationPaymentPaypal;
 
-  const totalCart = cartPayMentTemp.reduce((item1, item2) => {
-    return item1 + item2.price * item2.quantity;
+  const totalPrice = cart.reduce((item1, item2) => {
+    return (
+      item1 +
+      Math.round(
+        item2.price * item2.quantity -
+          (item2.price * item2.quantity * item2.sale) / 100
+      ).toFixed(2)
+    );
   }, 0);
 
   return (
@@ -19,7 +21,7 @@ function CheckoutInfor({cart}) {
       </div>
       <div className="checkout-content">
         <div className="checkout-price">
-          {cartPayMentTemp.map((item) => (
+          {cart.map((item) => (
             <div key={item._id} className="checkout-col">
               <span style={{ textTransform: "capitalize" }}>
                 {item.title}
@@ -28,22 +30,26 @@ function CheckoutInfor({cart}) {
                 </span>
               </span>
               <span style={{ color: "rgb(25,144,255)" }}>
-                {item.price * item.quantity} $
+                {Math.round(
+                  item.price * item.quantity -
+                    (item.price * item.quantity * item.sale) / 100
+                ).toFixed(2)}{" "}
+                $
               </span>
             </div>
           ))}
           <div className="checkout-col">
-            <span>Shipping COD:</span>
-            <span>{10} $</span>
+            <span>Fee Shipping: </span>
+            <span>{feeShipValue} $</span>
           </div>
           <div className="checkout-col">
             <span>Voucher Gift:</span>
-            <span>{10} $</span>
+            <span>{voucherValue} $</span>
           </div>
           <div className="checkout-col ">
             <span>Order Total:</span>
             <span style={{ color: "rgb(247,69,46)" }}>
-              {totalCart + 10} $
+              {Number(totalPrice) + Number(feeShipValue) + voucherValue} $
             </span>
           </div>
         </div>
