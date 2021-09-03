@@ -345,8 +345,12 @@ function Cart() {
             feeShipValue: fee,
             token,
           });
-
           await UserAPI.deleteVoucherSave({ token, voucher: voucherUsed });
+          await VoucherAPI.updateVoucherRemain({
+            token,
+            _id: voucherUsed._id,
+            user,
+          });
           dispatch(removeManyCart(productCheckOut));
           dispatch(setProvince(null));
           dispatch(setDistrict(null));
