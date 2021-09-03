@@ -9,8 +9,6 @@ function HistoryCustomer() {
   const { history } = useSelector((state) => state.histories);
   const { token } = useSelector((state) => state.token);
 
-  console.log(history);
-
   const dispatch = useDispatch();
 
   useEffect(() => {

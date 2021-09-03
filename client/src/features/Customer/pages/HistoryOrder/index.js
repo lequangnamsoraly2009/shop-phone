@@ -9,7 +9,7 @@ function HistoryOrder() {
   const params = useParams();
   const [orderDetail, setOrderDetail] = useState({});
   const { history } = useSelector((state) => state.histories);
-  console.log(history)
+  console.log(history);
   useEffect(() => {
     history.forEach((item) => {
       if (item._id === params.id) {
@@ -31,8 +31,8 @@ function HistoryOrder() {
       </div>
       <div className="order-header">
         <h3 style={{ fontWeight: 300, fontSize: 20 }}>
-          {`Order details #${orderDetail.paymentID?.split("-")[1]}`} -{" "}
-          <strong>Delivery Success</strong>
+          {`Order details #${orderDetail._id}`} -{" "}
+          <strong>Delivery {orderDetail.status}</strong>
         </h3>
       </div>
       <div className="order-date-delivery">
@@ -58,9 +58,8 @@ function HistoryOrder() {
                 <span style={{ color: "#000", fontWeight: 800 }}>
                   Address:{" "}
                 </span>
-                {orderDetail.address?.line1} - {orderDetail.address?.city} -{" "}
-                {orderDetail.address?.state} -{" "}
-                {orderDetail.address?.country_code}
+                {orderDetail.address.ward} - {orderDetail.address.district} -{" "}
+                {orderDetail.address.province}
               </span>
               {orderDetail.phone === "" || orderDetail.phone === undefined ? (
                 <span>
@@ -75,28 +74,48 @@ function HistoryOrder() {
               )}
               <span>
                 <span style={{ color: "#000", fontWeight: 800 }}>Name: </span>
-                {orderDetail.address?.recipient_name}
+                {orderDetail.name}
               </span>
             </div>
             <div className="order-infor-delivery">
-              <span>
+              <span style={{ textTransform: "capitalize" }}>
                 <span
                   style={{ color: "#000", fontWeight: 800, marginRight: 5 }}
                 >
                   Delivery Method:
                 </span>
-                Economical delivery
+                {orderDetail.methodPayment}
               </span>
               <span>
                 <span style={{ color: "red", fontWeight: 800, marginRight: 5 }}>
-                  Ship:
+                  Fee Ship:
                 </span>
-                10.0 $
+                {orderDetail.feeShipValue} $
+              </span>
+              <span>
+                <span
+                  style={{ color: "blue", fontWeight: 800, marginRight: 5 }}
+                >
+                  Gift Voucher:
+                </span>
+                {orderDetail.voucherValue} $
               </span>
             </div>
             <div className="order-infor-status">
               <span style={{ color: "#000", fontWeight: 800 }}>Status: </span>
-              <span style={{ color: "green" }}>Delivery Success</span>
+              {orderDetail.status === "Pending" ? (
+                <span style={{ color: "red" }}>
+                  Delivery {orderDetail.status}
+                </span>
+              ) : orderDetail.status === "Success" ? (
+                <span style={{ color: "green" }}>
+                  Delivery {orderDetail.status}
+                </span>
+              ) : (
+                <span style={{ color: "gray" }}>
+                  Delivery {orderDetail.status}
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -165,7 +184,13 @@ function HistoryOrder() {
           Your Notes For Shop:
         </span>
         {orderDetail.notes === "" || orderDetail.notes === undefined ? (
-          <span>(VietNamese Admin Said) <i>Bạn có notes lại cái gì cho Shop đâu mà bây giờ chui vô đây đọc </i>😭</span>
+          <span>
+            (VietNamese Admin Said){" "}
+            <i>
+              Bạn có notes lại cái gì cho Shop đâu mà bây giờ chui vô đây đọc{" "}
+            </i>
+            😭
+          </span>
         ) : (
           <span>
             <i>{orderDetail.notes}</i>
