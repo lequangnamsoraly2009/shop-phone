@@ -9,7 +9,11 @@ export const columnTable = [
     render: (text, record, index) => (
       <div className="order-table-product">
         <a href={`/detail/${record._id}`} className="order-table-img">
-          <img src={record.images.url} alt={record.images.public_id} style={{height: 100, width: 100, objectFit:"scale-down"}} />
+          <img
+            src={record.images.url}
+            alt={record.images.public_id}
+            style={{ height: 100, width: 100, objectFit: "scale-down" }}
+          />
         </a>
         <div className="order-table-info">
           <a href={`/detail/${record._id}`}>
@@ -24,6 +28,7 @@ export const columnTable = [
         </div>
       </div>
     ),
+    align: "center",
   },
   {
     title: "Price",
@@ -31,6 +36,7 @@ export const columnTable = [
     key: "price",
     width: 200,
     render: (text, record, index) => <span>{record.price} $</span>,
+    align: "center",
   },
   {
     title: "Quantity",
@@ -38,6 +44,7 @@ export const columnTable = [
     key: "quantity",
     width: 150,
     render: (text, record, index) => <span>{record.quantity}</span>,
+    align: "center",
   },
   {
     title: "Sale",
@@ -45,6 +52,7 @@ export const columnTable = [
     dataIndex: "sale",
     width: 200,
     render: (text, record, index) => <span>{record.sale} %</span>,
+    align: "center",
   },
   {
     title: "Provisional",
@@ -61,5 +69,6 @@ export const columnTable = [
           $
         </span>
       ),
+    align: "center",
   },
 ];

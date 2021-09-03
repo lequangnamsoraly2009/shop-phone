@@ -9,7 +9,6 @@ function HistoryOrder() {
   const params = useParams();
   const [orderDetail, setOrderDetail] = useState({});
   const { history } = useSelector((state) => state.histories);
-  console.log(history);
   useEffect(() => {
     history.forEach((item) => {
       if (item._id === params.id) {
@@ -58,8 +57,8 @@ function HistoryOrder() {
                 <span style={{ color: "#000", fontWeight: 800 }}>
                   Address:{" "}
                 </span>
-                {orderDetail.address.ward} - {orderDetail.address.district} -{" "}
-                {orderDetail.address.province}
+                {orderDetail.address?.ward} - {orderDetail.address?.district} -{" "}
+                {orderDetail.address?.province}
               </span>
               {orderDetail.phone === "" || orderDetail.phone === undefined ? (
                 <span>
