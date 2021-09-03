@@ -35,6 +35,17 @@ const UserAPI = {
       }
     );
   },
+  deleteVoucherSave: ({ token, voucher }) => {
+    return API.patch(
+      `/users/delete_voucher`,
+      {
+        voucher,
+      },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  }
 };
 
 export default UserAPI;

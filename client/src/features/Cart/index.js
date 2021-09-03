@@ -36,6 +36,7 @@ import moment from "moment";
 import VoucherAPI from "../../api/voucherAPI";
 import PaymentAPI from "../../api/paymentAPI";
 import { useHistory } from "react-router-dom";
+import UserAPI from "../../api/userAPI";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -67,6 +68,7 @@ function Cart() {
   const [fee, setFee] = useState(0);
   const [isFee, setIsFee] = useState(false);
   const [voucherCoupon, setVoucherCoupon] = useState(0);
+  const [voucherUsed, setVoucherUsed] = useState({});
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -146,6 +148,7 @@ function Cart() {
         });
         // Pass all validate -> update state
         setVoucherCoupon(voucherUsed[0].valueCode);
+        setVoucherUsed(voucherUsed[0]);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -342,6 +345,8 @@ function Cart() {
             feeShipValue: fee,
             token,
           });
+
+          await UserAPI.deleteVoucherSave({ token, voucher: voucherUsed });
           dispatch(removeManyCart(productCheckOut));
           dispatch(setProvince(null));
           dispatch(setDistrict(null));
