@@ -86,15 +86,16 @@ function HistoryCustomer() {
                 record.cart.reduce((item1, item2) => {
                   return (
                     item1 +
+                    item2.price * item2.quantity -
                     Math.round(
-                      item2.price * item2.quantity -
-                        (item2.price * item2.quantity * item2.sale) / 100
+                      (item2.price * item2.quantity * item2.sale) / 100
                     ).toFixed(2)
                   );
                 }, 0)
-              ) +
+              ) -
                 Number(record.voucherValue) +
-                Number(record.feeShipValue)} $
+                Number(record.feeShipValue)}{" "}
+              $
             </span>
           }
         </>
