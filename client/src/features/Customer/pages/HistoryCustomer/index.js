@@ -9,6 +9,8 @@ function HistoryCustomer() {
   const { history } = useSelector((state) => state.histories);
   const { token } = useSelector((state) => state.token);
 
+  console.log(history);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,7 +24,7 @@ function HistoryCustomer() {
       key: "paymentID",
       render: (text, record, index) => (
         <Link to={`/customer/history/${record._id}`} style={{ fontSize: 12 }}>
-          {record.paymentID.split("-")[1]}
+          {record._id}
         </Link>
       ),
       width: 300,
@@ -82,9 +84,19 @@ function HistoryCustomer() {
         <>
           {
             <span style={{ fontSize: 12 }}>
-              {record.cart.reduce((item1, item2) => {
-                return item1 + item2.price * item2.quantity;
-              }, 0)}
+              {Number(
+                record.cart.reduce((item1, item2) => {
+                  return (
+                    item1 +
+                    Math.round(
+                      item2.price * item2.quantity -
+                        (item2.price * item2.quantity * item2.sale) / 100
+                    ).toFixed(2)
+                  );
+                }, 0)
+              ) +
+                Number(record.voucherValue) +
+                Number(record.feeShipValue)} $
             </span>
           }
         </>
@@ -95,9 +107,14 @@ function HistoryCustomer() {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (text) => (
-        <span style={{ fontSize: 12, color: "green" }}>Success</span>
-      ),
+      render: (text, record, index) =>
+        record.status === "Pending" ? (
+          <span style={{ fontSize: 12, color: "red" }}>{record.status}</span>
+        ) : record.status === "Success" ? (
+          <span style={{ fontSize: 12, color: "green" }}>{record.status}</span>
+        ) : (
+          <span style={{ fontSize: 12, color: "gray" }}>{record.status}</span>
+        ),
       width: 140,
     },
   ];

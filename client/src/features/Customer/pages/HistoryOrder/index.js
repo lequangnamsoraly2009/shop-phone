@@ -9,8 +9,7 @@ function HistoryOrder() {
   const params = useParams();
   const [orderDetail, setOrderDetail] = useState({});
   const { history } = useSelector((state) => state.histories);
-  console.log(orderDetail);
-
+  console.log(history)
   useEffect(() => {
     history.forEach((item) => {
       if (item._id === params.id) {
