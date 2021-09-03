@@ -72,7 +72,6 @@ function Cart() {
   const [voucherUsed, setVoucherUsed] = useState({});
   const [changeButtonPay, setChangeButtonPay] = useState("cod");
 
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -367,6 +366,67 @@ function Cart() {
           });
           setTimeout(() => {
             history.push("/home/cart");
+          }, 3000);
+        }
+      } else if (values.methodPayment === "paypal") {
+        if (
+          provinceSelect === null ||
+          districtSelect === null ||
+          wardSelect === ""
+        ) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Select full address please !",
+            // showConfirmButton: true,
+            timer: 2000,
+          });
+        } else {
+          const province = dataProvince.filter(
+            (province) => province.ProvinceID === provinceSelect
+          );
+          const district = dataDistrict.filter(
+            (district) => district.DistrictID === districtSelect
+          );
+          const ward = dataWard.filter((ward) => ward.WardCode === wardSelect);
+          const addressDelivery = {
+            province: province[0].ProvinceName,
+            district: district[0].DistrictName,
+            ward: ward[0].WardName,
+          };
+          const { email, methodPayment, nameReceiver, note, numberPhone } =
+            values;
+          // await PaymentAPI.createPayment({
+          //   cart: productCheckOut,
+          //   address: addressDelivery,
+          //   phone: numberPhone,
+          //   notes: note,
+          //   fullNameReceiver: nameReceiver,
+          //   emailReceiver: email,
+          //   methodPayment,
+          //   voucherValue: voucherCoupon,
+          //   feeShipValue: fee,
+          //   token,
+          // });
+          // await UserAPI.deleteVoucherSave({ token, voucher: voucherUsed });
+          // await VoucherAPI.updateVoucherRemain({
+          //   token,
+          //   _id: voucherUsed._id,
+          //   user,
+          // });
+          // dispatch(removeManyCart(productCheckOut));
+          // dispatch(setProvince(null));
+          // dispatch(setDistrict(null));
+          // dispatch(setWard(""));
+          // Swal.fire({
+          //   position: "center",
+          //   icon: "success",
+          //   title: "You have successfully placed an order !",
+          //   showConfirmButton: false,
+          //   timer: 3000,
+          // });
+          setTimeout(() => {
+            history.push("/home/checkout");
           }, 3000);
         }
       } else {
@@ -831,7 +891,7 @@ function Cart() {
                   <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 15 }}>
                     {changeButtonPay === "paypal" ? (
                       <Button type="primary" htmlType="submit">
-                        <PaypalButton total={0 + 10} tranSuccess />
+                       Pay With Paypal
                       </Button>
                     ) : changeButtonPay === "vnpay" ? (
                       <Button type="primary" htmlType="submit">

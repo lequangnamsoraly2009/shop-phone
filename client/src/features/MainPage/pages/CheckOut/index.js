@@ -1,4 +1,4 @@
-import { Breadcrumb} from "antd";
+import { Breadcrumb } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import AddressShipping from "./components/addressShip";
@@ -12,6 +12,7 @@ import {
   removeManyCart,
 } from "../../../../app/cartSlice";
 import "./checkout.css";
+import CheckoutInfor from "./inforCheckout";
 
 function CheckOut() {
   const { carts, addressTemp, cartPayMentTemp } = useSelector(
@@ -26,7 +27,6 @@ function CheckOut() {
   const totalPrice = cartPayMentTemp.reduce((item1, item2) => {
     return item1 + item2.price * item2.quantity;
   }, 0);
-
 
   const tranSuccess = async (payment) => {
     const { paymentID, address } = payment;
@@ -74,6 +74,9 @@ function CheckOut() {
             Check Out
           </Breadcrumb.Item>
         </Breadcrumb>
+      </div>
+      <div>
+        <CheckoutInfor />
       </div>
       <div className="checkout-steps">
         <div className="steps-action">
