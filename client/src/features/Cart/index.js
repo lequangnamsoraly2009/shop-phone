@@ -38,6 +38,7 @@ import PaymentAPI from "../../api/paymentAPI";
 import { useHistory } from "react-router-dom";
 import UserAPI from "../../api/userAPI";
 import PaypalButton from "../MainPage/pages/CheckOut/PaypalButton";
+import { setInformationPaymentPaypal } from "../../app/paymentSlice";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -394,8 +395,18 @@ function Cart() {
             district: district[0].DistrictName,
             ward: ward[0].WardName,
           };
-          const { email, methodPayment, nameReceiver, note, numberPhone } =
-            values;
+          const informationCheckout = {
+            address: addressDelivery,
+            inforUser: values,
+            cart: productCheckOut,
+            voucherValue: voucherCoupon,
+            feeShipValue: fee,
+          };
+          dispatch(setInformationPaymentPaypal(informationCheckout));
+          dispatch(removeManyCart(productCheckOut));
+          dispatch(setProvince(null));
+          dispatch(setDistrict(null));
+          dispatch(setWard(""));
           // await PaymentAPI.createPayment({
           //   cart: productCheckOut,
           //   address: addressDelivery,
@@ -891,7 +902,7 @@ function Cart() {
                   <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 15 }}>
                     {changeButtonPay === "paypal" ? (
                       <Button type="primary" htmlType="submit">
-                       Pay With Paypal
+                        Pay With Paypal
                       </Button>
                     ) : changeButtonPay === "vnpay" ? (
                       <Button type="primary" htmlType="submit">

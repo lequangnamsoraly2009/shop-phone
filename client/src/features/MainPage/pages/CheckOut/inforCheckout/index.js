@@ -36,6 +36,10 @@ function CheckoutInfor() {
             <span>Shipping COD:</span>
             <span>{10} $</span>
           </div>
+          <div className="checkout-col">
+            <span>Voucher Gift:</span>
+            <span>{10} $</span>
+          </div>
           <div className="checkout-col ">
             <span>Order Total:</span>
             <span style={{ color: "rgb(247,69,46)" }}>

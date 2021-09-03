@@ -15,6 +15,10 @@ import "./checkout.css";
 import CheckoutInfor from "./inforCheckout";
 
 function CheckOut() {
+  const {informationPaymentPaypal } = useSelector((state) => state.payments)
+  // console.log(informationPaymentPaypal)
+  const {address,cart,feeShipValue,inforUser,voucherValue} = informationPaymentPaypal
+  console.log(address,cart,feeShipValue,inforUser,voucherValue)
   const { carts, addressTemp, cartPayMentTemp } = useSelector(
     (state) => state.carts
   );
@@ -52,26 +56,29 @@ function CheckOut() {
     }, 3000);
   };
 
-  useEffect(() => {
-    const updateCartToServer = async () => {
-      await API.patch(
-        "/users/addcart",
-        { cart: [...carts] },
-        {
-          headers: { Authorization: token },
-        }
-      );
-    };
-    updateCartToServer();
-  }, [carts, token]);
+  // useEffect(() => {
+  //   const updateCartToServer = async () => {
+  //     await API.patch(
+  //       "/users/addcart",
+  //       { cart: [...carts] },
+  //       {
+  //         headers: { Authorization: token },
+  //       }
+  //     );
+  //   };
+  //   updateCartToServer();
+  // }, [carts, token]);
 
   return (
     <div className="container-fluid">
       <div className="breadcumb-wrapper">
         <Breadcrumb separator=">">
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+          <Breadcrumb.Item href="/home/cart" style={{ textTransform: "capitalize" }}>
+            Cart
+          </Breadcrumb.Item>
           <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
-            Check Out
+            Check Out With PayPal
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>

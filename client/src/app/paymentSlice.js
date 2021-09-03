@@ -13,6 +13,7 @@ const initialState = {
   payments: [],
   searchPayments: "",
   paginationPayments: [],
+  informationPaymentPaypal: {},
 };
 
 const paymentSlice = createSlice({
@@ -28,6 +29,9 @@ const paymentSlice = createSlice({
     setPaginationPayments: (state, action) => {
       state.paginationPayments = action.payload;
     },
+    setInformationPaymentPaypal: (state, action) => {
+      state.informationPaymentPaypal = action.payload;
+    }
   },
   extraReducers: {
     [getAllPayments.fulfilled]: (state, action) => {
@@ -39,7 +43,7 @@ const paymentSlice = createSlice({
 
 const { actions, reducer } = paymentSlice;
 
-export const { getPayments, setSearchPayments, setPaginationPayments } =
+export const { getPayments, setSearchPayments, setPaginationPayments, setInformationPaymentPaypal } =
   actions;
 
 export default reducer;
