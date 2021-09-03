@@ -37,7 +37,6 @@ import VoucherAPI from "../../api/voucherAPI";
 import PaymentAPI from "../../api/paymentAPI";
 import { useHistory } from "react-router-dom";
 import UserAPI from "../../api/userAPI";
-import PaypalButton from "../MainPage/pages/CheckOut/PaypalButton";
 import { setInformationPaymentPaypal } from "../../app/paymentSlice";
 
 const { Search } = Input;
@@ -396,6 +395,7 @@ function Cart() {
             ward: ward[0].WardName,
           };
           const informationCheckout = {
+            voucherUsed: voucherUsed,
             address: addressDelivery,
             inforUser: values,
             cart: productCheckOut,
@@ -403,10 +403,9 @@ function Cart() {
             feeShipValue: fee,
           };
           dispatch(setInformationPaymentPaypal(informationCheckout));
-          dispatch(removeManyCart(productCheckOut));
-          dispatch(setProvince(null));
-          dispatch(setDistrict(null));
-          dispatch(setWard(""));
+          // dispatch(setProvince(null));
+          // dispatch(setDistrict(null));
+          // dispatch(setWard(""));
           // await PaymentAPI.createPayment({
           //   cart: productCheckOut,
           //   address: addressDelivery,

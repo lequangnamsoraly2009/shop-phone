@@ -113,6 +113,8 @@ const paymentController = {
         voucherValue,
         feeShipValue,
       } = req.body;
+
+      console.log(req.body)
       const { _id } = user;
 
       if(feeShipValue === 0){

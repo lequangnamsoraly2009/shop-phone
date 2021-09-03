@@ -1,10 +1,9 @@
 import { Breadcrumb } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import AddressShipping from "./components/addressShip";
 // import CheckoutInfor from "./components/inforCheckout";
 import PaypalButton from "./PaypalButton";
-import API from "../../../../api/axiosClient";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
@@ -14,21 +13,26 @@ import {
 import "./checkout.css";
 import CheckoutInfor from "./inforCheckout";
 import PaymentAPI from "../../../../api/paymentAPI";
+import UserAPI from "../../../../api/userAPI";
+import VoucherAPI from "../../../../api/voucherAPI";
+// import { setInformationPaymentPaypal } from "../../../../app/paymentSlice";
 
 function CheckOut() {
-  const {informationPaymentPaypal } = useSelector((state) => state.payments)
-  // console.log(informationPaymentPaypal)
-  const {address,cart,feeShipValue,inforUser,voucherValue} = informationPaymentPaypal
-  const {email,methodPayment,nameReceiver,note,numberPhone} = inforUser;
+  const { informationPaymentPaypal } = useSelector((state) => state.payments);
   const { token } = useSelector((state) => state.token);
+  const { user } = useSelector((state) => state.user);
+  // console.log(informationPaymentPaypal)
+  const { address, cart, feeShipValue, inforUser, voucherValue, voucherUsed } =
+    informationPaymentPaypal;
+  const { email, methodPayment, nameReceiver, note, numberPhone } = inforUser;
 
   const dispatch = useDispatch();
+
+  console.log(informationPaymentPaypal);
 
   const history = useHistory();
 
   const tranSuccess = async (payment) => {
-    const { paymentID} = payment;
-
     await PaymentAPI.createPayment({
       cart: cart,
       address: address,
@@ -41,7 +45,19 @@ function CheckOut() {
       feeShipValue: feeShipValue,
       token,
     });
+    const check = user.vouchersSave.filter(
+      (voucher) => voucher._id === voucherUsed._id
+    );
+    if (check.length > 0) {
+      await UserAPI.deleteVoucherSave({ token, voucher: voucherUsed });
+    }
+    await VoucherAPI.updateVoucherRemain({
+      token,
+      _id: voucherUsed._id,
+      user,
+    });
     dispatch(removeManyCart(cart));
+    // dispatch(setInformationPaymentPaypal({}));
     Swal.fire({
       position: "center",
       icon: "success",
@@ -72,7 +88,10 @@ function CheckOut() {
       <div className="breadcumb-wrapper">
         <Breadcrumb separator=">">
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-          <Breadcrumb.Item href="/home/cart" style={{ textTransform: "capitalize" }}>
+          <Breadcrumb.Item
+            href="/home/cart"
+            style={{ textTransform: "capitalize" }}
+          >
             Cart
           </Breadcrumb.Item>
           <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
@@ -85,7 +104,7 @@ function CheckOut() {
       </div>
       <div className="checkout-steps">
         <div className="steps-action">
-          <PaypalButton total={1+ 10} tranSuccess={tranSuccess} />
+          <PaypalButton total={1 + 10} tranSuccess={tranSuccess} />
         </div>
       </div>
     </div>
