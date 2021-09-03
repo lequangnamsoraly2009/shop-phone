@@ -70,7 +70,8 @@ function Cart() {
   const [isFee, setIsFee] = useState(false);
   const [voucherCoupon, setVoucherCoupon] = useState(0);
   const [voucherUsed, setVoucherUsed] = useState({});
-  const [changeButtonPay, setChangeButtonPay] = useState(0);
+  const [changeButtonPay, setChangeButtonPay] = useState("cod");
+
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -815,30 +816,24 @@ function Cart() {
                       },
                     ]}
                   >
-                    <Select>
+                    <Select onSelect={(value) => setChangeButtonPay(value)}>
                       <Select.Option value="cod">
                         Cash On Delivery
                       </Select.Option>
-                      <Select.Option
-                        value="paypal"
-                        onClick={() => setChangeButtonPay(1)}
-                      >
+                      <Select.Option value="paypal">
                         Payment With Paypal
                       </Select.Option>
-                      <Select.Option
-                        value="vnpay"
-                        onClick={() => setChangeButtonPay(2)}
-                      >
+                      <Select.Option value="vnpay">
                         Payment With VN Pay
                       </Select.Option>
                     </Select>
                   </Form.Item>
                   <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 15 }}>
-                    {changeButtonPay === 1 ? (
+                    {changeButtonPay === "paypal" ? (
                       <Button type="primary" htmlType="submit">
                         <PaypalButton total={0 + 10} tranSuccess />
                       </Button>
-                    ) : changeButtonPay === 2 ? (
+                    ) : changeButtonPay === "vnpay" ? (
                       <Button type="primary" htmlType="submit">
                         Pay With VNPay
                       </Button>
