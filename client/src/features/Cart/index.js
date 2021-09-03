@@ -357,6 +357,7 @@ function Cart() {
           dispatch(setProvince(null));
           dispatch(setDistrict(null));
           dispatch(setWard(""));
+          dispatch(setDataFee([]));
           Swal.fire({
             position: "center",
             icon: "success",
@@ -403,9 +404,10 @@ function Cart() {
             feeShipValue: fee,
           };
           dispatch(setInformationPaymentPaypal(informationCheckout));
-          // dispatch(setProvince(null));
-          // dispatch(setDistrict(null));
-          // dispatch(setWard(""));
+          dispatch(setProvince(null));
+          dispatch(setDistrict(null));
+          dispatch(setWard(""));
+          dispatch(setDataFee([]));
           // await PaymentAPI.createPayment({
           //   cart: productCheckOut,
           //   address: addressDelivery,
