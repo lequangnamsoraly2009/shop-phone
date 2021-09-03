@@ -409,7 +409,7 @@ function Cart() {
           }, 3000);
         }
       } else {
-        console.log("cc");
+        // Dành cho VNPay
       }
     } catch (error) {
       Swal.fire({
@@ -421,8 +421,6 @@ function Cart() {
         timer: 3000,
       });
     }
-
-    // dispatch(addCartPayMentTemp(productCheckOut));
   };
 
   const handleOnSelectProvince = (value) => {
@@ -442,26 +440,6 @@ function Cart() {
     dispatch(setWard(value));
     setIsFee(false);
   };
-
-  // const sendPayMentCart = () => {
-  //   if (isLoggedIn === false) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Oops...",
-  //       text: "Please Login or Register to Payment",
-  //     });
-  //   } else if (productChoice === 0) {
-  //     Swal.fire({
-  //       position: "center",
-  //       icon: "error",
-  //       title:
-  //         "You have not selected any products to pay! Please check again !",
-  //       // showConfirmButton: true,
-  //       timer: 5000,
-  //     });
-  //   }
-  //   dispatch(addCartPayMentTemp(productCheckOut));
-  // };
 
   if (isLoadingCart === true) {
     return <div>Loading</div>;

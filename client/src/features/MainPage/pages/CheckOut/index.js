@@ -10,7 +10,7 @@ import CheckoutInfor from "./inforCheckout";
 import PaymentAPI from "../../../../api/paymentAPI";
 import UserAPI from "../../../../api/userAPI";
 import VoucherAPI from "../../../../api/voucherAPI";
-import { setInformationPaymentPaypal } from "../../../../app/paymentSlice";
+// import { setInformationPaymentPaypal } from "../../../../app/paymentSlice";
 import {
   setDataFee,
   setDistrict,
