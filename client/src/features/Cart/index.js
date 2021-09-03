@@ -404,39 +404,6 @@ function Cart() {
             feeShipValue: fee,
           };
           dispatch(setInformationPaymentPaypal(informationCheckout));
-          dispatch(setProvince(null));
-          dispatch(setDistrict(null));
-          dispatch(setWard(""));
-          dispatch(setDataFee([]));
-          // await PaymentAPI.createPayment({
-          //   cart: productCheckOut,
-          //   address: addressDelivery,
-          //   phone: numberPhone,
-          //   notes: note,
-          //   fullNameReceiver: nameReceiver,
-          //   emailReceiver: email,
-          //   methodPayment,
-          //   voucherValue: voucherCoupon,
-          //   feeShipValue: fee,
-          //   token,
-          // });
-          // await UserAPI.deleteVoucherSave({ token, voucher: voucherUsed });
-          // await VoucherAPI.updateVoucherRemain({
-          //   token,
-          //   _id: voucherUsed._id,
-          //   user,
-          // });
-          // dispatch(removeManyCart(productCheckOut));
-          // dispatch(setProvince(null));
-          // dispatch(setDistrict(null));
-          // dispatch(setWard(""));
-          // Swal.fire({
-          //   position: "center",
-          //   icon: "success",
-          //   title: "You have successfully placed an order !",
-          //   showConfirmButton: false,
-          //   timer: 3000,
-          // });
           setTimeout(() => {
             history.push("/home/checkout");
           }, 3000);

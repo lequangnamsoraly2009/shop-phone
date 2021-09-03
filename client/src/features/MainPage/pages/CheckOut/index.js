@@ -1,21 +1,22 @@
 import { Breadcrumb } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import AddressShipping from "./components/addressShip";
-// import CheckoutInfor from "./components/inforCheckout";
 import PaypalButton from "./PaypalButton";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-import {
-  // removeCartPayMentTemp,
-  removeManyCart,
-} from "../../../../app/cartSlice";
+import { removeManyCart } from "../../../../app/cartSlice";
 import "./checkout.css";
 import CheckoutInfor from "./inforCheckout";
 import PaymentAPI from "../../../../api/paymentAPI";
 import UserAPI from "../../../../api/userAPI";
 import VoucherAPI from "../../../../api/voucherAPI";
-// import { setInformationPaymentPaypal } from "../../../../app/paymentSlice";
+import { setInformationPaymentPaypal } from "../../../../app/paymentSlice";
+import {
+  setDataFee,
+  setDistrict,
+  setProvince,
+  setWard,
+} from "../../../../app/addressSlice";
 
 function CheckOut() {
   const { informationPaymentPaypal } = useSelector((state) => state.payments);
@@ -59,12 +60,18 @@ function CheckOut() {
     if (check.length > 0) {
       await UserAPI.deleteVoucherSave({ token, voucher: voucherUsed });
     }
-    await VoucherAPI.updateVoucherRemain({
-      token,
-      _id: voucherUsed._id,
-      user,
-    });
+    if(voucherUsed._id !== undefined) {
+      await VoucherAPI.updateVoucherRemain({
+        token,
+        _id: voucherUsed._id,
+        user,
+      });
+    }
     dispatch(removeManyCart(cart));
+    dispatch(setProvince(null));
+    dispatch(setDistrict(null));
+    dispatch(setWard(""));
+    dispatch(setDataFee([]));
     // dispatch(setInformationPaymentPaypal({}));
     Swal.fire({
       position: "center",
