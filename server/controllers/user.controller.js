@@ -438,11 +438,12 @@ const userController = {
 
       const { vouchersSave } = user;
 
+      const checkVoucher = vouchersSave.filter((x) => x._id === voucher._id);
 
-      const checkVoucher = vouchersSave.filter(x => x._id === voucher._id )
-
-      if(checkVoucher.length>0){
-        return res.status(400).json({status: false, message: "This voucher is already saved ! "})
+      if (checkVoucher.length > 0) {
+        return res
+          .status(400)
+          .json({ status: false, message: "This voucher is already saved ! " });
       }
       vouchersSave.push(voucher);
 
@@ -459,11 +460,38 @@ const userController = {
   },
   deleteVoucherUsed: async (req, res) => {
     try {
-      
+      const { voucher } = req.body;
+      const user = await Users.findById(req.user.id);
+      if (!user) {
+        return res
+          .status(400)
+          .json({ status: false, message: "User does not exist" });
+      }
+
+      const { vouchersSave } = user;
+
+      const checkVoucher = vouchersSave.filter((x) => x._id === voucher._id);
+
+      if (checkVoucher.length === 0) {
+        return res
+          .status(400)
+          .json({ status: false, message: "User is not save this voucher" });
+      }
+
+      const voucherTemp = vouchersSave.filter((x) => x._id !== voucher._id);
+
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        {
+          vouchersSave: voucherTemp,
+        }
+      );
+
+      return res.json({ message: "Delete voucher save successful" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
-  }
+  },
 };
 
 const createAccessToken = (user) => {
