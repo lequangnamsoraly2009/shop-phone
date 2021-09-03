@@ -474,7 +474,9 @@ function Cart() {
       key: "price",
       render: (text, record, index) => (
         <span>
-          {Math.floor(record.price - record.price * (record.sale / 100))}$
+          {record.price -
+            (record.price * (record.sale / 100)).toFixed(2)}
+          $
         </span>
       ),
     },
@@ -526,9 +528,9 @@ function Cart() {
       key: "totalPrice",
       render: (text, record, index) => (
         <span>
-          {Math.round(
-            record.price - record.price * (record.sale / 100)
-          ).toFixed(2) * record.quantity}{" "}
+          {(record.price * record.quantity).toFixed(2) -
+            (record.price * (record.sale / 100)).toFixed(2) *
+              record.quantity}{" "}
           $
         </span>
       ),
@@ -554,13 +556,13 @@ function Cart() {
       const totalPrice = selectedRows.reduce((item1, item2) => {
         return (
           item1 +
-          Math.round(item2.price - item2.price * (item2.sale / 100)).toFixed(
+          (item2.price - item2.price * (item2.sale / 100)).toFixed(
             2
           ) *
             item2.quantity
         );
       }, 0);
-      setTotal(totalPrice);
+      setTotal(Number(totalPrice));
       setProductChoice(selectedRows.length);
       setProductCheckOut(selectedRows);
     },
@@ -578,7 +580,7 @@ function Cart() {
       dataIndex: "service_fee",
       render: (text, record, index) => (
         <span>
-          {(Math.round((record.service_fee / 22795) * 100) / 100).toFixed(2)} $
+          {(((record.service_fee / 22795) * 100) / 100).toFixed(2)} $
         </span>
       ),
       align: "center",
@@ -588,7 +590,7 @@ function Cart() {
       dataIndex: "insurance_fee",
       render: (text, record, index) => (
         <span>
-          {(Math.round((record.insurance_fee / 22795) * 100) / 100).toFixed(2)}{" "}
+          {(((record.insurance_fee / 22795) * 100) / 100).toFixed(2)}{" "}
           $
         </span>
       ),
@@ -605,7 +607,7 @@ function Cart() {
       dataIndex: "total",
       render: (text, record, index) => (
         <span>
-          {(Math.round((record.total / 22795) * 100) / 100).toFixed(2)} $
+          {(((record.total / 22795) * 100) / 100).toFixed(2)} $
         </span>
       ),
       align: "center",
@@ -619,7 +621,7 @@ function Cart() {
             type="primary"
             onClick={() =>
               handleOnSelectFee(
-                (Math.round((record.total / 22795) * 100) / 100).toFixed(2)
+                (((record.total / 22795) * 100) / 100).toFixed(2)
               )
             }
           >
@@ -676,7 +678,7 @@ function Cart() {
               <div className="cart-total ">
                 <span>Total:</span>
                 <span style={{ color: "rgb(247,69,46)" }}>
-                  {total + Number(fee) + voucherCoupon} $
+                  {total + Number(fee) - Number(voucherCoupon)} $
                 </span>
               </div>
             </div>

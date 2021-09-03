@@ -34,10 +34,8 @@ function CheckOut() {
   const totalPrice = cart.reduce((item1, item2) => {
     return (
       item1 +
-      Math.round(
-        item2.price * item2.quantity -
-          (item2.price * item2.quantity * item2.sale) / 100
-      ).toFixed(2)
+      item2.price * item2.quantity -
+      Math.round((item2.price * item2.quantity * item2.sale) / 100).toFixed(2)
     );
   }, 0);
 
@@ -60,7 +58,7 @@ function CheckOut() {
     if (check.length > 0) {
       await UserAPI.deleteVoucherSave({ token, voucher: voucherUsed });
     }
-    if(voucherUsed._id !== undefined) {
+    if (voucherUsed._id !== undefined) {
       await VoucherAPI.updateVoucherRemain({
         token,
         _id: voucherUsed._id,
@@ -120,7 +118,7 @@ function CheckOut() {
       <div className="checkout-steps">
         <div className="steps-action">
           <PaypalButton
-            total={Number(totalPrice) + Number(feeShipValue) + voucherValue}
+            total={Number(totalPrice) + Number(feeShipValue) - Number(voucherValue)}
             tranSuccess={tranSuccess}
           />
         </div>

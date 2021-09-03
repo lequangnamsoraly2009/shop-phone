@@ -7,10 +7,8 @@ function CheckoutInfor({ informationPaymentPaypal }) {
   const totalPrice = cart.reduce((item1, item2) => {
     return (
       item1 +
-      Math.round(
-        item2.price * item2.quantity -
-          (item2.price * item2.quantity * item2.sale) / 100
-      ).toFixed(2)
+      item2.price * item2.quantity -
+      ((item2.price * item2.quantity * item2.sale) / 100).toFixed(2)
     );
   }, 0);
 
@@ -30,10 +28,10 @@ function CheckoutInfor({ informationPaymentPaypal }) {
                 </span>
               </span>
               <span style={{ color: "rgb(25,144,255)" }}>
-                {Math.round(
-                  item.price * item.quantity -
+                {item.price * item.quantity -
+                  (
                     (item.price * item.quantity * item.sale) / 100
-                ).toFixed(2)}{" "}
+                  ).toFixed(2)}{" "}
                 $
               </span>
             </div>
@@ -44,12 +42,12 @@ function CheckoutInfor({ informationPaymentPaypal }) {
           </div>
           <div className="checkout-col">
             <span>Voucher Gift:</span>
-            <span>{voucherValue} $</span>
+            <span>- {voucherValue} $</span>
           </div>
           <div className="checkout-col ">
             <span>Order Total:</span>
             <span style={{ color: "rgb(247,69,46)" }}>
-              {Number(totalPrice) + Number(feeShipValue) + voucherValue} $
+              {Number(totalPrice) + Number(feeShipValue) - voucherValue} $
             </span>
           </div>
         </div>
