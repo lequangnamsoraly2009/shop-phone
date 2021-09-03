@@ -115,7 +115,7 @@ function CardItemCate({ product }) {
           }}
         >
           <p style={{ margin: "0px 5px", fontWeight: 800, fontSize: 14 }}>
-            {Math.round(product?.price - (product?.price * product?.sale) / 100)} $
+            {(product?.price - ((product?.price * product?.sale) / 100).toFixed(2))} $
           </p>
           <p
             style={{

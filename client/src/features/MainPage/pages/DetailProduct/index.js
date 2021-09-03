@@ -335,9 +335,9 @@ function DetailProduct() {
                   </div>
                   <div className="product-price">
                     <span>
-                      {Math.floor(
+                      {(
                         detailProduct.price -
-                          detailProduct.price * (detailProduct.sale / 100)
+                          (detailProduct.price * (detailProduct.sale / 100)).toFixed(2)
                       )}
                       $
                     </span>
