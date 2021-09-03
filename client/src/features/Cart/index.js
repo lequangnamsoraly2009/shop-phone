@@ -37,6 +37,7 @@ import VoucherAPI from "../../api/voucherAPI";
 import PaymentAPI from "../../api/paymentAPI";
 import { useHistory } from "react-router-dom";
 import UserAPI from "../../api/userAPI";
+import PaypalButton from "../MainPage/pages/CheckOut/PaypalButton";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -69,6 +70,7 @@ function Cart() {
   const [isFee, setIsFee] = useState(false);
   const [voucherCoupon, setVoucherCoupon] = useState(0);
   const [voucherUsed, setVoucherUsed] = useState({});
+  const [changeButtonPay, setChangeButtonPay] = useState(0);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -817,18 +819,34 @@ function Cart() {
                       <Select.Option value="cod">
                         Cash On Delivery
                       </Select.Option>
-                      <Select.Option value="paypal">
+                      <Select.Option
+                        value="paypal"
+                        onClick={() => setChangeButtonPay(1)}
+                      >
                         Payment With Paypal
                       </Select.Option>
-                      <Select.Option value="vnpay">
+                      <Select.Option
+                        value="vnpay"
+                        onClick={() => setChangeButtonPay(2)}
+                      >
                         Payment With VN Pay
                       </Select.Option>
                     </Select>
                   </Form.Item>
                   <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 15 }}>
-                    <Button type="primary" htmlType="submit">
-                      Pay
-                    </Button>
+                    {changeButtonPay === 1 ? (
+                      <Button type="primary" htmlType="submit">
+                        <PaypalButton total={0 + 10} tranSuccess />
+                      </Button>
+                    ) : changeButtonPay === 2 ? (
+                      <Button type="primary" htmlType="submit">
+                        Pay With VNPay
+                      </Button>
+                    ) : (
+                      <Button type="primary" htmlType="submit">
+                        Pay COD
+                      </Button>
+                    )}
                   </Form.Item>
                 </Form>
               </div>
