@@ -9,6 +9,8 @@ function HistoryOrder() {
   const params = useParams();
   const [orderDetail, setOrderDetail] = useState({});
   const { history } = useSelector((state) => state.histories);
+
+
   useEffect(() => {
     history.forEach((item) => {
       if (item._id === params.id) {
@@ -140,9 +142,9 @@ function HistoryOrder() {
                   return (
                     item1 +
                     item2.price * item2.quantity -
-                    Math.floor(
+                    Math.round(
                       item2.price * item2.quantity * (item2.sale / 100)
-                    )
+                    ).toFixed(2)
                   );
                 }
               }, 0)}{" "}
@@ -153,7 +155,13 @@ function HistoryOrder() {
             <span style={{ color: "#000", fontWeight: 500, marginRight: 150 }}>
               Ship Fee
             </span>
-            <span style={{ borderBottom: "1px solid #000" }}>10 $</span>
+            <span >{orderDetail.feeShipValue} $</span>
+          </div>
+          <div className="order-total-item">
+            <span style={{ color: "#000", fontWeight: 500, marginRight: 150 }}>
+              Gift Voucher
+            </span>
+            <span style={{ borderBottom: "1px solid #000" }}>- {orderDetail.voucherValue} $</span>
           </div>
           <div className="order-total-item">
             <span style={{ color: "#000", fontWeight: 500, marginRight: 150 }}>
@@ -167,12 +175,12 @@ function HistoryOrder() {
                   return (
                     item1 +
                     item2.price * item2.quantity -
-                    Math.floor(
+                    Math.round(
                       item2.price * item2.quantity * (item2.sale / 100)
-                    )
+                    ).toFixed(2)
                   );
                 }
-              }, 10)}{" "}
+              }, (-orderDetail.voucherValue + orderDetail.feeShipValue))}{" "}
               $
             </span>
           </div>
