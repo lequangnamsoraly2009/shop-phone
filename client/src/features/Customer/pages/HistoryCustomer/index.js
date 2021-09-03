@@ -87,9 +87,9 @@ function HistoryCustomer() {
                   return (
                     item1 +
                     item2.price * item2.quantity -
-                    Math.round(
-                      (item2.price * item2.quantity * item2.sale) / 100
-                    ).toFixed(2)
+                    ((item2.price * item2.quantity * item2.sale) / 100).toFixed(
+                      2
+                    )
                   );
                 }, 0)
               ) -

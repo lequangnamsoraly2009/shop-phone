@@ -62,10 +62,10 @@ export const columnTable = [
         <span>{record.price * record.quantity} $</span>
       ) : (
         <span>
-          {(
-            record.price * record.quantity -
-            Math.round((record.price * record.quantity * record.sale) / 100).toFixed(2)
-          )}{" "}
+          {record.price * record.quantity -
+            ((record.price * record.quantity * record.sale) / 100).toFixed(
+              2
+            )}{" "}
           $
         </span>
       ),

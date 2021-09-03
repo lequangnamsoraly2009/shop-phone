@@ -35,7 +35,7 @@ function CheckOut() {
     return (
       item1 +
       item2.price * item2.quantity -
-      Math.round((item2.price * item2.quantity * item2.sale) / 100).toFixed(2)
+      ((item2.price * item2.quantity * item2.sale) / 100).toFixed(2)
     );
   }, 0);
 
@@ -118,7 +118,9 @@ function CheckOut() {
       <div className="checkout-steps">
         <div className="steps-action">
           <PaypalButton
-            total={Number(totalPrice) + Number(feeShipValue) - Number(voucherValue)}
+            total={
+              Number(totalPrice) + Number(feeShipValue) - Number(voucherValue)
+            }
             tranSuccess={tranSuccess}
           />
         </div>
