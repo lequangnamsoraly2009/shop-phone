@@ -27,7 +27,7 @@ const PaymentAPI = {
     emailReceiver,
     methodPayment,
     voucherValue,
-    feeShipValue
+    feeShipValue,
   }) => {
     return API.post(
       `/api/payment`,
@@ -40,8 +40,17 @@ const PaymentAPI = {
         methodPayment,
         emailReceiver,
         voucherValue,
-        feeShipValue
+        feeShipValue,
       },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
+  changeStatusPayment: ({ token, _id, status }) => {
+    return API.get(
+      `/api/payment/${_id}`,
+      { status },
       {
         headers: { Authorization: token },
       }

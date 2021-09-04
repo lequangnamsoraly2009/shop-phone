@@ -117,7 +117,7 @@ const paymentController = {
       // console.log(req.body)
       const { _id } = user;
 
-      if(feeShipValue === 0){
+      if (feeShipValue === 0) {
         return res
           .status(400)
           .json({ status: false, message: "Please select method delivery!" });
@@ -149,6 +149,22 @@ const paymentController = {
       await newPayment.save();
 
       res.json({ message: "Payment successful" });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  changeStatusPayment: async (req, res) => {
+    try {
+      const { status } = req.body;
+      await Payments.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          status: status,
+        }
+      );
+      return res
+        .status(200)
+        .json({ status: true, message: "Change status payment" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

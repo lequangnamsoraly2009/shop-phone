@@ -1,21 +1,23 @@
 import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Table } from "antd";
+import { Breadcrumb, Button, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import { useHistory, useParams } from "react-router-dom";
 import {
   columnDataBuyer,
   columnDataReceiver,
-  columnPayment,
   columnTable,
 } from "./tableColumn";
 import "./tableColumn";
+import PaymentAPI from "../../../../api/paymentAPI";
 
 function DetailOrder() {
   const [detailOrder, setDetailOrder] = useState({});
   const [numberOrderUser, setNumberOrderUser] = useState(0);
 
   const { payments } = useSelector((state) => state.payments);
+  const { token } = useSelector((state) => state.token);
 
   const history = useHistory();
   const params = useParams();
@@ -41,6 +43,136 @@ function DetailOrder() {
     e.preventDefault();
     history.goBack();
   };
+
+  const handleAcceptPayment = async () => {
+    try {
+      const statusChange = "Success";
+      const response = await PaymentAPI.changeStatusPayment({
+        token,
+        _id: detailOrder?._id,
+        status: statusChange,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Successful!",
+        text: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
+
+  const handleCancelPayment = async () => {};
+
+  const columnPayment = [
+    {
+      title: "Total Price",
+      dataIndex: "total_price",
+      key: "total_price",
+      render: (text, record, index) => (
+        <span>
+          {record.cart?.reduce((item1, item2) => {
+            return item1 + item2.price * item2.quantity;
+          }, 0)}
+          $
+        </span>
+      ),
+    },
+    {
+      title: "Price Sale",
+      dataIndex: "price_sale",
+      key: "price_sale",
+      align: "center",
+      render: (text, record, index) => (
+        <span>
+          {record.cart
+            ?.reduce((item1, item2) => {
+              return item1 + (item2.price * item2.quantity * item2.sale) / 100;
+            }, 0.0)
+            .toFixed(2)}
+          $
+        </span>
+      ),
+    },
+    {
+      title: "Fee Shipping",
+      dataIndex: "feeShipValue",
+      key: "feeShipValue",
+      align: "center",
+      render: (text, record, index) => <span>{record.feeShipValue}$</span>,
+    },
+    {
+      title: "Gift Voucher",
+      dataIndex: "voucherValue",
+      key: "voucherValue",
+      align: "center",
+      render: (text, record, index) => <span>{record.voucherValue}$</span>,
+    },
+    {
+      title: "Total Price To Pay",
+      dataIndex: "price_pay",
+      key: "price_pay",
+      align: "center",
+      render: (text, record, index) => (
+        <span>
+          {record.cart?.reduce((item1, item2) => {
+            return (
+              item1 +
+              (item2.price * item2.quantity -
+                ((item2.price * item2.quantity * item2.sale) / 100).toFixed(2))
+            );
+          }, record.feeShipValue - record.voucherValue)}
+          $
+        </span>
+      ),
+    },
+    {
+      title: "Print Invoice",
+      key: "print_invoice",
+      align: "center",
+      render: (text, record, index) => <Button type="link">Print PDF</Button>,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+      render: (text, record, index) =>
+        record.status === "Pending" ? (
+          <span style={{ color: "red" }}>{record.status}</span>
+        ) : record.status === "Success" ? (
+          <span style={{ color: "green" }}>{record.status}</span>
+        ) : (
+          <span style={{ color: "gray" }}>{record.status}</span>
+        ),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      align: "center",
+      render: (text, record, index) => (
+        <Space size="middle">
+          <Button onClick={() => handleAcceptPayment()} type="primary">
+            Accept and Delivery
+          </Button>
+          <Button onClick={() => handleCancelPayment()} type="danger">
+            Cancel
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
   return (
     <div className="container-admin">
       <div className="header_page">
