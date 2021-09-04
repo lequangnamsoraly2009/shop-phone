@@ -163,6 +163,18 @@ module.exports = ({ detailPayment }) => {
                                 </tr>
                             </table>
                         </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        Note Of Customer
+                                    </td>
+                                    <td>
+                                        ${detailPayment.notes}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
     
                     <tr class="heading">
@@ -178,11 +190,6 @@ module.exports = ({ detailPayment }) => {
                     <tr class="details">
                         <td>Gift Voucher</td>
                         <td>${detailPayment.voucherValue} $</td>
-                    </tr>
-
-                    <tr class="details">
-                        <td>Note Of Customer</td>
-                        <td>${detailPayment.notes} $</td>
                     </tr>
     
                     <tr class="heading">
