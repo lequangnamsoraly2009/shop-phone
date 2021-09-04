@@ -17,6 +17,7 @@ import { saveAs } from "file-saver";
 
 function DetailOrder() {
   const [totalPaymentOfUser, setTotalPaymentOfUser] = useState(1);
+  const [awaitPrint, setAwaitPrint] = useState(false);
 
   const { detailPayment, payments } = useSelector((state) => state.payments);
   const { token } = useSelector((state) => state.token);
@@ -46,7 +47,6 @@ function DetailOrder() {
     e.preventDefault();
     history.goBack();
   };
-
 
   const handleAcceptPayment = async () => {
     try {
@@ -132,9 +132,10 @@ function DetailOrder() {
     }
   };
 
-  const handleClickPrintPDF = async () => {
+  const handleClickAwaitPrintPDF = async () => {
     try {
-      axiosClient.post(
+      setAwaitPrint(true);
+      await axiosClient.post(
         "/api/create-pdf",
         {
           detailPayment,
@@ -153,6 +154,21 @@ function DetailOrder() {
         type: "application/pdf",
       });
       saveAs(pdfBlob, `RECEIPT-${detailPayment._id}.pdf`);
+    } catch (error) {}
+  };
+
+  const handleClickPrintPDF = async () => {
+    try {
+      const response = await axiosClient.get("/api/fetch-pdf", {
+        responseType: "blob",
+        headers: { Authorization: token },
+      });
+
+      const pdfBlob = new Blob([response.data], {
+        type: "application/pdf",
+      });
+      saveAs(pdfBlob, `RECEIPT-${detailPayment._id}.pdf`);
+      setAwaitPrint(false);
     } catch (error) {}
   };
 
@@ -225,6 +241,15 @@ function DetailOrder() {
       render: (text, record, index) =>
         record.status === "Cancel" ? (
           "No Invoice"
+        ) : awaitPrint === false ? (
+          <Button
+            onClick={() => {
+              handleClickAwaitPrintPDF();
+            }}
+            type="primary"
+          >
+            Prepare PDF
+          </Button>
         ) : (
           <Button
             onClick={() => {
