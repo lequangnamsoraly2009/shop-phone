@@ -179,6 +179,11 @@ module.exports = ({ detailPayment }) => {
                         <td>Gift Voucher</td>
                         <td>${detailPayment.voucherValue} $</td>
                     </tr>
+
+                    <tr class="details">
+                        <td>Note Of Customer</td>
+                        <td>${detailPayment.notes} $</td>
+                    </tr>
     
                     <tr class="heading">
                         <td>Item</td>
