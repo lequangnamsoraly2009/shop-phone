@@ -1,6 +1,6 @@
 import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Space, Table } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useHistory, useParams } from "react-router-dom";
@@ -14,23 +14,31 @@ import PaymentAPI from "../../../../api/paymentAPI";
 import { getPaymentToDetail } from "../../../../app/paymentSlice";
 
 function DetailOrder() {
+  const [totalPaymentOfUser, setTotalPaymentOfUser] = useState(1);
 
-  const { detailPayment } = useSelector((state) => state.payments);
+  const { detailPayment, payments } = useSelector((state) => state.payments);
   const { token } = useSelector((state) => state.token);
-
-  console.log(detailPayment)
 
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
 
   const arrayDetail = [];
-  arrayDetail.push({...detailPayment });
+  arrayDetail.push({ totalPaymentOfUser,...detailPayment });
 
   useEffect(() => {
     dispatch(getPaymentToDetail({ token, idPayment: params.id }));
   }, [dispatch, token, params]);
 
+  useEffect(() => {
+    let sum = 0;
+    payments.forEach((payment) => {
+      if (payment.user_id === detailPayment.user_id) {
+        sum = sum + 1;
+      }
+    });
+    setTotalPaymentOfUser(sum);
+  }, [payments, detailPayment]);
 
   const backPreviousPage = (e) => {
     e.preventDefault();

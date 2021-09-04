@@ -109,7 +109,7 @@ export const columnDataBuyer = [
     dataIndex: "total_orders",
     key: "total_orders",
     align: "center",
-    render: (text, record, index) => <span>{0}</span>,
+    render: (text, record, index) => <span>{record.totalPaymentOfUser}</span>,
   },
 ];
 
