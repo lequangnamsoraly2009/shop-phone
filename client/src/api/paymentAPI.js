@@ -48,7 +48,7 @@ const PaymentAPI = {
     );
   },
   changeStatusPayment: ({ token, _id, status }) => {
-    return API.get(
+    return API.patch(
       `/api/payment/${_id}`,
       { status },
       {
