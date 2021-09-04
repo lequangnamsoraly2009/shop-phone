@@ -1,6 +1,6 @@
 import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Space, Table } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useHistory, useParams } from "react-router-dom";
@@ -11,35 +11,26 @@ import {
 } from "./tableColumn";
 import "./tableColumn";
 import PaymentAPI from "../../../../api/paymentAPI";
-import { setDetailPayment } from "../../../../app/paymentSlice";
+import { getPaymentToDetail } from "../../../../app/paymentSlice";
 
 function DetailOrder() {
-  // const [detailOrder, setDetailOrder] = useState({});
-  const [numberOrderUser, setNumberOrderUser] = useState(0);
 
-  const { payments, detailPayment } = useSelector((state) => state.payments);
+  const { detailPayment } = useSelector((state) => state.payments);
   const { token } = useSelector((state) => state.token);
+
+  console.log(detailPayment)
 
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
 
-  console.log(params.id);
-
   const arrayDetail = [];
-  arrayDetail.push({ numberOrderUser, ...detailPayment });
+  arrayDetail.push({...detailPayment });
 
   useEffect(() => {
-    payments.forEach((payment) => {
-      let sumOrders = 0;
-      if (payment._id === params.id) {
-        dispatch(setDetailPayment(payment));
-      }
-      if (payment.user_id === detailPayment.user_id) {
-        setNumberOrderUser((sumOrders += 1));
-      }
-    });
-  }, [params, payments, dispatch, detailPayment, numberOrderUser]);
+    dispatch(getPaymentToDetail({ token, idPayment: params.id }));
+  }, [dispatch, token, params]);
+
 
   const backPreviousPage = (e) => {
     e.preventDefault();

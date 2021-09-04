@@ -169,6 +169,22 @@ const paymentController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  getPaymentToDetail: async (req, res) => {
+    try {
+      const {idPayment} = req.body;
+
+      const payment = await Payments.findOne({ _id: idPayment});
+
+
+      res.json({
+        status: "success",
+        result: payment.length,
+        payment: payment,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message })
+    }
+  }
 };
 
 const countSoldAndStorage = async (id, quantity, oldSold, oldStorage) => {

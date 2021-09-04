@@ -9,6 +9,14 @@ export const getAllPayments = createAsyncThunk(
   }
 );
 
+export const getPaymentToDetail = createAsyncThunk(
+  "/payment/getPaymentToDetail",
+  async ({ token, idPayment }) => {
+    const response = await PaymentAPI.getPaymentToDetail({ token, idPayment });
+    return response.data.payment;
+  }
+);
+
 const initialState = {
   payments: [],
   searchPayments: "",
@@ -33,14 +41,14 @@ const paymentSlice = createSlice({
     setInformationPaymentPaypal: (state, action) => {
       state.informationPaymentPaypal = action.payload;
     },
-    setDetailPayment: (state, action) => {
-      state.detailPayment = action.payload;
-    },
   },
   extraReducers: {
     [getAllPayments.fulfilled]: (state, action) => {
       state.payments = action.payload;
       state.paginationPayments = action.payload;
+    },
+    [getPaymentToDetail.fulfilled]: (state, action) => {
+      state.detailPayment = action.payload;
     },
   },
 });
@@ -52,7 +60,6 @@ export const {
   setSearchPayments,
   setPaginationPayments,
   setInformationPaymentPaypal,
-  setDetailPayment,
 } = actions;
 
 export default reducer;

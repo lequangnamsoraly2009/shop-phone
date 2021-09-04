@@ -17,6 +17,17 @@ const PaymentAPI = {
       }
     );
   },
+  getPaymentToDetail: ({ token, idPayment }) => {
+    return API.post(
+      `/api/payment_detail`,
+      {
+        idPayment,
+      },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
   createPayment: ({
     token,
     cart,
