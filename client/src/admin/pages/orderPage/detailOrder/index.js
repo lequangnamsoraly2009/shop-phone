@@ -133,18 +133,26 @@ function DetailOrder() {
 
   const handleClickPrintPDF = async () => {
     try {
-      axiosClient.post("/api/create-pdf",{
-        test: "123"
-      }, {
-        headers: { Authorization: token },
-      });
+      await axiosClient.post(
+        "/api/create-pdf",
+        {
+          test: "123",
+        },
+        {
+          headers: { Authorization: token },
+        }
+      );
 
-      const response = axiosClient.get("/api/fetch-pdf", {
+      const response = await axiosClient.get("/api/fetch-pdf", {
         responseType: "blob",
         headers: { Authorization: token },
       });
-      
-      const pdfBlob = new Blob([response.data.res], { type: "application/pdf" });
+
+      console.log(response);
+
+      const pdfBlob = new Blob([response.data.res], {
+        type: "application/pdf",
+      });
       saveAs(pdfBlob, "newPdf.pdf");
     } catch (error) {}
   };
