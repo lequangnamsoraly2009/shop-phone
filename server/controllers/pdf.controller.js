@@ -6,11 +6,15 @@ const pdfController = {
   createPDF: (req, res) => {
     try {
       const { detailPayment } = req.body;
-      pdf.create(pdfReceipt({ detailPayment }), {}).toFile("./pdf/result.pdf", (err) => {
-        if (err) {
-          return res.status(400).json({ status: false, message: err.message });
-        }
-      });
+      pdf
+        .create(pdfReceipt({ detailPayment: detailPayment }), {})
+        .toFile("./pdf/result.pdf", (err) => {
+          if (err) {
+            return res
+              .status(400)
+              .json({ status: false, message: err.message });
+          }
+        });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

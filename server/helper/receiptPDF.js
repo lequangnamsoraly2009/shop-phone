@@ -1,5 +1,21 @@
-module.exports = ({detailPayment}) => {
-    const today = new Date();
+module.exports = ({ detailPayment }) => {
+  const today = new Date();
+  const totalBillProduct = detailPayment.cart.reduce((item1, item2) => {
+    return (
+      item1 +
+      item2.price * item2.quantity -
+      ((item2.price * item2.quantity * item2.sale) / 100).toFixed(2)
+    );
+  }, 0);
+
+  const totalBill = detailPayment.cart.reduce((item1, item2) => {
+    return (
+      item1 +
+      item2.price * item2.quantity -
+      ((item2.price * item2.quantity * item2.sale) / 100).toFixed(2)
+    );
+  }, detailPayment.feeShipValue - detailPayment.voucherValue);
+
   return `
     <!DOCTYPE html>
     <html>
@@ -115,8 +131,12 @@ module.exports = ({detailPayment}) => {
     
                                     <td>
                                         Invoice: #${detailPayment._id}<br />
-                                        Created: ${today.toLocaleString('en-GB')}<br />
-                                        PurchaseDate: ${new Date(detailPayment.createdAt).toLocaleString("en-GB")}
+                                        Created: ${today.toLocaleString(
+                                          "en-GB"
+                                        )}<br />
+                                        PurchaseDate: ${new Date(
+                                          detailPayment.createdAt
+                                        ).toLocaleString("en-GB")}
                                     </td>
                                 </tr>
                             </table>
@@ -130,7 +150,9 @@ module.exports = ({detailPayment}) => {
                                     <td>
                                         ${detailPayment.address.ward}<br />
                                         ${detailPayment.address.district}<br />
-                                        Tỉnh ${detailPayment.address.province}<br />
+                                        Tỉnh ${
+                                          detailPayment.address.province
+                                        }<br />
                                     </td>
     
                                     <td>
@@ -151,11 +173,11 @@ module.exports = ({detailPayment}) => {
     
                     <tr class="details">
                         <td>Fee Shipping</td>
-                        <td>${detailPayment.feeShipValue}</td>
+                        <td>${detailPayment.feeShipValue} $</td>
                     </tr>
                     <tr class="details">
                         <td>Gift Voucher</td>
-                        <td>${detailPayment.voucherValue}</td>
+                        <td>${detailPayment.voucherValue} $</td>
                     </tr>
     
                     <tr class="heading">
@@ -163,21 +185,24 @@ module.exports = ({detailPayment}) => {
     
                         <td>Price</td>
                     </tr>
-    
+
                     <tr class="item">
-                        <td>Lz</td>
+                        <td>Total Price Products</td>
     
-                        <td>${100} $</td>
+                        <td>${totalBillProduct} $</td>
                     </tr>
     
                     <tr class="total">
                         <td></td>
     
-                        <td>Total: $385.00</td>
+                        <td>Total Price: ${totalBill} $</td>
                     </tr>
                 </table>
             </div>
         </body>
+        <script>
+        
+        </script>
     </html>
     `;
 };
