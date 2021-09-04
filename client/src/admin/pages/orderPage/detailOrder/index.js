@@ -12,6 +12,8 @@ import {
 import "./tableColumn";
 import PaymentAPI from "../../../../api/paymentAPI";
 import { getPaymentToDetail } from "../../../../app/paymentSlice";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import ReceiptPDF from "../receiptPDF";
 
 function DetailOrder() {
   const [totalPaymentOfUser, setTotalPaymentOfUser] = useState(1);
@@ -24,7 +26,7 @@ function DetailOrder() {
   const dispatch = useDispatch();
 
   const arrayDetail = [];
-  arrayDetail.push({ totalPaymentOfUser,...detailPayment });
+  arrayDetail.push({ totalPaymentOfUser, ...detailPayment });
 
   useEffect(() => {
     dispatch(getPaymentToDetail({ token, idPayment: params.id }));
@@ -256,6 +258,13 @@ function DetailOrder() {
           Orders From Customers
         </h3>
       </div>
+      <div>
+        <PDFDownloadLink document={<ReceiptPDF />} fileName="test.pdf">
+          {({ blob, url, loading, error }) =>
+            loading ? "Loading document..." : "Download now!"
+          }
+        </PDFDownloadLink>
+      </div>
       <div className="product_breadcrumb">
         <Breadcrumb>
           <Breadcrumb.Item href="">
@@ -322,6 +331,7 @@ function DetailOrder() {
           </div>
         </div>
       </div>
+      
     </div>
   );
 }
