@@ -1,4 +1,5 @@
 module.exports = ({test}) => {
+    const today = new Date();
   return `
     <!DOCTYPE html>
     <html>
@@ -114,7 +115,7 @@ module.exports = ({test}) => {
     
                                     <td>
                                         Invoice #: ${test}<br />
-                                        Created: January 1, 2015<br />
+                                        Created: ${today.toLocaleString('en-GB')}<br />
                                         Due: February 1, 2015
                                     </td>
                                 </tr>

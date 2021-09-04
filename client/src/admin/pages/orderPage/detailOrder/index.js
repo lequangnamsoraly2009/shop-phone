@@ -47,6 +47,9 @@ function DetailOrder() {
     history.goBack();
   };
 
+  const today = new Date()
+  console.log(today.toLocaleString('en-GB'))
+
   const handleAcceptPayment = async () => {
     try {
       const statusChange = "Success";
