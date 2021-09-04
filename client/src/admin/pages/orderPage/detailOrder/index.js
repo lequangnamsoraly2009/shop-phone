@@ -150,7 +150,7 @@ function DetailOrder() {
 
       console.log(response);
 
-      const pdfBlob = new Blob([response.data.res], {
+      const pdfBlob = new Blob([response.data], {
         type: "application/pdf",
       });
       saveAs(pdfBlob, "newPdf.pdf");
