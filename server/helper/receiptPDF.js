@@ -114,7 +114,7 @@ module.exports = ({detailPayment}) => {
                                     </td>
     
                                     <td>
-                                        Invoice #: ${detailPayment._id}<br />
+                                        Invoice: #${detailPayment._id}<br />
                                         Created: ${today.toLocaleString('en-GB')}<br />
                                         PurchaseDate: ${new Date(detailPayment.createdAt).toLocaleString("en-GB")}
                                     </td>
@@ -130,13 +130,13 @@ module.exports = ({detailPayment}) => {
                                     <td>
                                         ${detailPayment.address.ward}<br />
                                         ${detailPayment.address.district}<br />
-                                        ${detailPayment.address.province}<br />
+                                        Tỉnh ${detailPayment.address.province}<br />
                                     </td>
     
                                     <td>
-                                        ${name}<br />
-                                        ${email}<br />
-                                        ${phone}
+                                        ${detailPayment.name}<br />
+                                        ${detailPayment.email}<br />
+                                        ${detailPayment.phone}
                                     </td>
                                 </tr>
                             </table>
@@ -146,16 +146,16 @@ module.exports = ({detailPayment}) => {
                     <tr class="heading">
                         <td>Payment Method</td>
     
-                        <td>${paymentMethod}</td>
+                        <td>${detailPayment.methodPayment}</td>
                     </tr>
     
                     <tr class="details">
                         <td>Fee Shipping</td>
-                        <td>${feeShipValue}</td>
+                        <td>${detailPayment.feeShipValue}</td>
                     </tr>
                     <tr class="details">
                         <td>Gift Voucher</td>
-                        <td>${voucherValue}</td>
+                        <td>${detailPayment.voucherValue}</td>
                     </tr>
     
                     <tr class="heading">
@@ -165,7 +165,7 @@ module.exports = ({detailPayment}) => {
                     </tr>
     
                     <tr class="item">
-                        <td>${cart.detailName}</td>
+                        <td>Lz</td>
     
                         <td>${100} $</td>
                     </tr>
