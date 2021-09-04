@@ -148,12 +148,10 @@ function DetailOrder() {
         headers: { Authorization: token },
       });
 
-
       const pdfBlob = new Blob([response.data], {
         type: "application/pdf",
       });
-      console.log(pdfBlob)
-      saveAs(pdfBlob, "newPdf.pdf");
+      saveAs(pdfBlob, `RECEIPT-${detailPayment._id}.pdf`);
     } catch (error) {}
   };
 
