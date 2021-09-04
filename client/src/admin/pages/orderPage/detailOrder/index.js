@@ -72,7 +72,61 @@ function DetailOrder() {
     }
   };
 
-  const handleCancelPayment = async () => {};
+  const handleCancelPayment = async () => {
+    try {
+      const statusChange = "Cancel";
+      const response = await PaymentAPI.changeStatusPayment({
+        token,
+        _id: detailOrder?._id,
+        status: statusChange,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Successful!",
+        text: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
+
+  const handleRestorePayment = async () => {
+    try {
+      const statusChange = "Pending";
+      const response = await PaymentAPI.changeStatusPayment({
+        token,
+        _id: detailOrder?._id,
+        status: statusChange,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Successful Restore!",
+        text: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
 
   const columnPayment = [
     {
@@ -140,7 +194,12 @@ function DetailOrder() {
       title: "Print Invoice",
       key: "print_invoice",
       align: "center",
-      render: (text, record, index) => <Button type="link">Print PDF</Button>,
+      render: (text, record, index) =>
+        record.status === "Cancel" ? (
+          "No Invoice"
+        ) : (
+          <Button type="link">Print PDF</Button>
+        ),
     },
     {
       title: "Status",
@@ -164,6 +223,10 @@ function DetailOrder() {
         <Space size="middle">
           {record.status === "Success" ? (
             <span>Done</span>
+          ) : record.status === "Cancel" ? (
+            <Button onClick={() => handleRestorePayment()} type="danger">
+              Restore
+            </Button>
           ) : (
             <>
               <Button onClick={() => handleAcceptPayment()} type="primary">
