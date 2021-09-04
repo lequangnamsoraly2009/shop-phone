@@ -23,8 +23,6 @@ function DetailOrder() {
   const arrayDetail = [];
   arrayDetail.push({ numberOrderUser, ...detailOrder });
 
-  //   console.log(numberOrderUser);
-
   useEffect(() => {
     if (params) {
       let sumOrders = 0;
@@ -87,6 +85,7 @@ function DetailOrder() {
           <div className="order_header-infor-buyer">
             <Table
               dataSource={arrayDetail}
+              rowKey={"_id"}
               columns={columnDataReceiver}
               style={{ marginLeft: 50 }}
               pagination={{ position: ["none", "none"] }}
@@ -111,6 +110,7 @@ function DetailOrder() {
           </div>
           <div className="order_header-infor-buyer">
             <Table
+              rowKey={"_id"}
               style={{ marginLeft: 50 }}
               columns={columnPayment}
               dataSource={arrayDetail}
