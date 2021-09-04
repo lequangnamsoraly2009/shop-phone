@@ -162,12 +162,18 @@ function DetailOrder() {
       align: "center",
       render: (text, record, index) => (
         <Space size="middle">
-          <Button onClick={() => handleAcceptPayment()} type="primary">
-            Accept and Delivery
-          </Button>
-          <Button onClick={() => handleCancelPayment()} type="danger">
-            Cancel
-          </Button>
+          {record.status === "Success" ? (
+            <span>Done</span>
+          ) : (
+            <>
+              <Button onClick={() => handleAcceptPayment()} type="primary">
+                Accept and Delivery
+              </Button>
+              <Button onClick={() => handleCancelPayment()} type="danger">
+                Cancel
+              </Button>
+            </>
+          )}
         </Space>
       ),
     },
