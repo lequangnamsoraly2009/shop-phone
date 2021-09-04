@@ -47,8 +47,6 @@ function DetailOrder() {
     history.goBack();
   };
 
-  const today = new Date()
-  console.log(today.toLocaleString('en-GB'))
 
   const handleAcceptPayment = async () => {
     try {
@@ -139,7 +137,7 @@ function DetailOrder() {
       axiosClient.post(
         "/api/create-pdf",
         {
-          test: "123",
+          detailPayment,
         },
         {
           headers: { Authorization: token },

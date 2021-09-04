@@ -1,4 +1,4 @@
-module.exports = ({test}) => {
+module.exports = ({detailPayment}) => {
     const today = new Date();
   return `
     <!DOCTYPE html>
@@ -114,9 +114,9 @@ module.exports = ({test}) => {
                                     </td>
     
                                     <td>
-                                        Invoice #: ${test}<br />
+                                        Invoice #: ${detailPayment._id}<br />
                                         Created: ${today.toLocaleString('en-GB')}<br />
-                                        Due: February 1, 2015
+                                        PurchaseDate: ${new Date(detailPayment.createdAt).toLocaleString("en-GB")}
                                     </td>
                                 </tr>
                             </table>
@@ -128,15 +128,15 @@ module.exports = ({test}) => {
                             <table>
                                 <tr>
                                     <td>
-                                        Sparksuite, Inc.<br />
-                                        12345 Sunny Road<br />
-                                        Sunnyville, CA 12345
+                                        ${detailPayment.address.ward}<br />
+                                        ${detailPayment.address.district}<br />
+                                        ${detailPayment.address.province}<br />
                                     </td>
     
                                     <td>
-                                        Acme Corp.<br />
-                                        John Doe<br />
-                                        john@example.com
+                                        ${name}<br />
+                                        ${email}<br />
+                                        ${phone}
                                     </td>
                                 </tr>
                             </table>
@@ -146,13 +146,16 @@ module.exports = ({test}) => {
                     <tr class="heading">
                         <td>Payment Method</td>
     
-                        <td>Check #</td>
+                        <td>${paymentMethod}</td>
                     </tr>
     
                     <tr class="details">
-                        <td>Check</td>
-    
-                        <td>1000</td>
+                        <td>Fee Shipping</td>
+                        <td>${feeShipValue}</td>
+                    </tr>
+                    <tr class="details">
+                        <td>Gift Voucher</td>
+                        <td>${voucherValue}</td>
                     </tr>
     
                     <tr class="heading">
@@ -162,21 +165,9 @@ module.exports = ({test}) => {
                     </tr>
     
                     <tr class="item">
-                        <td>Website design</td>
+                        <td>${cart.detailName}</td>
     
-                        <td>$300.00</td>
-                    </tr>
-    
-                    <tr class="item">
-                        <td>Hosting (3 months)</td>
-    
-                        <td>$75.00</td>
-                    </tr>
-    
-                    <tr class="item last">
-                        <td>Domain name (1 year)</td>
-    
-                        <td>$10.00</td>
+                        <td>${100} $</td>
                     </tr>
     
                     <tr class="total">

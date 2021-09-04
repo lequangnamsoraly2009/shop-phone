@@ -5,8 +5,8 @@ const path = require("path");
 const pdfController = {
   createPDF: (req, res) => {
     try {
-      const { test } = req.body;
-      pdf.create(pdfReceipt({ test }), {}).toFile("./pdf/result.pdf", (err) => {
+      const { detailPayment } = req.body;
+      pdf.create(pdfReceipt({ detailPayment }), {}).toFile("./pdf/result.pdf", (err) => {
         if (err) {
           return res.status(400).json({ status: false, message: err.message });
         }
