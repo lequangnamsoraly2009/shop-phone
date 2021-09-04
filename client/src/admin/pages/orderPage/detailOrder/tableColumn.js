@@ -117,6 +117,7 @@ export const columnDataReceiver = [
   {
     title: "Name Customer",
     dataIndex: "name",
+    width: "10%",
     key: "name",
     render: (text, record, index) => <span>{record.name}</span>,
   },
@@ -124,6 +125,8 @@ export const columnDataReceiver = [
     title: "Email Customer",
     dataIndex: "email",
     key: "email",
+    width: "10%",
+
     align: "center",
     render: (text, record, index) => <span>{record.email}</span>,
   },
@@ -131,6 +134,8 @@ export const columnDataReceiver = [
     title: "Number Phone",
     dataIndex: "phone",
     key: "phone",
+    width: "10%",
+
     align: "center",
     render: (text, record, index) => (
       <span>{record.phone === undefined ? "Unknown" : `0${record.phone}`}</span>
@@ -141,7 +146,10 @@ export const columnDataReceiver = [
     dataIndex: "method",
     key: "method",
     align: "center",
-    render: (text, record, index) => <span>{record.numberOrderUser}</span>,
+    width: "10%",
+    render: (text, record, index) => (
+      <span style={{ textTransform: "upperCase" }}>{record.methodPayment}</span>
+    ),
   },
   {
     title: "Notes",
@@ -165,5 +173,3 @@ export const columnDataReceiver = [
     ),
   },
 ];
-
-
