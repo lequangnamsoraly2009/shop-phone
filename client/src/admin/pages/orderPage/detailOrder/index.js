@@ -12,7 +12,8 @@ import {
 import "./tableColumn";
 import PaymentAPI from "../../../../api/paymentAPI";
 import { getPaymentToDetail } from "../../../../app/paymentSlice";
-
+import axiosClient from "../../../../api/axiosClient";
+import { saveAs } from "file-saver";
 
 function DetailOrder() {
   const [totalPaymentOfUser, setTotalPaymentOfUser] = useState(1);
@@ -130,6 +131,24 @@ function DetailOrder() {
     }
   };
 
+  const handleClickPrintPDF = async () => {
+    try {
+      axiosClient.post("/api/create-pdf",{
+        test: "123"
+      }, {
+        headers: { Authorization: token },
+      });
+
+      const response = axiosClient.get("/api/fetch-pdf", {
+        responseType: "blob",
+        headers: { Authorization: token },
+      });
+      
+      const pdfBlob = new Blob([response.data.res], { type: "application/pdf" });
+      saveAs(pdfBlob, "newPdf.pdf");
+    } catch (error) {}
+  };
+
   const columnPayment = [
     {
       title: "Total Price",
@@ -200,7 +219,14 @@ function DetailOrder() {
         record.status === "Cancel" ? (
           "No Invoice"
         ) : (
-            <Button type="primary" >Print PDF</Button>
+          <Button
+            onClick={() => {
+              handleClickPrintPDF();
+            }}
+            type="primary"
+          >
+            Print PDF
+          </Button>
         ),
     },
     {
