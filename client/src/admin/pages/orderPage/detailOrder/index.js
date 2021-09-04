@@ -1,7 +1,7 @@
 import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useHistory, useParams } from "react-router-dom";
 import {
@@ -11,33 +11,35 @@ import {
 } from "./tableColumn";
 import "./tableColumn";
 import PaymentAPI from "../../../../api/paymentAPI";
+import { setDetailPayment } from "../../../../app/paymentSlice";
 
 function DetailOrder() {
-  const [detailOrder, setDetailOrder] = useState({});
+  // const [detailOrder, setDetailOrder] = useState({});
   const [numberOrderUser, setNumberOrderUser] = useState(0);
 
-  const { payments } = useSelector((state) => state.payments);
+  const { payments, detailPayment } = useSelector((state) => state.payments);
   const { token } = useSelector((state) => state.token);
 
   const history = useHistory();
   const params = useParams();
+  const dispatch = useDispatch();
+
+  console.log(params.id);
 
   const arrayDetail = [];
-  arrayDetail.push({ numberOrderUser, ...detailOrder });
+  arrayDetail.push({ numberOrderUser, ...detailPayment });
 
   useEffect(() => {
-    if (params) {
+    payments.forEach((payment) => {
       let sumOrders = 0;
-      payments.forEach((payment) => {
-        if (payment._id === params.id) {
-          setDetailOrder(payment);
-        }
-        if (payment.user_id === detailOrder.user_id) {
-          setNumberOrderUser((sumOrders += 1));
-        }
-      });
-    }
-  }, [params, payments, detailOrder, numberOrderUser]);
+      if (payment._id === params.id) {
+        dispatch(setDetailPayment(payment));
+      }
+      if (payment.user_id === detailPayment.user_id) {
+        setNumberOrderUser((sumOrders += 1));
+      }
+    });
+  }, [params, payments, dispatch, detailPayment, numberOrderUser]);
 
   const backPreviousPage = (e) => {
     e.preventDefault();
@@ -49,7 +51,7 @@ function DetailOrder() {
       const statusChange = "Success";
       const response = await PaymentAPI.changeStatusPayment({
         token,
-        _id: detailOrder?._id,
+        _id: detailPayment?._id,
         status: statusChange,
       });
       Swal.fire({
@@ -77,7 +79,7 @@ function DetailOrder() {
       const statusChange = "Cancel";
       const response = await PaymentAPI.changeStatusPayment({
         token,
-        _id: detailOrder?._id,
+        _id: detailPayment?._id,
         status: statusChange,
       });
       Swal.fire({
@@ -105,7 +107,7 @@ function DetailOrder() {
       const statusChange = "Pending";
       const response = await PaymentAPI.changeStatusPayment({
         token,
-        _id: detailOrder?._id,
+        _id: detailPayment?._id,
         status: statusChange,
       });
       Swal.fire({
@@ -272,6 +274,7 @@ function DetailOrder() {
           </div>
           <div className="order_header-infor-buyer">
             <Table
+              rowKey={Math.random() * 100000}
               dataSource={arrayDetail}
               columns={columnDataBuyer}
               style={{ marginLeft: 50 }}
@@ -286,7 +289,7 @@ function DetailOrder() {
           <div className="order_header-infor-buyer">
             <Table
               dataSource={arrayDetail}
-              rowKey={"_id"}
+              rowKey={Math.random() * 100000}
               columns={columnDataReceiver}
               style={{ marginLeft: 50 }}
               pagination={{ position: ["none", "none"] }}
@@ -298,10 +301,10 @@ function DetailOrder() {
             <span>List Items Order</span>
           </div>
           <Table
-            rowKey={"_id"}
+            rowKey={(record) => record.product_id}
             style={{ marginLeft: 50 }}
             columns={columnTable}
-            dataSource={detailOrder.cart}
+            dataSource={detailPayment.cart}
             pagination={{ position: ["none", "none"] }}
           />
         </div>
@@ -311,7 +314,7 @@ function DetailOrder() {
           </div>
           <div className="order_header-infor-buyer">
             <Table
-              rowKey={"_id"}
+              rowKey={Math.random() * 100000}
               style={{ marginLeft: 50 }}
               columns={columnPayment}
               dataSource={arrayDetail}
