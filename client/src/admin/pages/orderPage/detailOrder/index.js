@@ -12,8 +12,7 @@ import {
 import "./tableColumn";
 import PaymentAPI from "../../../../api/paymentAPI";
 import { getPaymentToDetail } from "../../../../app/paymentSlice";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import ReceiptPDF from "../receiptPDF";
+
 
 function DetailOrder() {
   const [totalPaymentOfUser, setTotalPaymentOfUser] = useState(1);
@@ -201,9 +200,7 @@ function DetailOrder() {
         record.status === "Cancel" ? (
           "No Invoice"
         ) : (
-          <PDFDownloadLink document={<ReceiptPDF />} fileName="test.pdf">
             <Button type="primary" >Print PDF</Button>
-          </PDFDownloadLink>
         ),
     },
     {
