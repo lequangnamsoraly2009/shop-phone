@@ -3,7 +3,7 @@ const pdfReceipt = require("../helper/receiptPDF");
 const path = require("path");
 
 const pdfController = {
-  createPDF: async (req, res) => {
+  createPDF: (req, res) => {
     try {
       const { test } = req.body;
       pdf.create(pdfReceipt({ test }), {}).toFile("./pdf/result.pdf", (err) => {
@@ -15,7 +15,7 @@ const pdfController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  fetchPDF: async (req, res) => {
+  fetchPDF: (req, res) => {
     try {
       res.sendFile("result.pdf", { root: path.join(__dirname, "../pdf") });
     } catch (error) {

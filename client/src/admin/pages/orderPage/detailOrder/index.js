@@ -133,7 +133,7 @@ function DetailOrder() {
 
   const handleClickPrintPDF = async () => {
     try {
-      await axiosClient.post(
+      axiosClient.post(
         "/api/create-pdf",
         {
           test: "123",
@@ -148,11 +148,11 @@ function DetailOrder() {
         headers: { Authorization: token },
       });
 
-      console.log(response);
 
       const pdfBlob = new Blob([response.data], {
         type: "application/pdf",
       });
+      console.log(pdfBlob)
       saveAs(pdfBlob, "newPdf.pdf");
     } catch (error) {}
   };
