@@ -201,7 +201,9 @@ function DetailOrder() {
         record.status === "Cancel" ? (
           "No Invoice"
         ) : (
-          <Button type="link">Print PDF</Button>
+          <PDFDownloadLink document={<ReceiptPDF />} fileName="test.pdf">
+            <Button type="primary" >Print PDF</Button>
+          </PDFDownloadLink>
         ),
     },
     {
@@ -257,13 +259,6 @@ function DetailOrder() {
           />
           Orders From Customers
         </h3>
-      </div>
-      <div>
-        <PDFDownloadLink document={<ReceiptPDF />} fileName="test.pdf">
-          {({ blob, url, loading, error }) =>
-            loading ? "Loading document..." : "Download now!"
-          }
-        </PDFDownloadLink>
       </div>
       <div className="product_breadcrumb">
         <Breadcrumb>
@@ -331,7 +326,6 @@ function DetailOrder() {
           </div>
         </div>
       </div>
-      
     </div>
   );
 }
