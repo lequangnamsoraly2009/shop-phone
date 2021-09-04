@@ -94,7 +94,7 @@ function MainOrder() {
       title: "PaymentID",
       dataIndex: "paymentID",
       key: "paymentID",
-      render: (text, record, index) => <span>{record.paymentID}</span>,
+      render: (text, record, index) => <span>{record._id}</span>,
       align: "center",
     },
     {

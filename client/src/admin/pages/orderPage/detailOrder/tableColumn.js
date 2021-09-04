@@ -72,10 +72,10 @@ export const columnTable = [
         <span>{record.price * record.quantity} $</span>
       ) : (
         <span>
-          {Math.floor(
-            record.price * record.quantity -
-              (record.price * record.quantity * record.sale) / 100
-          )}{" "}
+          {record.price * record.quantity -
+            ((record.price * record.quantity * record.sale) / 100).toFixed(
+              2
+            )}{" "}
           $
         </span>
       ),
@@ -158,7 +158,12 @@ export const columnDataReceiver = [
     key: "address",
     width: "30%",
     align: "center",
-    render: (text, record, index) => <span>{record.address?.line1}</span>,
+    render: (text, record, index) => (
+      <span>
+        {record.address?.ward} - {record.address?.district} - Tỉnh{" "}
+        {record.address?.province}
+      </span>
+    ),
   },
 ];
 
@@ -183,22 +188,28 @@ export const columnPayment = [
     align: "center",
     render: (text, record, index) => (
       <span>
-        {record.cart?.reduce((item1, item2) => {
-          return (
-            item1 +
-            Math.round((item2.price * item2.quantity * item2.sale) / 100)
-          );
-        }, 0)}
+        {record.cart
+          ?.reduce((item1, item2) => {
+            return item1 + (item2.price * item2.quantity * item2.sale) / 100;
+          }, 0.0)
+          .toFixed(2)}
         $
       </span>
     ),
   },
   {
-    title: "Transport Fee",
-    dataIndex: "fee",
-    key: "fee",
+    title: "Fee Shipping",
+    dataIndex: "feeShipValue",
+    key: "feeShipValue",
     align: "center",
-    render: (text, record, index) => <span>{10}$</span>,
+    render: (text, record, index) => <span>{record.feeShipValue}$</span>,
+  },
+  {
+    title: "Gift Voucher",
+    dataIndex: "voucherValue",
+    key: "voucherValue",
+    align: "center",
+    render: (text, record, index) => <span>{record.voucherValue}$</span>,
   },
   {
     title: "Total Price To Pay",
@@ -210,12 +221,10 @@ export const columnPayment = [
         {record.cart?.reduce((item1, item2) => {
           return (
             item1 +
-            Math.round(
-              item2.price * item2.quantity -
-                (item2.price * item2.quantity * item2.sale) / 100
-            )
+            (item2.price * item2.quantity -
+              ((item2.price * item2.quantity * item2.sale) / 100).toFixed(2))
           );
-        }, 10)}
+        }, record.feeShipValue - record.voucherValue)}
         $
       </span>
     ),
@@ -231,7 +240,14 @@ export const columnPayment = [
     dataIndex: "status",
     key: "status",
     align: "center",
-    render: (text, record, index) => <span>{record.status}</span>,
+    render: (text, record, index) =>
+      record.status === "Pending" ? (
+        <span style={{ color: "red" }}>{record.status}</span>
+      ) : record.status === "Success" ? (
+        <span style={{ color: "green" }}>{record.status}</span>
+      ) : (
+        <span style={{ color: "gray" }}>{record.status}</span>
+      ),
   },
   {
     title: "Actions",
