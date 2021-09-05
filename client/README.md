@@ -20,5 +20,6 @@
                                 + Voucher Sale Off With Percent Of Total Products (0%)
                                 + Voucher Sale Off With Free Ship or Percent (0%)
     - Change ID Payment in Admin DashBoard (100%)
-    - Accept Pending Payment and Send Mail Receipt For Customer (50%)
+    - Accept Pending Payment and Send Mail Receipt For Customer (75%)
     - Rebuild Constructor Folder and Function Controller (0%)
+    - Delete Email In Payment (0%)
