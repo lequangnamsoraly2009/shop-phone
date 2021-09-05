@@ -473,7 +473,7 @@ const ReceiptMail = ({
                           <tr>
                             <td align="center">
                               <h1 class="f-fallback discount_heading">5% off your next purchase!</h1>
-                              <p class="f-fallback discount_body">Thanks for your support! Here's a coupon for 5% off your next purchase if used in 7 more days. Join it!</p>
+                              <p class="f-fallback discount_body">Thanks for your support! Here's a coupon for 5% off your next purchase if used in more 7 days. Join it!</p>
                               <!-- Border based button
            https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
                               <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
@@ -510,14 +510,14 @@ const ReceiptMail = ({
                                   <td width="80%" class="purchase_item"><span class="f-fallback">Products (${
                                     detailPayment.cart.length
                                   })</span></td>
-                                  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">${totalBillProduct}</span></td>
+                                  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">${totalBillProduct} $</span></td>
                                 </tr>
                                 <tr>
                                   <td width="80%" class="purchase_footer" valign="middle">
                                     <p class="f-fallback purchase_total purchase_total--label">Total</p>
                                   </td>
                                   <td width="20%" class="purchase_footer" valign="middle">
-                                    <p class="f-fallback purchase_total">${totalBill}</p>
+                                    <p class="f-fallback purchase_total">${totalBill} $</p>
                                   </td>
                                 </tr>
                               </table>
