@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useHistory, useParams } from "react-router-dom";
-import { RollBoxLoading } from "react-loadingg";
+import { CommonLoading } from "react-loadingg";
 import {
   columnDataBuyer,
   columnDataReceiver,
@@ -328,7 +328,7 @@ function DetailOrder() {
   return (
     <div className="container-admin">
       {loadingPage === true ? (
-        <RollBoxLoading />
+        <CommonLoading />
       ) : (
         <>
           <div className="header_page">
