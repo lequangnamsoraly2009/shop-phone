@@ -1,4 +1,13 @@
-import { Anchor, Badge, Button, Drawer, Dropdown, Menu } from "antd";
+import {
+  Anchor,
+  Badge,
+  Button,
+  Drawer,
+  Dropdown,
+  Menu,
+  Avatar,
+  Image,
+} from "antd";
 import { Header } from "antd/lib/layout/layout";
 import "./header.css";
 import React, { useEffect, useState } from "react";
@@ -12,7 +21,7 @@ import {
 } from "@ant-design/icons";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { useDispatch, useSelector } from "react-redux";
-import Avatar from "antd/lib/avatar/avatar";
+// import Avatar from "antd/lib/avatar/avatar";
 import API from "../../api/axiosClient";
 import { getLogout, getUserLogin } from "../../app/userSlice";
 import { persistor } from "../../app/store";
@@ -118,7 +127,7 @@ function HeaderNav() {
 
   const onSearch = (value) => {
     history.push("/category");
-    dispatch(setSearch(value.toLowerCase()))
+    dispatch(setSearch(value.toLowerCase()));
     dispatch(setSearchFilter(value.toLowerCase()));
     dispatch(setCategoryFilter(""));
     dispatch(setPageFilter(1));
@@ -268,16 +277,33 @@ function HeaderNav() {
               ) : (
                 <div className="user_infor">
                   <Menu.Item key="user">
-                    <Avatar
-                      style={{
-                        color: "#f56a00",
-                        backgroundColor: "#fde3cf",
-                        textTransform: "capitalize",
-                        marginRight: 5,
-                      }}
-                    >
-                      U
-                    </Avatar>
+                    {user.picture ? (
+                      <Avatar
+                        style={{
+                          color: "#f56a00",
+                          backgroundColor: "#fde3cf",
+                          textTransform: "capitalize",
+                          marginRight: 5,
+                          border: "1px solid rgba(77, 77, 77, 0.3)",
+                        }}
+                        src={
+                          <Image src={user.picture} />
+                        }
+                      />
+                    ) : (
+                      <Avatar
+                        style={{
+                          color: "#f56a00",
+                          backgroundColor: "#fde3cf",
+                          textTransform: "capitalize",
+                          marginRight: 5,
+                          border: "1px solid rgba(77, 77, 77, 0.3)",
+                        }}
+                        src={
+                          <Image src="https://i.pinimg.com/474x/a7/b0/5e/a7b05eed960c1c288f05012082008f03.jpg" />
+                        }
+                      />
+                    )}
                     <a
                       href="/customer/infor"
                       style={{ textTransform: "capitalize" }}
