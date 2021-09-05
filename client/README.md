@@ -4,7 +4,7 @@
     - Detail Products Choose Options And Sale Price (25%)
     - Login With Facebook and Google (50% - Not Yet for Facebook)
     - Address Shipping Bug ((20%))
-    - Load Product -> Load Detail Product - Remove load full products to redux (DONE!)
+    - Load Product -> Load Detail Product - Remove load full products to redux (100%!)
     - DashBoard Admin (Processing!!!)  (50%)
     - Wrong Password -> Fix It (DONE!)
     - Loading Spin when load data (10%)

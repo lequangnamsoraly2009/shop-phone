@@ -99,12 +99,21 @@ function DetailUser() {
               <span style={{ fontSize: 16 }}>User Avatar</span>
             </div>
             <div className="user_data-infor-avatar">
-              <Avatar
-                style={{ height: 300, width: 300, border: "1px solid #000" }}
-                src={
-                  <Image src="https://i.pinimg.com/474x/a7/b0/5e/a7b05eed960c1c288f05012082008f03.jpg" />
-                }
-              />
+              {detailUser.picture ? (
+                <Avatar
+                  style={{ height: 300, width: 300, border: "1px solid #000" }}
+                  src={
+                    <Image style={{ height: 300, width: 300}}  src={detailUser.picture} />
+                  }
+                />
+              ) : (
+                <Avatar
+                  style={{ height: 300, width: 300, border: "1px solid #000" }}
+                  src={
+                    <Image src="https://i.pinimg.com/474x/a7/b0/5e/a7b05eed960c1c288f05012082008f03.jpg" />
+                  }
+                />
+              )}
             </div>
           </div>
           <div className="user_data-infor-right">
