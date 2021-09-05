@@ -1,18 +1,24 @@
-import { Breadcrumb, Row, Col, Menu } from "antd";
+import { Breadcrumb, Row, Col, Tabs } from "antd";
 import React, { useState } from "react";
 import "./information.css";
 import ChangePass from "../../components/changePass";
 import UpdateInfor from "../../components/updateInfor";
 
-function InformationCustomer() {
-  const [showInformation, setShowInformation] = useState(true);
+const { TabPane } = Tabs;
 
-  const handleClickShowPass = () => {
-    setShowInformation(false);
-  };
-  const handleClickShowInfor = () => {
-    setShowInformation(true);
-  };
+function InformationCustomer() {
+  // const [showInformation, setShowInformation] = useState(true);
+
+  // const handleClickShowPass = () => {
+  //   setShowInformation(false);
+  // };
+  // const handleClickShowInfor = () => {
+  //   setShowInformation(true);
+  // };
+
+  // const handleClickChangeAvater = () => {
+
+  // }
 
   return (
     <div className="container-fluid">
@@ -24,10 +30,19 @@ function InformationCustomer() {
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <Row gutter={{ xs: 4, sm: 8, md: 8, lg: 12 }}>
-        <Col className="gutter-row" span={4}>
-          <div className="infor-menu">
-            <Menu
+      <div className="infor-menu">
+        <Tabs tabPosition="left">
+          <TabPane tab="Information" key="1">
+            <UpdateInfor />
+          </TabPane>
+          <TabPane tab="Change Avatar" key="2">
+            Change Avatar
+          </TabPane>
+          <TabPane tab="Change Password" key="3">
+            <ChangePass />
+          </TabPane>
+        </Tabs>
+        {/* <Menu
               style={{ width: "100%" }}
               defaultSelectedKeys={["1"]}
               // defaultOpenKeys={["sub1"]}
@@ -39,13 +54,11 @@ function InformationCustomer() {
               <Menu.Item key="2" onClick={handleClickShowPass}>
                 Change Password
               </Menu.Item>
-            </Menu>
-          </div>
-        </Col>
-        <Col className="gutter-row" span={20}>
-          {showInformation === true ? <UpdateInfor /> : <ChangePass />}
-        </Col>
-      </Row>
+              <Menu.Item key="3" onClick={handleClickChangeAvater}>
+                Change Avatar
+              </Menu.Item>
+            </Menu> */}
+      </div>
     </div>
   );
 }
