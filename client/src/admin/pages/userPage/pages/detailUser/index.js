@@ -9,7 +9,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import UserAPI from "../../../../../api/userAPI";
 import "./detailUser.css";
 import Swal from "sweetalert2";
@@ -186,9 +186,10 @@ function DetailUser() {
                     <Button type="primary">Change Type</Button>
                   </Popconfirm>
                 )}
-
                 <Button type="primary">Send Notification</Button>
-                <Button type="primary">Send Voucher</Button>
+                <Link to="/admin/voucher">
+                  <Button type="primary">Send Voucher</Button>
+                </Link>
                 <Button type="primary">Chat With User</Button>
               </div>
             </div>
