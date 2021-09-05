@@ -30,8 +30,8 @@ function ChangeAvatar() {
             onEdit={onEdit}
             setLoading={setLoading}
           />
-          <span>Avatar</span>
         </div>
+        <span className="avatar-main-name">Your Avatar</span>
       </div>
     </div>
   );
