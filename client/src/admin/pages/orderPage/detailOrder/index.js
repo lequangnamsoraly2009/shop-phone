@@ -171,16 +171,25 @@ function DetailOrder() {
         }
       );
 
-      const response = await axiosClient.get("/api/fetch-pdf", {
-        responseType: "blob",
-        headers: { Authorization: token },
-      });
+      // const response = await axiosClient.get("/api/fetch-pdf", {
+      //   responseType: "blob",
+      //   headers: { Authorization: token },
+      // });
 
-      const pdfBlob = new Blob([response.data], {
-        type: "application/pdf",
+      // const pdfBlob = new Blob([response.data], {
+      //   type: "application/pdf",
+      // });
+      // saveAs(pdfBlob, `RECEIPT-${detailPayment._id}.pdf`);
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
       });
-      saveAs(pdfBlob, `RECEIPT-${detailPayment._id}.pdf`);
-    } catch (error) {}
+    }
   };
 
   const handleClickPrintPDF = async () => {
@@ -195,7 +204,16 @@ function DetailOrder() {
       });
       saveAs(pdfBlob, `RECEIPT-${detailPayment._id}.pdf`);
       setAwaitPrint(false);
-    } catch (error) {}
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   };
 
   const columnPayment = [
