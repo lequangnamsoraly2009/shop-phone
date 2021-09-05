@@ -122,7 +122,7 @@ function DetailOrder() {
         position: "center",
         icon: "error",
         title: "Something went wrong!",
-        text: `${error.response.data.message}`,
+        text: `${error.response?.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
@@ -151,7 +151,7 @@ function DetailOrder() {
         position: "center",
         icon: "error",
         title: "Something went wrong!",
-        text: `${error.response.data.message}`,
+        text: `${error.response?.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
@@ -185,7 +185,7 @@ function DetailOrder() {
         position: "center",
         icon: "error",
         title: "Something went wrong!",
-        text: `${error.response.data.message}`,
+        text: `${error.response?.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
@@ -209,7 +209,7 @@ function DetailOrder() {
         position: "center",
         icon: "error",
         title: "Something went wrong!",
-        text: `${error.response.data.message}`,
+        text: `${error.response?.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
