@@ -513,6 +513,14 @@ const ReceiptMail = ({
                                   <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">${totalBillProduct} $</span></td>
                                 </tr>
                                 <tr>
+                                  <td width="80%" class="purchase_item"><span class="f-fallback">Fee Shipping</span></td>
+                                  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">${detailPayment.feeShipValue} $</span></td>
+                                </tr>
+                                <tr>
+                                  <td width="80%" class="purchase_item"><span class="f-fallback">Gift Voucher</span></td>
+                                  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">- ${detailPayment.voucherValue} $</span></td>
+                                </tr>
+                                <tr>
                                   <td width="80%" class="purchase_footer" valign="middle">
                                     <p class="f-fallback purchase_total purchase_total--label">Total</p>
                                   </td>
