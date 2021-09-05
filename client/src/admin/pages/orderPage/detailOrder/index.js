@@ -87,6 +87,7 @@ function DetailOrder() {
         showConfirmButton: false,
         timer: 2000,
       });
+      window.location.reload();
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -115,6 +116,7 @@ function DetailOrder() {
         showConfirmButton: false,
         timer: 2000,
       });
+      window.location.reload();
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -143,6 +145,7 @@ function DetailOrder() {
         showConfirmButton: false,
         timer: 2000,
       });
+      window.location.reload();
     } catch (error) {
       Swal.fire({
         position: "center",
