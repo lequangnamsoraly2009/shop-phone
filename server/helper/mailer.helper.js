@@ -75,7 +75,7 @@ exports.sendGiftVouchersEMail = ({toUser, voucher}) => {
 } 
 
 exports.sendReceiptPayment = ({toUser, detailPayment, totalBill, totalBillProduct}) => {
-  const receipt = ReceiptMail({detailPayment, totalBill, totalBillProduct});
+  const receipt = ReceiptMail({toUser,detailPayment, totalBill, totalBillProduct});
   const mailOptions = {
     from: "Soraly Shop <no-reply@soralyshop.com>",
     to: toUser.email,

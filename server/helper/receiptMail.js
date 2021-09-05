@@ -1,4 +1,9 @@
-const ReceiptMail = ({ detailPayment, totalBill, totalBillProduct }) =>`
+const ReceiptMail = ({
+  toUser,
+  detailPayment,
+  totalBill,
+  totalBillProduct,
+}) => `
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -461,14 +466,14 @@ const ReceiptMail = ({ detailPayment, totalBill, totalBillProduct }) =>`
                   <tr>
                     <td class="content-cell">
                       <div class="f-fallback">
-                        <h1>Hi {{name}},</h1>
+                        <h1>Hi ${toUser.userName},</h1>
                         <p>Thanks for using our product. This email is the receipt for your purchase. No payment is due.</p>
                         <!-- Discount -->
                         <table class="discount" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td align="center">
                               <h1 class="f-fallback discount_heading">5% off your next purchase!</h1>
-                              <p class="f-fallback discount_body">Thanks for your support! Here's a coupon for 5% off your next purchase if used by {{expiration_date}}.</p>
+                              <p class="f-fallback discount_body">Thanks for your support! Here's a coupon for 5% off your next purchase if used in 7 more days. Join it!</p>
                               <!-- Border based button
            https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
                               <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
@@ -484,7 +489,7 @@ const ReceiptMail = ({ detailPayment, totalBill, totalBillProduct }) =>`
                         <table class="purchase" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td>
-                              <h3>${detailPayment._id}</h3></td>
+                              <h3>Payment ID: ${detailPayment._id}</h3></td>
                             <td>
                               <h3 class="align-right">${new Date(
                                 detailPayment.updatedAt
@@ -501,12 +506,12 @@ const ReceiptMail = ({ detailPayment, totalBill, totalBillProduct }) =>`
                                     <p class="f-fallback">Amount</p>
                                   </th>
                                 </tr>
-                                {{#each receipt_details}}
                                 <tr>
-                                  <td width="80%" class="purchase_item"><span class="f-fallback">Products</span></td>
+                                  <td width="80%" class="purchase_item"><span class="f-fallback">Products (${
+                                    detailPayment.cart.length
+                                  })</span></td>
                                   <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">${totalBillProduct}</span></td>
                                 </tr>
-                                {{/each}}
                                 <tr>
                                   <td width="80%" class="purchase_footer" valign="middle">
                                     <p class="f-fallback purchase_total purchase_total--label">Total</p>
