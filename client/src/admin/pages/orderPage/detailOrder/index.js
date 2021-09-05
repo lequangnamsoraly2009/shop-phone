@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useHistory, useParams } from "react-router-dom";
+import { RollBoxLoading } from "react-loadingg";
 import {
   columnDataBuyer,
   columnDataReceiver,
@@ -20,6 +21,7 @@ function DetailOrder() {
   const [totalPaymentOfUser, setTotalPaymentOfUser] = useState(1);
   const [userBuyer, setUserBuyer] = useState({});
   const [awaitPrint, setAwaitPrint] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(false);
 
   const { detailPayment, payments } = useSelector((state) => state.payments);
   const { token } = useSelector((state) => state.token);
@@ -63,6 +65,7 @@ function DetailOrder() {
 
   const handleAcceptPayment = async () => {
     try {
+      setLoadingPage(true);
       const statusChange = "Success";
       const response = await PaymentAPI.changeStatusPayment({
         token,
@@ -75,7 +78,7 @@ function DetailOrder() {
         detailPayment,
         user: userBuyer,
       });
-
+      setLoadingPage(false);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -324,83 +327,89 @@ function DetailOrder() {
 
   return (
     <div className="container-admin">
-      <div className="header_page">
-        <h3>
-          <Button
-            style={{ marginRight: 10 }}
-            type="dashed"
-            icon={<ArrowLeftOutlined />}
-            onClick={backPreviousPage}
-          />
-          Orders From Customers
-        </h3>
-      </div>
-      <div className="product_breadcrumb">
-        <Breadcrumb>
-          <Breadcrumb.Item href="">
-            <HomeOutlined />
-          </Breadcrumb.Item>
-          <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
-          <Breadcrumb.Item href="/admin/orders">Orders</Breadcrumb.Item>
-          <Breadcrumb.Item>Detail Orders</Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
-      <div className="container-special">
-        <div className="order_header">
-          <div className="order_header-buyer">
-            <span>Information Buyer</span>
+      {loadingPage === true ? (
+        <RollBoxLoading />
+      ) : (
+        <>
+          <div className="header_page">
+            <h3>
+              <Button
+                style={{ marginRight: 10 }}
+                type="dashed"
+                icon={<ArrowLeftOutlined />}
+                onClick={backPreviousPage}
+              />
+              Orders From Customers
+            </h3>
           </div>
-          <div className="order_header-infor-buyer">
-            <Table
-              rowKey={Math.random() * 100000}
-              dataSource={arrayDetailBuyer}
-              columns={columnDataBuyer}
-              style={{ marginLeft: 50 }}
-              pagination={{ position: ["none", "none"] }}
-            />
+          <div className="product_breadcrumb">
+            <Breadcrumb>
+              <Breadcrumb.Item href="">
+                <HomeOutlined />
+              </Breadcrumb.Item>
+              <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
+              <Breadcrumb.Item href="/admin/orders">Orders</Breadcrumb.Item>
+              <Breadcrumb.Item>Detail Orders</Breadcrumb.Item>
+            </Breadcrumb>
           </div>
-        </div>
-        <div className="order_header">
-          <div className="order_header-buyer">
-            <span>Information Receiver</span>
+          <div className="container-special">
+            <div className="order_header">
+              <div className="order_header-buyer">
+                <span>Information Buyer</span>
+              </div>
+              <div className="order_header-infor-buyer">
+                <Table
+                  rowKey={Math.random() * 100000}
+                  dataSource={arrayDetailBuyer}
+                  columns={columnDataBuyer}
+                  style={{ marginLeft: 50 }}
+                  pagination={{ position: ["none", "none"] }}
+                />
+              </div>
+            </div>
+            <div className="order_header">
+              <div className="order_header-buyer">
+                <span>Information Receiver</span>
+              </div>
+              <div className="order_header-infor-buyer">
+                <Table
+                  dataSource={arrayDetail}
+                  rowKey={Math.random() * 100000}
+                  columns={columnDataReceiver}
+                  style={{ marginLeft: 50 }}
+                  pagination={{ position: ["none", "none"] }}
+                />
+              </div>
+            </div>
+            <div className="product_data order_header">
+              <div className="order_header-buyer">
+                <span>List Items Order</span>
+              </div>
+              <Table
+                rowKey={(record) => record.product_id}
+                style={{ marginLeft: 50 }}
+                columns={columnTable}
+                dataSource={detailPayment.cart}
+                pagination={{ position: ["none", "none"] }}
+              />
+            </div>
+            <div className="order-footer order_header">
+              <div className="order_header-buyer">
+                <span>Payment</span>
+              </div>
+              <div className="order_header-infor-buyer">
+                <Table
+                  rowKey={Math.random() * 100000}
+                  style={{ marginLeft: 50 }}
+                  columns={columnPayment}
+                  dataSource={arrayDetail}
+                  pagination={{ position: ["none", "none"] }}
+                />
+              </div>
+            </div>
           </div>
-          <div className="order_header-infor-buyer">
-            <Table
-              dataSource={arrayDetail}
-              rowKey={Math.random() * 100000}
-              columns={columnDataReceiver}
-              style={{ marginLeft: 50 }}
-              pagination={{ position: ["none", "none"] }}
-            />
-          </div>
-        </div>
-        <div className="product_data order_header">
-          <div className="order_header-buyer">
-            <span>List Items Order</span>
-          </div>
-          <Table
-            rowKey={(record) => record.product_id}
-            style={{ marginLeft: 50 }}
-            columns={columnTable}
-            dataSource={detailPayment.cart}
-            pagination={{ position: ["none", "none"] }}
-          />
-        </div>
-        <div className="order-footer order_header">
-          <div className="order_header-buyer">
-            <span>Payment</span>
-          </div>
-          <div className="order_header-infor-buyer">
-            <Table
-              rowKey={Math.random() * 100000}
-              style={{ marginLeft: 50 }}
-              columns={columnPayment}
-              dataSource={arrayDetail}
-              pagination={{ position: ["none", "none"] }}
-            />
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }
