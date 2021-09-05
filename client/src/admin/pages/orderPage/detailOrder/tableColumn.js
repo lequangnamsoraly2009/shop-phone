@@ -86,7 +86,7 @@ export const columnDataBuyer = [
     title: "Name Customer",
     dataIndex: "name",
     key: "name",
-    render: (text, record, index) => <span>{record.name}</span>,
+    render: (text, record, index) => <span>{record.userName}</span>,
   },
   {
     title: "Email Customer",

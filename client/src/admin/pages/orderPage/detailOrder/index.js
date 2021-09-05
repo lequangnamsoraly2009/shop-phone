@@ -17,21 +17,33 @@ import { saveAs } from "file-saver";
 
 function DetailOrder() {
   const [totalPaymentOfUser, setTotalPaymentOfUser] = useState(1);
+  const [userBuyer, setUserBuyer] = useState({});
   const [awaitPrint, setAwaitPrint] = useState(false);
 
   const { detailPayment, payments } = useSelector((state) => state.payments);
   const { token } = useSelector((state) => state.token);
+  const { users } = useSelector((state) => state.usersAdmin);
 
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
 
-  const arrayDetail = [];
-  arrayDetail.push({ totalPaymentOfUser, ...detailPayment });
+  const arrayDetailBuyer = [];
+  arrayDetailBuyer.push({ totalPaymentOfUser, ...userBuyer });
+
+  const arrayDetail = [{ ...detailPayment }];
 
   useEffect(() => {
     dispatch(getPaymentToDetail({ token, idPayment: params.id }));
   }, [dispatch, token, params]);
+
+  useEffect(() => {
+    users.forEach((user) => {
+      if (user._id === detailPayment.user_id) {
+        setUserBuyer(user);
+      }
+    });
+  }, [detailPayment, users]);
 
   useEffect(() => {
     let sum = 0;
@@ -333,7 +345,7 @@ function DetailOrder() {
           <div className="order_header-infor-buyer">
             <Table
               rowKey={Math.random() * 100000}
-              dataSource={arrayDetail}
+              dataSource={arrayDetailBuyer}
               columns={columnDataBuyer}
               style={{ marginLeft: 50 }}
               pagination={{ position: ["none", "none"] }}

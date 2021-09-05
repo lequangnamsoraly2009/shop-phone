@@ -23,3 +23,4 @@
     - Accept Pending Payment and Send Mail Receipt For Customer (75%)
     - Rebuild Constructor Folder and Function Controller (0%)
     - Delete Email In Payment (0%)
+    - Zoom Image In Detail Product (0%)
