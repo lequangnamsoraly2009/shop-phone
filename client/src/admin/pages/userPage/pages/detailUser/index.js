@@ -3,14 +3,18 @@ import { Breadcrumb, Image, Avatar, Descriptions, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import UserAPI from "../../../../../api/userAPI";
 import "./detailUser.css";
 
 function DetailUser() {
   const params = useParams();
   const { users } = useSelector((state) => state.usersAdmin);
+  const {token} = useSelector((state) => state.token);
+
   const [detailUser, setDetailUser] = useState({});
 
   const history = useHistory();
+
 
   const backPreviousPage = (e) => {
     e.preventDefault();
@@ -27,7 +31,7 @@ function DetailUser() {
 
   const handleChangeTypeUser = async() => {
     try {
-      
+      await UserAPI.changeTypeUser({token, idUserChange: detailUser._id, typeUserChange: "Confirmed" })
     } catch (error) {
       
     }

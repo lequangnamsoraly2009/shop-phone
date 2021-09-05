@@ -45,6 +45,18 @@ const UserAPI = {
         headers: { Authorization: token },
       }
     );
+  },
+  changeTypeUser: ({ token, idUserChange, typeUserChange}) => {
+    return API.patch(
+      `/users/change_type`,
+      {
+        idUserChange,
+        typeUserChange
+      },
+      {
+        headers: { Authorization: token },
+      }
+    );
   }
 };
 
