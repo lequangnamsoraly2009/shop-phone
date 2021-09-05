@@ -1,20 +1,27 @@
 import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Image, Avatar, Descriptions, Button } from "antd";
+import {
+  Breadcrumb,
+  Image,
+  Avatar,
+  Descriptions,
+  Button,
+  Popconfirm,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import UserAPI from "../../../../../api/userAPI";
 import "./detailUser.css";
+import Swal from "sweetalert2";
 
 function DetailUser() {
   const params = useParams();
   const { users } = useSelector((state) => state.usersAdmin);
-  const {token} = useSelector((state) => state.token);
+  const { token } = useSelector((state) => state.token);
 
   const [detailUser, setDetailUser] = useState({});
 
   const history = useHistory();
-
 
   const backPreviousPage = (e) => {
     e.preventDefault();
@@ -29,13 +36,32 @@ function DetailUser() {
     });
   }, [params, users]);
 
-  const handleChangeTypeUser = async() => {
+  const handleChangeTypeUser = async (value) => {
     try {
-      await UserAPI.changeTypeUser({token, idUserChange: detailUser._id, typeUserChange: "Confirmed" })
+      const response = await UserAPI.changeTypeUser({
+        token,
+        idUserChange: detailUser._id,
+        typeUserChange: value,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Successful!",
+        text: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } catch (error) {
-      
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response?.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
-  }
+  };
 
   return (
     <div className="container-admin">
@@ -129,7 +155,38 @@ function DetailUser() {
             <div className="user_data-infor-right-change">
               <span>Action With This User</span>
               <div className="action">
-                <Button type="primary" onClick={() => handleChangeTypeUser()}>Change Type</Button>
+                {detailUser.typeUser === "Confirmed" ? (
+                  <Popconfirm
+                    title="What type of user do you want to change?"
+                    onConfirm={() => handleChangeTypeUser("Unconfirmed")}
+                    onCancel={() => handleChangeTypeUser("Block")}
+                    okText="Unconfirmed"
+                    cancelText="Block"
+                  >
+                    <Button type="primary">Change Type</Button>
+                  </Popconfirm>
+                ) : detailUser.typeUser === "Unconfimred" ? (
+                  <Popconfirm
+                    title="What type of user do you want to change?"
+                    onConfirm={() => handleChangeTypeUser("Confirmed")}
+                    onCancel={() => handleChangeTypeUser("Block")}
+                    okText="Confirmed"
+                    cancelText="Block"
+                  >
+                    <Button type="primary">Change Type</Button>
+                  </Popconfirm>
+                ) : (
+                  <Popconfirm
+                    title="What type of user do you want to change?"
+                    onConfirm={() => handleChangeTypeUser("Confirmed")}
+                    onCancel={() => handleChangeTypeUser("Unconfirmed")}
+                    okText="Confirm"
+                    cancelText="Unconfirmed"
+                  >
+                    <Button type="primary">Change Type</Button>
+                  </Popconfirm>
+                )}
+
                 <Button type="primary">Send Notification</Button>
                 <Button type="primary">Send Voucher</Button>
                 <Button type="primary">Chat With User</Button>
