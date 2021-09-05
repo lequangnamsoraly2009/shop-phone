@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import UploadAvatar from "../uploadImage";
 import "./changeAvatar.css";
 
@@ -6,6 +7,9 @@ function ChangeAvatar() {
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
+
+  const {user} = useSelector((state) => state.user);
+
 
   const callbackFunction = (childData) => {
     setImage(childData);
@@ -25,7 +29,7 @@ function ChangeAvatar() {
         <div className="create_upload-img-up">
           <UploadAvatar
             images={image}
-            // param={param}
+            param={user.picture}
             parentCallback={callbackFunction}
             onEdit={onEdit}
             setLoading={setLoading}

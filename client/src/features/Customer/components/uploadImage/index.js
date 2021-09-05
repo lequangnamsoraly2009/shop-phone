@@ -43,7 +43,7 @@ function UploadAvatar(props) {
 
   const onChange = ({ fileList: newFileList }) => {
     // On Edit -> Update Image Here
-    if (props.param.id) {
+    if (props.param) {
       if (newFileList === undefined) {
         props.parentCallback(props.images);
       } else {
