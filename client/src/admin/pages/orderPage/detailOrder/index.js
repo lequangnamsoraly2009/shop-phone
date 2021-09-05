@@ -14,6 +14,7 @@ import PaymentAPI from "../../../../api/paymentAPI";
 import { getPaymentToDetail } from "../../../../app/paymentSlice";
 import axiosClient from "../../../../api/axiosClient";
 import { saveAs } from "file-saver";
+import MailerAPI from "../../../../api/mailerAPI";
 
 function DetailOrder() {
   const [totalPaymentOfUser, setTotalPaymentOfUser] = useState(1);
@@ -68,6 +69,13 @@ function DetailOrder() {
         _id: detailPayment?._id,
         status: statusChange,
       });
+
+      await MailerAPI.sendReceiptMail({
+        token,
+        detailPayment,
+        user: userBuyer,
+      });
+
       Swal.fire({
         position: "center",
         icon: "success",
@@ -81,7 +89,7 @@ function DetailOrder() {
         position: "center",
         icon: "error",
         title: "Something went wrong!",
-        text: `${error.response.data.message}`,
+        text: `${error.response?.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
