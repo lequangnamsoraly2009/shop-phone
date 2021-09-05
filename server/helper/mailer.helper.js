@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const {google} = require("googleapis")
 const {GiftVoucher} = require("./giftVoucher")
+const {ReceiptMail} = require("./receiptMail")
 
 const oAuth2Client = new google.auth.OAuth2(process.env.CLIENT_ID,process.env.CLIENT_SECRET,process.env.REDIRECT_URI);
 oAuth2Client.setCredentials({refresh_token:process.env.REFRESH_TOKEN});
@@ -69,6 +70,17 @@ exports.sendGiftVouchersEMail = ({toUser, voucher}) => {
     to: toUser.email,
     subject: 'Soraly Shop - Gift Voucher',
     html: giftVoucher,
+  };
+  return sendMail(mailOptions);
+} 
+
+exports.sendReceiptPayment = ({toUser, detailPayment, totalBill, totalBillProduct}) => {
+  const receipt = ReceiptMail({detailPayment, totalBill, totalBillProduct});
+  const mailOptions = {
+    from: "Soraly Shop <no-reply@soralyshop.com>",
+    to: toUser.email,
+    subject: 'Soraly Shop - Receipt Email',
+    html: receipt,
   };
   return sendMail(mailOptions);
 } 
