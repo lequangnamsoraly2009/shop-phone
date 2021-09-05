@@ -25,6 +25,14 @@ function DetailUser() {
     });
   }, [params, users]);
 
+  const handleChangeTypeUser = async() => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <div className="container-admin">
       <div className="header_page">
@@ -117,7 +125,7 @@ function DetailUser() {
             <div className="user_data-infor-right-change">
               <span>Action With This User</span>
               <div className="action">
-                <Button type="primary">Change Type</Button>
+                <Button type="primary" onClick={() => handleChangeTypeUser()}>Change Type</Button>
                 <Button type="primary">Send Notification</Button>
                 <Button type="primary">Send Voucher</Button>
                 <Button type="primary">Chat With User</Button>

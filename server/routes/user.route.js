@@ -3,7 +3,7 @@ const userController = require("../controllers/user.controller");
 const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 const deviceMiddleware = require("../middleware/device");
-const passport = require("passport");
+const typeUserController = require("../controllers/typeUser.controller");
 
 router.post("/register", deviceMiddleware, userController.register);
 router.post("/login", userController.login);
@@ -20,6 +20,8 @@ router.patch("/infor", auth, userController.updateInforUser);
 router.patch("/addcart", auth, userController.addCart);
 router.get("/history", auth, userController.historyOrder);
 router.get("/all_users", auth, authAdmin, userController.getAllUsers);
+router.get("/change_type", auth, authAdmin, typeUserController.changeTypeUser);
+
 // All users not limit
 router.get("/all_users_1", auth, authAdmin, userController.getAllUsers1);
 router.get(
