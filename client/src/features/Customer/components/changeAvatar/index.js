@@ -6,7 +6,6 @@ import UploadAvatar from "../uploadImage";
 import "./changeAvatar.css";
 
 function ChangeAvatar() {
-  const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
 
@@ -20,8 +19,8 @@ function ChangeAvatar() {
 
   const callbackFunction = async(childData) => {
     try {
-      setImage(childData);
       const response = await UserAPI.changeAvatarUser({token, user: user, avatar: childData});
+      setOnEdit(true);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -56,7 +55,7 @@ function ChangeAvatar() {
       <div className="avatar-main">
         <div className="create_upload-img-up">
           <UploadAvatar
-            images={image}
+            images={user.avatar}
             userId={user._id}
             parentCallback={callbackFunction}
             onEdit={onEdit}

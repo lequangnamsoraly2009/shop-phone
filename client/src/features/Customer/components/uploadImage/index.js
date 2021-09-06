@@ -1,7 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Spin, Upload } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import UserAPI from "../../../../api/userAPI";
@@ -23,23 +23,23 @@ function UploadAvatar(props) {
 
   const { token } = useSelector((state) => state.token);
 
-  //   // Load image when edit image and dont set new Image here
-  //   useEffect(() => {
-  //     if (props.param.id) {
-  //       if (props.images?.url === undefined) {
-  //         setFile([]);
-  //       } else {
-  //         setFile([
-  //           {
-  //             uid: "-1",
-  //             name: "Preview Image By Soraly",
-  //             status: "done",
-  //             url: props.images?.url,
-  //           },
-  //         ]);
-  //       }
-  //     }
-  //   }, [props.param.id, props.images?.url]);
+    // Load image when edit image and dont set new Image here
+    useEffect(() => {
+      if (props.userId) {
+        if (props.images?.url === undefined) {
+          setFile([]);
+        } else {
+          setFile([
+            {
+              uid: "-1",
+              name: "Preview Image By Soraly",
+              status: "done",
+              url: props.images?.url,
+            },
+          ]);
+        }
+      }
+    }, [props.userId, props.images?.url]);
 
   const onChange = ({ fileList: newFileList }) => {
     // On Edit -> Update Image Here
