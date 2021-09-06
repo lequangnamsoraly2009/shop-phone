@@ -42,7 +42,7 @@ router.post("/upload-avatar", uploadAvatarController.uploadAvatar);
 
 router.post("/delete-avatar", uploadAvatarController.deleteAvatar);
 
-router.patch("/add-avatar", uploadAvatarController.addAvatarUser);
+router.patch("/change-avatar", uploadAvatarController.changeAvatarUser);
 
 
 

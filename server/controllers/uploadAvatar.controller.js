@@ -74,10 +74,10 @@ const uploadAvatarController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  addAvatarUser: async (req, res) => {
+  changeAvatarUser: async (req, res) => {
     try {
       const { avatar } = req.body;
-      const user = await Users.findByIdAndUpdate(
+      await Users.findByIdAndUpdate(
         { _id: req.user.id },
         { avatar: avatar }
       );

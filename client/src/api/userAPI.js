@@ -46,22 +46,31 @@ const UserAPI = {
       }
     );
   },
-  changeTypeUser: ({ token, idUserChange, typeUserChange}) => {
+  changeTypeUser: ({ token, idUserChange, typeUserChange }) => {
     return API.patch(
       `/users/change_type`,
       {
         idUserChange,
-        typeUserChange
+        typeUserChange,
       },
       {
         headers: { Authorization: token },
       }
     );
   },
-  deleteAvatarCloud: ({public_id, token, userId}) => {
+  deleteAvatarCloud: ({ public_id, token, userId }) => {
     return API.post(
       "/users/delete-avatar",
-      { public_id: public_id, userId: userId},
+      { public_id: public_id, userId: userId },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
+  changeAvatarUser: ({ avatar, token }) => {
+    return API.patch(
+      "/users/change-avatar",
+      { avatar },
       {
         headers: { Authorization: token },
       }

@@ -70,7 +70,7 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: Object,
-
+      default: {}
     }
   },
   {
