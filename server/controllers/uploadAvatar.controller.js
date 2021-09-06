@@ -56,11 +56,11 @@ const uploadAvatarController = {
       }
       const user = await Users.findById({ _id: userId });
 
-      if (user.picture.public_id === public_id) {
+      if (user.avatar.public_id === public_id) {
         await Users.findByIdAndUpdate(
           { _id: userId },
           {
-            images: {},
+            avatar: {},
           }
         );
       }

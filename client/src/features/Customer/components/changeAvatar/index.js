@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import UserAPI from "../../../../api/userAPI";
 import Swal from "sweetalert2";
@@ -12,23 +12,21 @@ function ChangeAvatar() {
   const {user} = useSelector((state) => state.user);
   const {token} = useSelector((state) => state.token);
 
-  console.log(user)
+  useEffect(() => {
+    if(user.avatar){
+      setOnEdit(true)
+    }
+    else{
+      setOnEdit(false)
+    }
+  },[user])
 
-  
-
+  console.log(onEdit)
 
   const callbackFunction = async(childData) => {
     try {
-      const response = await UserAPI.changeAvatarUser({token, user: user, avatar: childData});
+      await UserAPI.changeAvatarUser({token, user: user, avatar: childData});
       setOnEdit(true);
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Successful",
-        text: `${response.data.message}`,
-        showConfirmButton: false,
-        timer: 2000,
-      });
     } catch (error) {
       Swal.fire({
         position: "center",

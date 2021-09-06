@@ -32,7 +32,7 @@ function UploadAvatar(props) {
           setFile([
             {
               uid: "-1",
-              name: "Preview Image By Soraly",
+              name: "Preview Avatar By Soraly",
               status: "done",
               url: props.images?.url,
             },
@@ -45,7 +45,7 @@ function UploadAvatar(props) {
     // On Edit -> Update Image Here
     if (props.userId) {
       if (newFileList === undefined) {
-        props.parentCallback(props.avatar);
+        props.parentCallback(props.images);
       } else {
         setFile(newFileList);
         const status = newFileList[0]?.status;
@@ -86,7 +86,7 @@ function UploadAvatar(props) {
       props.setLoading(true);
       if (props.onEdit === true) {
         await UserAPI.deleteAvatarCloud({
-          public_id: props.avatar?.public_id,
+          public_id: props.images?.public_id,
           token,
           userId: props.userId,
         });
@@ -96,7 +96,7 @@ function UploadAvatar(props) {
         await UserAPI.deleteAvatarCloud({
           public_id: file.response.public_id,
           token,
-          // userId: props.userId,
+          userId: props.userId,
         });
         setFile([]);
         props.parentCallback({});
@@ -114,6 +114,7 @@ function UploadAvatar(props) {
         position: "center",
         icon: "error",
         title: "Something wrong. Please try again ! ",
+        text: `${error.response?.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
