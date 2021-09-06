@@ -55,7 +55,16 @@ function UploadAvatar(props) {
             Swal.fire({
               position: "center",
               icon: "success",
-              title: "Update Image Different Success",
+              title: "Update Avatar Success",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+          }
+          else{
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Upload Avatar Success",
               showConfirmButton: false,
               timer: 2000,
             });
@@ -105,7 +114,7 @@ function UploadAvatar(props) {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Image Delete Success",
+        title: "Delete Avatar Success",
         showConfirmButton: false,
         timer: 2000,
       });
