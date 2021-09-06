@@ -58,10 +58,10 @@ const UserAPI = {
       }
     );
   },
-  deleteImageCloud: (public_id, token, productId) => {
+  deleteAvatarCloud: ({public_id, token, userId}) => {
     return API.post(
-      "/api/admin/delete-image",
-      { public_id: public_id, productId: productId},
+      "/users/delete-avatar",
+      { public_id: public_id, userId: userId},
       {
         headers: { Authorization: token },
       }

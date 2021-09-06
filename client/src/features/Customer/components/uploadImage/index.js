@@ -4,7 +4,7 @@ import Modal from "antd/lib/modal/Modal";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import ProductFilterAPI from "../../../../api/productAPI";
+import UserAPI from "../../../../api/userAPI";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -23,29 +23,29 @@ function UploadAvatar(props) {
 
   const { token } = useSelector((state) => state.token);
 
-//   // Load image when edit image and dont set new Image here
-//   useEffect(() => {
-//     if (props.param.id) {
-//       if (props.images?.url === undefined) {
-//         setFile([]);
-//       } else {
-//         setFile([
-//           {
-//             uid: "-1",
-//             name: "Preview Image By Soraly",
-//             status: "done",
-//             url: props.images?.url,
-//           },
-//         ]);
-//       }
-//     }
-//   }, [props.param.id, props.images?.url]);
+  //   // Load image when edit image and dont set new Image here
+  //   useEffect(() => {
+  //     if (props.param.id) {
+  //       if (props.images?.url === undefined) {
+  //         setFile([]);
+  //       } else {
+  //         setFile([
+  //           {
+  //             uid: "-1",
+  //             name: "Preview Image By Soraly",
+  //             status: "done",
+  //             url: props.images?.url,
+  //           },
+  //         ]);
+  //       }
+  //     }
+  //   }, [props.param.id, props.images?.url]);
 
   const onChange = ({ fileList: newFileList }) => {
     // On Edit -> Update Image Here
-    if (props.param) {
+    if (props.userId) {
       if (newFileList === undefined) {
-        props.parentCallback(props.images);
+        props.parentCallback(props.avatar);
       } else {
         setFile(newFileList);
         const status = newFileList[0]?.status;
@@ -85,18 +85,19 @@ function UploadAvatar(props) {
       // Nếu edit thì nhảy vào cái này => nó cũng là xóa
       props.setLoading(true);
       if (props.onEdit === true) {
-        await ProductFilterAPI.deleteImageClound(
-          props.images?.public_id,
+        await UserAPI.deleteAvatarCloud({
+          public_id: props.avatar?.public_id,
           token,
-          props.param.id
-        );
+          userId: props.userId,
+        });
         setFile([]);
         props.parentCallback({});
       } else {
-        await ProductFilterAPI.deleteImageClound(
-          file.response.public_id,
-          token
-        );
+        await UserAPI.deleteAvatarCloud({
+          public_id: file.response.public_id,
+          token,
+          // userId: props.userId,
+        });
         setFile([]);
         props.parentCallback({});
       }
@@ -144,7 +145,7 @@ function UploadAvatar(props) {
   return (
     <>
       <Upload
-        action={"http://localhost:3001/api/admin/upload-image"}
+        action={"http://localhost:3001/users/upload-avatar"}
         listType="picture-card"
         fileList={file}
         onPreview={handlePreview}

@@ -10,6 +10,8 @@ function ChangeAvatar() {
 
   const {user} = useSelector((state) => state.user);
 
+  console.log(image)
+
 
   const callbackFunction = (childData) => {
     setImage(childData);
@@ -29,7 +31,7 @@ function ChangeAvatar() {
         <div className="create_upload-img-up">
           <UploadAvatar
             images={image}
-            param={user.picture}
+            userId={user._id}
             parentCallback={callbackFunction}
             onEdit={onEdit}
             setLoading={setLoading}
