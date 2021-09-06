@@ -4,6 +4,7 @@ const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 const deviceMiddleware = require("../middleware/device");
 const typeUserController = require("../controllers/typeUser.controller");
+const uploadAvatarController = require("../controllers/uploadAvatar.controller");
 
 router.post("/register", deviceMiddleware, userController.register);
 router.post("/login", userController.login);
@@ -35,5 +36,13 @@ router.get(
 // Save Voucher For User Here
 router.patch("/save_voucher", auth, userController.saveVoucher);
 router.patch("/delete_voucher", auth, userController.deleteVoucherUsed);
+
+// Upload Avatar and Delete Avatar Here
+router.post("/upload-avatar", uploadAvatarController.uploadAvatar);
+
+router.post("/delete-avatar", uploadAvatarController.deleteAvatar);
+
+
+
 
 module.exports = router;

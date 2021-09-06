@@ -57,7 +57,16 @@ const UserAPI = {
         headers: { Authorization: token },
       }
     );
-  }
+  },
+  deleteImageCloud: (public_id, token, productId) => {
+    return API.post(
+      "/api/admin/delete-image",
+      { public_id: public_id, productId: productId},
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
 };
 
 export default UserAPI;
