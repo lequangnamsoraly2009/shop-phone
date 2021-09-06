@@ -1,5 +1,5 @@
 const cloudinary = require("cloudinary");
-const Users = require("../models/user.model")
+const Users = require("../models/user.model");
 const fs = require("fs");
 
 const uploadAvatarController = {
@@ -55,7 +55,7 @@ const uploadAvatarController = {
           .json({ status: false, message: "No image have selected !" });
       }
       const user = await Users.findById({ _id: userId });
-      
+
       if (user.picture.public_id === public_id) {
         await Users.findByIdAndUpdate(
           { _id: userId },
@@ -64,7 +64,7 @@ const uploadAvatarController = {
           }
         );
       }
-      
+
       cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
         if (err) throw err;
 
@@ -73,7 +73,19 @@ const uploadAvatarController = {
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
-  }
+  },
+  addAvatarUser: async (req, res) => {
+    try {
+      const { avatar } = req.body;
+      const user = await Users.findByIdAndUpdate(
+        { _id: req.user.id },
+        { avatar: avatar }
+      );
+      res.json({status: true, message: "Change Avatar Success"})
+    } catch (error) {
+        return res.status(500).json({ status: false, message: error.message })
+    }
+  },
 };
 
 const removeTmp = (path) => {

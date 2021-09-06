@@ -68,6 +68,10 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: []
     },
+    avatar: {
+      type: Object,
+
+    }
   },
   {
     timestamps: true,
