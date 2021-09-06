@@ -277,7 +277,7 @@ function HeaderNav() {
               ) : (
                 <div className="user_infor">
                   <Menu.Item key="user">
-                    {user.picture ? (
+                    {user.avatar ? (
                       <Avatar
                         style={{
                           color: "#f56a00",
@@ -287,7 +287,7 @@ function HeaderNav() {
                           border: "1px solid rgba(77, 77, 77, 0.3)",
                         }}
                         src={
-                          <Image src={user.picture} />
+                          <Image src={user.avatar.url} />
                         }
                       />
                     ) : (
