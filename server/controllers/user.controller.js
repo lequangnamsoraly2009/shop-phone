@@ -389,6 +389,10 @@ const userController = {
       const { email, name, googleId, imageUrl } = req.body;
       const deviceResult = req.device;
 
+      const avatarUrl = {
+        url: imageUrl
+      }
+
       const user = await Users.findOne({ email });
       if (user) {
         const accessToken = createAccessToken({ id: user._id });
@@ -406,7 +410,7 @@ const userController = {
           email,
           resultDevice: deviceResult,
           googleId,
-          picture: imageUrl,
+          avatar: avatarUrl,
           methodLogin: 2,
         });
 
