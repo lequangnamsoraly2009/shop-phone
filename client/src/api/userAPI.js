@@ -67,10 +67,10 @@ const UserAPI = {
       }
     );
   },
-  changeAvatarUser: ({ avatar, token }) => {
+  changeAvatarUser: ({ avatar,user, token }) => {
     return API.patch(
       "/users/change-avatar",
-      { avatar },
+      { avatar, user },
       {
         headers: { Authorization: token },
       }

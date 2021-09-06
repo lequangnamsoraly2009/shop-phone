@@ -22,8 +22,13 @@ router.patch("/addcart", auth, userController.addCart);
 router.get("/history", auth, userController.historyOrder);
 router.get("/all_users", auth, authAdmin, userController.getAllUsers);
 
-// Change Type User 
-router.patch("/change_type", auth, authAdmin, typeUserController.changeTypeUser);
+// Change Type User
+router.patch(
+  "/change_type",
+  auth,
+  authAdmin,
+  typeUserController.changeTypeUser
+);
 
 // All users not limit
 router.get("/all_users_1", auth, authAdmin, userController.getAllUsers1);
@@ -42,10 +47,6 @@ router.post("/upload-avatar", uploadAvatarController.uploadAvatar);
 
 router.post("/delete-avatar", uploadAvatarController.deleteAvatar);
 
-router.patch("/change-avatar", uploadAvatarController.changeAvatarUser);
-
-
-
-
+router.patch("/change-avatar", auth, uploadAvatarController.changeAvatarUser);
 
 module.exports = router;

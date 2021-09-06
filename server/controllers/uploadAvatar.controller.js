@@ -76,9 +76,9 @@ const uploadAvatarController = {
   },
   changeAvatarUser: async (req, res) => {
     try {
-      const { avatar } = req.body;
-      await Users.findByIdAndUpdate(
-        { _id: req.user.id },
+      const { avatar, user } = req.body;
+      await Users.findOneAndUpdate(
+        { _id: user._id },
         { avatar: avatar }
       );
       res.json({status: true, message: "Change Avatar Success"})

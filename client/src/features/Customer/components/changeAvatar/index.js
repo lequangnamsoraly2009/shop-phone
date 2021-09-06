@@ -13,13 +13,15 @@ function ChangeAvatar() {
   const {user} = useSelector((state) => state.user);
   const {token} = useSelector((state) => state.token);
 
+  console.log(user)
+
   
 
 
   const callbackFunction = async(childData) => {
     try {
       setImage(childData);
-      const response = await UserAPI.changeAvatarUser({token, avatar: childData});
+      const response = await UserAPI.changeAvatarUser({token, user: user, avatar: childData});
       Swal.fire({
         position: "center",
         icon: "success",
