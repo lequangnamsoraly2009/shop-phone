@@ -99,11 +99,11 @@ function DetailUser() {
               <span style={{ fontSize: 16 }}>User Avatar</span>
             </div>
             <div className="user_data-infor-avatar">
-              {detailUser.picture ? (
+              {detailUser.avatar ? (
                 <Avatar
                   style={{ height: 300, width: 300, border: "1px solid #000" }}
                   src={
-                    <Image style={{ height: 300, width: 300}}  src={detailUser.picture} />
+                    <Image style={{ height: 300, width: 300}}  src={detailUser.avatar.url} />
                   }
                 />
               ) : (
