@@ -14,6 +14,7 @@ import "./product.css";
 import {
   DeleteOutlined,
   EditOutlined,
+  EyeInvisibleOutlined,
   EyeOutlined,
   HomeOutlined,
 } from "@ant-design/icons";
@@ -183,6 +184,35 @@ function MainProduct() {
         showConfirmButton: false,
         timer: 2000,
       });
+      window.location.reload();
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response?.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
+
+  const handleUnHideProduct = async (_id) => {
+    try {
+      const response = await ProductFilterAPI.hideProduct({
+        token,
+        hide: false,
+        idProduct: _id,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Success!",
+        text: `${response.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      window.location.reload();
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -308,17 +338,31 @@ function MainProduct() {
       key: "action",
       render: (text, record, index) => (
         <Space size="large">
-          <Popconfirm
-            title="Are You Hide Product?"
-            onConfirm={() => handleHideProduct(record._id)}
-            onCancel={handleCancelHideProduct}
-            okText="Yes"
-            cancelText="Cancel"
-          >
-            <EyeOutlined
-              style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
-            />
-          </Popconfirm>
+          {record.hide === true ? (
+            <Popconfirm
+              title="Are You Hide Product?"
+              onConfirm={() => handleUnHideProduct(record._id)}
+              onCancel={handleCancelHideProduct}
+              okText="Yes"
+              cancelText="Cancel"
+            >
+              <EyeInvisibleOutlined
+                style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
+              />
+            </Popconfirm>
+          ) : (
+            <Popconfirm
+              title="Are You Hide Product?"
+              onConfirm={() => handleHideProduct(record._id)}
+              onCancel={handleCancelHideProduct}
+              okText="Yes"
+              cancelText="Cancel"
+            >
+              <EyeOutlined
+                style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
+              />
+            </Popconfirm>
+          )}
           <Link
             to={`/admin/products/edit/${record._id}`}
             style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
