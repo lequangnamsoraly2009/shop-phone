@@ -13,6 +13,18 @@ const ProductFilterAPI = {
       }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
     );
   },
+  getAllProductsFilterForAdmin: ({
+    categoryFilter,
+    sortFilter,
+    searchFilter,
+    pageFilter,
+  }) => {
+    return API.get(
+      `/api/admin/products?limit=${
+        pageFilter * 20
+      }&${categoryFilter}&${sortFilter}&title[regex]=${searchFilter}`
+    );
+  },
   getAllProducts: () => {
     return API.get(`/api/products`);
   },

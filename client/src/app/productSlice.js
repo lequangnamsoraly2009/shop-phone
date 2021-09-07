@@ -14,6 +14,19 @@ export const getAllProductsFilter = createAsyncThunk(
   }
 );
 
+export const getAllProductsFilterForAdmin = createAsyncThunk(
+  "/product/getAllProductsFilterForAdmin",
+  async ({ categoryFilter, sortFilter, searchFilter, pageFilter }) => {
+    const response = await ProductFilterAPI.getAllProductsFilterForAdmin({
+      categoryFilter,
+      sortFilter,
+      searchFilter,
+      pageFilter,
+    });
+    return response.data.products;
+  }
+);
+
 export const getAllProducts = createAsyncThunk(
   "/product/getAllProduct",
   async () => {
@@ -23,6 +36,7 @@ export const getAllProducts = createAsyncThunk(
 );
 
 const initialState = {
+  productsAdmin: [],
   products: [],
   productsFilter: [],
   categoryFilter: "",
@@ -58,6 +72,10 @@ const productFilterSlice = createSlice({
   extraReducers: {
     [getAllProductsFilter.fulfilled]: (state, action) => {
       state.productsFilter = action.payload;
+      state.paginationFilter = action.payload;
+    },
+    [getAllProductsFilterForAdmin.fulfilled]: (state, action) => {
+      state.productsAdmin = action.payload;
       state.paginationFilter = action.payload;
     },
     [getAllProducts.fulfilled]: (state, action) => {

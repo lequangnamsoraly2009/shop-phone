@@ -17,7 +17,7 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsFilter } from "../../../app/productSlice";
+import { getAllProductsFilterForAdmin } from "../../../app/productSlice";
 import { getAllCategories } from "../../../app/categorySlice";
 import { setSearchUsers } from "../../../app/userSlice.admin";
 import { getAllPayments } from "../../../app/paymentSlice";
@@ -42,7 +42,7 @@ function SideBar() {
             <Link
               onClick={() =>
                 dispatch(
-                  getAllProductsFilter({
+                  getAllProductsFilterForAdmin({
                     categoryFilter: "",
                     sortFilter: "",
                     searchFilter: "",

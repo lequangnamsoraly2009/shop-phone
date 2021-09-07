@@ -21,7 +21,7 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllProductsFilter,
+  getAllProductsFilterForAdmin,
   getProductsFilter,
   setPaginationFilter,
   setSearchFilter,
@@ -34,7 +34,7 @@ const { Search } = Input;
 
 function MainProduct() {
   const {
-    productsFilter,
+    productsAdmin,
     categoryFilter,
     sortFilter,
     pageFilter,
@@ -49,7 +49,7 @@ function MainProduct() {
 
   useEffect(() => {
     dispatch(
-      getAllProductsFilter({
+      getAllProductsFilterForAdmin({
         categoryFilter: "",
         sortFilter: "",
         searchFilter: "",
@@ -62,7 +62,7 @@ function MainProduct() {
   const handleChangePage = async (page, pageSize) => {
     try {
       setIsLoading(true);
-      const response = await ProductFilterAPI.getAllProductsFilter({
+      const response = await ProductFilterAPI.getAllProductsFilterForAdmin({
         categoryFilter,
         sortFilter,
         searchFilter,
@@ -91,7 +91,7 @@ function MainProduct() {
 
   const onSearch = (values) => {
     dispatch(
-      getAllProductsFilter({
+      getAllProductsFilterForAdmin({
         categoryFilter,
         sortFilter,
         searchFilter: values.toLowerCase(),
@@ -103,7 +103,7 @@ function MainProduct() {
   const handleOnclickReload = (e) => {
     e.preventDefault();
     dispatch(
-      getAllProductsFilter({
+      getAllProductsFilterForAdmin({
         categoryFilter: "",
         sortFilter: "",
         searchFilter: "",
@@ -445,7 +445,7 @@ function MainProduct() {
             <Table
               pagination={{ position: ["none", "none"] }}
               columns={columns}
-              dataSource={productsFilter.slice(0, 10)}
+              dataSource={productsAdmin.slice(0, 10)}
               bordered={true}
               style={{ border: "1px solid #000" }}
             />
