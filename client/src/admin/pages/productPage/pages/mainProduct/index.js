@@ -168,9 +168,9 @@ function MainProduct() {
   };
 
   // Hide Products 
-  const handleHideProduct = () => {
+  const handleHideProduct = (_id) => {
     try {
-      
+      console.log(_id)
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -298,10 +298,10 @@ function MainProduct() {
         <Space size="large">
           <Popconfirm
             title="Are You Hide Product?"
-            onConfirm={handleHideProduct}
+            onConfirm={() => handleHideProduct(record._id)}
             onCancel={handleCancelHideProduct}
             okText="Yes"
-            cancelText="No"
+            cancelText="Cancel"
           >
             <EyeOutlined style={{ color: "rgb(25,144,255)", cursor: "pointer" }} />
           </Popconfirm>

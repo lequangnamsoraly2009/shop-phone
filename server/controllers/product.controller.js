@@ -254,6 +254,20 @@ const productController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  updateHideProduct: async (req, res) => {
+    try {
+      const { hide } = req.body;
+      await Products.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          hide: hide,
+        }
+      );
+      res.json({status: true, message: "Hide Product Success"})
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
 };
 
 module.exports = productController;

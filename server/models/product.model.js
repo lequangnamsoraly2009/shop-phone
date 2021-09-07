@@ -153,6 +153,10 @@ const productSchema = new mongoose.Schema(
       type: Object,
       required: true,
     },
+    hide: {
+      type: Boolean,
+      default: false,
+    }
   },
   {
     timestamps: true,

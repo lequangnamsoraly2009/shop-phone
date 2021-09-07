@@ -13,5 +13,7 @@ router
   .put(productController.updateProduct);
 
 router.route("/products/:id").patch(productController.updatePatchProduct);
+router.route("/product/hide-product/:id").patch(productController.updateHideProduct);
+
 
 module.exports = router;
