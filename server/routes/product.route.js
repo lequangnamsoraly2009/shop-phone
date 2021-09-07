@@ -15,5 +15,9 @@ router
 router.route("/products/:id").patch(productController.updatePatchProduct);
 router.route("/product/hide-product/:id").patch(productController.updateHideProduct);
 
+//Test get none hide
+
+// router.route("/test-product").get(productController.testProducts);
+
 
 module.exports = router;

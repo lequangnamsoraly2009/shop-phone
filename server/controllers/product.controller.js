@@ -46,7 +46,7 @@ class APIfeatures {
 const productController = {
   getProducts: async (req, res) => {
     try {
-      const products = await Products.find();
+      const products = await Products.find({hide: false});
       res.json({
         status: "success",
         products: products,
@@ -55,10 +55,21 @@ const productController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  // testProducts: async (req, res) => {
+  //   try {
+  //     const products = await Products.find({hide: false});
+  //     res.json({
+  //       status: "success",
+  //       products: products,
+  //     });
+  //   } catch (error) {
+  //     return res.status(500).json({ status: false, message: error.message });
+  //   }
+  // },
   // get product by filter
   getFilterProducts: async (req, res) => {
     try {
-      const features = new APIfeatures(Products.find(), req.query)
+      const features = new APIfeatures(Products.find({hide: false}), req.query)
         .filtering()
         .sorting()
         .pagination();
@@ -144,6 +155,7 @@ const productController = {
         thumbnail2,
         thumbnail3,
         thumbnail4,
+        hide: false
       });
 
       await newProduct.save();
