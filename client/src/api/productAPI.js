@@ -43,6 +43,15 @@ const ProductFilterAPI = {
       }
     );
   },
+  hideProduct: ({token, hide, idProduct}) => {
+    return API.patch(
+      `/api/product/hide-product/${idProduct}`,
+      { hide},
+      {
+        headers: { Authorization: token },
+      }
+    );
+  }
 };
 
 export default ProductFilterAPI;

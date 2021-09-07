@@ -167,23 +167,35 @@ function MainProduct() {
     });
   };
 
-  // Hide Products 
-  const handleHideProduct = (_id) => {
+  // Hide Products
+  const handleHideProduct = async (_id) => {
     try {
-      console.log(_id)
+      const response = await ProductFilterAPI.hideProduct({
+        token,
+        hide: true,
+        idProduct: _id,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Success!",
+        text: `${response.response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } catch (error) {
       Swal.fire({
         position: "center",
         icon: "error",
         title: "Something went wrong!",
-        text: `${error.response.data.message}` ,
+        text: `${error.response?.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
     }
-  }
+  };
 
-  const handleCancelHideProduct = (e) =>{
+  const handleCancelHideProduct = (e) => {
     e.preventDefault();
     Swal.fire({
       position: "center",
@@ -192,7 +204,7 @@ function MainProduct() {
       showConfirmButton: false,
       timer: 2000,
     });
-  }
+  };
 
   const columns = [
     {
@@ -303,7 +315,9 @@ function MainProduct() {
             okText="Yes"
             cancelText="Cancel"
           >
-            <EyeOutlined style={{ color: "rgb(25,144,255)", cursor: "pointer" }} />
+            <EyeOutlined
+              style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
+            />
           </Popconfirm>
           <Link
             to={`/admin/products/edit/${record._id}`}
