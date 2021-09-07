@@ -180,7 +180,7 @@ function MainProduct() {
         position: "center",
         icon: "success",
         title: "Success!",
-        text: `${response.response.data.message}`,
+        text: `${response.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });
@@ -204,11 +204,12 @@ function MainProduct() {
         hide: false,
         idProduct: _id,
       });
+
       Swal.fire({
         position: "center",
         icon: "success",
         title: "Success!",
-        text: `${response.response.data.message}`,
+        text: `${response.data.message}`,
         showConfirmButton: false,
         timer: 2000,
       });

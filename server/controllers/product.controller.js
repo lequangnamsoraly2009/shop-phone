@@ -257,7 +257,7 @@ const productController = {
   updateHideProduct: async (req, res) => {
     try {
       const { hide } = req.body;
-      await Products.findOneAndUpdate(
+      await Products.findByIdAndUpdate(
         { _id: req.params.id },
         {
           hide: hide,
