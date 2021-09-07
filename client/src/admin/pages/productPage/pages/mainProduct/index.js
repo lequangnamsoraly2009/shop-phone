@@ -11,7 +11,12 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import "./product.css";
-import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -162,6 +167,33 @@ function MainProduct() {
     });
   };
 
+  // Hide Products 
+  const handleHideProduct = () => {
+    try {
+      
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}` ,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  }
+
+  const handleCancelHideProduct = (e) =>{
+    e.preventDefault();
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Ok Không sao. Chúa phù hộ em :v",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  }
+
   const columns = [
     {
       title: "STT",
@@ -264,6 +296,15 @@ function MainProduct() {
       key: "action",
       render: (text, record, index) => (
         <Space size="large">
+          <Popconfirm
+            title="Are You Hide Product?"
+            onConfirm={handleHideProduct}
+            onCancel={handleCancelHideProduct}
+            okText="Yes"
+            cancelText="No"
+          >
+            <EyeOutlined style={{ color: "rgb(25,144,255)", cursor: "pointer" }} />
+          </Popconfirm>
           <Link
             to={`/admin/products/edit/${record._id}`}
             style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
