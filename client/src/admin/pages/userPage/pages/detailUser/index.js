@@ -131,10 +131,10 @@ function DetailUser() {
                 {detailUser._id}
               </Descriptions.Item>
               <Descriptions.Item label="Telephone">
-                {detailUser.phone}
+                {detailUser.phone ? detailUser.phone : "None"}
               </Descriptions.Item>
               <Descriptions.Item label="Age">
-                {detailUser.age}
+                {detailUser.age ? detailUser.age : "None"}
               </Descriptions.Item>
               <Descriptions.Item label="Telephone">
                 {detailUser.phone}
