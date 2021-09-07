@@ -26,7 +26,6 @@ function MainUser() {
     (state) => state.usersAdmin
   );
 
-
   const { token } = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -150,12 +149,17 @@ function MainUser() {
       title: "Phone",
       dataIndex: "phone",
       key: "phone",
-      render: (text, record, index) => (
-        <span>
-          +{record.prefix}
-          {record.phone.slice(1)}
-        </span>
-      ),
+      render: (text, record, index) =>
+        record.phone ? (
+          <span>
+            +{record.prefix}
+            {record.phone.slice(1)}
+          </span>
+        ) : (
+          <span>
+            None
+          </span>
+        ),
       align: "center",
     },
     {
@@ -163,7 +167,8 @@ function MainUser() {
       dataIndex: "age",
       key: "age",
       render: (text, record, index) => (
-        <span style={{ textTransform: "capitalize" }}>{record.age}</span>
+        record.age ? (<span style={{ textTransform: "capitalize" }}>{record.age}</span>) : (<span style={{ textTransform: "capitalize" }}>Unknown</span>)
+        
       ),
       sorter: (a, b) => a.age - b.age,
 
