@@ -146,7 +146,7 @@ function DetailUser() {
                 {detailUser.gender}
               </Descriptions.Item>
               <Descriptions.Item label="Type User">
-                {detailUser.typeUser === "Unconfirmed" ? (
+                {detailUser.typeUser === "Unconfimred" ? (
                   <span style={{ color: "gray" }}>{detailUser.typeUser}</span>
                 ) : detailUser.typeUser === "Block" ? (
                   <span style={{ color: "red" }}>{detailUser.typeUser}</span>
