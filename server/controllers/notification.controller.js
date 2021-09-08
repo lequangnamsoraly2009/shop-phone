@@ -1,11 +1,19 @@
 const Notifications = require("../models/notification.model");
 
 class APIfeatures {
-  constructor(query) {
+  constructor(query,queryString) {
     this.query = query;
+    this.queryString = queryString;
   }
   sorting() {
     this.query = this.query.sort("-createdAt");
+    return this;
+  }
+  pagination() {
+    const page = this.queryString.page * 1 || 1;
+    const limit = this.queryString.limit * 1 || 20;
+    const skip = (page - 1) * limit;
+    this.query = this.query.skip(skip).limit(limit);
     return this;
   }
 }
@@ -41,7 +49,7 @@ const notificationController = {
   },
   getNotificationForUser: async (req, res) => {
       try {
-        const features = new APIfeatures(Notifications.find({userId: req.user.id})).sorting()
+        const features = new APIfeatures(Notifications.find({userId: req.user.id}), req.query).sorting().pagination();
 
         const notifications = await features.query;
 
@@ -57,7 +65,7 @@ const notificationController = {
   },
   getNotificationForAdmin: async (req, res) => {
       try {
-        const features = new APIfeatures(Notifications.find()).sorting();
+        const features = new APIfeatures(Notifications.find(), req.query).sorting().pagination();
 
         const notifications = await features.query;
 
