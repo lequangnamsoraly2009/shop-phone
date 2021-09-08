@@ -25,6 +25,8 @@ function ListComments({ review, socket }) {
   const [hideReplyComment, setHideReplyComment] = useState(false);
   const [next, setNext] = useState(3);
 
+  console.log(review)
+
   // Sort reply comment review - Simple and clear
   const replyCommentReviewSort = replyCommentReview.sort((a, b) => {
     return moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf();
@@ -187,6 +189,7 @@ function ListComments({ review, socket }) {
       actions={actions}
       author={review.userName}
       avatar={
+       
         <Avatar
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrc-3zHHM18E7n_TuFEs26rqEKbR5n3dp0lA&usqp=CAU"
           alt={review.userName}

@@ -66,6 +66,7 @@ function Reviews({ detailProduct, socket }) {
   
         socket.emit("createCommentReview", {
           userName: user.userName,
+          avatar: user.avatar,
           message,
           rating,
           title,
