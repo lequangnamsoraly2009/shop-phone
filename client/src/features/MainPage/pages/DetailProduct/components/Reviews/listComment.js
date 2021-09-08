@@ -25,7 +25,7 @@ function ListComments({ review, socket }) {
   const [hideReplyComment, setHideReplyComment] = useState(false);
   const [next, setNext] = useState(3);
 
-  console.log(review)
+  // console.log(review)
 
   // Sort reply comment review - Simple and clear
   const replyCommentReviewSort = replyCommentReview.sort((a, b) => {
@@ -108,6 +108,7 @@ function ListComments({ review, socket }) {
 
     socket.emit("createCommentReview", {
       userName: user.userName,
+      avatar: user.avatar,
       message,
       product_id: review._id,
       createdAt,
@@ -189,11 +190,14 @@ function ListComments({ review, socket }) {
       actions={actions}
       author={review.userName}
       avatar={
-       
-        <Avatar
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrc-3zHHM18E7n_TuFEs26rqEKbR5n3dp0lA&usqp=CAU"
-          alt={review.userName}
-        />
+        review.avatar ? (
+          <Avatar src={review.avatar.url} alt={review.userName} />
+        ) : (
+          <Avatar
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrc-3zHHM18E7n_TuFEs26rqEKbR5n3dp0lA&usqp=CAU"
+            alt={review.userName}
+          />
+        )
       }
       content={
         <>
@@ -215,10 +219,14 @@ function ListComments({ review, socket }) {
         <>
           <Comment
             avatar={
-              <Avatar
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                alt={user.userName}
-              />
+              user.avatar ? (
+                <Avatar src={user.avatar?.url} alt={user.userName} />
+              ) : (
+                <Avatar
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrc-3zHHM18E7n_TuFEs26rqEKbR5n3dp0lA&usqp=CAU"
+                  alt={user.userName}
+                />
+              )
             }
             content={<Editor />}
           />
@@ -228,10 +236,14 @@ function ListComments({ review, socket }) {
       {replyChild && (
         <Comment
           avatar={
-            <Avatar
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              alt={user.userName}
-            />
+            user.avatar ? (
+              <Avatar src={user.avatar.url} alt={user.userName} />
+            ) : (
+              <Avatar
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrc-3zHHM18E7n_TuFEs26rqEKbR5n3dp0lA&usqp=CAU"
+                alt={user.userName}
+              />
+            )
           }
           content={<EditorReplyChild />}
         />
@@ -278,10 +290,17 @@ function ListComments({ review, socket }) {
             key={rep._id}
             author={rep.userName}
             avatar={
-              <Avatar
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrc-3zHHM18E7n_TuFEs26rqEKbR5n3dp0lA&usqp=CAU"
-                alt={rep.userName}
-              />
+              rep.avatar ? (
+                <Avatar
+                  src={rep.avatar.url}
+                  alt={rep.userName}
+                />
+              ) : (
+                <Avatar
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrc-3zHHM18E7n_TuFEs26rqEKbR5n3dp0lA&usqp=CAU"
+                  alt={rep.userName}
+                />
+              )
             }
             content={
               <>

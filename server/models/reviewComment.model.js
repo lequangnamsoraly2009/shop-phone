@@ -7,9 +7,14 @@ const reviewCommentSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    avatar: {
+      type: Object,
+      required: true,
+      default: {},
+    },
     title: {
       type: String,
-      default: ''
+      default: "",
     },
     message: {
       type: String,
@@ -17,7 +22,7 @@ const reviewCommentSchema = new mongoose.Schema(
     },
     images: {
       type: Object,
-      default: {}
+      default: {},
     },
     product_id: {
       type: String,
@@ -38,7 +43,7 @@ const reviewCommentSchema = new mongoose.Schema(
     },
     replies: {
       type: Array,
-      default: []
+      default: [],
     },
   },
   {
