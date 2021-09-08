@@ -32,7 +32,12 @@ const notificationController = {
   getNotificationForUser: async (req, res) => {},
   getNotificationForAdmin: async (req, res) => {},
   deleteNotification: async (req, res) => {
-
+    try {
+        await Notifications.findByIdAndDelete({_id: req.params.id})
+        res.json({ status: true, message:"Delete Notification successfully"})
+    } catch (error) {
+        return res.status(500).json({ status: false, message: error.message })
+    }
   }
 };
 
