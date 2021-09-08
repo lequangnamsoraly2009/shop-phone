@@ -7,7 +7,7 @@
     ```js
         notificationModelOfUser = {
             notification: String,
-            content: String,
+            contentNotification: String,
             userSend: Object,
             typeNotification: String,
             hasSeen: Boolean,
@@ -19,7 +19,7 @@
     ```js
         notificationModelOfAdmin = {
             notification: String,
-            content: String,
+            contentNotification: String,
             userSend: Object,
             typeNotification: String,
             hasSeen: Boolean,
