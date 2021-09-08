@@ -341,7 +341,7 @@ function MainProduct() {
         <Space size="large">
           {record.hide === true ? (
             <Popconfirm
-              title="Are You Hide Product?"
+              title="Are You Show Product?"
               onConfirm={() => handleUnHideProduct(record._id)}
               onCancel={handleCancelHideProduct}
               okText="Yes"
