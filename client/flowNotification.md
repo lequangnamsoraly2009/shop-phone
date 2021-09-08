@@ -4,7 +4,7 @@
 
 ### Notification Model Of User
 
-    ```javascript
+    ```JavaScript
         notificationModelOfUser = {
             notification: String,
             content: String,
@@ -16,7 +16,7 @@
 
 ### Notification Model Of Admin
 
-    ```javascript
+    ```JavaScript
         notificationModelOfAdmin = {
             notification: String,
             content: String,
