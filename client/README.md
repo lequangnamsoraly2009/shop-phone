@@ -27,6 +27,7 @@
     - Send Notification For User (Like: Notification Send Voucher, Chat , Payment Success, Reject, ...) (0%)
     - WishList For User ? (0%) 
     - When User Heart For Product -> Product Be Added WishList (0%) 
+    - Admin send Notify for User -> Example: Voucher, News, Update, ... (!== Notification) (0%)
 
 
  
