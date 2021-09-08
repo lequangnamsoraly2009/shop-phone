@@ -27,3 +27,14 @@
     - Send Notification For User (Like: Notification Send Voucher, Chat , Payment Success, Reject, ...) (0%)
     - WishList For User ? (0%) 
     - When User Heart For Product -> Product Be Added WishList (0%) 
+
+
+ ```js
+        notificationModelOfUser = {
+            notification: String,
+            content: String,
+            userSend: Object,
+            typeNotification: String,
+            hasSeen: Boolean,
+        }
+    ```
