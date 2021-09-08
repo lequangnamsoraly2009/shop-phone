@@ -45,6 +45,7 @@ app.use("/api", require("./routes/reviewComment.route"));
 app.use("/api", require("./routes/questionProduct.route"));
 app.use("/api", require("./routes/voucher.route"));
 app.use("/api", require("./routes/pdf.route"));
+app.use("/api", require("./routes/notification.route"));
 
 
 
