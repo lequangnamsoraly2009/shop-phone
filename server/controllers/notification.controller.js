@@ -27,23 +27,39 @@ const notificationController = {
         notification,
         contentNotification,
         userSend,
+        userId: userSend._id,
         typeNotification,
         hasSeen,
       });
 
       await newNotification.save();
 
-      res.json({ status: true, message: "Create Notification Successful" });
+      res.json({ status: "success", message: "Create Notification Successful" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  getNotificationForUser: async (req, res) => {},
+  getNotificationForUser: async (req, res) => {
+      try {
+        const features = new APIfeatures(Notifications.find({userId: req.user.id})).sorting()
+
+        const notifications = await features.query;
+
+        res.json({
+            status: "success",
+            result: notifications.length,
+            notifications: notifications,
+          });
+
+      } catch (error) {
+          return res.status(500).json({ status: false, message: error.message });
+      }
+  },
   getNotificationForAdmin: async (req, res) => {},
   deleteNotification: async (req, res) => {
     try {
       await Notifications.findByIdAndDelete({ _id: req.params.id });
-      res.json({ status: true, message: "Delete Notification successfully" });
+      res.json({ status: "success", message: "Delete Notification successfully" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
