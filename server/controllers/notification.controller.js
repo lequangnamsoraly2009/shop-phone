@@ -55,7 +55,22 @@ const notificationController = {
           return res.status(500).json({ status: false, message: error.message });
       }
   },
-  getNotificationForAdmin: async (req, res) => {},
+  getNotificationForAdmin: async (req, res) => {
+      try {
+        const features = new APIfeatures(Notifications.find()).sorting();
+
+        const notifications = await features.query;
+
+        res.json({
+            status: "success",
+            result: notifications.length,
+            notifications: notifications,
+          });
+
+      } catch (error) {
+          return res.status(500).json({ status: false, message: error.message })
+      }
+  },
   deleteNotification: async (req, res) => {
     try {
       await Notifications.findByIdAndDelete({ _id: req.params.id });

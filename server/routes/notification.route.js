@@ -5,7 +5,7 @@ const authAdmin = require("../middleware/authAdmin");
 
 router.route("/notification").post(auth, notificationController.createNotification);
 router.route("/notification/user").get(auth, notificationController.getNotificationForUser);
-router.route("/notification/admin").get(auth, notificationController.getNotificationForAdmin);
+router.route("/notification/admin").get(auth, authAdmin,notificationController.getNotificationForAdmin);
 
 router.route("/notification/:id").delete(auth, notificationController.deleteNotification);
 
