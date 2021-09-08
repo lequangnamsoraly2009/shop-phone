@@ -4,7 +4,7 @@
 
 ### Notification Model Of User
 
-    `
+    ```js
         notificationModelOfUser = {
             notification: String,
             content: String,
@@ -12,11 +12,11 @@
             typeNotification: String,
             hasSeen: Boolean,
         }
-    `
+    ```
 
 ### Notification Model Of Admin
 
-    `
+    ```js
         notificationModelOfAdmin = {
             notification: String,
             content: String,
@@ -24,7 +24,7 @@
             typeNotification: String,
             hasSeen: Boolean,
         }
-    `
+    ```
 
 ### Cases 
 
