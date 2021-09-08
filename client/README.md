@@ -29,12 +29,4 @@
     - When User Heart For Product -> Product Be Added WishList (0%) 
 
 
- ```js
-        notificationModelOfUser = {
-            notification: String,
-            content: String,
-            userSend: Object,
-            typeNotification: String,
-            hasSeen: Boolean,
-        }
-    ```
+ 
