@@ -1,4 +1,14 @@
-const Notifications = require("../models/notification.model")
+const Notifications = require("../models/notification.model");
+
+class APIfeatures {
+  constructor(query) {
+    this.query = query;
+  }
+  sorting() {
+    this.query = this.query.sort("-createdAt");
+    return this;
+  }
+}
 
 const notificationController = {
   createNotification: async (req, res) => {
@@ -11,7 +21,7 @@ const notificationController = {
         hasSeen,
       } = req.body;
 
-    //   Nếu user or admin > 10 notification -> delete notification cũ nhất
+      //   Nếu user or admin > 10 notification -> delete notification cũ nhất
 
       const newNotification = new Notifications({
         notification,
@@ -19,12 +29,11 @@ const notificationController = {
         userSend,
         typeNotification,
         hasSeen,
-      })
+      });
 
       await newNotification.save();
 
-      res.json({status: true, message: "Create Notification Successful"});
-
+      res.json({ status: true, message: "Create Notification Successful" });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
@@ -33,12 +42,12 @@ const notificationController = {
   getNotificationForAdmin: async (req, res) => {},
   deleteNotification: async (req, res) => {
     try {
-        await Notifications.findByIdAndDelete({_id: req.params.id})
-        res.json({ status: true, message:"Delete Notification successfully"})
+      await Notifications.findByIdAndDelete({ _id: req.params.id });
+      res.json({ status: true, message: "Delete Notification successfully" });
     } catch (error) {
-        return res.status(500).json({ status: false, message: error.message })
+      return res.status(500).json({ status: false, message: error.message });
     }
-  }
+  },
 };
 
 module.exports = notificationController;
