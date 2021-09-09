@@ -82,7 +82,7 @@ function SideBar() {
             <Link to="/admin/voucher">Voucher Coupon</Link>
           </Menu.Item>
           <Menu.Item icon={<ExperimentOutlined />} key="7">
-            <Link to="/admin/chat">Message</Link>
+            <Link to="/admin/notification">Notification</Link>
           </Menu.Item>
           <Menu.Item icon={<SettingOutlined />} key="8">
             <Link to="/admin/setting">Setting</Link>
