@@ -210,7 +210,7 @@ function MainQuestionProduct() {
   return (
     <div className="container-admin">
       <div className="header_page">
-        <h3>Product Questions</h3>
+        <h3>Pending Questions</h3>
       </div>
       <div className="product_breadcrumb">
         <Breadcrumb>
@@ -218,7 +218,7 @@ function MainQuestionProduct() {
             <HomeOutlined />
           </Breadcrumb.Item>
           <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Products Questions</Breadcrumb.Item>
+          <Breadcrumb.Item>Pending Questions</Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="product_data">
