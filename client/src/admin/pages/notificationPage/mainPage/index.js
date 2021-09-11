@@ -1,9 +1,11 @@
-import { HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Table, Input } from "antd";
+import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb, Button, Table, Input, Space, Popconfirm } from "antd";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotificationForAdmin } from "../../../../app/notificationSlice";
+import Swal from "sweetalert2";
+import NotificationAPI from "../../../../api/notificationAPI";
 
 const Search = Input;
 
@@ -17,6 +19,44 @@ function NotificationMainPage() {
     dispatch(getNotificationForAdmin({ token }));
   }, [dispatch, token]);
 
+  const handleDeleteNotification = async (_id) => {
+    try {
+      const response = await NotificationAPI.deleteNotification({
+        token,
+        idNotification: _id,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Cancel",
+        text: `${response.response.data.message}`,
+        showConfirmButton: false,
+        timer: 4000,
+      });
+      window.location.reload();
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Cancel",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 4000,
+      });
+    }
+  };
+
+  const handleCancelDeleteCategory = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Cancel",
+      showConfirmButton: false,
+      timer: 4000,
+    });
+  };
+
   const columns = [
     {
       title: "STT",
@@ -24,18 +64,14 @@ function NotificationMainPage() {
       width: 40,
       key: "stt",
       render: (text, record, index) => (
-        <span>
-          {notifications.findIndex((x) => x._id === record._id) + 1}
-        </span>
+        <span>{notifications.findIndex((x) => x._id === record._id) + 1}</span>
       ),
     },
     {
       title: "Title Notification",
       dataIndex: "notification",
       key: "notification",
-      render: (text, record, index) => (
-        <span>{record.notification}</span>
-      ),
+      render: (text, record, index) => <span>{record.notification}</span>,
       align: "center",
     },
     {
@@ -51,8 +87,32 @@ function NotificationMainPage() {
       title: "Type Notification",
       dataIndex: "typeNotification",
       key: "typeNotification",
+      render: (text, record, index) => <span>{record.typeNotification}</span>,
+      align: "center",
+    },
+    {
+      title: "Action",
+      key: "action",
       render: (text, record, index) => (
-        <span>{record.typeNotification}</span>
+        <Space size="large">
+          <Link
+            to={`/admin/categories/edit/${record._id}`}
+            style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
+          >
+            <EditOutlined />
+          </Link>
+          <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
+            <Popconfirm
+              title="Are you sure delete it?"
+              onConfirm={() => handleDeleteNotification(record._id)}
+              onCancel={handleCancelDeleteCategory}
+              okText="Xóa mẹ nó đi"
+              cancelText="Thôi đừng"
+            >
+              <DeleteOutlined />
+            </Popconfirm>
+          </div>
+        </Space>
       ),
       align: "center",
     },
