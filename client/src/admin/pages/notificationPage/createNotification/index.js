@@ -26,8 +26,10 @@ function CreateNotification() {
 
   const onFinishForm = async(values) => {
     try {
-      console.log(values)
-      socket.emit("get-data-notification", {data: values});
+      socket.emit("get-data-notification1", {data: values});
+      socket.on("get-data-notification2", (data) => {
+        console.log(data)
+      })
     } catch (error) {
       
     }

@@ -124,8 +124,8 @@ io.on("connection", (socket) => {
   });
 
   // Socket get data notification ?
-  socket.on("get-data-notification", async(data)=> {
-    console.log(data)
+  socket.on("get-data-notification1", async(data)=> {
+    io.emit("get-data-notification2", data);
   })
 
   socket.on("disconnect", () => {
