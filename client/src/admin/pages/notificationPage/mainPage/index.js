@@ -11,8 +11,6 @@ function NotificationMainPage() {
   const { token } = useSelector((state) => state.token);
   const { notifications } = useSelector((state) => state.notifications);
 
-  console.log(notifications);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,30 +19,41 @@ function NotificationMainPage() {
 
   const columns = [
     {
+      title: "STT",
+      dataIndex: "stt",
+      width: 40,
+      key: "stt",
+      render: (text, record, index) => (
+        <span>
+          {notifications.findIndex((x) => x._id === record._id) + 1}
+        </span>
+      ),
+    },
+    {
       title: "Title Notification",
       dataIndex: "notification",
       key: "notification",
-      render: (text, record, index) => {
+      render: (text, record, index) => (
         <span>{record.notification}</span>
-      },
+      ),
       align: "center",
     },
     {
       title: "Content Notification",
       dataIndex: "contentNotification",
       key: "contentNotification",
-      render: (text, record, index) => {
+      render: (text, record, index) => (
         <span>{record.contentNotification}</span>
-      },
+      ),
       align: "center",
     },
     {
-      title: "Title Notification",
-      dataIndex: "notification",
-      key: "notification",
-      render: (text, record, index) => {
-        <span>{record.notification}</span>
-      },
+      title: "Type Notification",
+      dataIndex: "typeNotification",
+      key: "typeNotification",
+      render: (text, record, index) => (
+        <span>{record.typeNotification}</span>
+      ),
       align: "center",
     },
   ];
@@ -93,7 +102,6 @@ function NotificationMainPage() {
             title={{ width: "100%" }}
           > */}
           <Table
-            style={{ border: "1px solid #000" }}
             rowKey="_id"
             pagination={{ position: ["none", "none"] }}
             columns={columns}
