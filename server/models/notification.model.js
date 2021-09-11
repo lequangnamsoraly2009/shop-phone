@@ -23,6 +23,7 @@ const notificationSchema = new mongoose.Schema(
     userId:{
         type: String,
         required: true,
+        default: "",
     },
     typeNotification: {
         type: String,

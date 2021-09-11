@@ -1,7 +1,7 @@
 const Notifications = require("../models/notification.model");
 
 class APIfeatures {
-  constructor(query,queryString) {
+  constructor(query, queryString) {
     this.query = query;
     this.queryString = queryString;
   }
@@ -29,60 +29,79 @@ const notificationController = {
         hasSeen,
       } = req.body;
 
+      let userId = "";
+
+      if (userSend === {}) {
+        userId = userId;
+      } else {
+        userId = userSend._id;
+      }
+
       //IDEA:   Nếu user or admin > 10 notification -> delete notification cũ nhất
 
       const newNotification = new Notifications({
         notification,
         contentNotification,
         userSend,
-        userId: userSend._id,
+        userId: userId,
         typeNotification,
         hasSeen,
       });
 
       await newNotification.save();
 
-      res.json({ status: "success", message: "Create Notification Successful" });
+      res.json({
+        status: "success",
+        message: "Create Notification Successful",
+      });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
   getNotificationForUser: async (req, res) => {
-      try {
-        const features = new APIfeatures(Notifications.find({userId: req.user.id}), req.query).sorting().pagination();
+    try {
+      const features = new APIfeatures(
+        Notifications.find({ userId: req.user.id }),
+        req.query
+      )
+        .sorting()
+        .pagination();
 
-        const notifications = await features.query;
+      const notifications = await features.query;
 
-        res.json({
-            status: "success",
-            result: notifications.length,
-            notifications: notifications,
-          });
-
-      } catch (error) {
-          return res.status(500).json({ status: false, message: error.message });
-      }
+      res.json({
+        status: "success",
+        result: notifications.length,
+        notifications: notifications,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
   },
   getNotificationForAdmin: async (req, res) => {
-      try {
-        const features = new APIfeatures(Notifications.find(), req.query).sorting().pagination();
+    try {
+      const features = new APIfeatures(Notifications.find(), req.query)
+        .sorting()
+        .pagination();
 
-        const notifications = await features.query;
+      const notifications = await features.query;
 
-        res.json({
-            status: "success",
-            result: notifications.length,
-            notifications: notifications,
-          });
-
-      } catch (error) {
-          return res.status(500).json({ status: false, message: error.message })
-      }
+      res.json({
+        status: "success",
+        result: notifications.length,
+        notifications: notifications,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
   },
   deleteNotification: async (req, res) => {
     try {
       await Notifications.findByIdAndDelete({ _id: req.params.id });
-      res.json({ status: "success", message: "Delete Notification successfully" });
+      res.json({
+        status: "success",
+        message: "Delete Notification successfully",
+      });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

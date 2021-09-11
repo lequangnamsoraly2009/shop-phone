@@ -1,8 +1,11 @@
 import { HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Input,Form } from "antd";
-import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
+import { Breadcrumb, Button, Input, Form, Select } from "antd";
+import React from "react";
+import { useSelector } from "react-redux";
+import NotificationAPI from "../../../../api/notificationAPI";
+// import io from "socket.io-client";
 
+const { Option } = Select;
 
 const layout = {
   labelCol: {
@@ -15,25 +18,28 @@ const layout = {
 
 function CreateNotification() {
   const [form] = Form.useForm();
-  const [socket, setSocket] = useState(null);
+  const { token } = useSelector((state) => state.token);
+  // const [socket, setSocket] = useState(null);
 
+  // useEffect(() => {
+  //   const socket = io();
+  //   setSocket(socket);
+  //   return () => socket.close();
+  // }, []);
 
-  useEffect(() => {
-    const socket = io();
-    setSocket(socket);
-    return () => socket.close();
-  }, []);
-
-  const onFinishForm = async(values) => {
+  const onFinishForm = async (values) => {
     try {
-      socket.emit("get-data-notification1", {data: values});
-      socket.on("get-data-notification2", (data) => {
-        console.log(data)
-      })
-    } catch (error) {
-      
-    }
-  }
+      const { notification, contentNotification, typeNotification } = values;
+      const response = await NotificationAPI.createNotification({
+        token,
+        notification,
+        contentNotification,
+        userSend: {},
+        typeNotification,
+        hasSeen: false,
+      });
+    } catch (error) {}
+  };
   return (
     <div className="container-admin">
       <div className="header_page">
@@ -54,47 +60,43 @@ function CreateNotification() {
       <div>
         <h1>Form Create Notification</h1>
         <div className="create_upload-info">
-          <Form
-            onFinish={onFinishForm}
-            {...layout}
-            size="middle"
-            form={form}
-            // initialValues={{
-            //   status: "Stocking",
-            // }}
-          >
+          <Form onFinish={onFinishForm} {...layout} size="middle" form={form}>
             <Form.Item
-              label="Product Name"
-              name="title"
+              label="Title"
+              name="notification"
               rules={[
-                { required: true, message: "Please input product name!" },
+                { required: true, message: "Please input notification title!" },
               ]}
             >
-              <Input placeholder="iPhone 12 Pro XS Max..." />
+              <Input placeholder="New Notification" />
             </Form.Item>
             <Form.Item
-              label="Product ID"
-              name="product_id"
-              rules={[{ required: true, message: "Please input product ID!" }]}
-            >
-              <Input placeholder="IP12PRM" />
-            </Form.Item>
-            <Form.Item
-              label="Description"
-              name="description"
+              label="Content"
+              name="contentNotification"
               rules={[
                 {
                   required: true,
-                  message: "Please input description product!",
+                  message: "Please input content notification!",
                 },
               ]}
             >
-              <Input.TextArea
-                placeholder="Monolithic synchronous design with sharp details..."
-                showCount
-                maxLength={300}
-                autoSize={{ maxRows: 2 }}
-              />
+              <Input placeholder="You have just received 1 voucher " />
+            </Form.Item>
+            <Form.Item
+              label="Type"
+              name="typeNotification"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select type notification!",
+                },
+              ]}
+            >
+              <Select placeholder="Please select type notification">
+                <Option value="new">New</Option>
+                <Option value="message">Message</Option>
+                <Option value="notification">Notification</Option>
+              </Select>
             </Form.Item>
             <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
               <Button type="primary" htmlType="submit">
