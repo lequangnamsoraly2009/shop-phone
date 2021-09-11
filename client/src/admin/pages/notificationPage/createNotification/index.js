@@ -1,6 +1,8 @@
 import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Input,Form } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import io from "socket.io-client";
+
 
 const layout = {
   labelCol: {
@@ -13,6 +15,23 @@ const layout = {
 
 function CreateNotification() {
   const [form] = Form.useForm();
+  const [socket, setSocket] = useState(null);
+
+
+  useEffect(() => {
+    const socket = io();
+    setSocket(socket);
+    return () => socket.close();
+  }, []);
+
+  const onFinishForm = async(values) => {
+    try {
+      console.log(values)
+      socket.emit("get-data-notification", {data: values});
+    } catch (error) {
+      
+    }
+  }
   return (
     <div className="container-admin">
       <div className="header_page">
@@ -34,7 +53,7 @@ function CreateNotification() {
         <h1>Form Create Notification</h1>
         <div className="create_upload-info">
           <Form
-            // onFinish={onFinishForm}
+            onFinish={onFinishForm}
             {...layout}
             size="middle"
             form={form}
@@ -42,7 +61,6 @@ function CreateNotification() {
             //   status: "Stocking",
             // }}
           >
-            <h3 style={{ color: "rgb(25,144,255)" }}>Main:</h3>
             <Form.Item
               label="Product Name"
               name="title"

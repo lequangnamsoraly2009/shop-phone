@@ -123,6 +123,11 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Socket get data notification ?
+  socket.on("get-data-notification", async(data)=> {
+    console.log(data)
+  })
+
   socket.on("disconnect", () => {
     // console.log("Disconnected: " + socket.id);
   });
