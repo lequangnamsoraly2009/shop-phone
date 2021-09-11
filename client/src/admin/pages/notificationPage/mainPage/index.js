@@ -7,6 +7,7 @@ import {
   Space,
   Popconfirm,
   Drawer,
+  Skeleton,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -20,6 +21,7 @@ const Search = Input;
 function NotificationMainPage() {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showDrawerChild, setShowDrawerChild] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { token } = useSelector((state) => state.token);
   const { notifications } = useSelector((state) => state.notifications);
@@ -27,7 +29,9 @@ function NotificationMainPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setIsLoading(true);
     dispatch(getNotificationForAdmin({ token }));
+    setIsLoading(false);
   }, [dispatch, token]);
 
   const handleDeleteNotification = async (_id) => {
@@ -171,19 +175,19 @@ function NotificationMainPage() {
           </div>
         </div>
         <div className="product_data-table">
-          {/* <Skeleton
+          <Skeleton
             active
             loading={isLoading}
             paragraph={{ rows: 10 }}
             title={{ width: "100%" }}
-          > */}
-          <Table
-            rowKey="_id"
-            pagination={{ position: ["none", "none"] }}
-            columns={columns}
-            dataSource={notifications}
-          />
-          {/* </Skeleton> */}
+          >
+            <Table
+              rowKey="_id"
+              pagination={{ position: ["none", "none"] }}
+              columns={columns}
+              dataSource={notifications}
+            />
+          </Skeleton>
         </div>
         {/* <div className="product_data-pagination">
           {paginationPayments.length <= 10 ? (
