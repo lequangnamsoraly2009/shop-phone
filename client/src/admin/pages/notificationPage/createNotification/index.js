@@ -3,6 +3,8 @@ import { Breadcrumb, Button, Input, Form, Select } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import NotificationAPI from "../../../../api/notificationAPI";
+import Swal from "sweetalert2";
+
 // import io from "socket.io-client";
 
 const { Option } = Select;
@@ -38,7 +40,24 @@ function CreateNotification() {
         typeNotification,
         hasSeen: false,
       });
-    } catch (error) {}
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Create Notification Successful",
+        text: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 4000,
+      });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 4000,
+      });
+    }
   };
   return (
     <div className="container-admin">
