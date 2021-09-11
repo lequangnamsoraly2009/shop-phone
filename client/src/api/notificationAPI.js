@@ -17,7 +17,6 @@ const NotificationAPI = {
     contentNotification,
     userSend,
     typeNotification,
-    hasSeen,
   }) => {
     return API.post(
       "/api/notification",
@@ -26,7 +25,6 @@ const NotificationAPI = {
         contentNotification,
         userSend,
         typeNotification,
-        hasSeen,
       },
       {
         headers: { Authorization: token },

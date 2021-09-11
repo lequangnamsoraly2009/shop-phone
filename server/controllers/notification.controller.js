@@ -26,7 +26,6 @@ const notificationController = {
         contentNotification,
         userSend,
         typeNotification,
-        hasSeen,
       } = req.body;
 
       let userId = "";
@@ -45,7 +44,6 @@ const notificationController = {
         userSend,
         userId: userId,
         typeNotification,
-        hasSeen,
       });
 
       await newNotification.save();

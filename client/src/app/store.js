@@ -25,6 +25,7 @@ import questionProductReducer from "./questionProductSlice";
 import searchReducer from "./searchSlice";
 import addressReducer from "./addressSlice";
 import vouchersReducer from "./voucherSlice"
+import notificationsReducer from "./notificationSlice";
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   search: searchReducer,
   address: addressReducer,
   vouchers: vouchersReducer,
+  notifications: notificationsReducer,
 });
 
 const persistConfig = {

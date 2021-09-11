@@ -26,10 +26,6 @@ const notificationSchema = new mongoose.Schema(
     },
     typeNotification: {
         type: String,
-    },
-    hasSeen: {
-        type: Boolean,
-        default: false,
     }
   },
   { timestamps: true }
