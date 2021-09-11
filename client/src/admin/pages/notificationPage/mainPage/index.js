@@ -1,6 +1,14 @@
-import { DeleteOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Table, Input, Space, Popconfirm } from "antd";
-import React, { useEffect } from "react";
+import { DeleteOutlined, EyeOutlined, HomeOutlined } from "@ant-design/icons";
+import {
+  Breadcrumb,
+  Button,
+  Table,
+  Input,
+  Space,
+  Popconfirm,
+  Drawer,
+} from "antd";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotificationForAdmin } from "../../../../app/notificationSlice";
@@ -10,6 +18,9 @@ import NotificationAPI from "../../../../api/notificationAPI";
 const Search = Input;
 
 function NotificationMainPage() {
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [showDrawerChild, setShowDrawerChild] = useState(false);
+
   const { token } = useSelector((state) => state.token);
   const { notifications } = useSelector((state) => state.notifications);
 
@@ -57,6 +68,13 @@ function NotificationMainPage() {
     });
   };
 
+  const onCloseDrawer = () => {
+    setShowDrawer(false);
+  };
+
+  const onChildrenDrawerClose = () => {
+    setShowDrawerChild(false);
+  };
   const columns = [
     {
       title: "STT",
@@ -95,12 +113,10 @@ function NotificationMainPage() {
       key: "action",
       render: (text, record, index) => (
         <Space size="large">
-          <Link
-            to={`/admin/categories/edit/${record._id}`}
-            style={{ color: "rgb(25,144,255)", cursor: "pointer" }}
-          >
-            <EditOutlined />
-          </Link>
+          <EyeOutlined
+            style={{ cursor: "pointer", color: "rgb(25,144,255)" }}
+            onClick={() => setShowDrawer(true)}
+          />
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <Popconfirm
               title="Are you sure delete it?"
@@ -183,6 +199,26 @@ function NotificationMainPage() {
           )}
         </div> */}
       </div>
+      <Drawer
+        title="Multi-level drawer"
+        width={520}
+        closable={false}
+        onClose={onCloseDrawer}
+        visible={showDrawer}
+      >
+        <Button type="primary" onClick={() => setShowDrawerChild(true)}>
+          Two-level drawer
+        </Button>
+        <Drawer
+          title="Two-level Drawer"
+          width={320}
+          closable={false}
+          onClose={onChildrenDrawerClose}
+          visible={showDrawerChild}
+        >
+          This is two-level drawer
+        </Drawer>
+      </Drawer>
     </div>
   );
 }
