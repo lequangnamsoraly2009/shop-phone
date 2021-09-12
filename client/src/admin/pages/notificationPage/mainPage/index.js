@@ -56,7 +56,7 @@ function NotificationMainPage() {
         title: "Cancel",
         text: `${error.response.data.message}`,
         showConfirmButton: false,
-        timer: 4000,
+        timer:3000,
       });
     }
   };
