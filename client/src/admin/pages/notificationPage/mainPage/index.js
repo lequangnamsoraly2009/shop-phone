@@ -99,10 +99,10 @@ function NotificationMainPage() {
   // Send 1 User
   const handleOnClickSendUser = async (userId) => {
     try {
-      const user = { _id: userId, hasSeen: false };
+      const userChoose = { _id: userId, hasSeen: false };
       const response = await NotificationAPI.sendOneUserNotification({
         token,
-        user: user,
+        user: userChoose,
         userSend: user,
         idNotification: idNotificationDrawer,
       });
