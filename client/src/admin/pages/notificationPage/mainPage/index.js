@@ -25,6 +25,8 @@ function NotificationMainPage() {
 
   const { token } = useSelector((state) => state.token);
   const { notifications } = useSelector((state) => state.notifications);
+  const { users } = useSelector((state) => state.usersAdmin);
+  console.log(users);
 
   const dispatch = useDispatch();
 
@@ -56,7 +58,7 @@ function NotificationMainPage() {
         title: "Cancel",
         text: `${error.response.data.message}`,
         showConfirmButton: false,
-        timer:3000,
+        timer: 3000,
       });
     }
   };
@@ -79,6 +81,40 @@ function NotificationMainPage() {
   const onChildrenDrawerClose = () => {
     setShowDrawerChild(false);
   };
+
+  const columnsListUser = [
+    {
+      title: "STT",
+      dataIndex: "stt",
+      width: 40,
+      key: "stt",
+      render: (text, record, index) => (
+        <span>{users.findIndex((x) => x._id === record._id) + 1}</span>
+      ),
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: (text, record, index) => <span>{record.email}</span>,
+      align: "center",
+    },
+    {
+      title: "Type User",
+      dataIndex: "typeUser",
+      key: "typeUser",
+      render: (text, record, index) =>
+        record.typeUser === "Confirmed" ? (
+          <span style={{ color: "green" }}>{record.typeUser}</span>
+        ) : record.typeUser === "Unconfirmed" ? (
+          <span style={{ color: "red" }}>{record.typeUser}</span>
+        ) : (
+          <span style={{ color: "gray" }}>{record.typeUser}</span>
+        ),
+      align: "center",
+    },
+  ];
+
   const columns = [
     {
       title: "STT",
@@ -204,12 +240,18 @@ function NotificationMainPage() {
         </div> */}
       </div>
       <Drawer
-        title="Multi-level drawer"
-        width={520}
+        title="Notification For User"
+        width={800}
         closable={false}
         onClose={onCloseDrawer}
         visible={showDrawer}
       >
+        <Table
+          rowKey="_id"
+          pagination={{ position: ["none", "none"] }}
+          columns={columnsListUser}
+          dataSource={users}
+        />
         <Button type="primary" onClick={() => setShowDrawerChild(true)}>
           Two-level drawer
         </Button>
