@@ -1,4 +1,4 @@
-import { DeleteOutlined, EyeOutlined, HomeOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined, DeleteOutlined, EyeOutlined, HomeOutlined } from "@ant-design/icons";
 import {
   Breadcrumb,
   Button,
@@ -113,6 +113,19 @@ function NotificationMainPage() {
         ),
       align: "center",
     },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record, index) => (
+        <Space size="large">
+          <ArrowRightOutlined
+            style={{ cursor: "pointer", color: "rgb(25,144,255)" }}
+            onClick={() => setShowDrawer(true)}
+          />
+        </Space>
+      ),
+      align: "center",
+    },
   ];
 
   const columns = [
@@ -219,7 +232,7 @@ function NotificationMainPage() {
           >
             <Table
               rowKey="_id"
-              pagination={{ position: ["none", "none"] }}
+              // pagination={{ position: ["none", "none"] }}
               columns={columns}
               dataSource={notifications}
             />
@@ -248,10 +261,12 @@ function NotificationMainPage() {
       >
         <Table
           rowKey="_id"
-          pagination={{ position: ["none", "none"] }}
+          // pagination={{ position: ["none", "none"] }}
           columns={columnsListUser}
           dataSource={users}
+          
         />
+        <Button type="primary" style={{margin: "30px 40px 0 0" }}>Send All</Button>
         <Button type="primary" onClick={() => setShowDrawerChild(true)}>
           Two-level drawer
         </Button>
