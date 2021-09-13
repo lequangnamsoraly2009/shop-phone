@@ -108,16 +108,45 @@ const notificationController = {
 
       const { userReceive } = notification;
 
-      const hasCheckUser = userReceive.every((u) => u._id === user._id);
-
-      if (hasCheckUser === false) {
+      const hasCheckUser = userReceive.some((u) => u._id === user._id);
+    
+      if (hasCheckUser === true) {
         return res
           .status(400)
           .json({ status: false, message: "User has send notification" });
+      } else {
+        const listUser = [...userReceive];
+        listUser.push(user);
+        await Notifications.findByIdAndUpdate(
+          { _id: req.params.id },
+          {
+            userReceive: listUser,
+            userSend: userSend,
+            userId: userSend._id,
+          }
+        );
+
+        res.json({
+          status: "success",
+          message: "Send notification Success",
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  sendAllNotification: async (req, res) => {
+    try {
+      const { listUser, userSend } = req.body;
+
+      const notification = await Notifications.findById({ _id: req.params.id });
+
+      if (notification.length > 0) {
+        return res
+          .status(400)
+          .json({ status: false, message: "Change another ways" });
       }
 
-      const listUser = [...userReceive];
-      listUser.push(user);
       await Notifications.findByIdAndUpdate(
         { _id: req.params.id },
         {
@@ -129,35 +158,10 @@ const notificationController = {
 
       res.json({
         status: "success",
-        message: "Send notification Success",
+        message: "Send notification for all user has success",
       });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
-    }
-  },
-  sendAllNotification: async (req, res) => {
-    try {
-      const { listUser, userSend } = req.body;
-      
-      const notification = await Notifications.findById({_id: req.params.id})
-
-      if(notification.length > 0){
-        return res.status(400).json({ status: false, message: "Change another ways"})
-      }
-
-      await Notifications.findByIdAndUpdate({ _id: req.params.id},{
-        userReceive: listUser,
-        userSend: userSend,
-        userId: userSend._id,
-      })
-
-      res.json({
-        status: "success",
-        message: "Send notification for all user has success",
-      });
-      
-    } catch (error) {
-      return res.status(500).json({ status: false, message: error.message })
     }
   },
 };
