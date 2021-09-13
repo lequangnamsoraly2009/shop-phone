@@ -21,12 +21,8 @@ class APIfeatures {
 const notificationController = {
   createNotification: async (req, res) => {
     try {
-      const {
-        notification,
-        contentNotification,
-        userSend,
-        typeNotification,
-      } = req.body;
+      const { notification, contentNotification, userSend, typeNotification } =
+        req.body;
 
       let userId = "";
 
@@ -104,6 +100,37 @@ const notificationController = {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
+  sendOneUserNotification: async (req, res) => {
+    try {
+      const { user, userSend } = req.body;
+
+      const notification = await Notifications.findById({ _id: req.params.id });
+
+      const { userReceive } = notification;
+
+      const hasCheckUser = userReceive.every((u) => u._id === user._id);
+
+      if (hasCheckUser === false) {
+        return res
+          .status(400)
+          .json({ status: false, message: "User has send notification" });
+      }
+
+      const listUser = [...userReceive];
+      listUser.push(user);
+      await Notifications.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          userReceive: listUser,
+          userSend: userSend,
+          userId: userSend._id,
+        }
+      );
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message });
+    }
+  },
+  sendAllNotification: async (req, res) => {},
 };
 
 module.exports = notificationController;

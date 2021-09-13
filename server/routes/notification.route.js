@@ -8,6 +8,8 @@ router.route("/notification/user").get(auth, notificationController.getNotificat
 router.route("/notification/admin").get(auth, authAdmin,notificationController.getNotificationForAdmin);
 
 router.route("/notification/:id").delete(auth, notificationController.deleteNotification);
+router.route("/notification/user/:id").patch(auth, notificationController.sendOneUserNotification);
+router.route("/notification/alluser/:id").patch(auth, notificationController.sendAllNotification);
 
 
 module.exports = router;
