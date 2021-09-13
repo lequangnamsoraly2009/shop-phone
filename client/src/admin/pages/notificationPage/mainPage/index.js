@@ -30,6 +30,7 @@ function NotificationMainPage() {
   const [showDrawerChild, setShowDrawerChild] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [idNotificationDrawer, setIdNotificationDrawer] = useState("");
+  const [notificationDrawer, setNotificationDrawer] = useState({});
 
   const { token } = useSelector((state) => state.token);
   const { notifications } = useSelector((state) => state.notifications);
@@ -85,11 +86,14 @@ function NotificationMainPage() {
   const onCloseDrawer = () => {
     setShowDrawer(false);
     setIdNotificationDrawer("");
+    setNotificationDrawer({});
   };
 
   const handleOnClickChooseNotification = (_idNotification) => {
     setShowDrawer(true);
     setIdNotificationDrawer(_idNotification);
+    const notification = notifications.filter((noti) => noti._id === _idNotification)
+    setNotificationDrawer(notification[0]);
   };
 
   const onChildrenDrawerClose = () => {
@@ -158,7 +162,7 @@ function NotificationMainPage() {
       render: (text, record, index) =>
         record.typeUser === "Confirmed" ? (
           <span style={{ color: "green" }}>{record.typeUser}</span>
-        ) : record.typeUser === "Unconfirmed" ? (
+        ) : record.typeUser === "Block" ? (
           <span style={{ color: "red" }}>{record.typeUser}</span>
         ) : (
           <span style={{ color: "gray" }}>{record.typeUser}</span>
