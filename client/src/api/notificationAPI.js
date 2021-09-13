@@ -31,11 +31,35 @@ const NotificationAPI = {
       }
     );
   },
-  deleteNotification: ({token, idNotification}) => {
+  deleteNotification: ({ token, idNotification }) => {
     return API.delete(`/api/notification/${idNotification}`, {
+      headers: { Authorization: token },
+    });
+  },
+  sendOneUserNotification: ({ token, user, userSend, idNotification }) => {
+    return API.patch(
+      `/api/notification/user/${idNotification}`,
+      {
+        user,
+        userSend,
+      },
+      {
         headers: { Authorization: token },
-      });
-  }
+      }
+    );
+  },
+  sendAllNotification: ({ token, listUser, userSend, idNotification }) => {
+    return API.patch(
+      `/api/notification/alluser/${idNotification}`,
+      {
+        listUser,
+        userSend,
+      },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  },
 };
 
 export default NotificationAPI;

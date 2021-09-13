@@ -29,6 +29,7 @@ function NotificationMainPage() {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showDrawerChild, setShowDrawerChild] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [idNotificationDrawer,setIdNotificationDrawer] = useState("");
 
   const { token } = useSelector((state) => state.token);
   const { notifications } = useSelector((state) => state.notifications);
@@ -83,10 +84,17 @@ function NotificationMainPage() {
 
   const onCloseDrawer = () => {
     setShowDrawer(false);
+    setIdNotificationDrawer("");
   };
+
+  const handleOnClickChooseNotification = (_idNotification) => {
+    setShowDrawer(true);
+    setIdNotificationDrawer(_idNotification);
+  }
 
   const onChildrenDrawerClose = () => {
     setShowDrawerChild(false);
+
   };
 
   // Send 1 User
@@ -107,7 +115,7 @@ function NotificationMainPage() {
 
   // Send Some Users
   const handleSelectUser = (values) => {
-    console.log(values)
+    // console.log(values)
   }
 
   // Send All Users
@@ -201,7 +209,7 @@ function NotificationMainPage() {
         <Space size="large">
           <EyeOutlined
             style={{ cursor: "pointer", color: "rgb(25,144,255)" }}
-            onClick={() => setShowDrawer(true)}
+            onClick={() =>handleOnClickChooseNotification(record._id)}
           />
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <Popconfirm
