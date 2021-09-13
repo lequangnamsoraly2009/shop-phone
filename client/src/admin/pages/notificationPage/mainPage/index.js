@@ -29,12 +29,12 @@ function NotificationMainPage() {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showDrawerChild, setShowDrawerChild] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [idNotificationDrawer,setIdNotificationDrawer] = useState("");
+  const [idNotificationDrawer, setIdNotificationDrawer] = useState("");
 
   const { token } = useSelector((state) => state.token);
   const { notifications } = useSelector((state) => state.notifications);
   const { users } = useSelector((state) => state.usersAdmin);
-  // console.log(users);
+  const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -90,17 +90,30 @@ function NotificationMainPage() {
   const handleOnClickChooseNotification = (_idNotification) => {
     setShowDrawer(true);
     setIdNotificationDrawer(_idNotification);
-  }
+  };
 
   const onChildrenDrawerClose = () => {
     setShowDrawerChild(false);
-
   };
 
   // Send 1 User
-  const handleOnClickSendUser = async(userId) => {
+  const handleOnClickSendUser = async (userId) => {
     try {
-      
+      const user = { _id: userId, hasSeen: false };
+      const response = await NotificationAPI.sendOneUserNotification({
+        token,
+        user: user,
+        userSend: user,
+        idNotification: idNotificationDrawer,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Success!",
+        text: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 3000,
+      });
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -108,20 +121,18 @@ function NotificationMainPage() {
         title: "Notification!",
         text: `${error.response.data.message}`,
         showConfirmButton: false,
-        timer: 4000,
+        timer: 3000,
       });
     }
-  }
+  };
 
   // Send Some Users
   const handleSelectUser = (values) => {
     // console.log(values)
-  }
+  };
 
   // Send All Users
-  const handleOnClickSendAll = () => {
-
-  }
+  const handleOnClickSendAll = () => {};
 
   const columnsListUser = [
     {
@@ -209,7 +220,7 @@ function NotificationMainPage() {
         <Space size="large">
           <EyeOutlined
             style={{ cursor: "pointer", color: "rgb(25,144,255)" }}
-            onClick={() =>handleOnClickChooseNotification(record._id)}
+            onClick={() => handleOnClickChooseNotification(record._id)}
           />
           <div style={{ color: "rgb(25,144,255)", cursor: "pointer" }}>
             <Popconfirm
@@ -306,7 +317,11 @@ function NotificationMainPage() {
           columns={columnsListUser}
           dataSource={users}
         />
-        <Button type="primary" style={{ margin: "30px 40px 0 0" }} onClick={handleOnClickSendAll}>
+        <Button
+          type="primary"
+          style={{ margin: "30px 40px 0 0" }}
+          onClick={handleOnClickSendAll}
+        >
           Send All
         </Button>
         <Button type="primary" onClick={() => setShowDrawerChild(true)}>
