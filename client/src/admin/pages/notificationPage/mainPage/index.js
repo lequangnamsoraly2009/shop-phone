@@ -1,4 +1,9 @@
-import { ArrowRightOutlined, DeleteOutlined, EyeOutlined, HomeOutlined } from "@ant-design/icons";
+import {
+  ArrowRightOutlined,
+  DeleteOutlined,
+  EyeOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
 import {
   Breadcrumb,
   Button,
@@ -8,6 +13,7 @@ import {
   Popconfirm,
   Drawer,
   Skeleton,
+  Select,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -17,6 +23,7 @@ import Swal from "sweetalert2";
 import NotificationAPI from "../../../../api/notificationAPI";
 
 const Search = Input;
+const { Option } = Select;
 
 function NotificationMainPage() {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -26,7 +33,7 @@ function NotificationMainPage() {
   const { token } = useSelector((state) => state.token);
   const { notifications } = useSelector((state) => state.notifications);
   const { users } = useSelector((state) => state.usersAdmin);
-  console.log(users);
+  // console.log(users);
 
   const dispatch = useDispatch();
 
@@ -81,6 +88,10 @@ function NotificationMainPage() {
   const onChildrenDrawerClose = () => {
     setShowDrawerChild(false);
   };
+
+  const handleSelectUser = (values) => {
+    console.log(values)
+  }
 
   const columnsListUser = [
     {
@@ -264,20 +275,34 @@ function NotificationMainPage() {
           // pagination={{ position: ["none", "none"] }}
           columns={columnsListUser}
           dataSource={users}
-          
         />
-        <Button type="primary" style={{margin: "30px 40px 0 0" }}>Send All</Button>
+        <Button type="primary" style={{ margin: "30px 40px 0 0" }}>
+          Send All
+        </Button>
         <Button type="primary" onClick={() => setShowDrawerChild(true)}>
-          Two-level drawer
+          Send Some Users
         </Button>
         <Drawer
           title="Two-level Drawer"
-          width={320}
+          width={500}
           closable={false}
           onClose={onChildrenDrawerClose}
           visible={showDrawerChild}
         >
-          This is two-level drawer
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: "100%" }}
+            placeholder="Please select users"
+            onChange={handleSelectUser}
+            optionLabelProp="label"
+          >
+            {users.map((user) => (
+              <Option key={user._id} label={user.email} value={user._id}>
+                Email: {user.email} - Type: {user.typeUser}
+              </Option>
+            ))}
+          </Select>
         </Drawer>
       </Drawer>
     </div>
