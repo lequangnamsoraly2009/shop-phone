@@ -74,7 +74,7 @@ function NotificationMainPage() {
     e.preventDefault();
     Swal.fire({
       position: "center",
-      icon: "success",
+      icon: "cancel",
       title: "Cancel",
       showConfirmButton: false,
       timer: 4000,
@@ -89,8 +89,30 @@ function NotificationMainPage() {
     setShowDrawerChild(false);
   };
 
+  // Send 1 User
+  const handleOnClickSendUser = async(userId) => {
+    try {
+      
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "cancel",
+        title: "Notification!",
+        text: `${error.response.data.message}`,
+        showConfirmButton: false,
+        timer: 4000,
+      });
+    }
+  }
+
+  // Send Some Users
   const handleSelectUser = (values) => {
     console.log(values)
+  }
+
+  // Send All Users
+  const handleOnClickSendAll = () => {
+
   }
 
   const columnsListUser = [
@@ -131,7 +153,7 @@ function NotificationMainPage() {
         <Space size="large">
           <ArrowRightOutlined
             style={{ cursor: "pointer", color: "rgb(25,144,255)" }}
-            onClick={() => setShowDrawer(true)}
+            onClick={() => handleOnClickSendUser(record._id)}
           />
         </Space>
       ),
@@ -276,14 +298,14 @@ function NotificationMainPage() {
           columns={columnsListUser}
           dataSource={users}
         />
-        <Button type="primary" style={{ margin: "30px 40px 0 0" }}>
+        <Button type="primary" style={{ margin: "30px 40px 0 0" }} onClick={handleOnClickSendAll}>
           Send All
         </Button>
         <Button type="primary" onClick={() => setShowDrawerChild(true)}>
           Send Some Users
         </Button>
         <Drawer
-          title="Two-level Drawer"
+          title="Send Some Users"
           width={500}
           closable={false}
           onClose={onChildrenDrawerClose}
