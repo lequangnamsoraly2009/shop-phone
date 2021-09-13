@@ -126,11 +126,40 @@ const notificationController = {
           userId: userSend._id,
         }
       );
+
+      res.json({
+        status: "success",
+        message: "Send notification Success",
+      });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
   },
-  sendAllNotification: async (req, res) => {},
+  sendAllNotification: async (req, res) => {
+    try {
+      const { listUser, userSend } = req.body;
+      
+      const notification = await Notifications.findById({_id: req.params.id})
+
+      if(notification.length > 0){
+        return res.status(400).json({ status: false, message: "Change another ways"})
+      }
+
+      await Notifications.findByIdAndUpdate({ _id: req.params.id},{
+        userReceive: listUser,
+        userSend: userSend,
+        userId: userSend._id,
+      })
+
+      res.json({
+        status: "success",
+        message: "Send notification for all user has success",
+      });
+      
+    } catch (error) {
+      return res.status(500).json({ status: false, message: error.message })
+    }
+  },
 };
 
 module.exports = notificationController;
