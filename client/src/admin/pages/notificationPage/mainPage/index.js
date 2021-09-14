@@ -31,6 +31,7 @@ function NotificationMainPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [idNotificationDrawer, setIdNotificationDrawer] = useState("");
   const [notificationDrawer, setNotificationDrawer] = useState({});
+  console.log(notificationDrawer)
 
   const { token } = useSelector((state) => state.token);
   const { notifications } = useSelector((state) => state.notifications);
