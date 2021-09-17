@@ -64,7 +64,7 @@ function NotificationMainPage() {
     } catch (error) {
       Swal.fire({
         position: "center",
-        icon: "success",
+        icon: "error",
         title: "Cancel",
         text: `${error.response.data.message}`,
         showConfirmButton: false,
