@@ -58,7 +58,7 @@ function CreateCategory() {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something wrong. Please try again ! ",
+        title: "Something wrong. Please try again. Try again ! ",
         showConfirmButton: false,
         timer: 2000,
       });
