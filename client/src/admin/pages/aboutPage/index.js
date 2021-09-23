@@ -2,8 +2,7 @@ import React from 'react'
 
 function AboutPage() {
     return (
-        <div>
-            about
+        <div>About Page Admin 1
         </div>
     )
 }
