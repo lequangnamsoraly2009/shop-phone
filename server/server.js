@@ -129,6 +129,6 @@ io.on("connection", (socket) => {
   })
 
   socket.on("disconnect", () => {
-    // console.log("Disconnected: " + socket.id);
+    console.log("Disconnected: " + socket.id);
   });
 });
